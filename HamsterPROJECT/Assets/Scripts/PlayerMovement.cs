@@ -8,23 +8,36 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxSpeed = 50;
 	float smoothTime = 0.3f;
 	float xVelocity = 0.0f;
-
     int playerDirection = 1;
+	bool lockMovement;
+	bool isGrounded;
 
     Rigidbody2D rigid;
+	Transform feetPos;
 
-	bool lockMovement;
+	[SerializeField] float checkRadius;
+	[SerializeField] LayerMask groundLayer;
+
+	[SerializeField] float fastFallSpeed = 100;
 
     // Use this for initialization 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+		feetPos = transform.GetChild (0).transform;
     }
 
-    // Update is called once per frame 
     void FixedUpdate()
     {
-		// Conditions that don't allow movement
+		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+
+		//Movement Lock
+		if (isGrounded && Input.GetButton ("Lock"))
+			lockMovement = true;
+		else
+			lockMovement = false;
+
+		//Movement
         if (!lockMovement)
         {
             //Handling player direction
@@ -46,5 +59,12 @@ public class PlayerMovement : MonoBehaviour
                 rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
             }
         }
+
+		//FastFall
+		if (Input.GetAxis("Vertical") < - 0.5f && !isGrounded)
+		{
+			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
+			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
+		}
     }
 }
