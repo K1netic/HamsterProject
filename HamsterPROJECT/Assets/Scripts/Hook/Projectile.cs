@@ -10,6 +10,10 @@ public class Projectile : MonoBehaviour {
 	void Start(){
 		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
 		direction = direction.normalized;
+        if(direction == Vector3.zero)
+        {
+            direction = Vector3.right;
+        }
 	}
 
 	void Update () {

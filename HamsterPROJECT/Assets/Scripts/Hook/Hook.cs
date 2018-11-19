@@ -12,8 +12,9 @@ public class Hook : MonoBehaviour {
 	//SHOT
 	public GameObject projectile;
 	public Transform shotPoint;
-	public float startTimeBtwShots;
-	private float timeBtwShots;
+	public float timeBtwShots = 1;
+    private bool hookInCD;
+    GameObject currentProjectile;
 
 
 	// Use this for initialization
@@ -24,34 +25,29 @@ public class Hook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		transform.position = Player.transform.position;
-		screenPoint.x = (Input.GetAxis("Horizontal"));
-		screenPoint.y = (Input.GetAxis("Vertical"));
-		float rotZ = Mathf.Atan2 (screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.Euler (0f, 0f, rotZ + offset);
+        transform.position = Player.transform.position;
+        screenPoint.x = (Input.GetAxis("Horizontal"));
+        screenPoint.y = (Input.GetAxis("Vertical"));
+        float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
 
-
-		if (Input.GetButtonDown ("Hook")) 
+		if (Input.GetButtonDown ("Hook") && !hookInCD) 
 		{
-			if (timeBtwShots <= 0) 
-				{
-					Instantiate (projectile, shotPoint.position, transform.rotation);
-				}
-				timeBtwShots = startTimeBtwShots;
-				Debug.Log ("Shoot");
+            currentProjectile = Instantiate(projectile, shotPoint.position, transform.rotation);
+            hookInCD = true;
+            Invoke("ResetHookCD", timeBtwShots);
+            Debug.Log("Shoot");
 		} 
 
-		else if (Input.GetButtonUp ("Hook")) 
+		else if (Input.GetButtonUp ("Hook") && currentProjectile != null) 
 		{
-			GameObject.Find("hookhead").GetComponent<Projectile>().Destruction();
+            currentProjectile.GetComponent<Projectile>().Destruction();
 			Debug.Log ("Destroy");
-		}
-
-		else
-		{
-			timeBtwShots -= Time.deltaTime;
-
-		}
-		
+		}		
 	}
+
+    void ResetHookCD()
+    {
+        hookInCD = false;
+    }
 }
