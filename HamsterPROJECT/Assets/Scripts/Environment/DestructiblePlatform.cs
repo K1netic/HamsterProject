@@ -21,7 +21,6 @@ public class DestructiblePlatform : MonoBehaviour {
         //La ligne en dessous sert à enlever " (UnityEngine.Sprite)" du string, car quand on fait sprite.name on récupère son nom mais avec " (UnityEngine.Sprite)" à la fin......
         gameObjectName = gameObjectName.Replace(carbage, "");
         currentPV = maxHP;
-        print(gameObjectName);
     }
 
     public void TakeDamage(int damage)
@@ -34,7 +33,6 @@ public class DestructiblePlatform : MonoBehaviour {
         }
         //Remplace le sprite par le sprite qui correspond à son nombre de PV
         myRenderer.sprite = Resources.Load<Sprite>("Platforms/"+ gameObjectName+"/"+currentPV);
-        print("Platforms/" + gameObjectName + "/" + currentPV);
     }
 
     private void OnMouseDown()
