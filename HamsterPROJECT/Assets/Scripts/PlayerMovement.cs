@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
 	[SerializeField] float fastFallSpeed = 100;
 
+	[SerializeField] string playerNumber;
+
     // Use this for initialization 
     void Start()
     {
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
 		//Movement Lock
-		if (isGrounded && Input.GetButton ("Lock"))
+		if (isGrounded && Input.GetButton ("Lock" + playerNumber))
 			lockMovement = true;
 		else
 			lockMovement = false;
@@ -41,19 +43,19 @@ public class PlayerMovement : MonoBehaviour
         if (!lockMovement)
         {
             //Handling player direction
-            if (Input.GetAxisRaw("Horizontal") > 0)
+			if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
             {
                 transform.localScale = new Vector3(1, 1, 0);
                 playerDirection = 1;
             }
-            if (Input.GetAxisRaw("Horizontal") < 0)
+			if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
             {
                 transform.localScale = new Vector3(-1, 1, 0);
                 playerDirection = -1;
             }
 
             //Input -> start moving
-            if (Input.GetAxisRaw("Horizontal") != 0)
+			if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
             {
                 float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed, ref xVelocity, smoothTime);
                 rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
@@ -61,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 		//FastFall
-		if (Input.GetAxis("Vertical") < - 0.5f && !isGrounded)
+		if (Input.GetAxisRaw("Vertical" + playerNumber) < - 0.5f && !isGrounded)
 		{
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
