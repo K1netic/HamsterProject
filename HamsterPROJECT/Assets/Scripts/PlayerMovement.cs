@@ -5,29 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float maxSpeed = 50;
+	Rigidbody2D rigid;
+	Transform feetPos;
+
+	//Movement
+    [SerializeField] float maxSpeed = 100;
 	float smoothTime = 0.3f;
 	float xVelocity = 0.0f;
     int playerDirection = 1;
-	bool lockMovement;
-	bool isGrounded;
+	bool lockMovement = false;
 
-    Rigidbody2D rigid;
-	Transform feetPos;
-
-	[SerializeField] float checkRadius;
+	//Ground Check
+	bool isGrounded = false;
+	[SerializeField] float checkRadius = 1.0f;
 	[SerializeField] LayerMask groundLayer;
 
-	[SerializeField] float fastFallSpeed = 100;
+	//Fast Fall
+	[SerializeField] float fastFallSpeed = 200;
+	// Value under which vertical joystick input will trigger fastFall
+	[SerializeField] float fastFallVerticalThreshold = - 0.5f;
+	// Value over which horizontal joystick input will cancel fastFall 
+	[SerializeField] float fastFallHorizontalThreshold = 0.1f;
 
 	[SerializeField] string playerNumber;
 
-    // Use this for initialization 
-    void Start()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-		feetPos = transform.GetChild (0).transform;
-    }
+	void Start()
+	{
+		rigid = this.GetComponent<Rigidbody2D> ();
+		feetPos = this.transform.GetChild (0).transform;
+	}
 
     void FixedUpdate()
     {
@@ -63,7 +69,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
 		//FastFall
-		if (Input.GetAxisRaw("Vertical" + playerNumber) < - 0.5f && !isGrounded)
+		if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
+			&& !isGrounded
+			&& Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNumber)) < fastFallHorizontalThreshold)
 		{
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
