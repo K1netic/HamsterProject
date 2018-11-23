@@ -15,8 +15,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void Update()
 	{
-		Debug.Log (ready);
-
 		if (!ready && checkPanels)
 		{
 			checkPanels = false;
