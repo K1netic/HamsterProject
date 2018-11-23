@@ -6,9 +6,10 @@ public class Projectile : MonoBehaviour {
 
 	public float speed;
 	private Vector3 direction;
+    public string playerNumber;
 
-	void Start(){
-		direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+    void Start(){
+        direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
         {
