@@ -6,52 +6,57 @@ using UnityEngine.UI;
 public class PlayerSelectionPanel : MonoBehaviour {
 
 	public string playerSelectionPanelID;
-	bool activated = false;
-	bool validated = false;
+	public enum SelectionPanelState {Deactivated, Activated, Validated};
+	public SelectionPanelState state;
+	[SerializeField] Color activationColor;
+
 	Image img;
 
 	void Start()
 	{
 		img = this.GetComponent<Image> ();
+		state = SelectionPanelState.Deactivated;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && !activated)
+		#region StateManagement
+		if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Deactivated )
 		{
-			activated = true;
-			ActivatePanel ();
+			state = SelectionPanelState.Activated;
 		}
 			
-		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && !validated)
+		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
-			validated = true;
-			ValidatePanel ();
+			state = SelectionPanelState.Validated;
 		}
-			
-	}
 
-	void ActivatePanel()
-	{
-		switch (playerSelectionPanelID)
+		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
-		case "_P1":
-			img.color = Color.blue;
+			state = SelectionPanelState.Deactivated;
+		}
+
+		else if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Validated)
+		{
+			state = SelectionPanelState.Activated;
+		}
+		#endregion
+
+		#region ActionsToDoForEachState
+		switch (state)
+		{
+		case SelectionPanelState.Deactivated:
+			img.color = Color.gray;
 			break;
-		case "_P2":
-			img.color = Color.red;
+		case SelectionPanelState.Activated:
+			img.color = activationColor;
+			//Hiding "ready" text
+			this.transform.GetChild (0).gameObject.SetActive (false);
 			break;
-		case "_P3":
-			img.color = Color.yellow;
-			break;
-		case "_P4":
-			img.color = Color.green;
+		case SelectionPanelState.Validated:
+			this.transform.GetChild (0).gameObject.SetActive (true);
 			break;
 		}
-	}
-
-	void ValidatePanel()
-	{
-		this.transform.GetChild (0).gameObject.SetActive (true);
+		#endregion
 	}
 }
