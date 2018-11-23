@@ -12,12 +12,13 @@ public class GrapplingHook : MonoBehaviour {
 	public float distance=10f; // distance of the hook
 	public LayerMask mask;
 	public float step = 0.2f; //speed of retractation
-
-	public bool grappling = true;
+    string playerNumber;
+    public bool grappling = true;
 
 	void Start () {
-		//Disables the line and rendering of the joint
-		joint = GetComponent<DistanceJoint2D> ();
+        playerNumber = GetComponent<PlayerMovement>().playerNumber;
+        //Disables the line and rendering of the joint
+        joint = GetComponent<DistanceJoint2D> ();
 		joint.enabled = false;
 		line.enabled = false;
 	}
@@ -35,12 +36,12 @@ public class GrapplingHook : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown ("Hook")) {
+		if (Input.GetButtonDown ("Hook" + playerNumber)) {
 
 			// get the axis to aim
 			Vector3 inputDirection;
-			inputDirection.x = Input.GetAxis ("Horizontal");
-			inputDirection.y = Input.GetAxis ("Vertical");
+			inputDirection.x = Input.GetAxis ("Horizontal" + playerNumber);
+			inputDirection.y = Input.GetAxis ("Vertical" + playerNumber);
 			inputDirection.z = 0;
 			targetPos = inputDirection;
 			//targetPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -67,11 +68,11 @@ public class GrapplingHook : MonoBehaviour {
 			}
 		}
 			
-		if (Input.GetButton ("Hook")) {
+		if (Input.GetButton ("Hook" + playerNumber)) {
 			line.SetPosition (0, transform.position);
 		}
 
-		if (Input.GetButtonUp ("Hook")) 
+		if (Input.GetButtonUp ("Hook" + playerNumber)) 
 		{
 			joint.enabled = false;
 			line.enabled = false;

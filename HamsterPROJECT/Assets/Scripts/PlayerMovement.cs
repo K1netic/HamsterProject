@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	// Value over which horizontal joystick input will cancel fastFall 
 	[SerializeField] float fastFallHorizontalThreshold = 0.1f;
 
-	[SerializeField] string playerNumber;
+	[SerializeField] public string playerNumber;
 
 	void Start()
 	{
