@@ -20,6 +20,8 @@ public class RandomItem : MonoBehaviour {
     //Répartir les minimums et maximums entre 1 et 100, pour obtenir des %. Par exemple pour la SteelRope, min = 1 et max = 20, elle aura 20% de chance de sortir.
 
     [SerializeField]
+    float repopTime = 10;
+    [SerializeField]
     int minSteelRope;
     [SerializeField]
     int maxSteelRope;
@@ -109,6 +111,8 @@ public class RandomItem : MonoBehaviour {
                 print("ExplosivePoop");
             }
 
+            gameObject.SetActive(false);
+            Invoke("Reactivate", repopTime);
 
             /*switch (random)
             {
@@ -140,5 +144,10 @@ public class RandomItem : MonoBehaviour {
                     break;
             }*/
         }
+    }
+
+    void Reactivate()
+    {
+        gameObject.SetActive(true);
     }
 }
