@@ -12,11 +12,20 @@ public class Inventory : MonoBehaviour {
     public string currentItem;
     bool cdItem;
 
+    //Je vais pour l'instant gérer les stats des objets directement depuis ce script, mais il faudra à la fin créer un script "Equilibrage"
+    // et récupérer les valeurs dans ce script afin d'être sur que tout les joeurs ont les mêmes bonus
+    [SerializeField]
+    float bonusCroquettes;
+    [SerializeField]
+    float timeBonusCroquettes;
+
     string playerNumber;
+    PlayerMovement playerMovementScript;
 
     private void Start()
     {
-        playerNumber = GetComponent<PlayerMovement>().playerNumber;
+        playerMovementScript = GetComponent<PlayerMovement>();
+        playerNumber = playerMovementScript.playerNumber;
     }
 
     // Update is called once per frame
@@ -53,6 +62,8 @@ public class Inventory : MonoBehaviour {
                 case "CocaineCroquettes":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    playerMovementScript.bonusSpeed = bonusCroquettes;
+                    Invoke("ResetCroquettesBonus", timeBonusCroquettes);
                     break;
                 case "ExplosivePoop":
                     print("Player" + playerNumber + " used " + currentItem);
@@ -71,5 +82,10 @@ public class Inventory : MonoBehaviour {
     void ResetCD()
     {
         cdItem = false;
+    }
+
+    void ResetCroquettesBonus()
+    {
+        playerMovementScript.bonusSpeed = 1;
     }
 }

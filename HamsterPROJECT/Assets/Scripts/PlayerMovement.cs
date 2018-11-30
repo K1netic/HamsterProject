@@ -14,9 +14,10 @@ public class PlayerMovement : MonoBehaviour
 	float xVelocity = 0.0f;
     int playerDirection = 1;
 	bool lockMovement = false;
+    public float bonusSpeed = 1;
 
-	//Ground Check
-	bool isGrounded = false;
+    //Ground Check
+    bool isGrounded = false;
 	[SerializeField] float checkRadius = 1.0f;
 	[SerializeField] LayerMask groundLayer;
 
@@ -63,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
             //Input -> start moving
 			if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
             {
-                float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed, ref xVelocity, smoothTime);
+                float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
                 rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
             }
         }
