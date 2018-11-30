@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float bonusSpeed = 1;
 
     //Ground Check
-    bool isGrounded = false;
+    public bool isGrounded = false;
 	[SerializeField] float checkRadius = 1.0f;
 	[SerializeField] LayerMask groundLayer;
 

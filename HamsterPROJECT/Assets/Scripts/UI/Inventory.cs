@@ -18,14 +18,22 @@ public class Inventory : MonoBehaviour {
     float bonusCroquettes;
     [SerializeField]
     float timeBonusCroquettes;
+    [SerializeField]
+    float gravityWithParachute;
+    [SerializeField]
+    float timeWithParachute;
 
     string playerNumber;
     PlayerMovement playerMovementScript;
+    Rigidbody2D playerRigid;
+    float stockGravity;
 
     private void Start()
     {
         playerMovementScript = GetComponent<PlayerMovement>();
+        playerRigid = GetComponent<Rigidbody2D>();
         playerNumber = playerMovementScript.playerNumber;
+        stockGravity = playerRigid.gravityScale;
     }
 
     // Update is called once per frame
@@ -50,6 +58,16 @@ public class Inventory : MonoBehaviour {
                 case "Parachute":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    if (!playerMovementScript.isGrounded)
+                    {
+                        playerRigid.gravityScale = gravityWithParachute;
+                        playerRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+                        Invoke("CloseParachute", timeWithParachute);
+                    }
+                    else
+                    {
+                        //Handle what happen if we open parachute on the ground, I think we should not allow this
+                    }
                     break;
                 case "Shield":
                     print("Player" + playerNumber + " used " + currentItem);
@@ -87,5 +105,11 @@ public class Inventory : MonoBehaviour {
     void ResetCroquettesBonus()
     {
         playerMovementScript.bonusSpeed = 1;
+    }
+
+    void CloseParachute()
+    {
+        playerRigid.gravityScale = stockGravity;
+        playerRigid.constraints &= ~RigidbodyConstraints2D.FreezeRotation;
     }
 }
