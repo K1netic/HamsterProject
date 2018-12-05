@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 50320920458897198}
   - component: {fileID: 58688193637040740}
   - component: {fileID: 114260431746654644}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: P1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4425491925009546}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: FeetPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148263084706142}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: StartRaycastUnderPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hooked: 0
   maxSpeed: 100
+  bonusSpeed: 1
+  isGrounded: 0
   checkRadius: 1
   groundLayer:
     serializedVersion: 2

@@ -7,10 +7,10 @@ public class Projectile : MonoBehaviour {
 	public float speed;
 	private Vector3 direction;
 
-    [HideInInspector]
+    
     public string playerNumber;
 
-    bool hooked;
+    public bool hooked;
 
     void Start(){
         direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
@@ -24,6 +24,7 @@ public class Projectile : MonoBehaviour {
 	void Update () {
         if(!hooked)
 		    transform.position += direction / speed;
+
 	}
 
 	public void Destruction(){
@@ -32,6 +33,14 @@ public class Projectile : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print(collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Hookable"))
+        {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            hooked = true;
+        }
+        else
+        {
+            Destruction();
+        }
     }
 }

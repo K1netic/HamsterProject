@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
 	Rigidbody2D rigid;
 	Transform feetPos;
+    public bool hooked;
 
 	//Movement
     [SerializeField] float maxSpeed = 100;
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     int playerDirection = 1;
 	bool lockMovement = false;
     public float bonusSpeed = 1;
+
+    State currentState;
 
     //Ground Check
     public bool isGrounded = false;
@@ -37,7 +40,8 @@ public class PlayerMovement : MonoBehaviour
 	}
 
     void FixedUpdate()
-    {
+    {      
+
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
 		//Movement Lock
@@ -46,27 +50,42 @@ public class PlayerMovement : MonoBehaviour
 		else
 			lockMovement = false;
 
-		//Movement
-        if (!lockMovement)
-        {
-            //Handling player direction
-			if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 0);
-                playerDirection = 1;
-            }
-			if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 0);
-                playerDirection = -1;
-            }
+        print(currentState);
 
-            //Input -> start moving
-			if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
-            {
-                float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
-                rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
-            }
+        switch (currentState)
+        {
+            case State.grounded:
+                //Movement
+                if (!lockMovement)
+                {
+                    //Handling player direction
+                    if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
+                    {
+                        transform.localScale = new Vector3(1, 1, 0);
+                        playerDirection = 1;
+                    }
+                    if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
+                    {
+                        transform.localScale = new Vector3(-1, 1, 0);
+                        playerDirection = -1;
+                    }
+
+                    //Input -> start moving
+                    if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
+                    {
+                        float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
+                        rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
+                    }
+                }
+                break;
+            case State.hooked:
+                GetComponent<Rigidbody2D>().AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * 25);
+                
+                break;
+            case State.inAir:
+                break;
+            default:
+                break;
         }
 
 		//FastFall
@@ -77,5 +96,15 @@ public class PlayerMovement : MonoBehaviour
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
 		}
+    }
+
+    public void StateHook()
+    {
+        currentState = State.hooked;
+    }
+
+    enum State
+    {
+        grounded, hooked, inAir
     }
 }
