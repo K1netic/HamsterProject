@@ -9,13 +9,21 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
 	[SerializeField] Color activationColor;
+	[SerializeField] Sprite[] charactersSprites;
+	int nbCharactersAvailable;
+	[SerializeField] int characterSelected = 0;
+	 
+	[SerializeField] Image backgroundImg;
+	[SerializeField] Image characterSprite;
 
-	Image img;
+	bool blockStickMovement = false;
 
 	void Start()
 	{
-		img = this.GetComponent<Image> ();
+		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
+
+		nbCharactersAvailable = charactersSprites.Length -1;
 	}
 
 	// Update is called once per frame
@@ -46,17 +54,48 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		switch (state)
 		{
 		case SelectionPanelState.Deactivated:
-			img.color = Color.gray;
+			backgroundImg.color = Color.gray;
+			characterSprite.gameObject.SetActive(false);
 			break;
 		case SelectionPanelState.Activated:
-			img.color = activationColor;
+			backgroundImg.color = activationColor;
 			//Hiding "ready" text
-			this.transform.GetChild (0).gameObject.SetActive (false);
+			this.transform.GetChild (1).gameObject.SetActive (false);
+			//Activate character selection
+			characterSprite.gameObject.SetActive(true);
+			CharacterSelection();
 			break;
 		case SelectionPanelState.Validated:
-			this.transform.GetChild (0).gameObject.SetActive (true);
+			this.transform.GetChild (1).gameObject.SetActive (true);
 			break;
 		}
 		#endregion
 	}
+
+	void CharacterSelection()
+	{
+		if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == 1 && !blockStickMovement)
+		{
+			if (characterSelected < nbCharactersAvailable)
+				characterSelected += 1;
+			else
+				characterSelected = 0;
+			characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + characterSelected.ToString ());
+			blockStickMovement = true;
+		} 
+
+		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == -1 && !blockStickMovement)
+		{
+			if (characterSelected > 0)
+				characterSelected -= 1;
+			else
+				characterSelected = nbCharactersAvailable;
+			characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + characterSelected.ToString ());
+			blockStickMovement = true;
+		} 
+
+		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) < 0.2 && Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) > -0.2)
+			blockStickMovement = false;
+	}
+
 }
