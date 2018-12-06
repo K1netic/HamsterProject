@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
 	Rigidbody2D rigid;
-	Transform feetPos;
+	public Transform feetPos;
     public bool hooked;
 
 	//Movement
@@ -36,21 +36,26 @@ public class PlayerMovement : MonoBehaviour
 	void Start()
 	{
 		rigid = this.GetComponent<Rigidbody2D> ();
-		feetPos = this.transform.GetChild (0).transform;
 	}
 
     void FixedUpdate()
     {      
-
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+
+        if (isGrounded && currentState != State.hooked)
+        {
+            currentState = State.grounded;
+        }
+        else if(currentState != State.hooked)
+        {
+            currentState = State.inAir;
+        }
 
 		//Movement Lock
 		if (isGrounded && Input.GetButton ("Lock" + playerNumber))
 			lockMovement = true;
 		else
 			lockMovement = false;
-
-        print(currentState);
 
         switch (currentState)
         {
@@ -98,9 +103,14 @@ public class PlayerMovement : MonoBehaviour
 		}
     }
 
-    public void StateHook()
+    public void StateHooked()
     {
         currentState = State.hooked;
+    }
+
+    public void StateNotHooked()
+    {
+        currentState = State.inAir;
     }
 
     enum State

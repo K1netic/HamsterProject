@@ -46,18 +46,22 @@ public class Inventory : MonoBehaviour {
                 case "SteelRope":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "PeakBall":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "ExplosiveHook":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "Parachute":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     if (!playerMovementScript.isGrounded)
                     {
                         playerRigid.gravityScale = gravityWithParachute;
@@ -72,20 +76,24 @@ public class Inventory : MonoBehaviour {
                 case "Shield":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "Miracle":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "CocaineCroquettes":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     playerMovementScript.bonusSpeed = bonusCroquettes;
                     Invoke("ResetCroquettesBonus", timeBonusCroquettes);
                     break;
                 case "ExplosivePoop":
                     print("Player" + playerNumber + " used " + currentItem);
                     currentItem = "None";
+                    item.text = "None";
                     break;
                 case "None":
                     print("Player" + playerNumber + " has no item to use");

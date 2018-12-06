@@ -22,9 +22,10 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void Update () {
-        if(!hooked)
-		    transform.position += direction / speed;
-
+        if (!hooked)
+        {
+            transform.position += direction / speed;
+        } 
 	}
 
 	public void Destruction(){

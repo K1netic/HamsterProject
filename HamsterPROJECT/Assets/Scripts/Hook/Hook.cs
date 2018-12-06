@@ -9,6 +9,8 @@ public class Hook : MonoBehaviour {
     public float distanceMax = 10f; // distance of the hook
     bool jointNotCreated = true;
     PlayerMovement playerMovement;
+    public float retractationStep;
+    int layerMask;
 
     //AIM
     public float offset;
@@ -27,6 +29,8 @@ public class Hook : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        layerMask = ~(1 << 8);
+
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
 
@@ -51,16 +55,21 @@ public class Hook : MonoBehaviour {
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
-		
 
-        if(currentProjectile != null)
+        if (currentProjectile != null)
         {
             line.SetPosition(0, player.transform.position);
             line.SetPosition(1, currentProjectile.transform.position);
 
+            if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
+            {
+                currentProjectile.GetComponent<Projectile>().Destruction();
+                line.gameObject.SetActive(false);
+            }
+
             if (currentProjectile.GetComponent<Projectile>().hooked)
             {
-                playerMovement.StateHook();
+                playerMovement.StateHooked();
                 if (jointNotCreated)
                 {
                     joint.enabled = true;
@@ -68,6 +77,28 @@ public class Hook : MonoBehaviour {
                     joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
                     joint.maxDistanceOnly = true;
                     jointNotCreated = false;
+                }
+
+                Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+                RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
+                RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
+                
+                if(Input.GetAxisRaw("LT"+ playerNumber) > 0 && checkToJoint.collider == null)
+                {
+                    joint.distance -= retractationStep;
+                }
+
+                if (Input.GetAxisRaw("RT" + playerNumber) < 0 && checkOppositeToJoint.collider == null)
+                {
+                    if(joint.distance < distanceMax - retractationStep)
+                    {
+                        joint.distance += retractationStep;
+                        joint.maxDistanceOnly = false;
+                    }
+                }
+                else
+                {
+                    joint.maxDistanceOnly = true;
                 }
             }
         }
@@ -78,17 +109,17 @@ public class Hook : MonoBehaviour {
             line.SetPosition(0, player.transform.position);
             currentProjectile = Instantiate(projectile, shotPoint.position, transform.rotation);
             currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
+            line.SetPosition(1, currentProjectile.transform.position);
             hookInCD = true;
             Invoke("ResetHookCD", timeBtwShots);
-            Debug.Log("Shoot");
         }
 
         else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
         {
+            playerMovement.StateNotHooked();
             joint.enabled = false;
             currentProjectile.GetComponent<Projectile>().Destruction();
             line.gameObject.SetActive(false);
-            Debug.Log("Destroy");
             jointNotCreated = true;
         }
     }
