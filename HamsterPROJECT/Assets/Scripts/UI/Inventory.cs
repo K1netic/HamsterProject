@@ -5,22 +5,19 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
 
+    Balancing balanceData;
+
     [SerializeField]
     public Text item;
-    [SerializeField]
-    float timeCDItem = 1f;
-    public string currentItem;
-    bool cdItem;
 
-    //Je vais pour l'instant gérer les stats des objets directement depuis ce script, mais il faudra à la fin créer un script "Equilibrage"
-    // et récupérer les valeurs dans ce script afin d'être sur que tout les joeurs ont les mêmes bonus
-    [SerializeField]
+    bool cdItem;
+    [HideInInspector]
+    public string currentItem;
+
+    float timeCDItem = 1f;
     float bonusCroquettes;
-    [SerializeField]
     float timeBonusCroquettes;
-    [SerializeField]
     float gravityWithParachute;
-    [SerializeField]
     float timeWithParachute;
 
     string playerNumber;
@@ -30,6 +27,15 @@ public class Inventory : MonoBehaviour {
 
     private void Start()
     {
+        //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
+        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+
+        timeCDItem = balanceData.timeCDItem;
+        bonusCroquettes = balanceData.bonusCroquettes;
+        timeBonusCroquettes = balanceData.timeBonusCroquettes;
+        gravityWithParachute = balanceData.gravityWithParachute;
+        timeWithParachute = balanceData.timeWithParachute;
+
         playerMovementScript = GetComponent<PlayerMovement>();
         playerRigid = GetComponent<Rigidbody2D>();
         playerNumber = playerMovementScript.playerNumber;

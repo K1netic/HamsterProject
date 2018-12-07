@@ -5,37 +5,52 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    Balancing balanceData;
+
 	Rigidbody2D rigid;
 	public Transform feetPos;
+    [HideInInspector]
     public bool hooked;
 
 	//Movement
-    [SerializeField] float maxSpeed = 100;
+    float maxSpeed = 100;
 	float smoothTime = 0.3f;
 	float xVelocity = 0.0f;
     int playerDirection = 1;
 	bool lockMovement = false;
+    [HideInInspector]
     public float bonusSpeed = 1;
 
     State currentState;
 
     //Ground Check
+    [HideInInspector]
     public bool isGrounded = false;
-	[SerializeField] float checkRadius = 1.0f;
-	[SerializeField] LayerMask groundLayer;
+	float checkRadius = 1.0f;
+	LayerMask groundLayer;
 
 	//Fast Fall
-	[SerializeField] float fastFallSpeed = 200;
+	float fastFallSpeed = 200;
 	// Value under which vertical joystick input will trigger fastFall
-	[SerializeField] float fastFallVerticalThreshold = - 0.5f;
+	float fastFallVerticalThreshold = - 0.5f;
 	// Value over which horizontal joystick input will cancel fastFall 
-	[SerializeField] float fastFallHorizontalThreshold = 0.1f;
+	float fastFallHorizontalThreshold = 0.1f;
 
 	[SerializeField] public string playerNumber;
 
 	void Start()
 	{
-		rigid = this.GetComponent<Rigidbody2D> ();
+        //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
+        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+
+        maxSpeed = balanceData.maxSpeedPlayer;
+        checkRadius = balanceData.checkRadius;
+        groundLayer = balanceData.groundLayer;
+        fastFallSpeed = balanceData.fastFallSpeed;
+        fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
+        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;
+
+        rigid = this.GetComponent<Rigidbody2D> ();
 	}
 
     void FixedUpdate()

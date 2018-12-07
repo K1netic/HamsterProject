@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1125123527889812}
+  m_IsPrefabAsset: 1
+--- !u!1 &1125123527889812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4229037337806844}
+  - component: {fileID: 114934012383551894}
+  m_Layer: 0
+  m_Name: Balancing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4229037337806844
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125123527889812}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.9137814, y: -1.0416796, z: 1.875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114934012383551894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125123527889812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23b3c803d3e4564aa526e0286e2bad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeCDItem: 1
+  bonusCroquettes: 2
+  timeBonusCroquettes: 3
+  gravityWithParachute: 0.5
+  timeWithParachute: 3
+  speedHookhead: 2
+  distanceMaxHook: 15
+  retractationStep: 0.25
+  offsetHook: 0
+  projectile: {fileID: 1645695988748404, guid: 6f95656305c549a49809775e75ab9309, type: 2}
+  timeBtwShots: 0.3
+  maxSpeedPlayer: 100
+  checkRadius: 1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  fastFallSpeed: 200
+  fastFallVerticalThreshold: -0.5
+  fastFallHorizontalThreshold: 0.1
