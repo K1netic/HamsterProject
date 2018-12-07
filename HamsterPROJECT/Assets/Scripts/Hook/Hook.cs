@@ -83,12 +83,12 @@ public class Hook : MonoBehaviour {
                 RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
                 RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
                 
-                if(Input.GetAxisRaw("LT"+ playerNumber) > 0 && checkToJoint.collider == null)
+                if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
                 }
 
-                if (Input.GetAxisRaw("RT" + playerNumber) < 0 && checkOppositeToJoint.collider == null)
+                if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
                 {
                     if(joint.distance < distanceMax - retractationStep)
                     {
@@ -109,13 +109,15 @@ public class Hook : MonoBehaviour {
             line.SetPosition(0, player.transform.position);
             currentProjectile = Instantiate(projectile, shotPoint.position, transform.rotation);
             currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
+            currentProjectile.GetComponent<Projectile>().line = line;
             line.SetPosition(1, currentProjectile.transform.position);
             hookInCD = true;
-            Invoke("ResetHookCD", timeBtwShots);
+            
         }
 
         else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
         {
+            Invoke("ResetHookCD", timeBtwShots);
             playerMovement.StateNotHooked();
             joint.enabled = false;
             currentProjectile.GetComponent<Projectile>().Destruction();

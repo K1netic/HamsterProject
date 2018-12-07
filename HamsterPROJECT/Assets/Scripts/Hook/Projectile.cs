@@ -7,12 +7,13 @@ public class Projectile : MonoBehaviour {
 	public float speed;
 	private Vector3 direction;
 
-    
+    public LineRenderer line;
     public string playerNumber;
 
     public bool hooked;
 
     void Start(){
+        line.enabled = true;
         direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
@@ -34,14 +35,23 @@ public class Projectile : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Hookable"))
+        if (!hooked)
         {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            hooked = true;
-        }
-        else
-        {
-            Destruction();
+            if (collision.gameObject.CompareTag("Hookable"))
+            {
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                hooked = true;
+            }
+            else
+            {
+                line.enabled = false;
+                Destruction();
+            }
+
+            if (collision.gameObject.CompareTag("Player"))
+            {
+
+            }
         }
     }
 }
