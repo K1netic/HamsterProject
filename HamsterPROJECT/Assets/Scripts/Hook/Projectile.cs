@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
-	public float speed;
+    Balancing balanceData;
+
+    float speed;
 	private Vector3 direction;
 
+    [HideInInspector]
     public LineRenderer line;
+    [HideInInspector]
     public string playerNumber;
-
+    [HideInInspector]
     public bool hooked;
 
     void Start(){
+        //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
+        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+
+        speed = balanceData.speedHookhead;
+
         line.enabled = true;
         direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;

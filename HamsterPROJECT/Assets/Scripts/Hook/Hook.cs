@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour {
 
+    Balancing balanceData;
+
     //JOINT
     DistanceJoint2D joint;
-    public float distanceMax = 10f; // distance of the hook
+    float distanceMax; // distance of the hook
     bool jointNotCreated = true;
     PlayerMovement playerMovement;
-    public float retractationStep;
+    float retractationStep;
     int layerMask;
 
     //AIM
-    public float offset;
+    float offset;
 	public GameObject player;
 	private Vector2 screenPoint;
     private LineRenderer line;
 
 	//SHOT
-	public GameObject projectile;
+	GameObject projectile;
 	public Transform shotPoint;
-	public float timeBtwShots = 1;
+    float timeBtwShots;
     private bool hookInCD;
     GameObject currentProjectile;
     string playerNumber;
@@ -29,6 +31,15 @@ public class Hook : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
+        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+
+        distanceMax = balanceData.distanceMaxHook;
+        retractationStep = balanceData.retractationStep;
+        offset = balanceData.offsetHook;
+        projectile = balanceData.projectile;
+        timeBtwShots = balanceData.timeBtwShots;
+
         layerMask = ~(1 << 8);
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
@@ -63,6 +74,7 @@ public class Hook : MonoBehaviour {
 
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
+                Invoke("ResetHookCD", timeBtwShots);
                 currentProjectile.GetComponent<Projectile>().Destruction();
                 line.gameObject.SetActive(false);
             }
