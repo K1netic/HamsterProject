@@ -24,7 +24,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			foreach (PlayerSelectionPanel pan in panels)
 			{
 				if (pan.state == PlayerSelectionPanel.SelectionPanelState.Validated)
-					readyCount ++;
+					readyCount++;
 			}
 			//...then the game can start
 			if (readyCount >= 2)
@@ -33,15 +33,30 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				ready = false;
 			
 			checkPanels = true;
-		}
-		else 
+		} 
+		else
 		{
 			readyText.SetActive (true);
 			//Load Map Selection Screen when all players are ready and P1 presses A
-			if (Input.GetButton("Submit_P1"))
+			if (Input.GetButton ("Submit_P1"))
 			{
+				PlayerInfos ();
 				SceneManager.LoadScene (sceneToLoad);
 			} 
+		}
+	}
+
+	// Writing playerInfos in the GameManager
+	void PlayerInfos()
+	{
+		//Player 1 -> PlayerSelectionPanel 
+		for (int i = 0; i < panels.Length; i++)
+		{
+			if (panels [i].state == PlayerSelectionPanel.SelectionPanelState.Validated)
+			{
+				GameManager.playersActive [i] = true;
+				GameManager.playersSprites [i] = panels [i].characterSelected;
+			}
 		}
 	}
 }

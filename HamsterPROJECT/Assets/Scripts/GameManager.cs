@@ -18,14 +18,18 @@ public class GameManager : MonoBehaviour {
 			return instance;
 		}
 	}
-
-	//Players
-	List<GameObject> playersActive;
+		
+	public static bool[] playersActive = new bool[4];
+	public static int[] playersSprites = new int[4];
 
 	void Awake()
 	{
 		// Don't destroy the game manager when reloading/changing scene
 		DontDestroyOnLoad (gameObject);
+		playersActive.SetValue (false, 0);
+		playersActive.SetValue (false, 1);
+		playersActive.SetValue (false, 2);
+		playersActive.SetValue (false, 3);
 	}
 		
 }
