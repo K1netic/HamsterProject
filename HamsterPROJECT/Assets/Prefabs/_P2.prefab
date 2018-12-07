@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 58770085993319782}
   - component: {fileID: 114723513862862120}
   - component: {fileID: 114877174795113960}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: P2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1484734949075630}
+  projectile: {fileID: 1645695988748404, guid: 4c65cab67fc67524a9f02df0d06f9066, type: 2}
   shotPoint: {fileID: 4812420854639678}
 --- !u!114 &114723513862862120
 MonoBehaviour:
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeText: {fileID: 114517237567207530, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   feetPos: {fileID: 4933425335507058}
   hooked: 0
   bonusSpeed: 1

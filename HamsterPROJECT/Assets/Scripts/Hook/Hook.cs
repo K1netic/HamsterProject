@@ -18,9 +18,10 @@ public class Hook : MonoBehaviour {
     float offset;
 	public GameObject player;
 	private Vector2 screenPoint;
-    private LineRenderer line;
+    public LineRenderer line;
 
 	//SHOT
+    [SerializeField]
 	GameObject projectile;
 	public Transform shotPoint;
     float timeBtwShots;
@@ -37,10 +38,25 @@ public class Hook : MonoBehaviour {
         distanceMax = balanceData.distanceMaxHook;
         retractationStep = balanceData.retractationStep;
         offset = balanceData.offsetHook;
-        projectile = balanceData.projectile;
         timeBtwShots = balanceData.timeBtwShots;
 
-        layerMask = ~(1 << 8);
+        switch (gameObject.layer)
+        {
+            case 12:
+                layerMask = ~(1 << 8);
+                break;
+            case 13:
+                layerMask = ~(1 << 9);
+                break;
+            case 14:
+                layerMask = ~(1 << 10);
+                break;
+            case 15:
+                layerMask = ~(1 << 11);
+                break;
+            default:
+                break;
+        }
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -74,7 +90,7 @@ public class Hook : MonoBehaviour {
 
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
-                Invoke("ResetHookCD", timeBtwShots);
+                StartCoroutine("ResetHookCD");
                 currentProjectile.GetComponent<Projectile>().Destruction();
                 line.gameObject.SetActive(false);
             }
@@ -121,7 +137,7 @@ public class Hook : MonoBehaviour {
             line.SetPosition(0, player.transform.position);
             currentProjectile = Instantiate(projectile, shotPoint.position, transform.rotation);
             currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
-            currentProjectile.GetComponent<Projectile>().line = line;
+            currentProjectile.GetComponent<Projectile>().hook = this;
             line.SetPosition(1, currentProjectile.transform.position);
             hookInCD = true;
             
@@ -129,7 +145,7 @@ public class Hook : MonoBehaviour {
 
         else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
         {
-            Invoke("ResetHookCD", timeBtwShots);
+            StartCoroutine("ResetHookCD");
             playerMovement.StateNotHooked();
             joint.enabled = false;
             currentProjectile.GetComponent<Projectile>().Destruction();
@@ -138,8 +154,9 @@ public class Hook : MonoBehaviour {
         }
     }
 
-    void ResetHookCD()
+    public IEnumerator ResetHookCD()
     {
+        yield return new WaitForSeconds(timeBtwShots);
         hookInCD = false;
     }
 }

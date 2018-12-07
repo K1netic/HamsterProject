@@ -10,11 +10,11 @@ public class Projectile : MonoBehaviour {
 	private Vector3 direction;
 
     [HideInInspector]
-    public LineRenderer line;
-    [HideInInspector]
     public string playerNumber;
     [HideInInspector]
     public bool hooked;
+    [HideInInspector]
+    public Hook hook;
 
     void Start(){
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -22,7 +22,6 @@ public class Projectile : MonoBehaviour {
 
         speed = balanceData.speedHookhead;
 
-        line.enabled = true;
         direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
@@ -39,13 +38,22 @@ public class Projectile : MonoBehaviour {
 	}
 
 	public void Destruction(){
-		Destroy (gameObject);
+        if (hook.line.gameObject.activeSelf)
+        {
+            hook.line.gameObject.SetActive(false);
+        }
+        StartCoroutine(hook.ResetHookCD());
+        Destroy (gameObject);
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!hooked)
         {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                Destruction();
+            }
             if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -53,13 +61,7 @@ public class Projectile : MonoBehaviour {
             }
             else
             {
-                line.enabled = false;
                 Destruction();
-            }
-
-            if (collision.gameObject.CompareTag("Player"))
-            {
-
             }
         }
     }

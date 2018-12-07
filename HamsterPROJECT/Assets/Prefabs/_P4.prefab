@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 58898942173662076}
   - component: {fileID: 114217734810265896}
   - component: {fileID: 114600468513634708}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: P4
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1898001362695730}
+  projectile: {fileID: 1645695988748404, guid: e9950001e0803d046a53186f5db1cbfe, type: 2}
   shotPoint: {fileID: 4780168162314610}
 --- !u!114 &114217734810265896
 MonoBehaviour:
@@ -222,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeText: {fileID: 114771877720023196, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   feetPos: {fileID: 4538943984620814}
   hooked: 0
   bonusSpeed: 1

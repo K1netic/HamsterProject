@@ -16,7 +16,6 @@ public class Balancing : MonoBehaviour {
     public float distanceMaxHook = 15f;
     public float retractationStep;
     public float offsetHook;
-    public GameObject projectile;
     public float timeBtwShots;
 
     //MOVEMENT
@@ -26,4 +25,7 @@ public class Balancing : MonoBehaviour {
     public float fastFallSpeed = 200;
     public float fastFallVerticalThreshold = -0.5f;
     public float fastFallHorizontalThreshold = 0.1f;
+
+    //PLAYER
+    public int playerMaxHP = 5;
 }
