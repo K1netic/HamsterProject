@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1135654829988272}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17670321, y: -0.63994026, z: 0.9115491}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4740719657198494}
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1193887155682720}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.483297, y: 11.170059, z: 0.9115491}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4780168162314610}
@@ -128,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426465713960588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.22, y: 9.3, z: 0.08845088}
+  m_LocalPosition: {x: 0.21, y: 12.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4835024907412014}
@@ -157,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1898001362695730}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.321804, y: 2.9202127, z: 0.9115491}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4740719657198494}
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1898001362695730}
+  line: {fileID: 0}
   projectile: {fileID: 1645695988748404, guid: e9950001e0803d046a53186f5db1cbfe, type: 2}
   shotPoint: {fileID: 4780168162314610}
 --- !u!114 &114217734810265896
@@ -252,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 114859413149584370, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+  item: {fileID: 0}
   currentItem: 
 --- !u!212 &212334848804816112
 SpriteRenderer:
