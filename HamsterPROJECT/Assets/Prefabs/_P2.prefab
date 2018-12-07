@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 58770085993319782}
   - component: {fileID: 114723513862862120}
   - component: {fileID: 114877174795113960}
+  - component: {fileID: 114009405070246460}
   m_Layer: 9
   m_Name: P2
   m_TagString: Player
@@ -198,6 +199,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114009405070246460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1484734949075630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeText: {fileID: 114517237567207530, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
 --- !u!114 &114342300618671746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -236,7 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeText: {fileID: 114517237567207530, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   feetPos: {fileID: 4933425335507058}
   hooked: 0
   bonusSpeed: 1
@@ -253,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 114744819045376532, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   currentItem: 
 --- !u!212 &212712153489027198
 SpriteRenderer:

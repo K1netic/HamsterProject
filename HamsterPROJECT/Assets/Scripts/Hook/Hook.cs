@@ -91,7 +91,7 @@ public class Hook : MonoBehaviour {
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
                 StartCoroutine("ResetHookCD");
-                currentProjectile.GetComponent<Projectile>().Destruction();
+                currentProjectile.GetComponent<Projectile>().End();
                 line.gameObject.SetActive(false);
             }
 
@@ -148,7 +148,7 @@ public class Hook : MonoBehaviour {
             StartCoroutine("ResetHookCD");
             playerMovement.StateNotHooked();
             joint.enabled = false;
-            currentProjectile.GetComponent<Projectile>().Destruction();
+            currentProjectile.GetComponent<Projectile>().End();
             line.gameObject.SetActive(false);
             jointNotCreated = true;
         }

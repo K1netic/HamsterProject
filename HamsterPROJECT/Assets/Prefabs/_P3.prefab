@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 58982714316748332}
   - component: {fileID: 114702727666493784}
   - component: {fileID: 114487518868658880}
+  - component: {fileID: 114958149911375588}
   m_Layer: 10
   m_Name: P3
   m_TagString: Player
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 114212173951317716, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   currentItem: 
 --- !u!114 &114702727666493784
 MonoBehaviour:
@@ -237,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeText: {fileID: 114272887018689908, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   feetPos: {fileID: 4655447459034628}
   hooked: 0
   bonusSpeed: 1
@@ -255,6 +255,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1706271482531144}
+--- !u!114 &114958149911375588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1706271482531144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeText: {fileID: 114272887018689908, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
 --- !u!212 &212506469334338006
 SpriteRenderer:
   m_ObjectHideFlags: 1

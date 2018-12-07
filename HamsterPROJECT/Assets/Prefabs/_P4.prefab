@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 58898942173662076}
   - component: {fileID: 114217734810265896}
   - component: {fileID: 114600468513634708}
+  - component: {fileID: 114254027481778956}
   m_Layer: 11
   m_Name: P4
   m_TagString: Player
@@ -224,12 +225,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeText: {fileID: 114771877720023196, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   feetPos: {fileID: 4538943984620814}
   hooked: 0
   bonusSpeed: 1
   isGrounded: 0
   playerNumber: _P3
+--- !u!114 &114254027481778956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1898001362695730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeText: {fileID: 114771877720023196, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
 --- !u!114 &114561648134266388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
+  item: {fileID: 114859413149584370, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   currentItem: 
 --- !u!212 &212334848804816112
 SpriteRenderer:

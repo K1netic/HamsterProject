@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     Balancing balanceData;
-
-    [SerializeField]
-    Text lifeText;
-    int playerHP;
 
 	Rigidbody2D rigid;
 	public Transform feetPos;
@@ -53,21 +48,13 @@ public class PlayerMovement : MonoBehaviour
         groundLayer = balanceData.groundLayer;
         fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
-        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;
-        playerHP = balanceData.playerMaxHP;
+        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;        
 
         rigid = this.GetComponent<Rigidbody2D> ();
-
-        UpdateLifeUI();
     }
 
     void FixedUpdate()
     {      
-        if(playerHP <= 0)
-        {
-            Dead();
-        }
-
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
         if (isGrounded && currentState != State.hooked)
@@ -144,21 +131,5 @@ public class PlayerMovement : MonoBehaviour
     enum State
     {
         grounded, hooked, inAir
-    }
-
-    public void TakeDamage(int damage)
-    {
-        playerHP -= damage;
-        UpdateLifeUI();
-    }
-
-    void UpdateLifeUI()
-    {
-        lifeText.text = "Current HP : " + playerHP;
-    }
-
-    void Dead()
-    {
-        Destroy(transform.parent.gameObject);
     }
 }

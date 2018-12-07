@@ -37,13 +37,15 @@ public class Projectile : MonoBehaviour {
         } 
 	}
 
-	public void Destruction(){
+	void Destruction(){
         if (hook.line.gameObject.activeSelf)
         {
             hook.line.gameObject.SetActive(false);
         }
         StartCoroutine(hook.ResetHookCD());
-        Destroy (gameObject);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        Invoke("End",balanceData.timeBtwShots+1);
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -52,6 +54,7 @@ public class Projectile : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(1);
                 Destruction();
             }
             if (collision.gameObject.CompareTag("Hookable"))
@@ -64,5 +67,10 @@ public class Projectile : MonoBehaviour {
                 Destruction();
             }
         }
+    }
+
+    public void End()
+    {
+        Destroy(gameObject);
     }
 }
