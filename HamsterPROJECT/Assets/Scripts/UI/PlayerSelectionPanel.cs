@@ -11,7 +11,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	[SerializeField] Color activationColor;
 	[SerializeField] Sprite[] charactersSprites;
 	int nbCharactersAvailable;
-	[SerializeField] int characterSelected = 0;
+	[SerializeField] public int characterSelected = 0;
 	 
 	[SerializeField] Image backgroundImg;
 	[SerializeField] Image characterSprite;
@@ -58,7 +58,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			characterSprite.gameObject.SetActive(false);
 			break;
 		case SelectionPanelState.Activated:
-			backgroundImg.color = activationColor;
+			characterSprite.color = Color.white;
 			//Hiding "ready" text
 			this.transform.GetChild (1).gameObject.SetActive (false);
 			//Activate character selection
@@ -66,6 +66,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			CharacterSelection();
 			break;
 		case SelectionPanelState.Validated:
+			characterSprite.color = activationColor;
 			this.transform.GetChild (1).gameObject.SetActive (true);
 			break;
 		}
