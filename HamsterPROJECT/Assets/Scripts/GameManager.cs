@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	private static GameManager _instance;
+	private static GameManager instance;
 
 	public static GameManager Instance
 	{
 		get
 		{
-			if (_instance == null)
+			if (instance == null)
 			{
-				_instance = GameObject.FindObjectOfType<GameManager> ();
+				instance = GameObject.FindObjectOfType<GameManager> ();
 			}
 
-			return _instance;
+			return instance;
 		}
 	}
 
 	//Players
 	List<GameObject> playersActive;
-
 
 	void Awake()
 	{
