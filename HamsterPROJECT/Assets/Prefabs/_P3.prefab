@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4634265623104226}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: ShotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4972879546902584}
   - component: {fileID: 212506469334338006}
   - component: {fileID: 114270428737713064}
-  m_Layer: 9
+  m_Layer: 14
   m_Name: Arrow_P3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,6 +74,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1509687485872600
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4714672270863996}
+  - component: {fileID: 114468721906803714}
+  m_Layer: 8
+  m_Name: DirectionOnHook
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1706271482531144
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +120,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4714672270863996}
   m_Father: {fileID: 4419957033517388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490937746107604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalPosition: {x: -24.2, y: -12.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4127010833782516}
@@ -149,6 +166,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4419957033517388}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4714672270863996
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1509687485872600}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 24.490002, y: 2.2600002, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4127010833782516}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4972879546902584
 Transform:
@@ -214,6 +244,18 @@ MonoBehaviour:
   line: {fileID: 0}
   projectile: {fileID: 1645695988748404, guid: 9c6de93432523d24596b4d011cef3a3c, type: 2}
   shotPoint: {fileID: 4634265623104226}
+  currentProjectile: {fileID: 0}
+--- !u!114 &114468721906803714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1509687485872600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d0f78fb41df23c43ba1c3ad94eab633, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114487518868658880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,7 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 114212173951317716, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+  item: {fileID: 0}
   currentItem: 
 --- !u!114 &114702727666493784
 MonoBehaviour:
@@ -241,6 +283,7 @@ MonoBehaviour:
   feetPos: {fileID: 4655447459034628}
   hooked: 0
   bonusSpeed: 1
+  childRedAxis: {x: 0, y: 0, z: 0}
   isGrounded: 0
   playerNumber: _P3
 --- !u!114 &114742738643429540
@@ -266,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeText: {fileID: 114272887018689908, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+  lifeText: {fileID: 0}
 --- !u!212 &212506469334338006
 SpriteRenderer:
   m_ObjectHideFlags: 1

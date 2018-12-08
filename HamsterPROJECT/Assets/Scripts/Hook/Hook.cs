@@ -18,6 +18,7 @@ public class Hook : MonoBehaviour {
     float offset;
 	public GameObject player;
 	private Vector2 screenPoint;
+    [HideInInspector]
     public LineRenderer line;
 
 	//SHOT
@@ -26,12 +27,18 @@ public class Hook : MonoBehaviour {
 	public Transform shotPoint;
     float timeBtwShots;
     private bool hookInCD;
-    GameObject currentProjectile;
+    [HideInInspector]
+    public GameObject currentProjectile;
     string playerNumber;
 
+    private void Awake()
+    {
+        joint = player.AddComponent<DistanceJoint2D>();
+        joint.enabled = false;
+    }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
@@ -60,9 +67,6 @@ public class Hook : MonoBehaviour {
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
-
-        joint = player.AddComponent<DistanceJoint2D>();
-        joint.enabled = false;
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
@@ -110,7 +114,7 @@ public class Hook : MonoBehaviour {
                 Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
                 RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
                 RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
-                
+
                 if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
@@ -118,7 +122,7 @@ public class Hook : MonoBehaviour {
 
                 if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
                 {
-                    if(joint.distance < distanceMax - retractationStep)
+                    if (joint.distance < distanceMax - retractationStep)
                     {
                         joint.distance += retractationStep;
                         joint.maxDistanceOnly = false;
@@ -127,7 +131,7 @@ public class Hook : MonoBehaviour {
                 else
                 {
                     joint.maxDistanceOnly = true;
-                }
+                }   
             }
         }
 

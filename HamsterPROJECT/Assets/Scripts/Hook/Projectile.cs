@@ -7,7 +7,9 @@ public class Projectile : MonoBehaviour {
     Balancing balanceData;
 
     float speed;
-	private Vector3 direction;
+	Vector3 direction;
+    int hookheadDamage;
+    Rigidbody2D rigid;
 
     [HideInInspector]
     public string playerNumber;
@@ -21,7 +23,9 @@ public class Projectile : MonoBehaviour {
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
         speed = balanceData.speedHookhead;
+        hookheadDamage = balanceData.hookheadDamage;
 
+        rigid = GetComponent<Rigidbody2D>();
         direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
@@ -33,7 +37,7 @@ public class Projectile : MonoBehaviour {
 	void Update () {
         if (!hooked)
         {
-            transform.position += direction / speed;
+            rigid.AddForce(direction / speed);
         } 
 	}
 
@@ -54,7 +58,7 @@ public class Projectile : MonoBehaviour {
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(1);
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage);
                 Destruction();
             }
             if (collision.gameObject.CompareTag("Hookable"))

@@ -20,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
 	bool lockMovement = false;
     [HideInInspector]
     public float bonusSpeed = 1;
+    [HideInInspector]
+    public Vector3 childRedAxis;
+    float airControlForce;
+    float hookMovementForce;
 
     State currentState;
 
@@ -43,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
+        hookMovementForce = balanceData.hookMovementForce;
+        airControlForce = balanceData.airControlForce;
         maxSpeed = balanceData.maxSpeedPlayer;
         checkRadius = balanceData.checkRadius;
         groundLayer = balanceData.groundLayer;
@@ -54,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate()
-    {      
+    {
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
         if (isGrounded && currentState != State.hooked)
@@ -99,19 +105,24 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case State.hooked:
-                GetComponent<Rigidbody2D>().AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * 25);
+                //rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * 25);
+
+                rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
                 
                 break;
             case State.inAir:
+                rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
                 break;
             default:
                 break;
         }
 
-		//FastFall
-		if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
-			&& !isGrounded
-			&& Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNumber)) < fastFallHorizontalThreshold)
+        //FastFall
+        if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
+            && !isGrounded
+            && Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNumber)) < fastFallHorizontalThreshold
+            && currentState == State.inAir
+            )
 		{
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);

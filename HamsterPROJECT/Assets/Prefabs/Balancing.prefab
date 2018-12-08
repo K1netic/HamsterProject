@@ -56,7 +56,7 @@ MonoBehaviour:
   timeBonusCroquettes: 3
   gravityWithParachute: 0.5
   timeWithParachute: 3
-  speedHookhead: 2
+  speedHookhead: 100
   distanceMaxHook: 15
   retractationStep: 0.25
   offsetHook: 0
@@ -69,4 +69,7 @@ MonoBehaviour:
   fastFallSpeed: 200
   fastFallVerticalThreshold: -0.5
   fastFallHorizontalThreshold: 0.1
+  airControlForce: 10
+  hookMovementForce: 45
   playerMaxHP: 5
+  hookheadDamage: 1
