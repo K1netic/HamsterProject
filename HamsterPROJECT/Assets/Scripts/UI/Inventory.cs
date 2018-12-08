@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour {
                     item.text = "None";
                     if (!playerMovementScript.isGrounded)
                     {
-                        playerRigid.gravityScale = gravityWithParachute;
+                        playerRigid.gravityScale /= gravityWithParachute;
                         playerRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
                         Invoke("CloseParachute", timeWithParachute);
                     }

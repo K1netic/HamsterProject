@@ -105,10 +105,12 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case State.hooked:
-                //rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * 25);
+                //rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * hookMovementForce);
 
                 rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
-                
+
+                //rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+               
                 break;
             case State.inAir:
                 rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);

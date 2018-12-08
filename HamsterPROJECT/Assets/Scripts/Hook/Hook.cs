@@ -104,6 +104,7 @@ public class Hook : MonoBehaviour {
                 playerMovement.StateHooked();
                 if (jointNotCreated)
                 {
+                    player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                     joint.enabled = true;
                     joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
                     joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
@@ -114,6 +115,8 @@ public class Hook : MonoBehaviour {
                 Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
                 RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
                 RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
+
+                Debug.DrawRay(player.transform.position, jointDirection, Color.red, 5);
 
                 if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
@@ -151,6 +154,7 @@ public class Hook : MonoBehaviour {
         {
             StartCoroutine("ResetHookCD");
             playerMovement.StateNotHooked();
+            player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
             joint.enabled = false;
             currentProjectile.GetComponent<Projectile>().End();
             line.gameObject.SetActive(false);
