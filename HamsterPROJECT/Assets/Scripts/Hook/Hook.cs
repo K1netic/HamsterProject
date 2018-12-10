@@ -13,6 +13,8 @@ public class Hook : MonoBehaviour {
     PlayerMovement playerMovement;
     float retractationStep;
     int layerMask;
+	float TimeHooked;
+	float TimeRemaining;
 
     //AIM
     float offset;
@@ -35,6 +37,10 @@ public class Hook : MonoBehaviour {
     float knockBackTime;
     float knockBackForce;
 
+	//COLOR
+	Color colorRope;
+	float t;
+
     private void Awake()
     {
         joint = player.AddComponent<DistanceJoint2D>();
@@ -46,6 +52,7 @@ public class Hook : MonoBehaviour {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
+		TimeHooked = balanceData.TimeHooked;
         distanceMax = balanceData.distanceMaxHook;
         retractationStep = balanceData.retractationStep;
         offset = balanceData.offsetHook;
@@ -74,13 +81,16 @@ public class Hook : MonoBehaviour {
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
 
+		colorRope = projectile.GetComponent<SpriteRenderer> ().color;
+
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
         line.startWidth = .05f;// la largeur de la ligne
         line.endWidth = .05f;
         line.gameObject.SetActive(false);// désactive la ligne
-        line.startColor = Color.black;
-        line.endColor = Color.black;
+		line.startColor = colorRope;
+		line.endColor = colorRope;
+		line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
     }
 	
@@ -111,6 +121,7 @@ public class Hook : MonoBehaviour {
                 
                 if (jointNotCreated)
                 {
+					t = 0;
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
                     joint.enabled = true;
                     joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
@@ -118,6 +129,26 @@ public class Hook : MonoBehaviour {
                     joint.maxDistanceOnly = true;
                     jointNotCreated = false;
                 }
+
+				TimeRemaining -= Time.deltaTime;
+				t += Time.deltaTime / TimeRemaining;
+				line.startColor = Color.Lerp(colorRope, Color.black,t);
+				line.endColor = Color.Lerp(colorRope, Color.black,t);
+
+				if (TimeRemaining <= 0) 
+				{
+					StartCoroutine("ResetHookCD");
+					playerMovement.StateNotHooked();
+					player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
+					joint.enabled = false;
+					currentProjectile.GetComponent<Projectile>().End();
+					line.gameObject.SetActive(false);
+					jointNotCreated = true;
+					TimeRemaining = TimeHooked;
+					line.startColor = colorRope;
+					line.endColor = colorRope;
+				}
+
 
                 Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
 
@@ -169,6 +200,9 @@ public class Hook : MonoBehaviour {
             currentProjectile.GetComponent<Projectile>().End();
             line.gameObject.SetActive(false);
             jointNotCreated = true;
+			TimeRemaining = TimeHooked;
+			line.startColor = colorRope;
+			line.endColor = colorRope;
         }
     }
 
