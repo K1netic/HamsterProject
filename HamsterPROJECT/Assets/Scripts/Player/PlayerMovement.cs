@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     Balancing balanceData;
 
-	Rigidbody2D rigid;
+    [HideInInspector]
+	public Rigidbody2D rigid;
 	public Transform feetPos;
     [HideInInspector]
     public bool hooked;
@@ -19,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
 	float smoothTime = 0.3f;
 	float xVelocity = 0.0f;
     int playerDirection = 1;
+    [HideInInspector]
+    public bool lockMovementKnockBack;
 	bool lockMovement = false;
     [HideInInspector]
     public float bonusSpeed = 1;
-    [HideInInspector]
-    public Vector3 childRedAxis;
+    /*[HideInInspector]
+    public Vector3 childRedAxis;*/
     float airControlForce;
     float hookMovementForce;
 
@@ -36,11 +39,11 @@ public class PlayerMovement : MonoBehaviour
 	LayerMask groundLayer;
 
 	//Fast Fall
-	float fastFallSpeed = 200;
+	/*float fastFallSpeed = 200;
 	// Value under which vertical joystick input will trigger fastFall
 	float fastFallVerticalThreshold = - 0.5f;
 	// Value over which horizontal joystick input will cancel fastFall 
-	float fastFallHorizontalThreshold = 0.1f;
+	float fastFallHorizontalThreshold = 0.1f;*/
 
 	[SerializeField] public string playerNumber;
 
@@ -54,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
         maxSpeed = balanceData.maxSpeedPlayer;
         checkRadius = balanceData.checkRadius;
         groundLayer = balanceData.groundLayer;
-        fastFallSpeed = balanceData.fastFallSpeed;
+        /*fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
-        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;        
+        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */      
 
         rigid = this.GetComponent<Rigidbody2D> ();
     }
@@ -84,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case State.grounded:
                 //Movement
-                if (!lockMovement)
+                if (!lockMovement && !lockMovementKnockBack)
                 {
                     //Handling player direction
                     if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
@@ -168,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //FastFall
-        if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
+        /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
             && !isGrounded
             && Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNumber)) < fastFallHorizontalThreshold
             && currentState == State.inAir
@@ -176,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
-		}
+		}*/
     }
 
     public void StateHooked()

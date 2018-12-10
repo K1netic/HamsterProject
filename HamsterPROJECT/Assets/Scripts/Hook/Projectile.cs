@@ -66,10 +66,10 @@ public class Projectile : MonoBehaviour {
             
             if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage);
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
             }
-            if (collision.gameObject.CompareTag("Hookable"))
+            else if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 hooked = true;
