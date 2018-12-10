@@ -31,6 +31,10 @@ public class Hook : MonoBehaviour {
     public GameObject currentProjectile;
     string playerNumber;
 
+    //ARROW 
+    float knockBackTime;
+    float knockBackForce;
+
     private void Awake()
     {
         joint = player.AddComponent<DistanceJoint2D>();
@@ -46,6 +50,8 @@ public class Hook : MonoBehaviour {
         retractationStep = balanceData.retractationStep;
         offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
+        knockBackTime = balanceData.knockBackTime;
+        knockBackForce = balanceData.knockBackForceTwoArrows;
 
         switch (gameObject.layer)
         {
@@ -102,6 +108,7 @@ public class Hook : MonoBehaviour {
             if (currentProjectile.GetComponent<Projectile>().hooked)
             {
                 playerMovement.StateHooked();
+                
                 if (jointNotCreated)
                 {
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -113,10 +120,13 @@ public class Hook : MonoBehaviour {
                 }
 
                 Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
-                RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
-                RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
 
-                Debug.DrawRay(player.transform.position, jointDirection, Color.red, 5);
+                playerMovement.jointDirection = jointDirection;
+
+                RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMask);
+                RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMask);
+
+                Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
 
                 if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
@@ -166,5 +176,22 @@ public class Hook : MonoBehaviour {
     {
         yield return new WaitForSeconds(timeBtwShots);
         hookInCD = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Arrow"))
+        {
+            playerMovement.lockMovementKnockBack = true;
+            Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+            playerMovement.rigid.velocity = Vector3.zero;
+            playerMovement.rigid.AddForce(-directionKnockBack * knockBackForce);
+            Invoke("UnlockMovement", knockBackTime);
+        }
+    }
+
+    void UnlockMovement()
+    {
+        playerMovement.lockMovementKnockBack = false;
     }
 }

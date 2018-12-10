@@ -38,7 +38,14 @@ public class Projectile : MonoBehaviour {
         if (!hooked)
         {
             rigid.AddForce(direction / speed);
-        } 
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, new Vector3(0.5f, .5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(-0.5f, -.5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(-0.5f, .5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(0.5f, -.5f, 0) * 10, Color.cyan, 5);
+        }
 	}
 
 	void Destruction(){
@@ -56,12 +63,13 @@ public class Projectile : MonoBehaviour {
     {
         if (!hooked)
         {
+            
             if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage);
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
             }
-            if (collision.gameObject.CompareTag("Hookable"))
+            else if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 hooked = true;

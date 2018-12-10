@@ -37,25 +37,10 @@ GameObject:
   - component: {fileID: 4641017046395308}
   - component: {fileID: 212475519958069078}
   - component: {fileID: 114167588318129154}
+  - component: {fileID: 60565744378084356}
   m_Layer: 15
   m_Name: Arrow_P4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1260854638482926
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4046520055338688}
-  - component: {fileID: 114034268967327574}
-  m_Layer: 8
-  m_Name: DirectionOnHook
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,19 +96,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4046520055338688
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1260854638482926}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.51, y: -19.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4835024907412014}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4538943984620814
 Transform:
   m_ObjectHideFlags: 1
@@ -189,8 +161,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4046520055338688}
+  m_Children: []
   m_Father: {fileID: 4740719657198494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -229,17 +200,36 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &114034268967327574
-MonoBehaviour:
+--- !u!60 &60565744378084356
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1260854638482926}
+  m_GameObject: {fileID: 1193887155682720}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d0f78fb41df23c43ba1c3ad94eab633, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 0.25}
+    newSize: {x: 1, y: 0.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.35, y: 0.125}
+      - {x: 0.35, y: -0.125}
+      - {x: 0.39999998, y: -0.125}
+      - {x: 0.5, y: -0.024999999}
+      - {x: 0.5, y: 0.024999999}
+      - {x: 0.39999998, y: 0.125}
 --- !u!114 &114167588318129154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -267,12 +257,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigid: {fileID: 0}
   feetPos: {fileID: 4538943984620814}
   hooked: 0
+  jointDirection: {x: 0, y: 0}
+  lockMovementKnockBack: 0
   bonusSpeed: 1
-  childRedAxis: {x: 0, y: 0, z: 0}
   isGrounded: 0
-  playerNumber: _P3
+  playerNumber: _P4
 --- !u!114 &114254027481778956
 MonoBehaviour:
   m_ObjectHideFlags: 1
