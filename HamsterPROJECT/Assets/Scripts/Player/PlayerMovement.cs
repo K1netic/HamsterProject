@@ -110,49 +110,53 @@ public class PlayerMovement : MonoBehaviour
                 //Déplacement grâce au référenciel de l'enfant
                 //rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
 
-                //Déplacement selon la flèche            
+                //Déplacement selon la flèche
                 if(jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
                 {
-                    if(Input.GetAxis("Horizontal" + playerNumber) < 0)
+                    //LEFT
+                    /*if(Input.GetAxis("Horizontal" + playerNumber) < 0)
                     {
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
                     }
                     else
-                    {
+                    {*/
                         rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
-                    }
+                    //}
                 }else if(jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
                 {
-                    if (Input.GetAxis("Horizontal" + playerNumber) > 0)
+                    //RIGHT
+                    /*if (Input.GetAxis("Horizontal" + playerNumber) > 0)
                     {
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
                     }
                     else
-                    {
+                    {*/
                         rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
-                    }
+                    //}
                 }
                 else if(jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
                 {
-                    if (Input.GetAxis("Vertical" + playerNumber) < 0)
+                    //BOT
+                    /*if (Input.GetAxis("Vertical" + playerNumber) < 0)
                     {
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
                     }
                     else
-                    {
+                    {*/
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
-                    }
+                    //}
                 }
                 else if(jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
                 {
-                    if (Input.GetAxis("Vertical" + playerNumber) > 0)
+                    //TOP
+                    /*if (Input.GetAxis("Vertical" + playerNumber) > 0)
                     {
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
                     }
                     else
-                    {
+                    {*/
                         rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
-                    }
+                    //}
                 }
 
                 break;
