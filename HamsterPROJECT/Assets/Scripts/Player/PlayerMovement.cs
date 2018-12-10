@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
 	public Transform feetPos;
     [HideInInspector]
     public bool hooked;
+    [HideInInspector]
+    public Vector2 jointDirection;
 
 	//Movement
     float maxSpeed = 100;
@@ -84,18 +86,6 @@ public class PlayerMovement : MonoBehaviour
                 //Movement
                 if (!lockMovement)
                 {
-                    //Handling player direction
-                    if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
-                    {
-                        transform.localScale = new Vector3(1, 1, 0);
-                        playerDirection = 1;
-                    }
-                    if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
-                    {
-                        transform.localScale = new Vector3(-1, 1, 0);
-                        playerDirection = -1;
-                    }
-
                     //Input -> start moving
                     if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
                     {
@@ -107,10 +97,54 @@ public class PlayerMovement : MonoBehaviour
             case State.hooked:
                 //rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * hookMovementForce);
 
-                rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
+                //Déplacement grâce au référenciel de l'enfant
+                //rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
 
-                //rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
-               
+                //Déplacement selon la flèche            
+                if(jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
+                {
+                    if(Input.GetAxis("Horizontal" + playerNumber) < 0)
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    else
+                    {
+                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                }else if(jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
+                {
+                    if (Input.GetAxis("Horizontal" + playerNumber) > 0)
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    else
+                    {
+                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                }
+                else if(jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
+                {
+                    if (Input.GetAxis("Vertical" + playerNumber) < 0)
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    else
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
+                    }
+                }
+                else if(jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
+                {
+                    if (Input.GetAxis("Vertical" + playerNumber) > 0)
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    else
+                    {
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
+                    }
+                }
+
                 break;
             case State.inAir:
                 rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);

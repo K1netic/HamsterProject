@@ -102,6 +102,7 @@ public class Hook : MonoBehaviour {
             if (currentProjectile.GetComponent<Projectile>().hooked)
             {
                 playerMovement.StateHooked();
+                
                 if (jointNotCreated)
                 {
                     player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -113,6 +114,9 @@ public class Hook : MonoBehaviour {
                 }
 
                 Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+
+                playerMovement.jointDirection = jointDirection;
+
                 RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .75f, layerMask);
                 RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .75f, layerMask);
 
