@@ -13,7 +13,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	[SerializeField] string sceneToLoad;
 	[SerializeField] GameObject readyText;
 
-	void Update()
+	void FixedUpdate()
 	{
 		if (!ready && checkPanels)
 		{
