@@ -86,6 +86,16 @@ public class PlayerMovement : MonoBehaviour
                 //Movement
                 if (!lockMovement)
                 {
+                    //Handling player direction
+                    if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
+                    {
+                        playerDirection = 1;
+                    }
+                    if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
+                    {
+                        playerDirection = -1;
+                    }
+
                     //Input -> start moving
                     if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
                     {
