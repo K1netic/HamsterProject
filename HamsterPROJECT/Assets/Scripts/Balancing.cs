@@ -17,6 +17,7 @@ public class Balancing : MonoBehaviour {
     public float retractationStep;
     public float offsetHook;
     public float timeBtwShots;
+	public float TimeHooked = 8f;
 
     [Header("PLAYER MOVEMENT")]
     public float maxSpeedPlayer = 100;
