@@ -18,9 +18,22 @@ public class GameManager : MonoBehaviour {
 			return instance;
 		}
 	}
+
+	public enum gameModes
+	{
+		LastManStanding,
+		Kills
+	}
+
+	public static gameModes gameModeType;
+		
+	// Numbers of matches won to win a full game
+	public static int goal;
 		
 	public static bool[] playersActive = new bool[4];
 	public static int[] playersSprites = new int[4];
+	public static bool[] playersAlive = new bool[4];
+	public static int[] playersScores = new int[4];
 
 	void Awake()
 	{
@@ -31,5 +44,7 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 2);
 		playersActive.SetValue (false, 3);
 	}
-		
+
+	//Score
+
 }

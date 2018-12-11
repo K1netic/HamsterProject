@@ -8,6 +8,7 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	[SerializeField] string previousScene;
 	[SerializeField] string sceneToLoadOnClick;
+	[SerializeField] GameManager.gameModes gameModeToSet;
 
 	void FixedUpdate()
 	{
@@ -31,6 +32,11 @@ public class UiButtonFunctions : MonoBehaviour {
 		{
 			Application.Quit ();
 		}
+	}
+
+	public void SetGameMode()
+	{
+		GameManager.gameModeType = gameModeToSet;
 	}
 
 }

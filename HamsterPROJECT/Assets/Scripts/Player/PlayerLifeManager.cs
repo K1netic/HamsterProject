@@ -113,6 +113,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Dead()
     {
+		// Set player as dead in the game manager
+		GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
         Destroy(transform.parent.gameObject);
     }
 }

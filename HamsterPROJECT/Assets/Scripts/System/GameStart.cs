@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelStart : MonoBehaviour {
+public class GameStart : MonoBehaviour {
 
 	//Players Prefabs
 	[SerializeField] GameObject P1;
@@ -15,14 +15,21 @@ public class LevelStart : MonoBehaviour {
 	[SerializeField] Transform spawnPoint3;
 	[SerializeField] Transform spawnPoint4;
 
-	// Use this for initialization
 	void Start () {
+		// Instantiate players depending on which were validated in the character selection screen
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
 			if (GameManager.playersActive[i] == true)
 			{
 				Invoke("Instantiate_P" + (i + 1).ToString() ,0);
 			}
+		}
+
+		// Set all active players to Alive (true) at beginning of 
+		for (int i = 0; i < GameManager.playersActive.Length; i ++)
+		{
+			if (GameManager.playersActive [i] == true)
+				GameManager.playersAlive [i] = true;
 		}
 	}
 	
