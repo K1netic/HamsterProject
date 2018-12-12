@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 3);
 	}
 
-	//Score
+	public static void ResetScore()
+	{
+		for (int i = 0; i < GameManager.playersScores.Length; i ++)
+		{
+			GameManager.playersScores [i] = 0;
+		}
+	}
 
 }

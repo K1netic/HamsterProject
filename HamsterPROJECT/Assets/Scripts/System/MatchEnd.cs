@@ -15,7 +15,8 @@ public class MatchEnd : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		scoreDisplay.SetActive (false);
-		// default value for winner
+		// default value, stays at 42 if nobody won
+		// 0, 1, 2 and 3 are reserved to players
 		winner = 42;
 	}
 	
@@ -53,11 +54,6 @@ public class MatchEnd : MonoBehaviour {
 				}
 			}
 
-			else if (GameManager.gameModeType == GameManager.gameModes.Kills)
-			{
-				// Register all kills
-			}
-
 			StartCoroutine(DisplayScore ());
 		}
 	}
@@ -78,6 +74,7 @@ public class MatchEnd : MonoBehaviour {
 		// Stop playing if one player reached the game goal
 		if (Input.GetButton ("Submit_P1") && GameManager.playersScores[winner] == GameManager.goal )
 		{
+			GameManager.ResetScore ();
 			SceneManager.LoadScene ("EndGame");
 		}
 	}
