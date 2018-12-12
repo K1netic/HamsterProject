@@ -12,12 +12,9 @@ public class Hook : MonoBehaviour {
     bool jointNotCreated = true;
     PlayerMovement playerMovement;
     float retractationStep;
-    [SerializeField]
-    LayerMask layerMaskRaycast;
-    [SerializeField]
-    LayerMask layerMaskArrow;
-	float timeHooked;
-	float timeRemaining;
+    int layerMask;
+	float TimeHooked;
+	float TimeRemaining;
 
     //AIM
     float offset;
@@ -29,6 +26,7 @@ public class Hook : MonoBehaviour {
 	//SHOT
     [SerializeField]
 	GameObject projectile;
+	public Transform shotPoint;
     float timeBtwShots;
     private bool hookInCD;
     [HideInInspector]
@@ -38,12 +36,6 @@ public class Hook : MonoBehaviour {
     //ARROW 
     float knockBackTime;
     float knockBackForce;
-    int arrowDamage;
-    Vector2 start1;
-    Vector2 start2;
-    Vector2 end;
-    RaycastHit2D arrowEdge1;
-    RaycastHit2D arrowEdge2;
 
 	//COLOR
 	Color colorRope;
@@ -60,16 +52,31 @@ public class Hook : MonoBehaviour {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
-		timeHooked = balanceData.TimeHooked;
+		TimeHooked = balanceData.TimeHooked;
         distanceMax = balanceData.distanceMaxHook;
         retractationStep = balanceData.retractationStep;
         offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
         knockBackTime = balanceData.knockBackTime;
         knockBackForce = balanceData.knockBackForceTwoArrows;
-        arrowDamage = balanceData.arrowDamage;
 
-        timeRemaining = timeHooked;
+        switch (gameObject.layer)
+        {
+            case 12:
+                layerMask = ~(1 << 8);
+                break;
+            case 13:
+                layerMask = ~(1 << 9);
+                break;
+            case 14:
+                layerMask = ~(1 << 10);
+                break;
+            case 15:
+                layerMask = ~(1 << 11);
+                break;
+            default:
+                break;
+        }
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -85,7 +92,6 @@ public class Hook : MonoBehaviour {
 		line.endColor = colorRope;
 		line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
-        line.transform.parent = gameObject.transform.parent;
     }
 	
 	// Update is called once per frame
@@ -96,27 +102,6 @@ public class Hook : MonoBehaviour {
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
-
-        start1 = transform.GetChild(0).GetComponent<Transform>().position;
-        start2 = transform.GetChild(1).GetComponent<Transform>().position;
-        end = transform.GetChild(2).GetComponent<Transform>().position;
-        
-        arrowEdge1 = Physics2D.Linecast(start1,end,layerMaskArrow);
-        arrowEdge2 = Physics2D.Linecast(start2,end,layerMaskArrow);
-
-        if(arrowEdge1.collider != null){
-            if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
-            }
-        }
-        if(arrowEdge2.collider != null){
-            if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
-            }
-        }
-
-        Debug.DrawLine(start1,end,Color.red);
-        Debug.DrawLine(start2,end,Color.red);
 
         if (currentProjectile != null)
         {
@@ -133,6 +118,7 @@ public class Hook : MonoBehaviour {
             if (currentProjectile.GetComponent<Projectile>().hooked)
             {
                 playerMovement.StateHooked();
+                
                 if (jointNotCreated)
                 {
 					t = 0;
@@ -144,13 +130,12 @@ public class Hook : MonoBehaviour {
                     jointNotCreated = false;
                 }
 
-				timeRemaining -= Time.deltaTime;
-                if(timeRemaining <= timeHooked/2)
-                    t += (Time.deltaTime / timeRemaining)/2;
+				TimeRemaining -= Time.deltaTime;
+				t += Time.deltaTime / TimeRemaining;
 				line.startColor = Color.Lerp(colorRope, Color.black,t);
 				line.endColor = Color.Lerp(colorRope, Color.black,t);
 
-				if (timeRemaining <= 0) 
+				if (TimeRemaining <= 0) 
 				{
 					StartCoroutine("ResetHookCD");
 					playerMovement.StateNotHooked();
@@ -159,7 +144,7 @@ public class Hook : MonoBehaviour {
 					currentProjectile.GetComponent<Projectile>().End();
 					line.gameObject.SetActive(false);
 					jointNotCreated = true;
-					timeRemaining = timeHooked;
+					TimeRemaining = TimeHooked;
 					line.startColor = colorRope;
 					line.endColor = colorRope;
 				}
@@ -169,8 +154,8 @@ public class Hook : MonoBehaviour {
 
                 playerMovement.jointDirection = jointDirection;
 
-                RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-                RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+                RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMask);
+                RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMask);
 
                 Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
 
@@ -198,8 +183,7 @@ public class Hook : MonoBehaviour {
         {
             line.gameObject.SetActive(true);
             line.SetPosition(0, player.transform.position);
-            currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-            currentProjectile.transform.parent = gameObject.transform.parent;
+            currentProjectile = Instantiate(projectile, shotPoint.position, transform.rotation);
             currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
             currentProjectile.GetComponent<Projectile>().hook = this;
             line.SetPosition(1, currentProjectile.transform.position);
@@ -216,7 +200,7 @@ public class Hook : MonoBehaviour {
             currentProjectile.GetComponent<Projectile>().End();
             line.gameObject.SetActive(false);
             jointNotCreated = true;
-			timeRemaining = timeHooked;
+			TimeRemaining = TimeHooked;
 			line.startColor = colorRope;
 			line.endColor = colorRope;
         }
@@ -228,7 +212,8 @@ public class Hook : MonoBehaviour {
         hookInCD = false;
     }
 
-    void OnCollisionEnter2D(Collision2D collision){
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("Arrow"))
         {
             playerMovement.lockMovementKnockBack = true;

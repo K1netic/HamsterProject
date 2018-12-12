@@ -39,6 +39,13 @@ public class Projectile : MonoBehaviour {
         {
             rigid.AddForce(direction / speed);
         }
+        else
+        {
+            Debug.DrawRay(transform.position, new Vector3(0.5f, .5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(-0.5f, -.5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(-0.5f, .5f, 0) * 10, Color.cyan, 5);
+            Debug.DrawRay(transform.position, new Vector3(0.5f, -.5f, 0) * 10, Color.cyan, 5);
+        }
 	}
 
 	void Destruction(){
