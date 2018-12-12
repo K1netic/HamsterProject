@@ -8,7 +8,6 @@ public class PlayerLifeManager : MonoBehaviour {
 
     Balancing balanceData;
 
-    [SerializeField]
     Text lifeText;
 
     PlayerMovement playerMovement;
@@ -37,6 +36,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
+
+        lifeText = GameObject.Find("Life"+playerMovement.playerNumber).GetComponent<Text>();
 
         UpdateLifeUI();
     }
@@ -79,14 +80,6 @@ public class PlayerLifeManager : MonoBehaviour {
             InvokeRepeating("Flashing", 0, flashingRate);
         }
         
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Arrow"))
-        {
-            TakeDamage(arrowDamage,collision.gameObject, true);
-        }
     }
 
     void UnlockMovement()
