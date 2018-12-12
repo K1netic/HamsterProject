@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStart : MonoBehaviour {
+public class MatchStart : MonoBehaviour {
 
 	//Players Prefabs
 	[SerializeField] GameObject P1;
