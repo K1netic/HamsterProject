@@ -78,6 +78,12 @@ public class PlayerLifeManager : MonoBehaviour {
             UpdateLifeUI();
             Invoke("ResetRecovery", recoveryTime);
             InvokeRepeating("Flashing", 0, flashingRate);
+
+			// Counting kills for the player score
+			if (GameManager.gameModeType == GameManager.gameModes.Kills && playerHP <= 0)
+			{
+				GameManager.playersScores[(int.Parse(attacker.gameObject.transform.parent.name.Substring (2, 1))) - 1] += 1; 
+			}
         }
         
     }
@@ -108,6 +114,6 @@ public class PlayerLifeManager : MonoBehaviour {
     {
 		// Set player as dead in the game manager
 		GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.parent.gameObject, 0.05f);
     }
 }

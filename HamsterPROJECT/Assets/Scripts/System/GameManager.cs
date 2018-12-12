@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	public static gameModes gameModeType;
 		
 	// Numbers of matches won to win a full game
-	public static int goal;
+	public static int goal = 5;
 		
 	public static bool[] playersActive = new bool[4];
 	public static int[] playersSprites = new int[4];
@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 3);
 	}
 
-	//Score
+	public static void ResetScore()
+	{
+		for (int i = 0; i < GameManager.playersScores.Length; i ++)
+		{
+			GameManager.playersScores [i] = 0;
+		}
+	}
 
 }

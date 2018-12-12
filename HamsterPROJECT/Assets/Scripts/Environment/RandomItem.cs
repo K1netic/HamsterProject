@@ -65,50 +65,50 @@ public class RandomItem : MonoBehaviour {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "SteelRope";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "SteelRope";
-                print("SteelRope");
+//                print("SteelRope");
             }else if(n >= minPeakBall && n <= maxPeakBall)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "PeakBall";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "PeakBall";
-                print("PeakBall");
+//                print("PeakBall");
             }else if(n >= minExplosiveHook && n <= maxExplosiveHook)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "ExplosiveHook";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "ExplosiveHook";
-                print("ExplosiveHook");
+//                print("ExplosiveHook");
             }else if(n >= minParachute && n <= maxParachute)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "Parachute";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "Parachute";
-                print("Parachute");
+//                print("Parachute");
             }else if(n >= minShield && n <= maxShield)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "Shield";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "Shield";
-                print("Shield");
+//                print("Shield");
             }else if(n >= minMiracle && n <= maxMiracle)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "Miracle";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "Miracle";
-                print("Miracle");
+//                print("Miracle");
             }else if(n >= minCocaineCroquettes && n <= maxCocaineCroquettes)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "CocaineCroquettes";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "CocaineCroquettes";
-                print("CocaineCroquettes");
+//                print("CocaineCroquettes");
             }
             else if(n >= minExplosivePoop && n <= maxExplosivePoop)
             {
                 Text item = collision.gameObject.GetComponent<Inventory>().item;
                 item.text = "ExplosivePoop";
                 collision.gameObject.GetComponent<Inventory>().currentItem = "ExplosivePoop";
-                print("ExplosivePoop");
+//                print("ExplosivePoop");
             }
 
             gameObject.SetActive(false);
