@@ -25,6 +25,7 @@ public class Hook : MonoBehaviour {
 	private Vector2 screenPoint;
     [HideInInspector]
     public LineRenderer line;
+    BoxCollider2D lineCollider;
 
 	//SHOT
     [SerializeField]
@@ -79,14 +80,37 @@ public class Hook : MonoBehaviour {
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
-        line.startWidth = .05f;// la largeur de la ligne
-        line.endWidth = .05f;
+        line.startWidth = balanceData.lineWidth;// la largeur de la ligne
+        line.endWidth = balanceData.lineWidth;
         line.gameObject.SetActive(false);// désactive la ligne
 		line.startColor = colorRope;
 		line.endColor = colorRope;
 		line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
         line.transform.parent = gameObject.transform.parent;
+        
+        line.gameObject.AddComponent<BoxCollider2D>();
+        lineCollider = line.GetComponent<BoxCollider2D>();
+        lineCollider.isTrigger = true;   
+
+        line.gameObject.tag = "Rope";
+        switch  (playerNumber){
+            case "_P1":
+            line.gameObject.layer = 17;
+            break;
+            case "_P2":
+            line.gameObject.layer = 18;
+            break;
+            case "_P3":
+            line.gameObject.layer = 19;
+            break;
+            case "_P4":
+            line.gameObject.layer = 20;
+            break;
+            default:
+            print("Default case switch start Hook.cs");
+            break;
+        }     
     }
 	
 	// Update is called once per frame
@@ -127,6 +151,14 @@ public class Hook : MonoBehaviour {
             line.SetPosition(0, player.transform.position);
             line.SetPosition(1, currentProjectile.transform.position);
 
+            Vector3 startPos = line.GetPosition(0);
+            Vector3 endPos = line.GetPosition(1);
+
+            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+            lineCollider.transform.position = (startPos + endPos) / 2;
+            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+            
+            
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
                 StartCoroutine("ResetHookCD");
@@ -207,23 +239,34 @@ public class Hook : MonoBehaviour {
             currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
             currentProjectile.GetComponent<Projectile>().hook = this;
             line.SetPosition(1, currentProjectile.transform.position);
+
+            Vector3 startPos = line.GetPosition(0);
+            Vector3 endPos = line.GetPosition(1);
+
+            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+            lineCollider.transform.position = (startPos + endPos) / 2;
+            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+
             hookInCD = true;
-            
         }
 
         else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
         {
-            StartCoroutine("ResetHookCD");
-            playerMovement.StateNotHooked();
-            player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
-            joint.enabled = false;
-            currentProjectile.GetComponent<Projectile>().End();
-            line.gameObject.SetActive(false);
-            jointNotCreated = true;
-			timeRemaining = timeHooked;
-			line.startColor = colorRope;
-			line.endColor = colorRope;
+            DisableRope();
         }
+    }
+
+    public void DisableRope(){
+        StartCoroutine("ResetHookCD");
+        playerMovement.StateNotHooked();
+        player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
+        joint.enabled = false;
+        currentProjectile.GetComponent<Projectile>().End();
+        line.gameObject.SetActive(false);
+        jointNotCreated = true;
+        timeRemaining = timeHooked;
+        line.startColor = colorRope;
+        line.endColor = colorRope;
     }
 
     public IEnumerator ResetHookCD()

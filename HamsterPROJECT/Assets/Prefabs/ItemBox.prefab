@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4581810238628758}
   - component: {fileID: 114193624556663430}
   - component: {fileID: 212627188251933870}
-  - component: {fileID: 61799620117941806}
+  - component: {fileID: 58414088187605714}
   m_Layer: 0
   m_Name: ItemBox
   m_TagString: Untagged
@@ -36,14 +36,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1796848284388666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.07, y: 0.21, z: 10.721284}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61799620117941806
-BoxCollider2D:
+--- !u!58 &58414088187605714
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -55,18 +55,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.53, y: 0.61}
-    newSize: {x: 0.53, y: 0.61}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.53, y: 0.61}
-  m_EdgeRadius: 0
+  m_Radius: 0.6525926
 --- !u!114 &114193624556663430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,22 +68,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c06c168adf6c7b4a8fd52f890cea467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSteelRope: 1
-  maxSteelRope: 10
-  minPeakBall: 11
-  maxPeakBall: 20
-  minExplosiveHook: 21
-  maxExplosiveHook: 30
-  minParachute: 31
-  maxParachute: 40
-  minShield: 41
-  maxShield: 50
-  minMiracle: 51
-  maxMiracle: 60
-  minCocaineCroquettes: 61
-  maxCocaineCroquettes: 70
-  minExplosivePoop: 71
-  maxExplosivePoop: 100
+  repopTime: 10
+  minSteelRope: 0
+  maxSteelRope: 0
+  minPeakBall: 0
+  maxPeakBall: 0
+  minExplosiveHook: 0
+  maxExplosiveHook: 0
+  minParachute: 0
+  maxParachute: 0
+  minShield: 0
+  maxShield: 0
+  minMiracle: 0
+  maxMiracle: 0
+  minCocaineCroquettes: 1
+  maxCocaineCroquettes: 100
+  minExplosivePoop: 0
+  maxExplosivePoop: 0
 --- !u!212 &212627188251933870
 SpriteRenderer:
   m_ObjectHideFlags: 1

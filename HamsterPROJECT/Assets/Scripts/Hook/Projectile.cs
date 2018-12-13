@@ -74,6 +74,12 @@ public class Projectile : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col){
+        if(col.gameObject.CompareTag("Rope")){
+            transform.parent.GetChild(2).GetComponent<Hook>().DisableRope();
+        }
+    }
+
     public void End()
     {
         Destroy(gameObject);
