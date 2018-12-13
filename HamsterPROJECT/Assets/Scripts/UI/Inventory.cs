@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour {
 
     Balancing balanceData;
 
-    [SerializeField]
+    [HideInInspector]
     public Text item;
 
     bool cdItem;
@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour {
         playerRigid = GetComponent<Rigidbody2D>();
         playerNumber = playerMovementScript.playerNumber;
         stockGravity = playerRigid.gravityScale;
+        item  = GameObject.Find("Item"+playerMovementScript.playerNumber).GetComponent<Text>();
     }
 
     // Update is called once per frame
