@@ -17,9 +17,11 @@ public class PlayerLifeManager : MonoBehaviour {
     float flashingRate;
     SpriteRenderer sprite;
     int arrowDamage;
+    int spikesDamage;
     float knockBackTime;
     float knockBackForceArrowPlayer;
     float knockBackForceHookheadPlayer;
+    float knockBackForceSpikesPlayer;
 
     // Use this for initialization
     void Start () {
@@ -33,6 +35,8 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackTime = balanceData.knockBackTime;
         knockBackForceArrowPlayer = balanceData.knockBackForceArrowPlayer;
         knockBackForceHookheadPlayer = balanceData.knockBackForceHookheadPlayer;
+        spikesDamage = balanceData.spikesDamage;
+        knockBackForceSpikesPlayer= balanceData.knockBackForceSpikesPlayer;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -69,6 +73,9 @@ public class PlayerLifeManager : MonoBehaviour {
                     case "Hook":
                         playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer);
                         break;
+                    case "Spikes":
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceSpikesPlayer);
+                        break;
                     default:
                         break;
                 }
@@ -86,6 +93,12 @@ public class PlayerLifeManager : MonoBehaviour {
 			}
         }
         
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.CompareTag("Spikes")){
+            TakeDamage(spikesDamage,col.gameObject,true);
+        }
     }
 
     void UnlockMovement()
