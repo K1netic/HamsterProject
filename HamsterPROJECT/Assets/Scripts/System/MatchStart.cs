@@ -15,7 +15,17 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] Transform spawnPoint3;
 	[SerializeField] Transform spawnPoint4;
 
-	void Start () {
+	void Awake () {
+		// Set all active players to Alive (true) at beginning of match
+		for (int i = 0; i < GameManager.playersActive.Length; i ++)
+		{
+			if (GameManager.playersActive [i] == true)
+				GameManager.playersAlive [i] = true;
+		}
+	}
+
+	void Start()
+	{
 		// Instantiate players depending on which were validated in the character selection screen
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
@@ -23,13 +33,6 @@ public class MatchStart : MonoBehaviour {
 			{
 				Invoke("Instantiate_P" + (i + 1).ToString() ,0);
 			}
-		}
-
-		// Set all active players to Alive (true) at beginning of 
-		for (int i = 0; i < GameManager.playersActive.Length; i ++)
-		{
-			if (GameManager.playersActive [i] == true)
-				GameManager.playersAlive [i] = true;
 		}
 	}
 	

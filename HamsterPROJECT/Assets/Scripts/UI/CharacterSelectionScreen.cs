@@ -13,6 +13,21 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	[SerializeField] string sceneToLoad;
 	[SerializeField] GameObject readyText;
 
+	void Start()
+	{
+		#region DataRecovering
+		for (int i = 0; i < GameManager.playersActive.Length; i++)
+		{
+			if (GameManager.playersActive[i] == true)
+			{
+				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = GameManager.playersSprites[i] ;
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + panels[i].GetComponent<PlayerSelectionPanel>().characterSelected.ToString ());
+			}
+		}
+		#endregion
+	}
+
 	void FixedUpdate()
 	{
 		if (!ready && checkPanels)

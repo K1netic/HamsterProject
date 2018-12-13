@@ -250,6 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousScene: 
   sceneToLoadOnClick: Options
+  gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!1 &288458847
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousScene: 
   sceneToLoadOnClick: 
+  gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!1 &766006345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousScene: 
   sceneToLoadOnClick: Credits
+  gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!1 &1760176260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,7 +1424,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   previousScene: 
-  sceneToLoadOnClick: GameModes
+  sceneToLoadOnClick: CharacterSelection
+  gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!1 &2079512772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1470,6 +1478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousScene: Title
   sceneToLoadOnClick: Title
+  gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!114 &2079512775
 MonoBehaviour:
   m_ObjectHideFlags: 0

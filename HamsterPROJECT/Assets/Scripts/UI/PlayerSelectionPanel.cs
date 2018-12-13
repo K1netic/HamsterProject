@@ -14,7 +14,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	[SerializeField] public int characterSelected = 0;
 	 
 	[SerializeField] Image backgroundImg;
-	[SerializeField] Image characterSprite;
+	[SerializeField] public Image characterSprite;
 
 	bool blockStickMovement = false;
 
@@ -28,6 +28,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
 		#region StateManagement
 		if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Deactivated )
 		{

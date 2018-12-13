@@ -162,9 +162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e747f2cae83e4499fe6ee48288abba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousScene: GameModes
-  sceneToLoadOnClick: GameModes
+  previousScene: MainMenu
+  sceneToLoadOnClick: MainMenu
   gameModeToSet: 0
+  textToChange: {fileID: 0}
 --- !u!114 &69848896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1694,7 +1695,7 @@ MonoBehaviour:
   - {fileID: 647827786}
   - {fileID: 457853942}
   - {fileID: 753666964}
-  sceneToLoad: Flo
+  sceneToLoad: GameModes
   readyText: {fileID: 453550062}
 --- !u!4 &2006969708
 Transform:
