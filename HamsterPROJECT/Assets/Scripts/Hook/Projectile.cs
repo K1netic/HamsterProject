@@ -74,6 +74,12 @@ public class Projectile : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col){
+        if(col.gameObject.CompareTag("Rope")){
+            col.gameObject.GetComponent<LineCutter>().CutRope();
+        }
+    }
+
     public void End()
     {
         Destroy(gameObject);
