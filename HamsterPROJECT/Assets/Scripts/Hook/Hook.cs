@@ -90,6 +90,8 @@ public class Hook : MonoBehaviour {
         line.transform.parent = gameObject.transform.parent;
         
         line.gameObject.AddComponent<BoxCollider2D>();
+        line.gameObject.AddComponent<LineCutter>();
+        line.gameObject.GetComponent<LineCutter>().line = this;
         lineCollider = line.GetComponent<BoxCollider2D>();
         lineCollider.isTrigger = true;   
 
@@ -232,6 +234,8 @@ public class Hook : MonoBehaviour {
 
         if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
         {
+            line.startColor = colorRope;
+            line.endColor = colorRope;
             line.gameObject.SetActive(true);
             line.SetPosition(0, player.transform.position);
             currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
