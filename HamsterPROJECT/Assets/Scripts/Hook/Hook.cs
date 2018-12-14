@@ -10,7 +10,8 @@ public class Hook : MonoBehaviour {
     DistanceJoint2D joint;
     float distanceMax; // distance of the hook
     bool jointNotCreated = true;
-    PlayerMovement playerMovement;
+    [HideInInspector]
+    public PlayerMovement playerMovement;
     float retractationStep;
     [SerializeField]
     LayerMask layerMaskRaycast;
@@ -40,6 +41,7 @@ public class Hook : MonoBehaviour {
     float knockBackTime;
     float knockBackForce;
     float arrowDamage;
+    float velocityArrowDamageRatio;
     Vector2 start1;
     Vector2 start2;
     Vector2 end;
@@ -70,6 +72,7 @@ public class Hook : MonoBehaviour {
         knockBackTime = balanceData.knockBackTime;
         knockBackForce = balanceData.knockBackForceTwoArrows;
         arrowDamage = balanceData.arrowDamage;
+        velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
 
         timeRemaining = timeHooked;
 
@@ -135,13 +138,17 @@ public class Hook : MonoBehaviour {
 
         if(arrowEdge1.collider != null){
             if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.rigid.velocity.magnitude / 2,gameObject, true);
+                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
                 damageAlreadyApplied = true;
             }
         }
         if(arrowEdge2.collider != null && !damageAlreadyApplied){
             if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.rigid.velocity.magnitude / 2,gameObject, true);
+                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
             }
         }
 

@@ -8,7 +8,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
     Balancing balanceData;
 
-    Text lifeText;
+    Slider lifeUI;
 
     PlayerMovement playerMovement;
     float playerHP;
@@ -22,6 +22,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackForceArrowPlayer;
     float knockBackForceHookheadPlayer;
     float knockBackForceSpikesPlayer;
+    float velocityKnockBackRatio;
 
     // Use this for initialization
     void Start () {
@@ -37,11 +38,13 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackForceHookheadPlayer = balanceData.knockBackForceHookheadPlayer;
         spikesDamage = balanceData.spikesDamage;
         knockBackForceSpikesPlayer= balanceData.knockBackForceSpikesPlayer;
+        velocityKnockBackRatio = balanceData.velocityKnockBackRatio;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
 
-        lifeText = GameObject.Find("Life"+playerMovement.playerNumber).GetComponent<Text>();
+        lifeUI = GameObject.Find("HPBar"+playerMovement.playerNumber).GetComponent<Slider>();
+        lifeUI.transform.GetChild(1).GetComponentInChildren<Image>().color = GetComponent<SpriteRenderer>().color;
 
         UpdateLifeUI();
     }
@@ -68,7 +71,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 switch (attacker.tag)
                 {
                     case "Arrow":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceArrowPlayer);
+                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackForceArrowPlayer 
+                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio));
+                        print(knockBackForceArrowPlayer);
+                        print(knockBackForceArrowPlayer 
+                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio);
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer);
@@ -120,13 +127,13 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void UpdateLifeUI()
     {
-        lifeText.text = "Current HP : " + playerHP;
+        lifeUI.value = playerHP;
     }
 
     void Dead()
     {
 		// Set player as dead in the game manager
-        lifeText.text = "Current HP : " + 0;
+        lifeUI.value = 0;
 		GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
         Destroy(transform.parent.gameObject, 0.05f);
     }

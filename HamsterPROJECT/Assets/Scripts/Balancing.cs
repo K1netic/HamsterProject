@@ -42,4 +42,6 @@ public class Balancing : MonoBehaviour {
     public float knockBackForceHookheadPlayer = 400;
     public float spikesDamage = 1;
     public float knockBackForceSpikesPlayer = 400;
+    public float velocityKnockBackRatio = 3;
+    public float velocityArrowDamageRatio = 2;
 }
