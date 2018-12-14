@@ -11,13 +11,13 @@ public class PlayerLifeManager : MonoBehaviour {
     Text lifeText;
 
     PlayerMovement playerMovement;
-    int playerHP;
+    float playerHP;
     bool inRecovery;
     float recoveryTime;
     float flashingRate;
     SpriteRenderer sprite;
-    int arrowDamage;
-    int spikesDamage;
+    float arrowDamage;
+    float spikesDamage;
     float knockBackTime;
     float knockBackForceArrowPlayer;
     float knockBackForceHookheadPlayer;
@@ -54,7 +54,7 @@ public class PlayerLifeManager : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(int damage, GameObject attacker, bool knockBack)
+    public void TakeDamage(float damage, GameObject attacker, bool knockBack)
     {
         if (!inRecovery)
         {
@@ -126,6 +126,7 @@ public class PlayerLifeManager : MonoBehaviour {
     void Dead()
     {
 		// Set player as dead in the game manager
+        lifeText.text = "Current HP : " + 0;
 		GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
         Destroy(transform.parent.gameObject, 0.05f);
     }

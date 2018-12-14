@@ -39,7 +39,7 @@ public class Hook : MonoBehaviour {
     //ARROW 
     float knockBackTime;
     float knockBackForce;
-    int arrowDamage;
+    float arrowDamage;
     Vector2 start1;
     Vector2 start2;
     Vector2 end;
@@ -135,13 +135,13 @@ public class Hook : MonoBehaviour {
 
         if(arrowEdge1.collider != null){
             if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
+                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.rigid.velocity.magnitude / 2,gameObject, true);
                 damageAlreadyApplied = true;
             }
         }
         if(arrowEdge2.collider != null && !damageAlreadyApplied){
             if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
+                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.rigid.velocity.magnitude / 2,gameObject, true);
             }
         }
 

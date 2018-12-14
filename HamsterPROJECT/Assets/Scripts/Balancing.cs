@@ -31,15 +31,15 @@ public class Balancing : MonoBehaviour {
     public float hookMovementForce = 25;
 
     [Header("DAMAGE & LIFE")]
-    public int playerMaxHP = 5;
-    public int hookheadDamage = 1;
+    public float playerMaxHP = 5;
+    public float hookheadDamage = 1;
     public float recoveryTime = .5f;
     public float flashingRate = .1f;
-    public int arrowDamage = 1;
+    public float arrowDamage = 1;
     public float knockBackTime = 0.25f;
     public float knockBackForceTwoArrows = 300;
     public float knockBackForceArrowPlayer = 300;
     public float knockBackForceHookheadPlayer = 400;
-    public int spikesDamage = 1;
+    public float spikesDamage = 1;
     public float knockBackForceSpikesPlayer = 400;
 }
