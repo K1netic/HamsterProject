@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour {
 
     float speed;
 	Vector3 direction;
-    int hookheadDamage;
+    float hookheadDamage;
     Rigidbody2D rigid;
 
     [HideInInspector]

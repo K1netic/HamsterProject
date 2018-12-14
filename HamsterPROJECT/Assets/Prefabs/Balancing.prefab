@@ -61,15 +61,25 @@ MonoBehaviour:
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.3
+  TimeHooked: 8
+  lineWidth: 0.05
   maxSpeedPlayer: 100
   checkRadius: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 65536
-  fastFallSpeed: 200
-  fastFallVerticalThreshold: -0.5
-  fastFallHorizontalThreshold: 0.1
   airControlForce: 10
   hookMovementForce: 45
-  playerMaxHP: 5
-  hookheadDamage: 1
+  playerMaxHP: 100
+  hookheadDamage: 5
+  recoveryTime: 0.5
+  flashingRate: 0.1
+  arrowDamage: 10
+  knockBackTime: 0.5
+  knockBackForceTwoArrows: 400
+  knockBackForceArrowPlayer: 400
+  knockBackForceHookheadPlayer: 500
+  spikesDamage: 10
+  knockBackForceSpikesPlayer: 400
+  velocityKnockBackRatio: 5
+  arrowDamageVelocityRatio: 2

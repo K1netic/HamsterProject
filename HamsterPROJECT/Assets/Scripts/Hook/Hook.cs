@@ -10,7 +10,8 @@ public class Hook : MonoBehaviour {
     DistanceJoint2D joint;
     float distanceMax; // distance of the hook
     bool jointNotCreated = true;
-    PlayerMovement playerMovement;
+    [HideInInspector]
+    public PlayerMovement playerMovement;
     float retractationStep;
     [SerializeField]
     LayerMask layerMaskRaycast;
@@ -39,7 +40,8 @@ public class Hook : MonoBehaviour {
     //ARROW 
     float knockBackTime;
     float knockBackForce;
-    int arrowDamage;
+    float arrowDamage;
+    float velocityArrowDamageRatio;
     Vector2 start1;
     Vector2 start2;
     Vector2 end;
@@ -70,6 +72,7 @@ public class Hook : MonoBehaviour {
         knockBackTime = balanceData.knockBackTime;
         knockBackForce = balanceData.knockBackForceTwoArrows;
         arrowDamage = balanceData.arrowDamage;
+        velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
 
         timeRemaining = timeHooked;
 
@@ -119,10 +122,13 @@ public class Hook : MonoBehaviour {
 	void Update () {
 
         transform.position = player.transform.position;
-        screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
+        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
+        //lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 && Input.GetAxisRaw("Vertical"+playerNumber) != 0)
+            transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
         start1 = transform.GetChild(0).GetComponent<Transform>().position;
         start2 = transform.GetChild(1).GetComponent<Transform>().position;
@@ -135,13 +141,17 @@ public class Hook : MonoBehaviour {
 
         if(arrowEdge1.collider != null){
             if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
+                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
                 damageAlreadyApplied = true;
             }
         }
         if(arrowEdge2.collider != null && !damageAlreadyApplied){
             if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage,gameObject, true);
+                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
             }
         }
 
