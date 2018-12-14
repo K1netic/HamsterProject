@@ -10,6 +10,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] string sceneToLoadOnClick;
 	[SerializeField] GameManager.gameModes gameModeToSet;
 	[SerializeField] Text textToChange;
+	[SerializeField] GameObject pauseMenu;
 
 	void FixedUpdate()
 	{
@@ -65,4 +66,9 @@ public class UiButtonFunctions : MonoBehaviour {
 		}
 	}
 
+	public void ClosePauseMenu()
+	{
+		pauseMenu.SetActive (false);
+		Time.timeScale = 1;
+	}
 }

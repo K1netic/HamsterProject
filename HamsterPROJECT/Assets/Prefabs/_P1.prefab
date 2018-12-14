@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 114505693058359796}
   - component: {fileID: 114945032729682278}
   - component: {fileID: 114833379394176936}
+  - component: {fileID: 114665678957114204}
   m_Layer: 8
   m_Name: P1
   m_TagString: Player
@@ -395,6 +396,17 @@ MonoBehaviour:
   bonusSpeed: 1
   isGrounded: 0
   playerNumber: _P1
+--- !u!114 &114665678957114204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189051534754470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7049be7b45152614da521e4ab6f134be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114833379394176936
 MonoBehaviour:
   m_ObjectHideFlags: 1
