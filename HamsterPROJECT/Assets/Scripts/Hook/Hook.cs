@@ -122,10 +122,13 @@ public class Hook : MonoBehaviour {
 	void Update () {
 
         transform.position = player.transform.position;
-        screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
+        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
+        //lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 && Input.GetAxisRaw("Vertical"+playerNumber) != 0)
+            transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
         start1 = transform.GetChild(0).GetComponent<Transform>().position;
         start2 = transform.GetChild(1).GetComponent<Transform>().position;
