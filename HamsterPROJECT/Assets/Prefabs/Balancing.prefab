@@ -68,11 +68,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 65536
-  airControlForce: 10
+  airControlForce: 7.5
   hookMovementForce: 45
   playerMaxHP: 100
   hookheadDamage: 5
-  recoveryTime: 0.5
+  recoveryTime: 1.5
   flashingRate: 0.1
   arrowDamage: 10
   knockBackTime: 0.5
@@ -82,4 +82,4 @@ MonoBehaviour:
   spikesDamage: 10
   knockBackForceSpikesPlayer: 400
   velocityKnockBackRatio: 5
-  arrowDamageVelocityRatio: 2
+  velocityArrowDamageRatio: 2

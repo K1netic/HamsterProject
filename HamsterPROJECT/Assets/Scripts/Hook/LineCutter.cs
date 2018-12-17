@@ -8,6 +8,7 @@ public class LineCutter : MonoBehaviour {
 	public Hook line;
 
 	public void CutRope(){
-		line.DisableRope();
+		if(line.currentProjectile.GetComponent<Projectile>().hooked)
+			line.DisableRope();
 	}
 }

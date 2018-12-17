@@ -21,7 +21,7 @@ public class Hook : MonoBehaviour {
 	float timeRemaining;
 
     //AIM
-    float offset;
+    //float offset;
 	public GameObject player;
 	private Vector2 screenPoint;
     [HideInInspector]
@@ -67,7 +67,7 @@ public class Hook : MonoBehaviour {
 		timeHooked = balanceData.TimeHooked;
         distanceMax = balanceData.distanceMaxHook;
         retractationStep = balanceData.retractationStep;
-        offset = balanceData.offsetHook;
+        //offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
         knockBackTime = balanceData.knockBackTime;
         knockBackForce = balanceData.knockBackForceTwoArrows;
@@ -127,13 +127,16 @@ public class Hook : MonoBehaviour {
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
         //lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
-        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 && Input.GetAxisRaw("Vertical"+playerNumber) != 0)
+        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0)
             transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
         start1 = transform.GetChild(0).GetComponent<Transform>().position;
         start2 = transform.GetChild(1).GetComponent<Transform>().position;
         end = transform.GetChild(2).GetComponent<Transform>().position;
-        
+
+        Debug.DrawLine(start1,end,Color.red);
+        Debug.DrawLine(start2,end,Color.red);
+
         arrowEdge1 = Physics2D.Linecast(start1,end,layerMaskArrow);
         arrowEdge2 = Physics2D.Linecast(start2,end,layerMaskArrow);
 
@@ -155,8 +158,7 @@ public class Hook : MonoBehaviour {
             }
         }
 
-        Debug.DrawLine(start1,end,Color.red);
-        Debug.DrawLine(start2,end,Color.red);
+        
 
         if (currentProjectile != null)
         {
