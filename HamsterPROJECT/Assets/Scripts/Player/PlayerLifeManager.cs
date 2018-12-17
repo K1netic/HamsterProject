@@ -69,8 +69,8 @@ public class PlayerLifeManager : MonoBehaviour {
                 switch (attacker.tag)
                 {
                     case "Arrow":
-                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackForceArrowPlayer 
-                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio), ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackForceArrowPlayer/*
+                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio*/), ForceMode2D.Impulse);
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer, ForceMode2D.Impulse);
