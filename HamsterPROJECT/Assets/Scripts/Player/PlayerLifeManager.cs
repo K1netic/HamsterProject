@@ -89,7 +89,7 @@ public class PlayerLifeManager : MonoBehaviour {
             InvokeRepeating("Flashing", 0, flashingRate);
 
 			// Counting kills for the player score
-			if (GameManager.gameModeType == GameManager.gameModes.Kills && playerHP <= 0)
+			if (GameManager.gameModeType == GameManager.gameModes.Kills && playerHP <= 0 && (attacker.tag == "Arrow" || attacker.tag == "Hook"))
 			{
 				GameManager.playersScores[(int.Parse(attacker.gameObject.transform.parent.name.Substring (2, 1))) - 1] += 1; 
 			}
