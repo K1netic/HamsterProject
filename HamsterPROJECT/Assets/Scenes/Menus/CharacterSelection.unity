@@ -707,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSelectionPanelID: _P3
   state: 0
-  activationColor: {r: 0, g: 1, b: 0.10449934, a: 0.78431374}
+  activationColor: {r: 1, g: 0.69803923, b: 0, a: 0.78431374}
   charactersSprites:
   - {fileID: 21300000, guid: c246acaa6b91e504599c70ad5890dfb4, type: 3}
   - {fileID: 21300000, guid: d99a05f66aeb6d64f84f9f9ea05b38aa, type: 3}
@@ -964,7 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSelectionPanelID: _P4
   state: 0
-  activationColor: {r: 1, g: 0.6987092, b: 0, a: 0.78431374}
+  activationColor: {r: 0, g: 1, b: 0.065425634, a: 0.78431374}
   charactersSprites:
   - {fileID: 21300000, guid: c246acaa6b91e504599c70ad5890dfb4, type: 3}
   - {fileID: 21300000, guid: d99a05f66aeb6d64f84f9f9ea05b38aa, type: 3}
@@ -1674,7 +1674,7 @@ GameObject:
   - component: {fileID: 2006969708}
   - component: {fileID: 2006969707}
   m_Layer: 0
-  m_Name: GameStart
+  m_Name: CharacterSelectionScripts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1696,8 +1696,10 @@ MonoBehaviour:
   - {fileID: 647827786}
   - {fileID: 457853942}
   - {fileID: 753666964}
+  ready: 0
   sceneToLoad: GameModes
   readyText: {fileID: 453550062}
+  previousScene: MainMenu
 --- !u!4 &2006969708
 Transform:
   m_ObjectHideFlags: 0

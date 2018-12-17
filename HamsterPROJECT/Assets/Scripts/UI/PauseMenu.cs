@@ -7,24 +7,39 @@ public class PauseMenu : MonoBehaviour {
 
 	[SerializeField] GameObject pauseMenu;
 
-	string plyrNumber;
+//	string plyrNumber;
 
-	void Start()
-	{
-		plyrNumber = this.GetComponent<PlayerMovement> ().playerNumber;
-	}
+	bool isOpen = false;
+
+//	void Start()
+//	{
+//		plyrNumber = this.GetComponent<PlayerMovement> ().playerNumber;
+//	}
 
 	void Update()
 	{
-		if (Input.GetButton("Pause" + plyrNumber))
+		if (Input.GetButtonDown("Pause_P1") && !isOpen)
 		{
 			OpenPauseMenu ();
 		}
+
+		else if ((Input.GetButtonDown("Pause_P1") || Input.GetButtonDown("Cancel_P1")) && isOpen)
+		{
+			ClosePauseMenu ();
+		}
 	}
 
-	public void OpenPauseMenu()
+	void OpenPauseMenu()
 	{
 		pauseMenu.SetActive (true);
 		Time.timeScale = 0;
+		isOpen = true;
+	}
+
+	public void ClosePauseMenu()
+	{
+		pauseMenu.SetActive (false);
+		Time.timeScale = 1;
+		isOpen = false;
 	}
 }
