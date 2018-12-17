@@ -16,7 +16,6 @@ public class PlayerLifeManager : MonoBehaviour {
     float recoveryTime;
     float flashingRate;
     SpriteRenderer sprite;
-    float arrowDamage;
     float spikesDamage;
     float knockBackTime;
     float knockBackForceArrowPlayer;
@@ -32,7 +31,6 @@ public class PlayerLifeManager : MonoBehaviour {
         playerHP = balanceData.playerMaxHP;
         recoveryTime = balanceData.recoveryTime;
         flashingRate = balanceData.flashingRate;
-        arrowDamage = balanceData.arrowDamage;
         knockBackTime = balanceData.knockBackTime;
         knockBackForceArrowPlayer = balanceData.knockBackForceArrowPlayer;
         knockBackForceHookheadPlayer = balanceData.knockBackForceHookheadPlayer;
