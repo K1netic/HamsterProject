@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MatchStart : MonoBehaviour {
 
@@ -15,6 +16,10 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] Transform spawnPoint3;
 	[SerializeField] Transform spawnPoint4;
 
+	Text beginText;
+	bool coroutineLimiter = false;
+	bool activateBegin = false;
+
 	void Awake () {
 		// Set all active players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
@@ -22,6 +27,8 @@ public class MatchStart : MonoBehaviour {
 			if (GameManager.playersActive [i] == true)
 				GameManager.playersAlive [i] = true;
 		}
+
+		beginText = GameObject.Find("BeginText").GetComponent<Text>();
 	}
 
 	void Start()
@@ -34,11 +41,35 @@ public class MatchStart : MonoBehaviour {
 				Invoke("Instantiate_P" + (i + 1).ToString() ,0);
 			}
 		}
+
+//		Time.timeScale = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// Gérer la déconnexion de manette
+
+//		if (Input.anyKeyDown)
+//		{
+//			activateBegin = true;
+//		}
+//
+//		if (activateBegin && !coroutineLimiter)
+//		{
+//			StartCoroutine (BeginCount ());
+//			coroutineLimiter = true;
+//		}
+	}
+
+	IEnumerator BeginCount()
+	{
+		beginText.text = "3";
+		yield return new WaitForSeconds (1.0f);
+		beginText.text = "2";
+		yield return new WaitForSeconds (1.0f);
+		beginText.text = "1";
+		yield return new WaitForSeconds (1.0f);
+		beginText.text = "Fight !";
+		Time.timeScale = 1;
 	}
 
 	void Instantiate_P1()

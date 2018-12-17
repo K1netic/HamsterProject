@@ -9,8 +9,10 @@ public class MatchEnd : MonoBehaviour {
 //	[SerializeField] float delayBeforeEndOfGame;
 	int nbPlayersAlive;
 	[SerializeField] GameObject scoreDisplay;
+	GameObject[] arrows;
 	int winner;
 	bool gameOver = false;
+	int nbPlayersActive;
 
 	// Used to count number of players that reached the number of kills required to win
 	int count = 0;
@@ -22,7 +24,7 @@ public class MatchEnd : MonoBehaviour {
 		// 0, 1, 2 and 3 are reserved to players
 		winner = 42;
 
-
+		arrows = GameObject.FindGameObjectsWithTag("Arrow");
 	}
 	
 	// Update is called once per frame
@@ -36,8 +38,14 @@ public class MatchEnd : MonoBehaviour {
 				nbPlayersAlive++;
 		}
 
+		for (int i = 0; i < GameManager.playersActive.Length; i ++)
+		{
+			if (GameManager.playersActive [i] == true)
+				nbPlayersActive++;
+		}
+
 		// One or less players remaining
-		if (nbPlayersAlive <= 1)
+		if (nbPlayersAlive <= 1 && nbPlayersActive > 0)
 		{
 			if (GameManager.gameModeType == GameManager.gameModes.LastManStanding && !gameOver)
 			{
@@ -65,8 +73,13 @@ public class MatchEnd : MonoBehaviour {
 
 	IEnumerator DisplayScore()
 	{
+		
 		yield return new WaitForSeconds (1f);
 		scoreDisplay.SetActive (true);
+		foreach (GameObject arrow in arrows)
+		{
+			arrow.GetComponent<Hook> ().isFrozen = true;
+		}
 		yield return new WaitForSeconds (1f);
 
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
