@@ -44,24 +44,28 @@ public class MatchStart : MonoBehaviour {
 	void Instantiate_P1()
 	{
 		P1.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[0].ToString ());
+		P1.transform.position = spawnPoint1.position;
 		Instantiate (P1, spawnPoint1);
 	}
 
 	void Instantiate_P2()
 	{
 		P2.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[1].ToString ());
+		P2.transform.position = spawnPoint2.position;
 		Instantiate (P2, spawnPoint2);
 	}
 
 	void Instantiate_P3()
 	{
 		P3.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[2].ToString ());
+		P3.transform.position = spawnPoint3.position;
 		Instantiate (P3, spawnPoint3);
 	}
 
 	void Instantiate_P4()
 	{
 		P4.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[3].ToString ());
+		P4.transform.position = spawnPoint4.position;
 		Instantiate (P4, spawnPoint4);
 	}
 

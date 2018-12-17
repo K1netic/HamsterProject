@@ -13,11 +13,6 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		if (Input.GetButton("Cancel_P1") && previousScene != null && previousScene != "")
-		{
-			SceneManager.LoadScene (previousScene);
-		}
-
 		// Update text to match GameManager value
 		if (textToChange != null)
 			textToChange.text = GameManager.goal.ToString ();
