@@ -48,6 +48,7 @@ public class Hook : MonoBehaviour {
     RaycastHit2D arrowEdge1;
     RaycastHit2D arrowEdge2;
     bool damageAlreadyApplied;
+    float knockBackForceTwoArrows;
 
 	//COLOR
 	Color colorRope;
@@ -73,6 +74,7 @@ public class Hook : MonoBehaviour {
         knockBackForce = balanceData.knockBackForceTwoArrows;
         arrowDamage = balanceData.arrowDamage;
         velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
+        knockBackForceTwoArrows = balanceData.knockBackForceTwoArrows;
 
         timeRemaining = timeHooked;
 
@@ -147,6 +149,10 @@ public class Hook : MonoBehaviour {
                 arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
                 TakeDamage(arrowDamage + 
                 playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                damageAlreadyApplied = true;
+            } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
+                Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
                 damageAlreadyApplied = true;
             }
         }
