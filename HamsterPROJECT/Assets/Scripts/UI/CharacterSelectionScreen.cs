@@ -32,7 +32,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		if (!ready && checkPanels)
+		if (checkPanels)
 		{
 			checkPanels = false;
 			readyText.SetActive (false);
@@ -43,6 +43,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				if (pan.state == PlayerSelectionPanel.SelectionPanelState.Validated)
 					readyCount++;
+				if (pan.state == PlayerSelectionPanel.SelectionPanelState.Activated)
+					activatedPlayers++;
 			}
 
 			// Conditions to start : at least two panels are validated
@@ -54,11 +56,12 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			
 			checkPanels = true;
 		}
-		else if (ready)
+
+		if (ready)
 		{
 			readyText.SetActive (true);
 			//Load Map Selection Screen when all players are ready and P1 presses A
-			if (Input.GetButtonDown ("Submit_P1"))
+			if (Input.GetButtonDown ("Pause_P1") && ready)
 			{
 				PlayerInfos ();
 				SceneManager.LoadScene (sceneToLoad);

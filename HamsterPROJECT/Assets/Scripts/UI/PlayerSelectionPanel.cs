@@ -36,25 +36,21 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Deactivated )
 		{
 			state = SelectionPanelState.Activated;
-			select.activatedPlayers ++;
 		}
 			
 		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
 			state = SelectionPanelState.Validated;
-			select.activatedPlayers --;
 		}
 
 		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
 			state = SelectionPanelState.Deactivated;
-			select.activatedPlayers --;
 		}
 
 		else if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Validated)
 		{
 			state = SelectionPanelState.Activated;
-			select.activatedPlayers ++;
 			select.ready = false;
 		}
 		#endregion
