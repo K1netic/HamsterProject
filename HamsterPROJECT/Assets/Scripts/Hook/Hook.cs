@@ -39,7 +39,7 @@ public class Hook : MonoBehaviour {
 
     //ARROW 
     float knockBackTime;
-    float knockBackForce;
+    float knockBackShieldHit;
     float arrowDamage;
     float velocityArrowDamageRatio;
     Vector2 start1;
@@ -49,6 +49,16 @@ public class Hook : MonoBehaviour {
     RaycastHit2D arrowEdge2;
     bool damageAlreadyApplied;
     float knockBackForceTwoArrows;
+    float knockBackPlayerHit;
+    Sprite arrowSprite;
+    Sprite shieldSprite;
+    SpriteRenderer spriteRenderer;
+    bool switchingState;
+    [HideInInspector]
+    public HookState currentState;
+    PolygonCollider2D[] colliders;
+    PolygonCollider2D arrowCollider;
+    PolygonCollider2D shieldCollider ;
 
 	//COLOR
 	Color colorRope;
@@ -63,10 +73,20 @@ public class Hook : MonoBehaviour {
         joint.enabled = false;
     }
 
+    public enum HookState
+    {
+        Arrow, Shield
+    }   
+
     // Use this for initialization
     void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+
+        colliders = GetComponents<PolygonCollider2D>();
+        arrowCollider = colliders[0];
+        shieldCollider = colliders[1];
+        arrowCollider.enabled = true;
 
 		timeHooked = balanceData.TimeHooked;
         distanceMax = balanceData.distanceMaxHook;
@@ -74,16 +94,19 @@ public class Hook : MonoBehaviour {
         //offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
         knockBackTime = balanceData.knockBackTime;
-        knockBackForce = balanceData.knockBackForceTwoArrows;
+        knockBackShieldHit = balanceData.knockBackShieldHit;
+        knockBackPlayerHit = balanceData.knockBackPlayerHit;
         arrowDamage = balanceData.arrowDamage;
         velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
-        knockBackForceTwoArrows = balanceData.knockBackForceTwoArrows;
+        arrowSprite = balanceData.arrowSprite;
+        shieldSprite = balanceData.shieldSprite;
 
         timeRemaining = timeHooked;
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
-
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = arrowSprite;
 		colorRope = projectile.GetComponent<SpriteRenderer> ().color;
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
@@ -126,10 +149,29 @@ public class Hook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!isFrozen)
-		{
-			transform.position = player.transform.position;
-			/*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
+        if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
+            switchingState = true;
+            switch (currentState){
+                case HookState.Arrow:
+                    spriteRenderer.sprite = shieldSprite;
+                    currentState = HookState.Shield;
+                    arrowCollider.enabled = false;
+                    shieldCollider.enabled = true;
+                break;
+                case HookState.Shield:
+                    spriteRenderer.sprite = arrowSprite;
+                    currentState = HookState.Arrow;
+                    arrowCollider.enabled = true;
+                    shieldCollider.enabled = false;
+                break;
+                default:
+                break;
+            }
+            Invoke("ResetCDSwitch",0.1f);
+        }
+
+        transform.position = player.transform.position;
+        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
@@ -137,9 +179,9 @@ public class Hook : MonoBehaviour {
 			if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0)
 				transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
-			start1 = transform.GetChild(0).GetComponent<Transform>().position;
-			start2 = transform.GetChild(1).GetComponent<Transform>().position;
-			end = transform.GetChild(2).GetComponent<Transform>().position;
+        /*start1 = transform.GetChild(0).GetComponent<Transform>().position;
+        start2 = transform.GetChild(1).GetComponent<Transform>().position;
+        end = transform.GetChild(2).GetComponent<Transform>().position;
 
 			Debug.DrawLine(start1,end,Color.red);
 			Debug.DrawLine(start2,end,Color.red);
@@ -149,25 +191,29 @@ public class Hook : MonoBehaviour {
 
 			damageAlreadyApplied = false;
 
-			if(arrowEdge1.collider != null){
-				if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-					arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
-					TakeDamage(arrowDamage + 
-						playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-					damageAlreadyApplied = true;
-				} else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
-					Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
-					playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-					damageAlreadyApplied = true;
-				}
-			}
-			if(arrowEdge2.collider != null && !damageAlreadyApplied){
-				if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-					arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
-					TakeDamage(arrowDamage + 
-						playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-				}
-			}
+        if(arrowEdge1.collider != null){
+            if(arrowEdge1.collider.gameObject.CompareTag("Player")){
+                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                damageAlreadyApplied = true;
+            } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
+                Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                damageAlreadyApplied = true;
+            }
+        }
+        if(arrowEdge2.collider != null && !damageAlreadyApplied){
+            if(arrowEdge2.collider.gameObject.CompareTag("Player")){
+                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
+                TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+            } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
+                Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                damageAlreadyApplied = true;
+            }
+        }*/
 
 
 
@@ -304,18 +350,39 @@ public class Hook : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("Arrow"))
-        {
-            playerMovement.lockMovementKnockBack = true;
-            Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
-            playerMovement.rigid.velocity = Vector3.zero;
-            playerMovement.rigid.AddForce(-directionKnockBack * knockBackForce);
-            Invoke("UnlockMovement", knockBackTime);
+        if(currentState == HookState.Arrow){
+            if(collision.gameObject.CompareTag("Player")){
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + 
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+            } 
+            else if (collision.gameObject.CompareTag("Arrow"))
+            {
+                playerMovement.lockMovementKnockBack = true;
+                Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+                playerMovement.rigid.velocity = Vector3.zero;
+                switch (collision.gameObject.GetComponent<Hook>().currentState){
+                    case HookState.Arrow:
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+                        
+                    break;
+                    case HookState.Shield:
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
+                    break;
+                    default:
+                    break;
+                }
+                Invoke("UnlockMovement", knockBackTime);
+            }
         }
+        
     }
 
     void UnlockMovement()
     {
         playerMovement.lockMovementKnockBack = false;
+    }
+
+    void ResetCDSwitch(){
+        switchingState = false;
     }
 }

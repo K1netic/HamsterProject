@@ -19,6 +19,8 @@ public class Balancing : MonoBehaviour {
     public float timeBtwShots;
 	public float TimeHooked = 8f;
     public float lineWidth = 0.05f;
+    public Sprite arrowSprite;
+    public Sprite shieldSprite;
 
     [Header("PLAYER MOVEMENT")]
     public float maxSpeedPlayer = 100;
@@ -31,17 +33,15 @@ public class Balancing : MonoBehaviour {
     public float hookMovementForce = 25;
 
     [Header("DAMAGE & LIFE")]
-    public float playerMaxHP = 5;
-    public float hookheadDamage = 1;
-    public float recoveryTime = .5f;
+    public float playerMaxHP = 100;
+    public float hookheadDamage = 5;
+    public float recoveryTime = 1.5f;
     public float flashingRate = .1f;
-    public float arrowDamage = 1;
-    public float knockBackTime = 0.25f;
-    public float knockBackForceTwoArrows = 300;
-    public float knockBackForceArrowPlayer = 300;
-    public float knockBackForceHookheadPlayer = 400;
-    public float spikesDamage = 1;
-    public float knockBackForceSpikesPlayer = 400;
-    public float velocityKnockBackRatio = 3;
+    public float arrowDamage = 10;
+    public float knockBackTime = 0.5f;
+    public float knockBackPlayerHit = 5;
+    public float knockBackShieldHit = 10;
+    public float knockBackSpikes = 5;
+    public float spikesDamage = 10;
     public float velocityArrowDamageRatio = 2;
 }

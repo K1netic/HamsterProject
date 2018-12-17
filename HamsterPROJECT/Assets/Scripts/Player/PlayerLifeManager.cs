@@ -18,10 +18,8 @@ public class PlayerLifeManager : MonoBehaviour {
     SpriteRenderer sprite;
     float spikesDamage;
     float knockBackTime;
-    float knockBackForceArrowPlayer;
-    float knockBackForceHookheadPlayer;
-    float knockBackForceSpikesPlayer;
-    float velocityKnockBackRatio;
+    float knockBackPlayerHit;
+    float knockBackSpikes;
 
     // Use this for initialization
     void Start () {
@@ -32,11 +30,9 @@ public class PlayerLifeManager : MonoBehaviour {
         recoveryTime = balanceData.recoveryTime;
         flashingRate = balanceData.flashingRate;
         knockBackTime = balanceData.knockBackTime;
-        knockBackForceArrowPlayer = balanceData.knockBackForceArrowPlayer;
-        knockBackForceHookheadPlayer = balanceData.knockBackForceHookheadPlayer;
+        knockBackPlayerHit = balanceData.knockBackPlayerHit;
+        knockBackSpikes = balanceData.knockBackSpikes;
         spikesDamage = balanceData.spikesDamage;
-        knockBackForceSpikesPlayer= balanceData.knockBackForceSpikesPlayer;
-        velocityKnockBackRatio = balanceData.velocityKnockBackRatio;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -69,14 +65,14 @@ public class PlayerLifeManager : MonoBehaviour {
                 switch (attacker.tag)
                 {
                     case "Arrow":
-                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackForceArrowPlayer/*
-                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio*/), ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackPlayerHit
+                        /*+ attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio*/), ForceMode2D.Impulse);
                         break;
                     case "Hook":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer, ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
                     case "Spikes":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceSpikesPlayer, ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackSpikes, ForceMode2D.Impulse);
                         break;
                     default:
                         break;

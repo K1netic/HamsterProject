@@ -63,6 +63,8 @@ MonoBehaviour:
   timeBtwShots: 0.3
   TimeHooked: 8
   lineWidth: 0.05
+  arrowSprite: {fileID: 21300000, guid: 8278b816ef94f5f49b03de1ffa257dc5, type: 3}
+  shieldSprite: {fileID: 21300000, guid: b09771c8f85a1dd49b3ec1f53be890ed, type: 3}
   maxSpeedPlayer: 100
   checkRadius: 1
   groundLayer:
@@ -76,10 +78,8 @@ MonoBehaviour:
   flashingRate: 0.1
   arrowDamage: 10
   knockBackTime: 0.5
-  knockBackForceTwoArrows: 400
-  knockBackForceArrowPlayer: 400
-  knockBackForceHookheadPlayer: 500
+  knockBackPlayerHit: 10
+  knockBackShieldHit: 20
+  knockBackSpikes: 10
   spikesDamage: 10
-  knockBackForceSpikesPlayer: 400
-  velocityKnockBackRatio: 5
   velocityArrowDamageRatio: 2
