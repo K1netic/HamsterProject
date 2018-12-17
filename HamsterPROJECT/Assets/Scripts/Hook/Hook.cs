@@ -149,29 +149,31 @@ public class Hook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
-            switchingState = true;
-            switch (currentState){
-                case HookState.Arrow:
-                    spriteRenderer.sprite = shieldSprite;
-                    currentState = HookState.Shield;
-                    arrowCollider.enabled = false;
-                    shieldCollider.enabled = true;
-                break;
-                case HookState.Shield:
-                    spriteRenderer.sprite = arrowSprite;
-                    currentState = HookState.Arrow;
-                    arrowCollider.enabled = true;
-                    shieldCollider.enabled = false;
-                break;
-                default:
-                break;
-            }
-            Invoke("ResetCDSwitch",0.1f);
-        }
+		if (!isFrozen)
+		{
+			if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
+				switchingState = true;
+				switch (currentState){
+				case HookState.Arrow:
+					spriteRenderer.sprite = shieldSprite;
+					currentState = HookState.Shield;
+					arrowCollider.enabled = false;
+					shieldCollider.enabled = true;
+					break;
+				case HookState.Shield:
+					spriteRenderer.sprite = arrowSprite;
+					currentState = HookState.Arrow;
+					arrowCollider.enabled = true;
+					shieldCollider.enabled = false;
+					break;
+				default:
+					break;
+				}
+				Invoke("ResetCDSwitch",0.1f);
+			}
 
-        transform.position = player.transform.position;
-        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
+			transform.position = player.transform.position;
+			/*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
         screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
         float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
@@ -179,7 +181,7 @@ public class Hook : MonoBehaviour {
 			if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0)
 				transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
-        /*start1 = transform.GetChild(0).GetComponent<Transform>().position;
+			/*start1 = transform.GetChild(0).GetComponent<Transform>().position;
         start2 = transform.GetChild(1).GetComponent<Transform>().position;
         end = transform.GetChild(2).GetComponent<Transform>().position;
 
