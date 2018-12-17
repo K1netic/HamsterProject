@@ -72,16 +72,13 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     case "Arrow":
                         playerMovement.rigid.AddForce(-directionKnockBack * (knockBackForceArrowPlayer 
-                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio));
-                        print(knockBackForceArrowPlayer);
-                        print(knockBackForceArrowPlayer 
-                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio);
+                        + attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio), ForceMode2D.Impulse);
                         break;
                     case "Hook":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer);
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceHookheadPlayer, ForceMode2D.Impulse);
                         break;
                     case "Spikes":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceSpikesPlayer);
+                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceSpikesPlayer, ForceMode2D.Impulse);
                         break;
                     default:
                         break;
