@@ -8,17 +8,20 @@ public class Hook : MonoBehaviour {
 
     //JOINT
     DistanceJoint2D joint;
-    float distanceMax; // distance of the hook
+    float distanceMax; // hook's distance
     bool jointNotCreated = true;
     [HideInInspector]
     public PlayerMovement playerMovement;
     float retractationStep;
     [SerializeField]
-    LayerMask layerMaskRaycast;
+    LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
     [SerializeField]
-    public LayerMask layerMaskArrow;
+    public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche (anciennement utilisé pour le raycast de la flèche)
 	float timeHooked;
 	float timeRemaining;
+    Vector3 jointDirection;
+    RaycastHit2D checkOppositeToJoint;
+    RaycastHit2D checkToJoint ;
 
     //AIM
     //float offset;
@@ -71,6 +74,7 @@ public class Hook : MonoBehaviour {
 
     private void Awake()
     {
+        //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
         joint = player.AddComponent<DistanceJoint2D>();
         joint.enabled = false;
     }
@@ -122,6 +126,7 @@ public class Hook : MonoBehaviour {
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
         line.transform.parent = gameObject.transform.parent;
         
+        //Ajoutet un collider à la corde ainsi que le script qui permet de la couper
         line.gameObject.AddComponent<BoxCollider2D>();
         line.gameObject.AddComponent<LineCutter>();
         line.gameObject.GetComponent<LineCutter>().line = this;
@@ -129,6 +134,7 @@ public class Hook : MonoBehaviour {
         lineCollider.isTrigger = true;   
 
         line.gameObject.tag = "Rope";
+        //Fixe le layer de la corde en fonction du player à qui elle appartient
         switch  (playerNumber){
             case "_P1":
             line.gameObject.layer = 17;
@@ -150,14 +156,16 @@ public class Hook : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        //S'assure que le joint ne peut pas être actif sans rigidbody connecté
         if(joint.connectedBody == null && joint.enabled){
             joint.enabled = false;
             jointNotCreated = true;
         }
 
+        //Test si le jeu est en pause
 		if (!isFrozen)
 		{
+            //Change entre la flèche et le bouclier
 			if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
 				switchingState = true;
 				switch (currentState){
@@ -176,21 +184,24 @@ public class Hook : MonoBehaviour {
 				default:
 					break;
 				}
+                //Empeche l'input d'être répété trop vite
 				Invoke("ResetCDSwitch",0.1f);
 			}
 
+            //S'assure que la position de la fléche et toujours aligné sur celle du player
 			transform.position = player.transform.position;
 			/*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
-        screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
-        float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
-			//lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+            screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
+            float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
+
+            //Gère l'orientation de la flèche en fonction de l'input du player
 			if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0)
 				transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
 
 			/*start1 = transform.GetChild(0).GetComponent<Transform>().position;
-        start2 = transform.GetChild(1).GetComponent<Transform>().position;
-        end = transform.GetChild(2).GetComponent<Transform>().position;
+            start2 = transform.GetChild(1).GetComponent<Transform>().position;
+            end = transform.GetChild(2).GetComponent<Transform>().position;
 
 			Debug.DrawLine(start1,end,Color.red);
 			Debug.DrawLine(start2,end,Color.red);
@@ -225,32 +236,34 @@ public class Hook : MonoBehaviour {
         }*/
 
 
-
+            //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
 			if (currentProjectile != null)
 			{
+                //Aligne la position sur le player et la tete de grappin
 				line.SetPosition(0, player.transform.position);
 				line.SetPosition(1, currentProjectile.transform.position);
 
 				Vector3 startPos = line.GetPosition(0);
 				Vector3 endPos = line.GetPosition(1);
 
+                //Aligne le trigger de la corde sur la corde
 				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
 				lineCollider.transform.position = (startPos + endPos) / 2;
 				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
-
+                //Désactive le grappin s'il est trop loin du joueur
 				if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
 				{
                     DisableRope();
-					/*StartCoroutine("ResetHookCD");
-					currentProjectile.GetComponent<Projectile>().End();
-					line.gameObject.SetActive(false);
-                    playerMovement.StateNotHooked();*/
 				}
 
+                //Test si le grappin est aggripé
 				if (projectileScript.hooked)
 				{
+                    //Change l'état du joueur
 					playerMovement.StateHooked();
+
+                    //Active le joint s'il ne l'est pas encore
 					if (jointNotCreated)
 					{
 						t = 0;
@@ -262,37 +275,44 @@ public class Hook : MonoBehaviour {
 						jointNotCreated = false;
 					}
 
+                    //Gère le timer du grappin et le changement de couleur de la corde
 					timeRemaining -= Time.deltaTime;
 					if(timeRemaining <= timeHooked/2)
 						t += (Time.deltaTime / timeRemaining)/2;
 					line.startColor = Color.Lerp(colorRope, Color.black,t);
 					line.endColor = Color.Lerp(colorRope, Color.black,t);
 
+                    //Si le temps est négatif le grappin est alors détruit
 					if (timeRemaining <= 0) 
 					{
                         DisableRope();
 					}
 
-
-					Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+                    //Calcule la direction du joint pour les raycast
+					jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
 
 					playerMovement.jointDirection = jointDirection;
 
-					RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-					RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+                    //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
+					checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
+					checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
 
 					Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
 
+                    //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
 					if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
 					{
 						joint.distance -= retractationStep;
 					}
 
+                    //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
 					if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
 					{
+                        //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
 						if (joint.distance < distanceMax - retractationStep)
 						{
 							joint.distance += retractationStep;
+                            //permet de faire reculer le joueur avec le changement de distance max
 							joint.maxDistanceOnly = false;
 						}
 					}
@@ -303,8 +323,10 @@ public class Hook : MonoBehaviour {
 				}
 			}
 
+            //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
 			if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
 			{
+                //Active la corde (line renderer) et instancie une tête de grappin
 				line.startColor = colorRope;
 				line.endColor = colorRope;
 				line.gameObject.SetActive(true);
@@ -321,13 +343,14 @@ public class Hook : MonoBehaviour {
 				Vector3 startPos = line.GetPosition(0);
 				Vector3 endPos = line.GetPosition(1);
 
+                //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
 				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
 				lineCollider.transform.position = (startPos + endPos) / 2;
 				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
 				hookInCD = true;
 			}
-
+            //Si le joueur relache le bouton on désactive le grappin
 			else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
 			{
 				DisableRope();
@@ -335,6 +358,7 @@ public class Hook : MonoBehaviour {
 		}
     }
 
+    //Désactive tout ce qu'il est relatif au grappin
     public void DisableRope(){
         StartCoroutine("ResetHookCD");
         playerMovement.StateNotHooked();
@@ -355,11 +379,14 @@ public class Hook : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision){
+        //Les collisions ne sont gérés que si le player est en mode offensif
         if(currentState == HookState.Arrow){
+            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon sa vitesse
             if(collision.gameObject.CompareTag("Player")){
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + 
                 playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
             } 
+            //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
             else if (collision.gameObject.CompareTag("Arrow"))
             {
                 playerMovement.lockMovementKnockBack = true;

@@ -66,8 +66,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Vérifie si le joueur est sur le sol
 		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
+        //Gère l'état du joueur
         if (isGrounded && currentState != State.hooked)
         {
             currentState = State.grounded;
@@ -83,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 		else
 			lockMovement = false;
 
+        //Switch permettant de gérer le mouvement en fonction de l'état du joueur
         switch (currentState)
         {
             case State.grounded:
@@ -108,11 +111,6 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case State.hooked:
-                //rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal"+playerNumber) * hookMovementForce);
-
-                //Déplacement grâce au référenciel de l'enfant
-                //rigid.AddForce(childRedAxis * Input.GetAxis("Horizontal" + playerNumber) * hookMovementForce);
-
                 //Déplacement selon la flèche
                 if((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f) 
                 || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))

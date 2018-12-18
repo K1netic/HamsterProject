@@ -37,6 +37,7 @@ public class PlayerLifeManager : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
 
+        //Récupère le slider qui correspond au player et applique la couleur du joueur sur la zone de remplissage
         lifeUI = GameObject.Find("HPBar"+playerMovement.playerNumber).GetComponent<Slider>();
         lifeUI.transform.GetChild(1).GetComponentInChildren<Image>().color = GetComponent<SpriteRenderer>().color;
 
@@ -45,25 +46,37 @@ public class PlayerLifeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
         if (playerHP <= 0)
         {
             Dead();
         }
     }
 
+    //Fonction qui applique des dégâts au joueur
+    //1er arg : les dégats qui vont être appliqués
+    //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
+    //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
     public void TakeDamage(float damage, GameObject attacker, bool knockBack)
     {
+        //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
             inRecovery = true;
             if (knockBack)
             {
+                //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovementKnockBack = true;
+                //Calcul la direction du knockback
                 Vector2 directionKnockBack = (attacker.transform.position - transform.position).normalized;
+                //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                 playerMovement.rigid.velocity = Vector3.zero;
                 Invoke("UnlockMovement", knockBackTime);
+                //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
+                //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
                 switch (attacker.tag)
                 {
+                    //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
                         playerMovement.rigid.AddForce(-directionKnockBack * (knockBackPlayerHit
                         /*+ attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio*/), ForceMode2D.Impulse);
@@ -81,7 +94,9 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             playerHP -= damage;
             UpdateLifeUI();
+            //Rend le player invulnérable pendant recoveryTime secondes
             Invoke("ResetRecovery", recoveryTime);
+            //Fait clignoter le joueur tant qu'il est invulnérable
             InvokeRepeating("Flashing", 0, flashingRate);
 
 			// Counting kills for the player score
@@ -111,6 +126,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void ResetRecovery()
     {
+        //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke();
         inRecovery = false;
         sprite.enabled = true;

@@ -39,15 +39,17 @@ public class Inventory : MonoBehaviour {
         playerMovementScript = GetComponent<PlayerMovement>();
         playerRigid = GetComponent<Rigidbody2D>();
         playerNumber = playerMovementScript.playerNumber;
-        stockGravity = playerRigid.gravityScale;
-        item  = GameObject.Find("Item"+playerMovementScript.playerNumber).GetComponent<Text>();
+        stockGravity = playerRigid.gravityScale;//Nécessaire pour l'utilisation du parachute
+        item  = GameObject.Find("Item"+playerMovementScript.playerNumber).GetComponent<Text>();//Récupération du texte pour UI
     }
 
     // Update is called once per frame
     void Update () {
+        //Si le joueur appuye sur le bouton ITEM et que l'utilisation d'un objet n'est pas en CD l'objet possédé est utilisé
         if (Input.GetButtonDown("Item" + playerNumber) && !cdItem)
         {
             cdItem = true;
+            //Switch pour savoir quel item le joueur possède
             switch (currentItem)
             {
                 case "SteelRope":
@@ -65,6 +67,7 @@ public class Inventory : MonoBehaviour {
                 case "Parachute":
                     currentItem = "None";
                     item.text = "None";
+                    //Si le joueur n'est pas au sol le parachute s'ouvre et modifie la gravité du joueur pour un temps donné
                     if (!playerMovementScript.isGrounded)
                     {
                         playerRigid.gravityScale /= gravityWithParachute;
@@ -85,6 +88,7 @@ public class Inventory : MonoBehaviour {
                     item.text = "None";
                     break;
                 case "CocaineCroquettes":
+                    //Change la valeur de bonusSpeed dans le script PlayerMovement pour un temps donné
                     currentItem = "None";
                     item.text = "None";
                     playerMovementScript.bonusSpeed = bonusCroquettes;

@@ -43,11 +43,13 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void Destruction(){
+        //Désactive la corde
         if (hook.line.gameObject.activeSelf)
         {
             hook.line.gameObject.SetActive(false);
         }
         StartCoroutine(hook.ResetHookCD());
+        //Rend le projectile jusqu'à ce qu'il soit détruit pour que la fonction ResetHookCD puisse s'effectuer entièrement
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
         Invoke("End",balanceData.timeBtwShots+1);
@@ -55,14 +57,16 @@ public class Projectile : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Vérifie les collisions uniquement si le projectile n'est pas pas aggripé
         if (!hooked)
         {
-            
+            //Inflige des dégâts et détruit le projectile s'il touche un player
             if (collision.gameObject.CompareTag("Player"))
             {
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
             }
+            //S'accroche si jamais le gameObject à le bon tag
             else if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -74,7 +78,7 @@ public class Projectile : MonoBehaviour {
             }
         }
     }
-
+    //Appel la méthode qui permet de couper la corde si le grappin est attaché
     void OnTriggerEnter2D(Collider2D col){
         if(col.gameObject.CompareTag("Rope")){
             col.gameObject.GetComponent<LineCutter>().CutRope();
