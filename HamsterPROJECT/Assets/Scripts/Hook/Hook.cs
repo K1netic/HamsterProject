@@ -27,6 +27,7 @@ public class Hook : MonoBehaviour {
     [HideInInspector]
     public LineRenderer line;
     BoxCollider2D lineCollider;
+    Vector3 shootPos;
 
 	//SHOT
     [SerializeField]
@@ -36,6 +37,7 @@ public class Hook : MonoBehaviour {
     [HideInInspector]
     public GameObject currentProjectile;
     string playerNumber;
+    Projectile projectileScript;
 
     //ARROW 
     float knockBackTime;
@@ -149,6 +151,11 @@ public class Hook : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if(joint.connectedBody == null && joint.enabled){
+            joint.enabled = false;
+            jointNotCreated = true;
+        }
+
 		if (!isFrozen)
 		{
 			if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
@@ -234,12 +241,14 @@ public class Hook : MonoBehaviour {
 
 				if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
 				{
-					StartCoroutine("ResetHookCD");
+                    DisableRope();
+					/*StartCoroutine("ResetHookCD");
 					currentProjectile.GetComponent<Projectile>().End();
 					line.gameObject.SetActive(false);
+                    playerMovement.StateNotHooked();*/
 				}
 
-				if (currentProjectile.GetComponent<Projectile>().hooked)
+				if (projectileScript.hooked)
 				{
 					playerMovement.StateHooked();
 					if (jointNotCreated)
@@ -261,16 +270,7 @@ public class Hook : MonoBehaviour {
 
 					if (timeRemaining <= 0) 
 					{
-						StartCoroutine("ResetHookCD");
-						playerMovement.StateNotHooked();
-						player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
-						joint.enabled = false;
-						currentProjectile.GetComponent<Projectile>().End();
-						line.gameObject.SetActive(false);
-						jointNotCreated = true;
-						timeRemaining = timeHooked;
-						line.startColor = colorRope;
-						line.endColor = colorRope;
+                        DisableRope();
 					}
 
 
@@ -310,9 +310,12 @@ public class Hook : MonoBehaviour {
 				line.gameObject.SetActive(true);
 				line.SetPosition(0, player.transform.position);
 				currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+                projectileScript = currentProjectile.GetComponent<Projectile>();
+                shootPos = transform.GetChild(0).GetComponent<Transform>().position;
+                projectileScript.direction = (shootPos - transform.position).normalized;
 				currentProjectile.transform.parent = gameObject.transform.parent;
-				currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
-				currentProjectile.GetComponent<Projectile>().hook = this;
+				projectileScript.playerNumber = playerNumber;
+				projectileScript.hook = this;
 				line.SetPosition(1, currentProjectile.transform.position);
 
 				Vector3 startPos = line.GetPosition(0);
@@ -337,7 +340,7 @@ public class Hook : MonoBehaviour {
         playerMovement.StateNotHooked();
         player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = false;
-        currentProjectile.GetComponent<Projectile>().End();
+        projectileScript.End();
         line.gameObject.SetActive(false);
         jointNotCreated = true;
         timeRemaining = timeHooked;
