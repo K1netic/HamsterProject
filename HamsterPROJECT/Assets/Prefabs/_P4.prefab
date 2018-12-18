@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 50970325077824388}
   - component: {fileID: 60663170970368732}
   - component: {fileID: 60114598573755940}
+  - component: {fileID: 114844402004085810}
   m_Layer: 20
   m_Name: Arrow_P4
   m_TagString: Arrow
@@ -57,6 +58,21 @@ GameObject:
   - component: {fileID: 4740719657198494}
   m_Layer: 0
   m_Name: _P4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1867595884269108
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4845472593411748}
+  m_Layer: 17
+  m_Name: ShootPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +121,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4845472593411748}
   m_Father: {fileID: 4740719657198494}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,6 +153,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4740719657198494}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4845472593411748
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867595884269108}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.563, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4641017046395308}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50528306500583248
@@ -294,6 +324,7 @@ MonoBehaviour:
   projectile: {fileID: 1645695988748404, guid: e9950001e0803d046a53186f5db1cbfe, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  isFrozen: 0
 --- !u!114 &114217734810265896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,6 +342,7 @@ MonoBehaviour:
   jointDirection: {x: 0, y: 0}
   lockMovementKnockBack: 0
   bonusSpeed: 1
+  currentState: 0
   isGrounded: 0
   playerNumber: _P4
 --- !u!114 &114254027481778956
@@ -349,6 +381,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   currentItem: 
+--- !u!114 &114844402004085810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193887155682720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d912ce133dd990046bfbec175a58e938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 1
 --- !u!212 &212334848804816112
 SpriteRenderer:
   m_ObjectHideFlags: 1

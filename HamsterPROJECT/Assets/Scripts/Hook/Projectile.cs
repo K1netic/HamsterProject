@@ -7,7 +7,8 @@ public class Projectile : MonoBehaviour {
     Balancing balanceData;
 
     float speed;
-	Vector3 direction;
+    [HideInInspector]
+	public Vector3 direction;
     float hookheadDamage;
     Rigidbody2D rigid;
 
@@ -26,12 +27,12 @@ public class Projectile : MonoBehaviour {
         hookheadDamage = balanceData.hookheadDamage;
 
         rigid = GetComponent<Rigidbody2D>();
-        direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
+        /*direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
         {
             direction = Vector3.right;
-        }
+        }*/
 	}
 
 	void Update () {

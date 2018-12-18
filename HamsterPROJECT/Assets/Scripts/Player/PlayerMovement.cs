@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 childRedAxis;*/
     float airControlForce;
     float hookMovementForce;
-
+    [SerializeField]
     State currentState;
 
     //Ground Check

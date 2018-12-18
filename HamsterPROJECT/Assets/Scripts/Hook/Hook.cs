@@ -16,7 +16,7 @@ public class Hook : MonoBehaviour {
     [SerializeField]
     LayerMask layerMaskRaycast;
     [SerializeField]
-    LayerMask layerMaskArrow;
+    public LayerMask layerMaskArrow;
 	float timeHooked;
 	float timeRemaining;
 
@@ -27,6 +27,7 @@ public class Hook : MonoBehaviour {
     [HideInInspector]
     public LineRenderer line;
     BoxCollider2D lineCollider;
+    Vector3 shootPos;
 
 	//SHOT
     [SerializeField]
@@ -36,6 +37,7 @@ public class Hook : MonoBehaviour {
     [HideInInspector]
     public GameObject currentProjectile;
     string playerNumber;
+    Projectile projectileScript;
 
     //ARROW 
     float knockBackTime;
@@ -54,7 +56,7 @@ public class Hook : MonoBehaviour {
     Sprite shieldSprite;
     SpriteRenderer spriteRenderer;
     bool switchingState;
-    [HideInInspector]
+    [SerializeField]
     public HookState currentState;
     PolygonCollider2D[] colliders;
     PolygonCollider2D arrowCollider;
@@ -148,6 +150,11 @@ public class Hook : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(joint.connectedBody == null && joint.enabled){
+            joint.enabled = false;
+            jointNotCreated = true;
+        }
 
 		if (!isFrozen)
 		{
@@ -245,39 +252,33 @@ public class Hook : MonoBehaviour {
 				playerMovement.StateHooked();
 				if (jointNotCreated)
 				{
-					t = 0;
-					player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-					joint.enabled = true;
-					joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
-					joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
-					joint.maxDistanceOnly = true;
-					jointNotCreated = false;
-				}
-
-				timeRemaining -= Time.deltaTime;
-				if(timeRemaining <= timeHooked/2)
-					t += (Time.deltaTime / timeRemaining)/2;
-				line.startColor = Color.Lerp(colorRope, Color.black,t);
-				line.endColor = Color.Lerp(colorRope, Color.black,t);
-
-				if (timeRemaining <= 0) 
-				{
-					StartCoroutine("ResetHookCD");
-					playerMovement.StateNotHooked();
-					player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
-					joint.enabled = false;
+                    DisableRope();
+					/*StartCoroutine("ResetHookCD");
 					currentProjectile.GetComponent<Projectile>().End();
 					line.gameObject.SetActive(false);
-					jointNotCreated = true;
-					timeRemaining = timeHooked;
-					line.startColor = colorRope;
-					line.endColor = colorRope;
+                    playerMovement.StateNotHooked();*/
 				}
 
+				if (projectileScript.hooked)
+				{
+					playerMovement.StateHooked();
+					if (jointNotCreated)
+					{
+						t = 0;
+						player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+						joint.enabled = true;
+						joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
+						joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
+						joint.maxDistanceOnly = true;
+						jointNotCreated = false;
+					}
 
 				Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
 
-				playerMovement.jointDirection = jointDirection;
+					if (timeRemaining <= 0) 
+					{
+                        DisableRope();
+					}
 
 				RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
 				RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
@@ -304,17 +305,20 @@ public class Hook : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
-		{
-			line.startColor = colorRope;
-			line.endColor = colorRope;
-			line.gameObject.SetActive(true);
-			line.SetPosition(0, player.transform.position);
-			currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-			currentProjectile.transform.parent = gameObject.transform.parent;
-			currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
-			currentProjectile.GetComponent<Projectile>().hook = this;
-			line.SetPosition(1, currentProjectile.transform.position);
+			if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
+			{
+				line.startColor = colorRope;
+				line.endColor = colorRope;
+				line.gameObject.SetActive(true);
+				line.SetPosition(0, player.transform.position);
+				currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+                projectileScript = currentProjectile.GetComponent<Projectile>();
+                shootPos = transform.GetChild(0).GetComponent<Transform>().position;
+                projectileScript.direction = (shootPos - transform.position).normalized;
+				currentProjectile.transform.parent = gameObject.transform.parent;
+				projectileScript.playerNumber = playerNumber;
+				projectileScript.hook = this;
+				line.SetPosition(1, currentProjectile.transform.position);
 
 			Vector3 startPos = line.GetPosition(0);
 			Vector3 endPos = line.GetPosition(1);
@@ -342,7 +346,7 @@ public class Hook : MonoBehaviour {
         playerMovement.StateNotHooked();
         player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = false;
-        currentProjectile.GetComponent<Projectile>().End();
+        projectileScript.End();
         line.gameObject.SetActive(false);
         jointNotCreated = true;
         timeRemaining = timeHooked;
