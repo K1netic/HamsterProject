@@ -68,7 +68,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel_P1") && previousScene != null && previousScene != "" && activatedPlayers == 0)
+		if (Input.GetButtonDown("Cancel_P1") && previousScene != null && previousScene != "" && activatedPlayers == 0 && panels[0].state != PlayerSelectionPanel.SelectionPanelState.Validated)
 		{
 			SceneManager.LoadScene (previousScene);
 		}

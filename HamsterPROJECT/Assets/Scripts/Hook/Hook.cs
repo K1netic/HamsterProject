@@ -171,6 +171,7 @@ public class Hook : MonoBehaviour {
 				}
 				Invoke("ResetCDSwitch",0.1f);
 			}
+		
 
 			transform.position = player.transform.position;
 			/*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
@@ -217,118 +218,122 @@ public class Hook : MonoBehaviour {
             }
         }*/
 
+		}
+
+		if (currentProjectile != null)
+		{
+			line.SetPosition(0, player.transform.position);
+			line.SetPosition(1, currentProjectile.transform.position);
+
+			Vector3 startPos = line.GetPosition(0);
+			Vector3 endPos = line.GetPosition(1);
+
+			lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+			lineCollider.transform.position = (startPos + endPos) / 2;
+			lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
 
-			if (currentProjectile != null)
+			if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
 			{
-				line.SetPosition(0, player.transform.position);
-				line.SetPosition(1, currentProjectile.transform.position);
+				StartCoroutine("ResetHookCD");
+				currentProjectile.GetComponent<Projectile>().End();
+				line.gameObject.SetActive(false);
+			}
 
-				Vector3 startPos = line.GetPosition(0);
-				Vector3 endPos = line.GetPosition(1);
+			if (currentProjectile.GetComponent<Projectile>().hooked)
+			{
+				playerMovement.StateHooked();
+				if (jointNotCreated)
+				{
+					t = 0;
+					player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+					joint.enabled = true;
+					joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
+					joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
+					joint.maxDistanceOnly = true;
+					jointNotCreated = false;
+				}
 
-				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-				lineCollider.transform.position = (startPos + endPos) / 2;
-				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+				timeRemaining -= Time.deltaTime;
+				if(timeRemaining <= timeHooked/2)
+					t += (Time.deltaTime / timeRemaining)/2;
+				line.startColor = Color.Lerp(colorRope, Color.black,t);
+				line.endColor = Color.Lerp(colorRope, Color.black,t);
 
-
-				if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
+				if (timeRemaining <= 0) 
 				{
 					StartCoroutine("ResetHookCD");
+					playerMovement.StateNotHooked();
+					player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
+					joint.enabled = false;
 					currentProjectile.GetComponent<Projectile>().End();
 					line.gameObject.SetActive(false);
+					jointNotCreated = true;
+					timeRemaining = timeHooked;
+					line.startColor = colorRope;
+					line.endColor = colorRope;
 				}
 
-				if (currentProjectile.GetComponent<Projectile>().hooked)
+
+				Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+
+				playerMovement.jointDirection = jointDirection;
+
+				RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
+				RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+
+				Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
+
+				if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
 				{
-					playerMovement.StateHooked();
-					if (jointNotCreated)
-					{
-						t = 0;
-						player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-						joint.enabled = true;
-						joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
-						joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
-						joint.maxDistanceOnly = true;
-						jointNotCreated = false;
-					}
-
-					timeRemaining -= Time.deltaTime;
-					if(timeRemaining <= timeHooked/2)
-						t += (Time.deltaTime / timeRemaining)/2;
-					line.startColor = Color.Lerp(colorRope, Color.black,t);
-					line.endColor = Color.Lerp(colorRope, Color.black,t);
-
-					if (timeRemaining <= 0) 
-					{
-						StartCoroutine("ResetHookCD");
-						playerMovement.StateNotHooked();
-						player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
-						joint.enabled = false;
-						currentProjectile.GetComponent<Projectile>().End();
-						line.gameObject.SetActive(false);
-						jointNotCreated = true;
-						timeRemaining = timeHooked;
-						line.startColor = colorRope;
-						line.endColor = colorRope;
-					}
-
-
-					Vector3 jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
-
-					playerMovement.jointDirection = jointDirection;
-
-					RaycastHit2D checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-					RaycastHit2D checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
-
-					Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
-
-					if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
-					{
-						joint.distance -= retractationStep;
-					}
-
-					if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
-					{
-						if (joint.distance < distanceMax - retractationStep)
-						{
-							joint.distance += retractationStep;
-							joint.maxDistanceOnly = false;
-						}
-					}
-					else
-					{
-						joint.maxDistanceOnly = true;
-					}   
+					joint.distance -= retractationStep;
 				}
+
+				if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
+				{
+					if (joint.distance < distanceMax - retractationStep)
+					{
+						joint.distance += retractationStep;
+						joint.maxDistanceOnly = false;
+					}
+				}
+				else
+				{
+					joint.maxDistanceOnly = true;
+				}   
 			}
+		}
 
-			if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
-			{
-				line.startColor = colorRope;
-				line.endColor = colorRope;
-				line.gameObject.SetActive(true);
-				line.SetPosition(0, player.transform.position);
-				currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-				currentProjectile.transform.parent = gameObject.transform.parent;
-				currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
-				currentProjectile.GetComponent<Projectile>().hook = this;
-				line.SetPosition(1, currentProjectile.transform.position);
+		if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
+		{
+			line.startColor = colorRope;
+			line.endColor = colorRope;
+			line.gameObject.SetActive(true);
+			line.SetPosition(0, player.transform.position);
+			currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+			currentProjectile.transform.parent = gameObject.transform.parent;
+			currentProjectile.GetComponent<Projectile>().playerNumber = playerNumber;
+			currentProjectile.GetComponent<Projectile>().hook = this;
+			line.SetPosition(1, currentProjectile.transform.position);
 
-				Vector3 startPos = line.GetPosition(0);
-				Vector3 endPos = line.GetPosition(1);
+			Vector3 startPos = line.GetPosition(0);
+			Vector3 endPos = line.GetPosition(1);
 
-				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-				lineCollider.transform.position = (startPos + endPos) / 2;
-				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+			lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+			lineCollider.transform.position = (startPos + endPos) / 2;
+			lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
-				hookInCD = true;
-			}
+			hookInCD = true;
+		}
 
-			else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
-			{
-				DisableRope();
-			}
+		else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null && !isFrozen)
+		{
+			DisableRope();
+		}
+
+		else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null && isFrozen)
+		{
+			StartCoroutine(Unfrozen());
 		}
     }
 
@@ -350,6 +355,17 @@ public class Hook : MonoBehaviour {
         yield return new WaitForSeconds(timeBtwShots);
         hookInCD = false;
     }
+
+	IEnumerator Unfrozen()
+	{
+		yield return new WaitUntil(() => !isFrozen);
+
+		// Disable rope if button is not held at the moment the game is unpaused/unfrozen
+		if (!Input.GetButton("Hook" + playerNumber))
+		{
+			DisableRope ();
+		}
+	}
 
     void OnCollisionEnter2D(Collision2D collision){
         if(currentState == HookState.Arrow){
