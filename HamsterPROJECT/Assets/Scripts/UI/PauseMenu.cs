@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Pause_P1") && !isOpen)
+		if (Input.GetButtonDown("Pause_P1") && !isOpen && MatchStart.gameHasStarted)
 		{
 			OpenPauseMenu ();
 			FreezePlayers ();
@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour {
 		else if ((Input.GetButtonDown("Pause_P1") || Input.GetButtonDown("Cancel_P1")) && isOpen)
 		{
 			ClosePauseMenu ();
-			UnFreezePlayers ();
+			UnfreezePlayers ();
 		}
 	}
 
@@ -55,7 +55,7 @@ public class PauseMenu : MonoBehaviour {
 		}
 	}
 
-	void UnFreezePlayers()
+	void UnfreezePlayers()
 	{
 		foreach (GameObject arrow in arrows)
 		{

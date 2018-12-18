@@ -73,7 +73,6 @@ public class MatchEnd : MonoBehaviour {
 
 	IEnumerator DisplayScore()
 	{
-		
 		yield return new WaitForSeconds (1f);
 		scoreDisplay.SetActive (true);
 		foreach (GameObject arrow in arrows)

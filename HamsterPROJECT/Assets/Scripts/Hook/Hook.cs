@@ -187,6 +187,7 @@ public class Hook : MonoBehaviour {
                 //Empeche l'input d'être répété trop vite
 				Invoke("ResetCDSwitch",0.1f);
 			}
+		
 
             //S'assure que la position de la fléche et toujours aligné sur celle du player
 			transform.position = player.transform.position;
@@ -235,6 +236,7 @@ public class Hook : MonoBehaviour {
             }
         }*/
 
+		}
 
             //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
 			if (currentProjectile != null)
@@ -243,8 +245,9 @@ public class Hook : MonoBehaviour {
 				line.SetPosition(0, player.transform.position);
 				line.SetPosition(1, currentProjectile.transform.position);
 
-				Vector3 startPos = line.GetPosition(0);
-				Vector3 endPos = line.GetPosition(1);
+			lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+			lineCollider.transform.position = (startPos + endPos) / 2;
+			lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
                 //Aligne le trigger de la corde sur la corde
 				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
@@ -302,7 +305,8 @@ public class Hook : MonoBehaviour {
                     //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
 					if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
 					{
-						joint.distance -= retractationStep;
+						joint.distance += retractationStep;
+						joint.maxDistanceOnly = false;
 					}
 
                     //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
@@ -321,7 +325,12 @@ public class Hook : MonoBehaviour {
 						joint.maxDistanceOnly = true;
 					}   
 				}
+				else
+				{
+					joint.maxDistanceOnly = true;
+				}   
 			}
+		}
 
             //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
 			if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
@@ -340,8 +349,8 @@ public class Hook : MonoBehaviour {
 				projectileScript.hook = this;
 				line.SetPosition(1, currentProjectile.transform.position);
 
-				Vector3 startPos = line.GetPosition(0);
-				Vector3 endPos = line.GetPosition(1);
+			Vector3 startPos = line.GetPosition(0);
+			Vector3 endPos = line.GetPosition(1);
 
                 //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
 				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
@@ -355,6 +364,11 @@ public class Hook : MonoBehaviour {
 			{
 				DisableRope();
 			}
+		}
+
+		else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null && isFrozen)
+		{
+			StartCoroutine(Unfrozen());
 		}
     }
 
@@ -377,6 +391,17 @@ public class Hook : MonoBehaviour {
         yield return new WaitForSeconds(timeBtwShots);
         hookInCD = false;
     }
+
+	IEnumerator Unfrozen()
+	{
+		yield return new WaitUntil(() => !isFrozen);
+
+		// Disable rope if button is not held at the moment the game is unpaused/unfrozen
+		if (!Input.GetButton("Hook" + playerNumber))
+		{
+			DisableRope ();
+		}
+	}
 
     void OnCollisionEnter2D(Collision2D collision){
         //Les collisions ne sont gérés que si le player est en mode offensif
