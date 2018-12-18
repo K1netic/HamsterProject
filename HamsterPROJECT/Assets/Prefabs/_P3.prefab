@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 50130597521113070}
   - component: {fileID: 60074316152335222}
   - component: {fileID: 60973174001419578}
+  - component: {fileID: 114212838577859832}
   m_Layer: 19
   m_Name: Arrow_P3
   m_TagString: Arrow
@@ -103,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490937746107604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.5, y: -13.25, z: 0}
+  m_LocalPosition: {x: -24.2, y: -12.29, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4127010833782516}
@@ -271,6 +272,22 @@ PolygonCollider2D:
       - {x: 0.57166666, y: -0.14583334}
       - {x: 0.57166666, y: 0.15416667}
       - {x: 0.42333335, y: 0.3025}
+--- !u!114 &114212838577859832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1199139456897382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d912ce133dd990046bfbec175a58e938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 1
 --- !u!114 &114270428737713064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,6 +311,7 @@ MonoBehaviour:
   projectile: {fileID: 1645695988748404, guid: 9c6de93432523d24596b4d011cef3a3c, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  isFrozen: 0
 --- !u!114 &114487518868658880
 MonoBehaviour:
   m_ObjectHideFlags: 1

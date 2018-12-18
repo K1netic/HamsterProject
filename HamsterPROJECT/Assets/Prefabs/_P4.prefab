@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 50970325077824388}
   - component: {fileID: 60663170970368732}
   - component: {fileID: 60114598573755940}
+  - component: {fileID: 114844402004085810}
   m_Layer: 20
   m_Name: Arrow_P4
   m_TagString: Arrow
@@ -294,6 +295,7 @@ MonoBehaviour:
   projectile: {fileID: 1645695988748404, guid: e9950001e0803d046a53186f5db1cbfe, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  isFrozen: 0
 --- !u!114 &114217734810265896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,6 +351,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   currentItem: 
+--- !u!114 &114844402004085810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193887155682720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d912ce133dd990046bfbec175a58e938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 1
 --- !u!212 &212334848804816112
 SpriteRenderer:
   m_ObjectHideFlags: 1

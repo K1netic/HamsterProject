@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 50469630686842804}
   - component: {fileID: 60543343198124326}
   - component: {fileID: 60328549094645384}
+  - component: {fileID: 114042248265755830}
   m_Layer: 18
   m_Name: Arrow_P2
   m_TagString: Arrow
@@ -129,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1561990239454186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.7, y: 4.6, z: 0}
+  m_LocalPosition: {x: 3.59, y: -12.99, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4073003708446972}
@@ -282,6 +283,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114042248265755830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853884896473544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d912ce133dd990046bfbec175a58e938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  skinWidth: 1
 --- !u!114 &114342300618671746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,6 +334,7 @@ MonoBehaviour:
   projectile: {fileID: 1645695988748404, guid: 4c65cab67fc67524a9f02df0d06f9066, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  isFrozen: 0
 --- !u!114 &114723513862862120
 MonoBehaviour:
   m_ObjectHideFlags: 1

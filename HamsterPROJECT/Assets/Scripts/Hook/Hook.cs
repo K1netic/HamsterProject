@@ -16,7 +16,7 @@ public class Hook : MonoBehaviour {
     [SerializeField]
     LayerMask layerMaskRaycast;
     [SerializeField]
-    LayerMask layerMaskArrow;
+    public LayerMask layerMaskArrow;
 	float timeHooked;
 	float timeRemaining;
 
@@ -54,7 +54,7 @@ public class Hook : MonoBehaviour {
     Sprite shieldSprite;
     SpriteRenderer spriteRenderer;
     bool switchingState;
-    [HideInInspector]
+    [SerializeField]
     public HookState currentState;
     PolygonCollider2D[] colliders;
     PolygonCollider2D arrowCollider;
