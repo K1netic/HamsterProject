@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 50540273417895388}
   - component: {fileID: 58770085993319782}
   - component: {fileID: 114723513862862120}
-  - component: {fileID: 114877174795113960}
   - component: {fileID: 114009405070246460}
   m_Layer: 9
   m_Name: P2
@@ -384,19 +383,6 @@ MonoBehaviour:
   currentState: 0
   isGrounded: 0
   playerNumber: _P2
---- !u!114 &114877174795113960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1484734949075630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2241ffa82c0b29a4095d5fea55ea5cc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  currentItem: 
 --- !u!212 &212712153489027198
 SpriteRenderer:
   m_ObjectHideFlags: 1
