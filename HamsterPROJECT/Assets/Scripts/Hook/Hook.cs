@@ -168,7 +168,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-			if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
+			if(Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
 				switchingState = true;
 				switch (currentState){
 				case HookState.Arrow:
@@ -246,29 +246,29 @@ public class Hook : MonoBehaviour {
 
 			damageAlreadyApplied = false;
 
-        if(arrowEdge1.collider != null){
-            if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
-                TakeDamage(arrowDamage + 
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-                damageAlreadyApplied = true;
-            } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
-                Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                damageAlreadyApplied = true;
+            if(arrowEdge1.collider != null){
+                if(arrowEdge1.collider.gameObject.CompareTag("Player")){
+                    arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
+                    TakeDamage(arrowDamage + 
+                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                    damageAlreadyApplied = true;
+                } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
+                    Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
+                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                    damageAlreadyApplied = true;
+                }
             }
-        }
-        if(arrowEdge2.collider != null && !damageAlreadyApplied){
-            if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
-                TakeDamage(arrowDamage + 
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-            } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
-                Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                damageAlreadyApplied = true;
-            }
-        }*/
+            if(arrowEdge2.collider != null && !damageAlreadyApplied){
+                if(arrowEdge2.collider.gameObject.CompareTag("Player")){
+                    arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
+                    TakeDamage(arrowDamage + 
+                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
+                    Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
+                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                    damageAlreadyApplied = true;
+                }
+            }*/
 
 		}
 
