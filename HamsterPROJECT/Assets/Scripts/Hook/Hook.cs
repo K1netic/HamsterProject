@@ -16,7 +16,7 @@ public class Hook : MonoBehaviour {
     [SerializeField]
     LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
     [SerializeField]
-    public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche (anciennement utilisé pour le raycast de la flèche)
+    public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche dans DontGoThroughThings (anciennement utilisé pour le raycast de la flèche)
 	float timeHooked;
 	float timeRemaining;
     Vector3 jointDirection;
@@ -168,7 +168,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-			if(Input.GetButtonDown("Item"+playerNumber) && !switchingState){
+			if(Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
 				switchingState = true;
 				switch (currentState){
 				case HookState.Arrow:
@@ -176,12 +176,44 @@ public class Hook : MonoBehaviour {
 					currentState = HookState.Shield;
 					arrowCollider.enabled = false;
 					shieldCollider.enabled = true;
+                    switch  (playerNumber){
+                        case "_P1":
+                        gameObject.layer = 21;
+                        break;
+                        case "_P2":
+                        gameObject.layer = 22;
+                        break;
+                        case "_P3":
+                        gameObject.layer = 23;
+                        break;
+                        case "_P4":
+                        gameObject.layer = 24;
+                        break;
+                        default:
+                        break;
+                    }
 					break;
 				case HookState.Shield:
 					spriteRenderer.sprite = arrowSprite;
 					currentState = HookState.Arrow;
 					arrowCollider.enabled = true;
 					shieldCollider.enabled = false;
+                    switch  (playerNumber){
+                        case "_P1":
+                        gameObject.layer = 17;
+                        break;
+                        case "_P2":
+                        gameObject.layer = 18;
+                        break;
+                        case "_P3":
+                        gameObject.layer = 19;
+                        break;
+                        case "_P4":
+                        gameObject.layer = 20;
+                        break;
+                        default:
+                        break;
+                    }
 					break;
 				default:
 					break;
@@ -214,29 +246,29 @@ public class Hook : MonoBehaviour {
 
 			damageAlreadyApplied = false;
 
-        if(arrowEdge1.collider != null){
-            if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
-                TakeDamage(arrowDamage + 
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-                damageAlreadyApplied = true;
-            } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
-                Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                damageAlreadyApplied = true;
+            if(arrowEdge1.collider != null){
+                if(arrowEdge1.collider.gameObject.CompareTag("Player")){
+                    arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
+                    TakeDamage(arrowDamage + 
+                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                    damageAlreadyApplied = true;
+                } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
+                    Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
+                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                    damageAlreadyApplied = true;
+                }
             }
-        }
-        if(arrowEdge2.collider != null && !damageAlreadyApplied){
-            if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
-                TakeDamage(arrowDamage + 
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-            } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
-                Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                damageAlreadyApplied = true;
-            }
-        }*/
+            if(arrowEdge2.collider != null && !damageAlreadyApplied){
+                if(arrowEdge2.collider.gameObject.CompareTag("Player")){
+                    arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
+                    TakeDamage(arrowDamage + 
+                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
+                } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
+                    Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
+                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
+                    damageAlreadyApplied = true;
+                }
+            }*/
 
 		}
 
@@ -310,8 +342,7 @@ public class Hook : MonoBehaviour {
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
                 if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
-                    joint.distance += retractationStep;
-                    joint.maxDistanceOnly = false;
+                    joint.distance -= retractationStep;
                 }
 
                 //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
@@ -329,11 +360,10 @@ public class Hook : MonoBehaviour {
                 {
                     joint.maxDistanceOnly = true;
                 }   
-            }
-            else
-            {
-                joint.maxDistanceOnly = true;
-            }   
+            }  
+        }
+        else{
+            playerMovement.StateNotHooked();
         }
 
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
@@ -353,8 +383,8 @@ public class Hook : MonoBehaviour {
             projectileScript.hook = this;
             line.SetPosition(1, currentProjectile.transform.position);
 
-        Vector3 startPos = line.GetPosition(0);
-        Vector3 endPos = line.GetPosition(1);
+            startPos = line.GetPosition(0);
+            endPos = line.GetPosition(1);
 
             //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
             lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
