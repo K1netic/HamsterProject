@@ -41,6 +41,8 @@ public class Hook : MonoBehaviour {
     public GameObject currentProjectile;
     string playerNumber;
     Projectile projectileScript;
+    Vector3 startPos;
+    Vector3 endPos;
 
     //ARROW 
     float knockBackTime;
@@ -238,133 +240,134 @@ public class Hook : MonoBehaviour {
 
 		}
 
-            //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
-			if (currentProjectile != null)
-			{
-                //Aligne la position sur le player et la tete de grappin
-				line.SetPosition(0, player.transform.position);
-				line.SetPosition(1, currentProjectile.transform.position);
+        //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
+        if (currentProjectile != null)
+        {
+            //Aligne la position sur le player et la tete de grappin
+            line.SetPosition(0, player.transform.position);
+            line.SetPosition(1, currentProjectile.transform.position);
 
-			lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-			lineCollider.transform.position = (startPos + endPos) / 2;
-			lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+            startPos = line.GetPosition(0); 
+			endPos = line.GetPosition(1); 
 
-                //Aligne le trigger de la corde sur la corde
-				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-				lineCollider.transform.position = (startPos + endPos) / 2;
-				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+            lineCollider.transform.position = (startPos + endPos) / 2;
+            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
-                //Désactive le grappin s'il est trop loin du joueur
-				if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
-				{
+            //Aligne le trigger de la corde sur la corde
+            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+            lineCollider.transform.position = (startPos + endPos) / 2;
+            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+
+            //Désactive le grappin s'il est trop loin du joueur
+            if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
+            {
+                DisableRope();
+            }
+
+            //Test si le grappin est aggripé
+            if (projectileScript.hooked)
+            {
+                //Change l'état du joueur
+                playerMovement.StateHooked();
+
+                //Active le joint s'il ne l'est pas encore
+                if (jointNotCreated)
+                {
+                    t = 0;
+                    player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                    joint.enabled = true;
+                    joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
+                    joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
+                    joint.maxDistanceOnly = true;
+                    jointNotCreated = false;
+                }
+
+                //Gère le timer du grappin et le changement de couleur de la corde
+                timeRemaining -= Time.deltaTime;
+                if(timeRemaining <= timeHooked/2)
+                    t += (Time.deltaTime / timeRemaining)/2;
+                line.startColor = Color.Lerp(colorRope, Color.black,t);
+                line.endColor = Color.Lerp(colorRope, Color.black,t);
+
+                //Si le temps est négatif le grappin est alors détruit
+                if (timeRemaining <= 0) 
+                {
                     DisableRope();
-				}
+                }
 
-                //Test si le grappin est aggripé
-				if (projectileScript.hooked)
-				{
-                    //Change l'état du joueur
-					playerMovement.StateHooked();
+                //Calcule la direction du joint pour les raycast
+                jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
 
-                    //Active le joint s'il ne l'est pas encore
-					if (jointNotCreated)
-					{
-						t = 0;
-						player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-						joint.enabled = true;
-						joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
-						joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
-						joint.maxDistanceOnly = true;
-						jointNotCreated = false;
-					}
+                playerMovement.jointDirection = jointDirection;
 
-                    //Gère le timer du grappin et le changement de couleur de la corde
-					timeRemaining -= Time.deltaTime;
-					if(timeRemaining <= timeHooked/2)
-						t += (Time.deltaTime / timeRemaining)/2;
-					line.startColor = Color.Lerp(colorRope, Color.black,t);
-					line.endColor = Color.Lerp(colorRope, Color.black,t);
+                //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
+                checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
+                checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
 
-                    //Si le temps est négatif le grappin est alors détruit
-					if (timeRemaining <= 0) 
-					{
-                        DisableRope();
-					}
+                Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
 
-                    //Calcule la direction du joint pour les raycast
-					jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+                //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
+                if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
+                {
+                    joint.distance += retractationStep;
+                    joint.maxDistanceOnly = false;
+                }
 
-					playerMovement.jointDirection = jointDirection;
+                //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
+                if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
+                {
+                    //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
+                    if (joint.distance < distanceMax - retractationStep)
+                    {
+                        joint.distance += retractationStep;
+                        //permet de faire reculer le joueur avec le changement de distance max
+                        joint.maxDistanceOnly = false;
+                    }
+                }
+                else
+                {
+                    joint.maxDistanceOnly = true;
+                }   
+            }
+            else
+            {
+                joint.maxDistanceOnly = true;
+            }   
+        }
 
-                    //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
-					checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-					checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+        //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
+        if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
+        {
+            //Active la corde (line renderer) et instancie une tête de grappin
+            line.startColor = colorRope;
+            line.endColor = colorRope;
+            line.gameObject.SetActive(true);
+            line.SetPosition(0, player.transform.position);
+            currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+            projectileScript = currentProjectile.GetComponent<Projectile>();
+            shootPos = transform.GetChild(0).GetComponent<Transform>().position;
+            projectileScript.direction = (shootPos - transform.position).normalized;
+            currentProjectile.transform.parent = gameObject.transform.parent;
+            projectileScript.playerNumber = playerNumber;
+            projectileScript.hook = this;
+            line.SetPosition(1, currentProjectile.transform.position);
 
-					Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
+        Vector3 startPos = line.GetPosition(0);
+        Vector3 endPos = line.GetPosition(1);
 
-                    //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
-					if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
-					{
-						joint.distance += retractationStep;
-						joint.maxDistanceOnly = false;
-					}
+            //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
+            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+            lineCollider.transform.position = (startPos + endPos) / 2;
+            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
-                    //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
-					if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
-					{
-                        //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
-						if (joint.distance < distanceMax - retractationStep)
-						{
-							joint.distance += retractationStep;
-                            //permet de faire reculer le joueur avec le changement de distance max
-							joint.maxDistanceOnly = false;
-						}
-					}
-					else
-					{
-						joint.maxDistanceOnly = true;
-					}   
-				}
-				else
-				{
-					joint.maxDistanceOnly = true;
-				}   
-			}
-		}
-
-            //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
-			if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
-			{
-                //Active la corde (line renderer) et instancie une tête de grappin
-				line.startColor = colorRope;
-				line.endColor = colorRope;
-				line.gameObject.SetActive(true);
-				line.SetPosition(0, player.transform.position);
-				currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-                projectileScript = currentProjectile.GetComponent<Projectile>();
-                shootPos = transform.GetChild(0).GetComponent<Transform>().position;
-                projectileScript.direction = (shootPos - transform.position).normalized;
-				currentProjectile.transform.parent = gameObject.transform.parent;
-				projectileScript.playerNumber = playerNumber;
-				projectileScript.hook = this;
-				line.SetPosition(1, currentProjectile.transform.position);
-
-			Vector3 startPos = line.GetPosition(0);
-			Vector3 endPos = line.GetPosition(1);
-
-                //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
-				lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-				lineCollider.transform.position = (startPos + endPos) / 2;
-				lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
-
-				hookInCD = true;
-			}
-            //Si le joueur relache le bouton on désactive le grappin
-			else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
-			{
-				DisableRope();
-			}
-		}
+            hookInCD = true;
+        }
+        //Si le joueur relache le bouton on désactive le grappin
+        else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
+        {
+            DisableRope();
+        }
 
 		else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null && isFrozen)
 		{
