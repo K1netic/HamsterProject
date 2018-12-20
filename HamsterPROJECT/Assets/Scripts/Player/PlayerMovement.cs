@@ -67,68 +67,76 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //Vérifie si le joueur est sur le sol
-		isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+		//isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+
+        if(currentState != State.hooked)
+            currentState = State.inAir;
 
         //Gère l'état du joueur
-        if (isGrounded && currentState != State.hooked)
+        /*if (isGrounded && currentState != State.hooked)
         {
             currentState = State.grounded;
         }
         else if(currentState != State.hooked)
         {
             currentState = State.inAir;
-        }
+        }*/
 
 		//Movement Lock
-		if (isGrounded && Input.GetButton ("Lock" + playerNumber))
+		if (Input.GetButton ("Lock" + playerNumber))
 			lockMovement = true;
 		else
 			lockMovement = false;
 
         //Switch permettant de gérer le mouvement en fonction de l'état du joueur
-        switch (currentState)
-        {
-            case State.grounded:
-                //Movement
-                if (!lockMovement && !lockMovementKnockBack)
-                {
-                    //Handling player direction
-                    if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
+        if(!lockMovementKnockBack){
+            switch (currentState){
+                case State.grounded:
+                    //Movement
+                    if (!lockMovement)
                     {
-                        playerDirection = 1;
-                    }
-                    if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
-                    {
-                        playerDirection = -1;
-                    }
+                        //Handling player direction
+                        if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
+                        {
+                            playerDirection = 1;
+                        }
+                        if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
+                        {
+                            playerDirection = -1;
+                        }
 
-                    //Input -> start moving
-                    if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
-                    {
-                        float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
-                        rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
+                        //Input -> start moving
+                        if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
+                        {
+                            float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
+                            rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
+                        }
                     }
-                }
-                break;
-            case State.hooked:
-                //Déplacement selon la flèche
-                if((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f) 
-                || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
-                {//LEFT & RIGHT
-                    rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
-                }
-                else if((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
-                || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
-                {//BOT & TOP
-                    rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
-                }
-                break;
-            case State.inAir:
-                rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
-                break;
-            default:
-                break;
+                    break;
+                case State.hooked:
+                    //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
+                    //Test si le joueur est dans un des 2 triangles de gauche ou de droite
+                    if((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f) 
+                    || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
+                    {//LEFT & RIGHT
+                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    //Test si le joueur est en haut ou en bas
+                    else if((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
+                    || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
+                    {//BOT & TOP
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
+                    }
+                    break;
+                case State.inAir:
+                    if(!lockMovement)
+                        rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
+                    break;
+                default:
+                    break;
+            }
         }
+        
 
         //FastFall
         /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
