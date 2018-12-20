@@ -169,127 +169,15 @@ public class Hook : MonoBehaviour {
 		{
             //Change entre la flèche et le bouclier
 			if(Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
-				switchingState = true;
-				switch (currentState){
-				case HookState.Arrow:
-					spriteRenderer.sprite = shieldSprite;
-					currentState = HookState.Shield;
-					arrowCollider.enabled = false;
-					shieldCollider.enabled = true;
-                    switch  (playerNumber){
-                        case "_P1":
-                        gameObject.layer = 21;
-                        break;
-                        case "_P2":
-                        gameObject.layer = 22;
-                        break;
-                        case "_P3":
-                        gameObject.layer = 23;
-                        break;
-                        case "_P4":
-                        gameObject.layer = 24;
-                        break;
-                        default:
-                        break;
-                    }
-					break;
-				case HookState.Shield:
-					spriteRenderer.sprite = arrowSprite;
-					currentState = HookState.Arrow;
-					arrowCollider.enabled = true;
-					shieldCollider.enabled = false;
-                    switch  (playerNumber){
-                        case "_P1":
-                        gameObject.layer = 17;
-                        break;
-                        case "_P2":
-                        gameObject.layer = 18;
-                        break;
-                        case "_P3":
-                        gameObject.layer = 19;
-                        break;
-                        case "_P4":
-                        gameObject.layer = 20;
-                        break;
-                        default:
-                        break;
-                    }
-					break;
-				default:
-					break;
-				}
-                //Empeche l'input d'être répété trop vite
-				Invoke("ResetCDSwitch",0.1f);
+				ArrowState();
 			}
-		
-
-            //S'assure que la position de la fléche et toujours aligné sur celle du player
-			transform.position = player.transform.position;
-			/*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
-            screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
-            float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
-
-            //Gère l'orientation de la flèche en fonction de l'input du player
-			if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0)
-				transform.rotation = Quaternion.FromToRotation(Vector3.right,new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
-
-			/*start1 = transform.GetChild(0).GetComponent<Transform>().position;
-            start2 = transform.GetChild(1).GetComponent<Transform>().position;
-            end = transform.GetChild(2).GetComponent<Transform>().position;
-
-			Debug.DrawLine(start1,end,Color.red);
-			Debug.DrawLine(start2,end,Color.red);
-
-			arrowEdge1 = Physics2D.Linecast(start1,end,layerMaskArrow);
-			arrowEdge2 = Physics2D.Linecast(start2,end,layerMaskArrow);
-
-			damageAlreadyApplied = false;
-
-            if(arrowEdge1.collider != null){
-                if(arrowEdge1.collider.gameObject.CompareTag("Player")){
-                    arrowEdge1.collider.gameObject.GetComponent<PlayerLifeManager>().
-                    TakeDamage(arrowDamage + 
-                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-                    damageAlreadyApplied = true;
-                } else if (arrowEdge1.collider.gameObject.CompareTag("Arrow")){
-                    Vector2 directionKnockBack = (arrowEdge1.collider.gameObject.transform.position - transform.position).normalized;
-                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                    damageAlreadyApplied = true;
-                }
-            }
-            if(arrowEdge2.collider != null && !damageAlreadyApplied){
-                if(arrowEdge2.collider.gameObject.CompareTag("Player")){
-                    arrowEdge2.collider.gameObject.GetComponent<PlayerLifeManager>().
-                    TakeDamage(arrowDamage + 
-                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-                } else if(arrowEdge2.collider.gameObject.CompareTag("Arrow")){
-                    Vector2 directionKnockBack = (arrowEdge2.collider.gameObject.transform.position - transform.position).normalized;
-                    playerMovement.rigid.AddForce(-directionKnockBack * knockBackForceTwoArrows, ForceMode2D.Impulse);
-                    damageAlreadyApplied = true;
-                }
-            }*/
-
+            UpdateArrow();
 		}
 
         //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
         if (currentProjectile != null)
         {
-            //Aligne la position sur le player et la tete de grappin
-            line.SetPosition(0, player.transform.position);
-            line.SetPosition(1, currentProjectile.transform.position);
-
-            startPos = line.GetPosition(0); 
-			endPos = line.GetPosition(1); 
-
-            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-            lineCollider.transform.position = (startPos + endPos) / 2;
-            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
-
-            //Aligne le trigger de la corde sur la corde
-            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-            lineCollider.transform.position = (startPos + endPos) / 2;
-            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+            UpdateRope();
 
             //Désactive le grappin s'il est trop loin du joueur
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
@@ -306,21 +194,10 @@ public class Hook : MonoBehaviour {
                 //Active le joint s'il ne l'est pas encore
                 if (jointNotCreated)
                 {
-                    t = 0;
-                    player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    joint.enabled = true;
-                    joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
-                    joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
-                    joint.maxDistanceOnly = true;
-                    jointNotCreated = false;
+                    CreateJoint();
                 }
 
-                //Gère le timer du grappin et le changement de couleur de la corde
-                timeRemaining -= Time.deltaTime;
-                if(timeRemaining <= timeHooked/2)
-                    t += (Time.deltaTime / timeRemaining)/2;
-                line.startColor = Color.Lerp(colorRope, Color.black,t);
-                line.endColor = Color.Lerp(colorRope, Color.black,t);
+                TimerRope();
 
                 //Si le temps est négatif le grappin est alors détruit
                 if (timeRemaining <= 0) 
@@ -328,17 +205,8 @@ public class Hook : MonoBehaviour {
                     DisableRope();
                 }
 
-                //Calcule la direction du joint pour les raycast
-                jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
-
-                playerMovement.jointDirection = jointDirection;
-
-                //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
-                checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-                checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
-
-                Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
-
+                RaycastingDistanceJoint();
+                
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
                 if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
                 {
@@ -369,29 +237,7 @@ public class Hook : MonoBehaviour {
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
         if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
         {
-            //Active la corde (line renderer) et instancie une tête de grappin
-            line.startColor = colorRope;
-            line.endColor = colorRope;
-            line.gameObject.SetActive(true);
-            line.SetPosition(0, player.transform.position);
-            currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-            projectileScript = currentProjectile.GetComponent<Projectile>();
-            shootPos = transform.GetChild(0).GetComponent<Transform>().position;
-            projectileScript.direction = (shootPos - transform.position).normalized;
-            currentProjectile.transform.parent = gameObject.transform.parent;
-            projectileScript.playerNumber = playerNumber;
-            projectileScript.hook = this;
-            line.SetPosition(1, currentProjectile.transform.position);
-
-            startPos = line.GetPosition(0);
-            endPos = line.GetPosition(1);
-
-            //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
-            lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
-            lineCollider.transform.position = (startPos + endPos) / 2;
-            lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
-
-            hookInCD = true;
+            ThrowHookhead();
         }
         //Si le joueur relache le bouton on désactive le grappin
         else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
@@ -403,6 +249,152 @@ public class Hook : MonoBehaviour {
 		{
 			StartCoroutine(Unfrozen());
 		}
+    }
+
+    void RaycastingDistanceJoint(){
+        //Calcule la direction du joint pour les raycast
+        jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
+
+        playerMovement.jointDirection = jointDirection;
+
+        //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
+        checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
+        checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+
+        Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
+    }
+
+    void UpdateArrow(){
+        //S'assure que la position de la fléche et toujours aligné sur celle du player
+        transform.position = player.transform.position;
+
+        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
+        screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
+        float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
+
+        //Gère l'orientation de la flèche en fonction de l'input du player
+        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0){
+            transform.rotation = Quaternion.FromToRotation(Vector3.right,
+            new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
+        }     
+    }
+
+    void ArrowState(){
+        switchingState = true;
+        switch (currentState){
+            case HookState.Arrow:
+                spriteRenderer.sprite = shieldSprite;
+                currentState = HookState.Shield;
+                arrowCollider.enabled = false;
+                shieldCollider.enabled = true;
+                switch  (playerNumber){
+                    case "_P1":
+                    gameObject.layer = 21;
+                    break;
+                    case "_P2":
+                    gameObject.layer = 22;
+                    break;
+                    case "_P3":
+                    gameObject.layer = 23;
+                    break;
+                    case "_P4":
+                    gameObject.layer = 24;
+                    break;
+                    default:
+                    break;
+                }
+                break;
+            case HookState.Shield:
+                spriteRenderer.sprite = arrowSprite;
+                currentState = HookState.Arrow;
+                arrowCollider.enabled = true;
+                shieldCollider.enabled = false;
+                switch  (playerNumber){
+                    case "_P1":
+                    gameObject.layer = 17;
+                    break;
+                    case "_P2":
+                    gameObject.layer = 18;
+                    break;
+                    case "_P3":
+                    gameObject.layer = 19;
+                    break;
+                    case "_P4":
+                    gameObject.layer = 20;
+                    break;
+                    default:
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
+        //Empeche l'input d'être répété trop vite
+        Invoke("ResetCDSwitch",0.1f);
+    }
+
+    void UpdateRope(){
+        //Aligne la position de la corde sur le player et la tete de grappin
+        line.SetPosition(0, player.transform.position);
+        line.SetPosition(1, currentProjectile.transform.position);
+
+        startPos = line.GetPosition(0); 
+        endPos = line.GetPosition(1); 
+
+        lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+        lineCollider.transform.position = (startPos + endPos) / 2;
+        lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+
+        //Aligne le trigger de la corde sur la corde
+        lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+        lineCollider.transform.position = (startPos + endPos) / 2;
+        lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+    }
+
+    void CreateJoint(){
+        t = 0;
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        joint.enabled = true;
+        joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
+        joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
+        joint.maxDistanceOnly = true;
+        jointNotCreated = false;
+    }
+
+    void TimerRope(){
+        //Gère le timer du grappin et le changement de couleur de la corde
+        timeRemaining -= Time.deltaTime;
+        if(timeRemaining <= timeHooked/2)
+            t += (Time.deltaTime / timeRemaining)/2;
+        line.startColor = Color.Lerp(colorRope, Color.black,t);
+        line.endColor = Color.Lerp(colorRope, Color.black,t);
+    }
+
+    private void ThrowHookhead(){
+        //Active la corde (line renderer) et instancie une tête de grappin
+        line.startColor = colorRope;
+        line.endColor = colorRope;
+        line.gameObject.SetActive(true);
+        line.SetPosition(0, player.transform.position);
+        currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+        projectileScript = currentProjectile.GetComponent<Projectile>();
+        shootPos = transform.GetChild(0).GetComponent<Transform>().position;
+        projectileScript.direction = (shootPos - transform.position).normalized;
+        currentProjectile.transform.parent = gameObject.transform.parent;
+        projectileScript.playerNumber = playerNumber;
+        projectileScript.hook = this;
+        line.SetPosition(1, currentProjectile.transform.position);
+
+        startPos = line.GetPosition(0);
+        endPos = line.GetPosition(1);
+
+        //Aligne le collider avec la corde, fait une première fois ici pour être sur qu'il n'y ait pas de frame de retard
+        lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+        lineCollider.transform.position = (startPos + endPos) / 2;
+        lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+
+        hookInCD = true;
     }
 
     //Désactive tout ce qu'il est relatif au grappin
@@ -439,7 +431,7 @@ public class Hook : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision){
         //Les collisions ne sont gérés que si le player est en mode offensif
         if(currentState == HookState.Arrow){
-            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon sa vitesse
+            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
             if(collision.gameObject.CompareTag("Player")){
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + 
                 playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);

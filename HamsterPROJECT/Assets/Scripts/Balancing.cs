@@ -38,10 +38,14 @@ public class Balancing : MonoBehaviour {
     public float recoveryTime = 1.5f;
     public float flashingRate = .1f;
     public float arrowDamage = 10;
+    public float spikesDamage = 10;
+    public float velocityArrowDamageRatio = 2;
+    public float laserDamage = 10;
+
+    [Header("Knockback")]
     public float knockBackTime = 0.5f;
     public float knockBackPlayerHit = 5;
     public float knockBackShieldHit = 10;
     public float knockBackSpikes = 5;
-    public float spikesDamage = 10;
-    public float velocityArrowDamageRatio = 2;
+    public float knockBackLaser = 10;
 }

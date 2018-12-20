@@ -20,6 +20,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackTime;
     float knockBackPlayerHit;
     float knockBackSpikes;
+    float knockBackLaser;
+    float laserDamage;
 
     // Use this for initialization
     void Start () {
@@ -33,6 +35,8 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         knockBackSpikes = balanceData.knockBackSpikes;
         spikesDamage = balanceData.spikesDamage;
+        knockBackLaser= balanceData.knockBackLaser;
+        laserDamage= balanceData.laserDamage;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -87,10 +91,12 @@ public class PlayerLifeManager : MonoBehaviour {
                     case "Spikes":
                         playerMovement.rigid.AddForce(-directionKnockBack * knockBackSpikes, ForceMode2D.Impulse);
                         break;
+                    case "Laser":
+                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        break;
                     default:
                         break;
                 }
-                Invoke("UnlockMovement", knockBackTime);
             }
             playerHP -= damage;
             UpdateLifeUI();
@@ -111,6 +117,12 @@ public class PlayerLifeManager : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col){
         if(col.gameObject.CompareTag("Spikes")){
             TakeDamage(spikesDamage,col.gameObject,true);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col){
+        if(col.gameObject.CompareTag("Laser")){
+            TakeDamage(laserDamage,col.gameObject, true);
         }
     }
 
