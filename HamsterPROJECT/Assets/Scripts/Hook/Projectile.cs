@@ -60,18 +60,19 @@ public class Projectile : MonoBehaviour {
         //Vérifie les collisions uniquement si le projectile n'est pas pas aggripé
         if (!hooked)
         {
-            //Inflige des dégâts et détruit le projectile s'il touche un player
-            if (collision.gameObject.CompareTag("Player"))
-            {
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
-                Destruction();
-            }
             //S'accroche si jamais le gameObject à le bon tag
-            else if (collision.gameObject.CompareTag("Hookable"))
+            if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 hooked = true;
             }
+            //Inflige des dégâts et détruit le projectile s'il touche un player
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
+                Destruction();
+            }
+            
             else
             {
                 Destruction();
@@ -82,8 +83,11 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col){
         if(col.gameObject.CompareTag("Rope")){
             col.gameObject.GetComponent<LineCutter>().CutRope();
+        }else if (col.gameObject.CompareTag("Laser")){
+            Destruction();
         }
     }
+
 
     public void End()
     {
