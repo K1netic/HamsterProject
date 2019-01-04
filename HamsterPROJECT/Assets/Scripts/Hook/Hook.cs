@@ -235,7 +235,7 @@ public class Hook : MonoBehaviour {
         }
 
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
-        if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD)
+		if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD && !isFrozen)
         {
             ThrowHookhead();
         }

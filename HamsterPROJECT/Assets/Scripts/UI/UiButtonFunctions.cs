@@ -18,7 +18,9 @@ public class UiButtonFunctions : MonoBehaviour {
 			textToChange.text = GameManager.goal.ToString ();
 	}
 
-	public void LoadScene(){
+	public void LoadScene()
+	{
+		if (Time.timeScale != 1) Time.timeScale = 1;
 		SceneManager.LoadScene (sceneToLoadOnClick);
 	}
 
