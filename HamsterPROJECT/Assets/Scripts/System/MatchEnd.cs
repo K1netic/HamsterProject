@@ -9,13 +9,15 @@ public class MatchEnd : MonoBehaviour {
 //	[SerializeField] float delayBeforeEndOfGame;
 	int nbPlayersAlive;
 	[SerializeField] GameObject scoreDisplay;
-	GameObject[] arrows;
+	public GameObject[] arrows;
 	int winner;
 	bool gameOver = false;
 	int nbPlayersActive;
 
 	// Used to count number of players that reached the number of kills required to win
 	int count = 0;
+
+	bool arrowSet = false;
  
 	// Use this for initialization
 	void Start () {
@@ -23,10 +25,8 @@ public class MatchEnd : MonoBehaviour {
 		// default value, stays at 42 if nobody won
 		// 0, 1, 2 and 3 are reserved to players
 		winner = 42;
-
-		arrows = GameObject.FindGameObjectsWithTag("Arrow");
 	}
-	
+		
 	// Update is called once per frame
 	void Update () {
 
@@ -45,7 +45,7 @@ public class MatchEnd : MonoBehaviour {
 		}
 
 		// One or less players remaining
-		if (nbPlayersAlive <= 1 && nbPlayersActive > 0)
+		if (nbPlayersAlive <= 1 && nbPlayersActive > 0 )
 		{
 			if (GameManager.gameModeType == GameManager.gameModes.LastManStanding && !gameOver)
 			{
@@ -66,7 +66,7 @@ public class MatchEnd : MonoBehaviour {
 					GameManager.playersScores [winner] += 1;
 				}
 			}
-
+				
 			StartCoroutine(DisplayScore ());
 		}
 
@@ -80,11 +80,9 @@ public class MatchEnd : MonoBehaviour {
 	IEnumerator DisplayScore()
 	{
 		yield return new WaitForSeconds (1f);
+		FreezeGame ();
 		scoreDisplay.SetActive (true);
-		foreach (GameObject arrow in arrows)
-		{
-			arrow.GetComponent<Hook> ().isFrozen = true;
-		}
+
 		yield return new WaitForSeconds (1f);
 
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
@@ -123,6 +121,24 @@ public class MatchEnd : MonoBehaviour {
 			else 
 			{
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			}
+		}
+	}
+
+	void FreezeGame()
+	{
+		if (!arrowSet)
+		{
+			arrowSet = true;
+			arrows = GameObject.FindGameObjectsWithTag ("Arrow");
+
+			foreach (GameObject arrow in arrows)
+			{
+				if (arrow != null)
+				{
+					arrow.GetComponent<Hook> ().isFrozen = true;
+					arrow.transform.parent.GetChild (0).GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Static;
+				}
 			}
 		}
 	}

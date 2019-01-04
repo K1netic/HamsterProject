@@ -12,12 +12,7 @@ public class PauseMenu : MonoBehaviour {
 //	string plyrNumber;
 
 	bool isOpen = false;
-
-	void Start()
-	{
-//		plyrNumber = this.GetComponent<PlayerMovement> ().playerNumber;
-		arrows = GameObject.FindGameObjectsWithTag("Arrow");
-	}
+	bool arrowSet = false;
 
 	void Update()
 	{
@@ -51,9 +46,16 @@ public class PauseMenu : MonoBehaviour {
 
 	void FreezePlayers()
 	{
+		if (!arrowSet)
+		{
+			arrowSet = true;
+			arrows = GameObject.FindGameObjectsWithTag ("Arrow");
+		}
+
 		foreach (GameObject arrow in arrows)
 		{
-			arrow.GetComponent<Hook> ().isFrozen = true;
+			if (arrow != null)
+				arrow.GetComponent<Hook> ().isFrozen = true;
 		}
 	}
 
@@ -61,7 +63,8 @@ public class PauseMenu : MonoBehaviour {
 	{
 		foreach (GameObject arrow in arrows)
 		{
-			arrow.GetComponent<Hook> ().isFrozen = false;
+			if (arrow != null)
+				arrow.GetComponent<Hook> ().isFrozen = false;
 		}
 	}
 }

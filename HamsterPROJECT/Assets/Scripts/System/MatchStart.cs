@@ -26,7 +26,7 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] Texture2D fullProgressBar;
 	float timeAtBegin;
 
-	void Awake () 
+	void Awake ()
 	{
 		// Set all active players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
