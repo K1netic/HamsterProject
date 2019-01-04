@@ -26,12 +26,15 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] Texture2D fullProgressBar;
 	float timeAtBegin;
 
-	void Awake () {
+	void Awake () 
+	{
 		// Set all active players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
 			if (GameManager.playersActive [i] == true)
+			{
 				GameManager.playersAlive [i] = true;
+			}
 		}
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
@@ -49,16 +52,12 @@ public class MatchStart : MonoBehaviour {
 				Invoke("Instantiate_P" + (i + 1).ToString() ,0);
 			}
 		}
-
-
 //		FreezePlayers ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
-
-
+	void Update () 
+	{
 		if (Input.anyKeyDown)
 		{
 			activateBegin = true;

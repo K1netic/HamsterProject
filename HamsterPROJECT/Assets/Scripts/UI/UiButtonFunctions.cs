@@ -36,6 +36,9 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		switch (GameManager.goal)
 		{
+		case 1:
+			GameManager.goal = 3;
+			break;
 		case 3:
 			GameManager.goal = 5;
 			break;
@@ -46,7 +49,7 @@ public class UiButtonFunctions : MonoBehaviour {
 			GameManager.goal = 10;
 			break;
 		case 10:
-			GameManager.goal = 3;
+			GameManager.goal = 1;
 			break;
 		default:
 			break;

@@ -69,6 +69,12 @@ public class MatchEnd : MonoBehaviour {
 
 			StartCoroutine(DisplayScore ());
 		}
+
+//		if (GameManager.gameModeType == GameManager.gameModes.Kills && System.Array.IndexOf(GameManager.playersScores, GameManager.goal) != null)
+			
+
+
+		// Add a brick to stop the game if one player reached the targeted number of kills
 	}
 
 	IEnumerator DisplayScore()
@@ -93,8 +99,8 @@ public class MatchEnd : MonoBehaviour {
 			// Stop playing if one player reached the game goal
 			if (Input.GetButton ("Submit_P1") && GameManager.playersScores[winner] == GameManager.goal )
 			{
-				GameManager.ResetScore ();
-				SceneManager.LoadScene ("EndGame");
+//				GameManager.ResetScore ();
+				SceneManager.LoadScene ("Results");
 			}
 		}
 			
@@ -111,8 +117,8 @@ public class MatchEnd : MonoBehaviour {
 			// if at least one player reached the goal...
 			if (count > 0)
 			{
-				GameManager.ResetScore ();
-				SceneManager.LoadScene ("EndGame");
+//				GameManager.ResetScore ();
+				SceneManager.LoadScene ("Results");
 			}
 			else 
 			{

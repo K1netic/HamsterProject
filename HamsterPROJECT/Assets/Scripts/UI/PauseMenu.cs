@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -36,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
 	void OpenPauseMenu()
 	{
 		pauseMenu.SetActive (true);
+	
 		Time.timeScale = 0;
 		isOpen = true;
 	}
