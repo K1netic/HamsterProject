@@ -20,6 +20,7 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	public void LoadScene()
 	{
+		//reset timeScale in case a scene is loaded from the pause menu
 		if (Time.timeScale != 1) Time.timeScale = 1;
 		SceneManager.LoadScene (sceneToLoadOnClick);
 	}
@@ -56,5 +57,12 @@ public class UiButtonFunctions : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	public void LoadLastMap()
+	{
+		//reset timeScale in case a scene is loaded from the pause menu
+		if (Time.timeScale != 1) Time.timeScale = 1;
+		SceneManager.LoadScene (GameManager.lastBattleMap);
 	}
 }

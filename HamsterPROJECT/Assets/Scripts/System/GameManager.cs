@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour {
 	public static bool[] playersAlive = new bool[4];
 	public static int[] playersScores = new int[4];
 
+	public static string lastBattleMap;
+
 	void Awake()
 	{
 		// Don't destroy the game manager when reloading/changing scene

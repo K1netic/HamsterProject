@@ -102,7 +102,7 @@ public class MatchEnd : MonoBehaviour {
 			// Stop playing if one player reached the game goal
 			if (Input.GetButton ("Submit_P1") && GameManager.playersScores[winner] == GameManager.goal )
 			{
-				SceneManager.LoadScene ("Results");
+				EndOfMatch ();
 			}
 		}
 			
@@ -119,7 +119,7 @@ public class MatchEnd : MonoBehaviour {
 			// if at least one player reached the goal...
 			if (count > 0)
 			{
-				SceneManager.LoadScene ("Results");
+				EndOfMatch ();
 			}
 			else 
 			{
@@ -144,5 +144,12 @@ public class MatchEnd : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	// Instruction for when the match is over
+	void EndOfMatch()
+	{
+		GameManager.lastBattleMap = SceneManager.GetActiveScene ().name;
+		SceneManager.LoadScene ("Results");
 	}
 }
