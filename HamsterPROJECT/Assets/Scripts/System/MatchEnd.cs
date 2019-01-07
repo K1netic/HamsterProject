@@ -13,6 +13,7 @@ public class MatchEnd : MonoBehaviour {
 	int winner;
 	bool gameOver = false;
 	int nbPlayersActive;
+	public static bool matchEnded = false;
 
 	// Used to count number of players that reached the number of kills required to win
 	int count = 0;
@@ -23,23 +24,24 @@ public class MatchEnd : MonoBehaviour {
 	void Start ()
 	{
 		scoreDisplay.SetActive (false);
+		matchEnded = false;
 		// default value, stays at 42 if nobody won
 		// 0, 1, 2 and 3 are reserved to players
 		winner = 42;
 	}
-		
+
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
 		// Count number of players in game
 		nbPlayersAlive = 0;
-		for (int i = 0; i < GameManager.playersAlive.Length; i ++)
+		for (int i = 0; i < GameManager.playersAlive.Length; i++)
 		{
 			if (GameManager.playersAlive [i] == true)
 				nbPlayersAlive++;
 		}
 
-		for (int i = 0; i < GameManager.playersActive.Length; i ++)
+		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
 			if (GameManager.playersActive [i] == true)
 				nbPlayersActive++;
@@ -67,21 +69,21 @@ public class MatchEnd : MonoBehaviour {
 					GameManager.playersScores [winner] += 1;
 				}
 			}
-				
+
 			StartCoroutine(DisplayScore ());
 		}
 
-
+		// Stop the game if one player reached the targeted number of kills
 		if (GameManager.gameModeType == GameManager.gameModes.Kills && 
 			System.Array.IndexOf(GameManager.playersScores, GameManager.goal) != -1)
 		{
 			StartCoroutine(DisplayScore ());
 		}
-		// Add a brick to stop the game if one player reached the targeted number of kills
 	}
 
 	IEnumerator DisplayScore()
 	{
+		matchEnded = true;
 		yield return new WaitForSeconds (1f);
 		FreezeGame ();
 		scoreDisplay.SetActive (true);

@@ -7,41 +7,35 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour {
 
 	[SerializeField] GameObject pauseMenu;
-	GameObject[] arrows;
-
-//	string plyrNumber;
-
-	bool isOpen = false;
+	public GameObject[] arrows;
 	bool arrowSet = false;
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Pause_P1") && !isOpen && MatchStart.gameHasStarted)
+		if (Input.GetButtonDown("Pause_P1") && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
 		{
 			OpenPauseMenu ();
-			FreezePlayers ();
 		}
 
-		else if ((Input.GetButtonDown("Pause_P1") || Input.GetButtonDown("Cancel_P1")) && isOpen)
+		else if ((Input.GetButtonDown("Pause_P1") || Input.GetButtonDown("Cancel_P1")) && pauseMenu.activeSelf) 
 		{
 			ClosePauseMenu ();
-			UnfreezePlayers ();
 		}
 	}
 
 	void OpenPauseMenu()
 	{
+		FreezePlayers ();
 		pauseMenu.SetActive (true);
-	
 		Time.timeScale = 0;
-		isOpen = true;
 	}
 
 	public void ClosePauseMenu()
 	{
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1;
-		isOpen = false;
+		UnfreezePlayers ();
+		arrowSet = false;
 	}
 
 	void FreezePlayers()
@@ -54,17 +48,21 @@ public class PauseMenu : MonoBehaviour {
 
 		foreach (GameObject arrow in arrows)
 		{
-			if (arrow != null)
-				arrow.GetComponent<Hook> ().isFrozen = true;
+			if (arrow != null) arrow.GetComponent<Hook> ().isFrozen = true;
 		}
 	}
 
-	void UnfreezePlayers()
+	public void UnfreezePlayers()
 	{
+		if (!arrowSet)
+		{
+			arrowSet = true;
+			arrows = GameObject.FindGameObjectsWithTag ("Arrow");
+		}
+
 		foreach (GameObject arrow in arrows)
 		{
-			if (arrow != null)
-				arrow.GetComponent<Hook> ().isFrozen = false;
+			if (arrow != null) arrow.GetComponent<Hook> ().isFrozen = false;
 		}
 	}
 }
