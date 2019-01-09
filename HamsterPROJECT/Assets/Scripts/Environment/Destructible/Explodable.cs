@@ -17,6 +17,8 @@ public class Explodable : MonoBehaviour
 	public string sortingTag = "Untagged";
     public int orderInLayer = 0;
 
+    int cpt;
+
     public enum ShatterType
     {
         Triangle,
@@ -26,8 +28,9 @@ public class Explodable : MonoBehaviour
     public List<GameObject> fragments = new List<GameObject>();
     private List<List<Vector2>> polygons = new List<List<Vector2>>();
    
-	void Start(){
-		explode ();
+	void Start() {
+        deleteFragments();
+        explode ();
 	}
 
     /// <summary>

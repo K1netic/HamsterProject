@@ -430,14 +430,10 @@ public class Hook : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision){
         //Les collisions ne sont gérés que si le player est en mode offensif
-        if(currentState == HookState.Arrow){
-            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
-            if(collision.gameObject.CompareTag("Player")){
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + 
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio,gameObject, true);
-            } 
+        if(currentState == HookState.Arrow)
+        {
             //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
-            else if (collision.gameObject.CompareTag("Arrow"))
+            if (collision.gameObject.CompareTag("Arrow"))
             {
                 playerMovement.lockMovementKnockBack = true;
                 Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
@@ -454,6 +450,12 @@ public class Hook : MonoBehaviour {
                     break;
                 }
                 Invoke("UnlockMovement", knockBackTime);
+            }
+            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage +
+                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio, gameObject, true);
             }
         }
         

@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     float hookMovementForce;
     [SerializeField]
     State currentState;
+    [HideInInspector]
+    public float speed;
 
     //Ground Check
     [HideInInspector]
@@ -66,10 +68,15 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        speed = rigid.velocity.magnitude;
+        if ( speed > 10)
+            GetComponent<SpriteRenderer>().color = Color.red;
+        else
+            GetComponent<SpriteRenderer>().color = Color.white;
         //Vérifie si le joueur est sur le sol
-		//isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+        //isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 
-        if(currentState != State.hooked)
+        if (currentState != State.hooked)
             currentState = State.inAir;
 
         //Gère l'état du joueur

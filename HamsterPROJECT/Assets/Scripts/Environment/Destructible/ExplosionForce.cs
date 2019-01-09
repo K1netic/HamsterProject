@@ -27,7 +27,8 @@ public class ExplosionForce : MonoBehaviour {
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
      
 		foreach(Collider2D coll in colliders){
-			if(coll.GetComponent<Rigidbody2D>()&&coll.gameObject.tag !="Player"){
+			if(coll.GetComponent<Rigidbody2D>()&&coll.gameObject.tag !="Player"&& coll.gameObject.tag != "Arrow")
+            {
                 AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);
 			}
 		}
@@ -44,7 +45,9 @@ public class ExplosionForce : MonoBehaviour {
     private void AddExplosionForce(Rigidbody2D body, float explosionForce, Vector3 explosionPosition, float explosionRadius, float upliftModifier = 0)
 	{
 		body.gameObject.tag = "Untagged";
-		body.bodyType = RigidbodyType2D.Dynamic;
+        body.gameObject.layer = LayerMask.NameToLayer("Scraps");
+
+        body.bodyType = RigidbodyType2D.Dynamic;
 		var dir = (body.transform.position - explosionPosition);	
 		float wearoff = 1 - (dir.magnitude / explosionRadius);
         Vector3 baseForce = dir.normalized * explosionForce * wearoff;

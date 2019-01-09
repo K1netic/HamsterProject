@@ -4,21 +4,28 @@ using System.Collections;
 public class ExplodeOnClick : MonoBehaviour {
 
 	float speed;
-	bool grosZizi;
+	bool explosionDone;
 
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (!grosZizi) {
-			if (collision.gameObject.CompareTag ("Player")) {
-				print (speed);
-				speed = collision.gameObject.GetComponent<Rigidbody2D> ().velocity.magnitude;
-				if (speed > 10f) {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            speed = collision.gameObject.GetComponent<PlayerMovement>().speed;
+            print(speed);
+            if (!explosionDone)
+                {
+                if (speed > 10f) {
 					GameObject.FindObjectOfType<ExplosionForce> ().doExplosion (transform.position, speed);
-					grosZizi = true;
+                    explosionDone = true;
 				}
 			}
 		}
 	}
-		
+
+    private void OnMouseDown()
+    {
+        GameObject.FindObjectOfType<ExplosionForce>().doExplosion(transform.position, speed);
+    }
+
 }
