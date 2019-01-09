@@ -19,10 +19,15 @@ public class MatchEnd : MonoBehaviour {
 	int count = 0;
 
 	bool arrowSet = false;
- 
+
+	// Audio
+	float delay = 0.1f;
+	AudioManager mngr;
+
 	// Use this for initialization
 	void Start ()
 	{
+		mngr = FindObjectOfType<AudioManager> ();
 		scoreDisplay.SetActive (false);
 		matchEnded = false;
 		// default value, stays at 42 if nobody won
@@ -87,6 +92,7 @@ public class MatchEnd : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		FreezeGame ();
 		scoreDisplay.SetActive (true);
+		mngr.PlaySound ("UI_matchEnd", mngr.UIsource);
 
 		yield return new WaitForSeconds (1f);
 
@@ -150,6 +156,7 @@ public class MatchEnd : MonoBehaviour {
 	void EndOfMatch()
 	{
 		GameManager.lastBattleMap = SceneManager.GetActiveScene ().name;
+		mngr.PlaySound ("UI_matchEndValidation", mngr.UIsource);
 		SceneManager.LoadScene ("Results");
 	}
 }

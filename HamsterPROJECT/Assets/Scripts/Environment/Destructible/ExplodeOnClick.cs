@@ -12,7 +12,6 @@ public class ExplodeOnClick : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             speed = collision.gameObject.GetComponent<PlayerMovement>().speed;
-            print(speed);
             if (!explosionDone)
                 {
                 if (speed > 10f) {
