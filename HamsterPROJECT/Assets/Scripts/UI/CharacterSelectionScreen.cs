@@ -15,8 +15,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	public int activatedPlayers = 0;
 	[SerializeField] string previousScene;
 
+	//Audio
+	float delay = 0.1f;
+	AudioManager mngr;
+
 	void Start()
 	{
+		mngr = FindObjectOfType<AudioManager> ();
+
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
@@ -64,13 +70,13 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			if (Input.GetButtonDown ("Pause_P1") && ready)
 			{
 				PlayerInfos ();
-				SceneManager.LoadScene (sceneToLoad);
+				StartCoroutine(LoadGameModes ());
 			}
 		}
 
 		if (Input.GetButtonDown("Cancel_P1") && previousScene != null && previousScene != "" && activatedPlayers == 0 && panels[0].state != PlayerSelectionPanel.SelectionPanelState.Validated)
 		{
-			SceneManager.LoadScene (previousScene);
+			StartCoroutine (LoadPreviousScene ());
 		}
 	}
 
@@ -86,5 +92,19 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				GameManager.playersSprites [i] = panels [i].characterSelected;
 			}
 		}
+	}
+
+	IEnumerator LoadPreviousScene()
+	{
+		mngr.PlaySound ("UI_cancel", mngr.UIsource);
+		yield return new WaitForSeconds (delay);
+		SceneManager.LoadScene (previousScene);
+	}
+
+	IEnumerator LoadGameModes()
+	{
+		mngr.PlaySound ("UI_validatePlus", mngr.UIsource);
+		yield return new WaitForSeconds (delay);
+		SceneManager.LoadScene (sceneToLoad);
 	}
 }

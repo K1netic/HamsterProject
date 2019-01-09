@@ -10,6 +10,15 @@ public class PauseMenu : MonoBehaviour {
 	public GameObject[] arrows;
 	bool arrowSet = false;
 
+	// Audio
+	float delay = 0.1f;
+	AudioManager mngr;
+
+	void Start()
+	{
+		mngr = FindObjectOfType<AudioManager> ();
+	}
+
 	void Update()
 	{
 		if (Input.GetButtonDown("Pause_P1") && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
@@ -25,6 +34,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
+		mngr.PlaySound ("UI_pauseMenuEnabled", mngr.UIsource);
 		FreezePlayers ();
 		pauseMenu.SetActive (true);
 		Time.timeScale = 0;
@@ -32,6 +42,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void ClosePauseMenu()
 	{
+		mngr.PlaySound ("UI_pauseMenuDisabled", mngr.UIsource);
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1;
 		UnfreezePlayers ();

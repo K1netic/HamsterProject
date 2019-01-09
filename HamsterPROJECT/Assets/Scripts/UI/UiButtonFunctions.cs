@@ -10,6 +10,13 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] string sceneToLoadOnClick;
 	[SerializeField] GameManager.gameModes gameModeToSet;
 	[SerializeField] Text textToChange;
+	float delay = 0.1f;
+	AudioManager mngr;
+
+	void Start()
+	{
+		mngr = FindObjectOfType<AudioManager> ();
+	}
 
 	void FixedUpdate()
 	{
@@ -37,6 +44,7 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	public void ChangeValue()
 	{
+		mngr.PlaySound ("UI_pick", mngr.UIsource);
 		switch (GameManager.goal)
 		{
 		case 1:
@@ -64,5 +72,35 @@ public class UiButtonFunctions : MonoBehaviour {
 		//reset timeScale in case a scene is loaded from the pause menu
 		if (Time.timeScale != 1) Time.timeScale = 1;
 		SceneManager.LoadScene (GameManager.lastBattleMap);
+	}
+
+	public void HighlightSound()
+	{
+		mngr.PlaySound ("UI_highlight", mngr.UIsource);
+	}
+
+	public void ClickSound()
+	{
+		mngr.PlaySound ("UI_validate", mngr.UIsource);
+	}
+
+	public void PickSound()
+	{
+		mngr.PlaySound ("UI_pick", mngr.UIsource);
+	}
+
+	public void HighlightPlusSound()
+	{
+		mngr.PlaySound ("UI_highlightPlus", mngr.UIsource);
+	}
+
+	public void ValidatePlusSound()
+	{
+		mngr.PlaySound ("UI_validatePlus", mngr.UIsource);
+	}
+
+	public void GameLaunchSound()
+	{
+		mngr.PlaySound ("UI_gameLaunch", mngr.UIsource);
 	}
 }

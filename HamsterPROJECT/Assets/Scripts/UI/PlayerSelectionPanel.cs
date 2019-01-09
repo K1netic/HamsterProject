@@ -20,8 +20,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	CharacterSelectionScreen select;
 
+	//Audio
+	float delay = 0.1f;
+	AudioManager mngr;
+	bool validate = false;
+
 	void Start()
 	{
+		mngr = FindObjectOfType<AudioManager> ();
 		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
 
@@ -45,11 +51,13 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
+			mngr.PlaySound ("UI_cancel", mngr.UIsource);
 			state = SelectionPanelState.Deactivated;
 		}
 
 		else if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Validated)
 		{
+			mngr.PlaySound ("UI_cancel", mngr.UIsource);
 			state = SelectionPanelState.Activated;
 			select.ready = false;
 		}
@@ -63,6 +71,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			characterSprite.gameObject.SetActive(false);
 			break;
 		case SelectionPanelState.Activated:
+			validate = false;
+			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
 			characterSprite.color = Color.white;
 			//Hiding "ready" text
 			this.transform.GetChild (1).gameObject.SetActive (false);
@@ -71,6 +81,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			CharacterSelection();
 			break;
 		case SelectionPanelState.Validated:
+			PlayValidateSound();
 			characterSprite.color = activationColor;
 			this.transform.GetChild (1).gameObject.SetActive (true);
 			break;
@@ -82,6 +93,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == 1 && !blockStickMovement)
 		{
+			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected < nbCharactersAvailable)
 				characterSelected += 1;
 			else
@@ -92,6 +104,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == -1 && !blockStickMovement)
 		{
+			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected > 0)
 				characterSelected -= 1;
 			else
@@ -104,4 +117,12 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = false;
 	}
 
+	void PlayValidateSound()
+	{
+		if (!validate)
+		{
+			mngr.PlaySound ("UI_validate", mngr.UIsource);
+			validate = true;
+		}
+	}
 }
