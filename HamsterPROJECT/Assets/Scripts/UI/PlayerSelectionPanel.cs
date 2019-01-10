@@ -24,6 +24,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	float delay = 0.1f;
 	AudioManager mngr;
 	bool validate = false;
+	bool activate = false;
 
 	void Start()
 	{
@@ -67,12 +68,13 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		switch (state)
 		{
 		case SelectionPanelState.Deactivated:
+			activate = false;
 			backgroundImg.color = Color.gray;
 			characterSprite.gameObject.SetActive(false);
 			break;
 		case SelectionPanelState.Activated:
 			validate = false;
-			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
+			PlayActivationSound();
 			characterSprite.color = Color.white;
 			//Hiding "ready" text
 			this.transform.GetChild (1).gameObject.SetActive (false);
@@ -115,6 +117,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) < 0.2 && Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) > -0.2)
 			blockStickMovement = false;
+	}
+
+	void PlayActivationSound()
+	{
+		if (!activate)
+		{
+			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
+			activate = true;
+		}
+
 	}
 
 	void PlayValidateSound()

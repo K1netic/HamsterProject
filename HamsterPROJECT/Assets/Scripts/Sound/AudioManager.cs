@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour {
 
 	public void PlaySound(string audioName, AudioSource source)
 	{
-		source.pitch = Random.Range (pitchMin, pitchMax);
+//		source.pitch = Random.Range (pitchMin, pitchMax);
 		switch(audioName)
 		{
 		case "towing":
