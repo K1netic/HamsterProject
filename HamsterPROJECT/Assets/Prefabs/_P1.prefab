@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 60811573583204402}
   - component: {fileID: 60118059048888604}
   - component: {fileID: 114581940265267500}
+  - component: {fileID: 114211520470683944}
   m_Layer: 17
   m_Name: Arrow_P1
   m_TagString: Arrow
@@ -118,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1320202228956494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: -5, z: 0}
+  m_LocalPosition: {x: -15.83, y: -6.91, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4278019453555246}
@@ -300,6 +301,18 @@ PolygonCollider2D:
       - {x: 0.5683333, y: -0.0058333334}
       - {x: 0.5683333, y: 0.00083333335}
       - {x: 0.56333333, y: 0.009166667}
+--- !u!114 &114211520470683944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1439054489095116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2c72c3cedd89e43a09421a6dc43be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastRange: 0.135
 --- !u!114 &114505693058359796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -318,6 +331,7 @@ MonoBehaviour:
   lockMovementKnockBack: 0
   bonusSpeed: 1
   currentState: 0
+  speed: 0
   isGrounded: 0
   playerNumber: _P1
 --- !u!114 &114581940265267500

@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 60663170970368732}
   - component: {fileID: 60114598573755940}
   - component: {fileID: 114844402004085810}
+  - component: {fileID: 114469793724023904}
   m_Layer: 20
   m_Name: Arrow_P4
   m_TagString: Arrow
@@ -342,6 +343,7 @@ MonoBehaviour:
   lockMovementKnockBack: 0
   bonusSpeed: 1
   currentState: 0
+  speed: 0
   isGrounded: 0
   playerNumber: _P4
 --- !u!114 &114254027481778956
@@ -355,6 +357,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114469793724023904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1193887155682720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2c72c3cedd89e43a09421a6dc43be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastRange: 0.135
 --- !u!114 &114561648134266388
 MonoBehaviour:
   m_ObjectHideFlags: 1
