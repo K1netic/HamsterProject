@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 60543343198124326}
   - component: {fileID: 60328549094645384}
   - component: {fileID: 114042248265755830}
+  - component: {fileID: 114765128062608116}
   m_Layer: 18
   m_Name: Arrow_P2
   m_TagString: Arrow
@@ -381,8 +382,21 @@ MonoBehaviour:
   lockMovementKnockBack: 0
   bonusSpeed: 1
   currentState: 0
+  speed: 0
   isGrounded: 0
   playerNumber: _P2
+--- !u!114 &114765128062608116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1853884896473544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2c72c3cedd89e43a09421a6dc43be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastRange: 0.135
 --- !u!212 &212712153489027198
 SpriteRenderer:
   m_ObjectHideFlags: 1

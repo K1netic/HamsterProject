@@ -11,13 +11,14 @@ public class Projectile : MonoBehaviour {
 	public Vector3 direction;
     float hookheadDamage;
     Rigidbody2D rigid;
-
+    bool inDestruction;
     [HideInInspector]
     public string playerNumber;
     [HideInInspector]
     public bool hooked;
     [HideInInspector]
     public Hook hook;
+    RaycastHit2D raycast;
 
     void Start(){
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -39,10 +40,31 @@ public class Projectile : MonoBehaviour {
         if (!hooked)
         {
             rigid.AddForce(direction / speed);
+            RaycastNoBounce();
         }
 	}
 
+    void RaycastNoBounce()
+    {
+        if (!inDestruction)
+        {
+            Debug.DrawRay(transform.position, direction, Color.black);
+            raycast = Physics2D.Raycast(transform.position, direction, 1f, hook.layerMaskRaycast);
+            if (raycast.collider != null)
+            {
+                //S'accroche si jamais le gameObject à le bon tag
+                if (raycast.collider.gameObject.CompareTag("Hookable"))
+                {
+                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    hooked = true;
+                    transform.position = raycast.point;
+                }
+            }
+        }
+    }
+
 	void Destruction(){
+        inDestruction = true;
         //Désactive la corde
         if (hook.line.gameObject.activeSelf)
         {
@@ -61,19 +83,19 @@ public class Projectile : MonoBehaviour {
         if (!hooked)
         {
             //S'accroche si jamais le gameObject à le bon tag
-            if (collision.gameObject.CompareTag("Hookable"))
+            /*if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 hooked = true;
             }
             //Inflige des dégâts et détruit le projectile s'il touche un player
-            else if (collision.gameObject.CompareTag("Player"))
+            else*/ if (collision.gameObject.CompareTag("Player"))
             {
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
             }
             
-            else
+            else if(!collision.gameObject.CompareTag("Hookable"))
             {
                 Destruction();
             }

@@ -68,11 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        speed = rigid.velocity.magnitude;
-        if ( speed > 10)
-            GetComponent<SpriteRenderer>().color = Color.red;
-        else
-            GetComponent<SpriteRenderer>().color = Color.white;
         //Vérifie si le joueur est sur le sol
         //isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
 

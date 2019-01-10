@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 60074316152335222}
   - component: {fileID: 60973174001419578}
   - component: {fileID: 114212838577859832}
+  - component: {fileID: 114139755116634148}
   m_Layer: 19
   m_Name: Arrow_P3
   m_TagString: Arrow
@@ -300,6 +301,18 @@ PolygonCollider2D:
       - {x: 0.57166666, y: -0.14583334}
       - {x: 0.57166666, y: 0.15416667}
       - {x: 0.42333335, y: 0.3025}
+--- !u!114 &114139755116634148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1199139456897382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2c72c3cedd89e43a09421a6dc43be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastRange: 0.135
 --- !u!114 &114212838577859832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,6 +371,7 @@ MonoBehaviour:
   lockMovementKnockBack: 0
   bonusSpeed: 1
   currentState: 0
+  speed: 0
   isGrounded: 0
   playerNumber: _P3
 --- !u!114 &114742738643429540

@@ -14,7 +14,7 @@ public class Hook : MonoBehaviour {
     public PlayerMovement playerMovement;
     float retractationStep;
     [SerializeField]
-    LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
+    public LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
     [SerializeField]
     public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche dans DontGoThroughThings (anciennement utilisé pour le raycast de la flèche)
 	float timeHooked;
