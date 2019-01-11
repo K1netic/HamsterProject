@@ -139,19 +139,27 @@ public class Hook : MonoBehaviour {
         //Fixe le layer de la corde en fonction du player à qui elle appartient
         switch  (playerNumber){
             case "_P1":
-            line.gameObject.layer = 17;
+                line.gameObject.layer = 17;
+                gameObject.layer = 17;
+                layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20);
             break;
             case "_P2":
-            line.gameObject.layer = 18;
-            break;
+                line.gameObject.layer = 18;
+                gameObject.layer = 18;
+                layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20);
+                break;
             case "_P3":
-            line.gameObject.layer = 19;
-            break;
+                line.gameObject.layer = 19;
+                gameObject.layer = 19;
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20);
+                break;
             case "_P4":
-            line.gameObject.layer = 20;
-            break;
+                line.gameObject.layer = 20;
+                gameObject.layer = 20;
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19);
+                break;
             default:
-            print("Default case switch start Hook.cs");
+                print("Default case switch start Hook.cs");
             break;
         }     
     }
@@ -168,7 +176,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-			if(Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
+            if (Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
 				ArrowState();
 			}
             UpdateArrow();

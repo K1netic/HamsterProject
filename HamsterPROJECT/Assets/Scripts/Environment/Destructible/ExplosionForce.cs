@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,37 +27,6 @@ public class ExplosionForce : MonoBehaviour {
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
      
 		foreach(Collider2D coll in colliders){
-=======
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-
-public class ExplosionForce : MonoBehaviour {
-	public float force = 50;
-	public float radius = 5;
-	public float upliftModifer = 0;
-	
-    /// <summary>
-    /// create an explosion force
-    /// </summary>
-    /// <param name="position">location of the explosion</param>
-	public void doExplosion(Vector3 position, float magnitude){
-		transform.localPosition = position;
-		StartCoroutine(waitAndExplode());
-	}
-
-    /// <summary>
-    /// exerts an explosion force on all rigidbodies within the given radius
-    /// </summary>
-    /// <returns></returns>
-	private IEnumerator waitAndExplode(){
-		yield return new WaitForFixedUpdate();
-		
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
-     
-		foreach(Collider2D coll in colliders){
->>>>>>> Stashed changes
 			if(coll.GetComponent<Rigidbody2D>()&&coll.gameObject.tag !="Player"&& coll.gameObject.tag != "Arrow")
             {
                 AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);

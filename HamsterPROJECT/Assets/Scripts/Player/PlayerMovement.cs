@@ -64,6 +64,24 @@ public class PlayerMovement : MonoBehaviour
         fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */      
 
         rigid = this.GetComponent<Rigidbody2D> ();
+
+        switch (playerNumber)
+        {
+            case "_P1":
+                gameObject.layer = 8;
+                break;
+            case "_P2":
+                gameObject.layer = 9;
+                break;
+            case "_P3":
+                gameObject.layer = 10;
+                break;
+            case "_P4":
+                gameObject.layer = 11;
+                break;
+            default:
+                break;
+        }
     }
 
     void FixedUpdate()
