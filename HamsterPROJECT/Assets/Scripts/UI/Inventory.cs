@@ -68,7 +68,7 @@ public class Inventory : MonoBehaviour {
                     currentItem = "None";
                     item.text = "None";
                     //Si le joueur n'est pas au sol le parachute s'ouvre et modifie la gravité du joueur pour un temps donné
-                    if (!playerMovementScript.isGrounded)
+                    /*if (!playerMovementScript.isGrounded)
                     {
                         playerRigid.gravityScale /= gravityWithParachute;
                         playerRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -77,7 +77,7 @@ public class Inventory : MonoBehaviour {
                     else
                     {
                         //Handle what happen if we open parachute on the ground, I think we should not allow this
-                    }
+                    }*/
                     break;
                 case "Shield":
                     currentItem = "None";
@@ -91,7 +91,7 @@ public class Inventory : MonoBehaviour {
                     //Change la valeur de bonusSpeed dans le script PlayerMovement pour un temps donné
                     currentItem = "None";
                     item.text = "None";
-                    playerMovementScript.bonusSpeed = bonusCroquettes;
+                    //playerMovementScript.bonusSpeed = bonusCroquettes;
                     Invoke("ResetCroquettesBonus", timeBonusCroquettes);
                     break;
                 case "ExplosivePoop":
@@ -114,7 +114,7 @@ public class Inventory : MonoBehaviour {
 
     void ResetCroquettesBonus()
     {
-        playerMovementScript.bonusSpeed = 1;
+        //playerMovementScript.bonusSpeed = 1;
     }
 
     void CloseParachute()
