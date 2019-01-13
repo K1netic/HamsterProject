@@ -62,14 +62,7 @@ MonoBehaviour:
   offsetHook: 0
   timeBtwShots: 0.3
   TimeHooked: 8
-  lineWidth: 0.05
-  arrowSprite: {fileID: 21300000, guid: 8278b816ef94f5f49b03de1ffa257dc5, type: 3}
-  shieldSprite: {fileID: 21300000, guid: b09771c8f85a1dd49b3ec1f53be890ed, type: 3}
-  maxSpeedPlayer: 100
-  checkRadius: 1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 65536
+  lineWidth: 0.125
   airControlForce: 7.5
   hookMovementForce: 45
   playerMaxHP: 100
@@ -77,9 +70,11 @@ MonoBehaviour:
   recoveryTime: 1.5
   flashingRate: 0.1
   arrowDamage: 10
+  spikesDamage: 10
+  velocityArrowDamageRatio: 2
+  laserDamage: 10
   knockBackTime: 0.5
   knockBackPlayerHit: 10
   knockBackShieldHit: 20
   knockBackSpikes: 10
-  spikesDamage: 10
-  velocityArrowDamageRatio: 2
+  knockBackLaser: 10

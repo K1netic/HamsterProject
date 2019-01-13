@@ -8,7 +8,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
     Balancing balanceData;
 
-    Slider lifeUI;
+    Image lifeBackground;
+    Image lifeImage;
 
     PlayerMovement playerMovement;
     float playerHP;
@@ -39,11 +40,32 @@ public class PlayerLifeManager : MonoBehaviour {
         laserDamage= balanceData.laserDamage;
 
         sprite = GetComponent<SpriteRenderer>();
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();        
 
-        //Récupère le slider qui correspond au player et applique la couleur du joueur sur la zone de remplissage
-        lifeUI = GameObject.Find("HPBar"+playerMovement.playerNumber).GetComponent<Slider>();
-        lifeUI.transform.GetChild(1).GetComponentInChildren<Image>().color = GetComponent<SpriteRenderer>().color;
+        lifeBackground = GameObject.Find("HPBar" + playerMovement.playerNumber).GetComponent<Image>();
+        lifeImage = GameObject.Find("HP" + playerMovement.playerNumber).GetComponent<Image>();
+
+        switch (GetComponent<SpriteRenderer>().sprite.name)
+        {
+            case "Perso1":
+                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar1");
+                break;
+            case "Perso2":
+                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar2");
+                break;
+            case "Perso3":
+                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar3");
+                break;
+            case "Perso4":
+                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar4");
+                break;
+            case "Perso5":
+                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar5");
+                break;
+            default:
+                print("Default case switch start PlayerLifeManager.cs");
+                break;
+        }
 
         UpdateLifeUI();
     }
@@ -98,6 +120,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         break;
                 }
             }
+            print(damage);
             playerHP -= damage;
             UpdateLifeUI();
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -146,14 +169,14 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void UpdateLifeUI()
     {
-        lifeUI.value = playerHP;
+        lifeImage.fillAmount = playerHP/100;
     }
 
     void Dead()
     {
-		// Set player as dead in the game manager
-        lifeUI.value = 0;
-		GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
+        // Set player as dead in the game manager
+        lifeImage.fillAmount = 0;
+        GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
         Destroy(transform.parent.gameObject, 0.05f);
     }
 }
