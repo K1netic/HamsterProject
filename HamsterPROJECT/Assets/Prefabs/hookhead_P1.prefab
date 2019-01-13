@@ -89,9 +89,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3892d00b41e3c594f84b4bdeb8c580f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line: {fileID: 0}
+  direction: {x: 0, y: 0, z: 0}
   playerNumber: 
   hooked: 0
+  hook: {fileID: 0}
 --- !u!212 &212055523113791832
 SpriteRenderer:
   m_ObjectHideFlags: 1

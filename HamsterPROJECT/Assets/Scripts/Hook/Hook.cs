@@ -59,6 +59,7 @@ public class Hook : MonoBehaviour {
     float knockBackPlayerHit;
     Sprite arrowSprite;
     Sprite shieldSprite;
+    Sprite hookSprite;
     SpriteRenderer spriteRenderer;
     bool switchingState;
     [SerializeField]
@@ -70,6 +71,7 @@ public class Hook : MonoBehaviour {
 	//COLOR
 	Color colorRope;
 	float t;
+    Color zizi;
 
 	// Pause menu
 	public bool isFrozen = false;
@@ -94,7 +96,6 @@ public class Hook : MonoBehaviour {
         colliders = GetComponents<PolygonCollider2D>();
         arrowCollider = colliders[0];
         shieldCollider = colliders[1];
-        arrowCollider.enabled = true;
 
 		timeHooked = balanceData.TimeHooked;
         distanceMax = balanceData.distanceMaxHook;
@@ -106,16 +107,12 @@ public class Hook : MonoBehaviour {
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         arrowDamage = balanceData.arrowDamage;
         velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
-        arrowSprite = balanceData.arrowSprite;
-        shieldSprite = balanceData.shieldSprite;
 
         timeRemaining = timeHooked;
 
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = arrowSprite;
-		colorRope = projectile.GetComponent<SpriteRenderer> ().color;
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
@@ -134,24 +131,74 @@ public class Hook : MonoBehaviour {
         line.gameObject.GetComponent<LineCutter>().line = this;
         lineCollider = line.GetComponent<BoxCollider2D>();
         lineCollider.isTrigger = true;   
-
         line.gameObject.tag = "Rope";
-        //Fixe le layer de la corde en fonction du player à qui elle appartient
+
+        //Charge les sprites en fonction du personnage sélectionné
+        switch (player.GetComponent<SpriteRenderer>().sprite.name)
+        {
+            case "Perso1":
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
+                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield1");
+                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
+                colorRope = new Color(.784f, .451f, .173f);
+                break;
+            case "Perso2":
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak2");
+                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield2");
+                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
+                colorRope = new Color(.596f, .31f,.624f);
+                break;
+            case "Perso3":
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak3");
+                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield3");
+                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
+                colorRope = new Color(0.310f, 0.624f, 0.318f);
+                break;
+            case "Perso4":
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak4");
+                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield4");
+                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
+                colorRope = new Color(.847f, .761f, .271f);
+                break;
+            case "Perso5":
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak5");
+                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield5");
+                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
+                colorRope = new Color(.216f, .384f, .529f);
+                break;
+            default:
+                print("Default case switch start Hook.cs");
+            break;
+        }
+        //Initialise le joueur avec la flèche
+        spriteRenderer.sprite = arrowSprite;
+        arrowCollider.enabled = true;
+        currentState = HookState.Arrow;
+
+        //Fixe les différents layer en fonction du numéro du joueur
         switch  (playerNumber){
             case "_P1":
-            line.gameObject.layer = 17;
+                line.gameObject.layer = 17;
+                gameObject.layer = 17;
+                layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20);
             break;
             case "_P2":
-            line.gameObject.layer = 18;
-            break;
+                line.gameObject.layer = 18;
+                gameObject.layer = 18;
+                layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20);
+                break;
             case "_P3":
-            line.gameObject.layer = 19;
-            break;
+                line.gameObject.layer = 19;
+                gameObject.layer = 19;
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20);
+                break;
             case "_P4":
-            line.gameObject.layer = 20;
-            break;
+                line.gameObject.layer = 20;
+                gameObject.layer = 20;
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19);
+                break;
             default:
-            print("Default case switch start Hook.cs");
+                print("Default case switch start Hook.cs");
             break;
         }     
     }
@@ -168,7 +215,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-			if(Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
+            if (Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
 				ArrowState();
 			}
             UpdateArrow();
@@ -337,17 +384,20 @@ public class Hook : MonoBehaviour {
     void UpdateRope(){
         //Aligne la position de la corde sur le player et la tete de grappin
         line.SetPosition(0, player.transform.position);
-        line.SetPosition(1, currentProjectile.transform.position);
+        //Aligne la ligne sur la tete de grappin que si le projectile n'est pas fixé
+        if (!projectileScript.hooked)
+        {
+            line.SetPosition(1, currentProjectile.transform.position);
+        }
+        startPos = line.GetPosition(0);
+        endPos = line.GetPosition(1);
 
-        startPos = line.GetPosition(0); 
-        endPos = line.GetPosition(1); 
-
-        lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+        lineCollider.size = new Vector3(Vector3.Distance(startPos, endPos), balanceData.lineWidth, 0);
         lineCollider.transform.position = (startPos + endPos) / 2;
         lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
         //Aligne le trigger de la corde sur la corde
-        lineCollider.size = new Vector3(Vector3.Distance(startPos,endPos),balanceData.lineWidth,0);
+        lineCollider.size = new Vector3(Vector3.Distance(startPos, endPos), balanceData.lineWidth, 0);
         lineCollider.transform.position = (startPos + endPos) / 2;
         lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
     }
@@ -378,6 +428,7 @@ public class Hook : MonoBehaviour {
         line.gameObject.SetActive(true);
         line.SetPosition(0, player.transform.position);
         currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
+        currentProjectile.GetComponent<SpriteRenderer>().sprite = hookSprite;
         projectileScript = currentProjectile.GetComponent<Projectile>();
         shootPos = transform.GetChild(0).GetComponent<Transform>().position;
         projectileScript.direction = (shootPos - transform.position).normalized;

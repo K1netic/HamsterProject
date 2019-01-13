@@ -6,6 +6,10 @@ public class Projectile : MonoBehaviour {
 
     Balancing balanceData;
 
+    [Range(0f, 1f)]
+    [SerializeField]
+    float raycastRange = 1;
+
     float speed;
     [HideInInspector]
 	public Vector3 direction;
@@ -19,6 +23,10 @@ public class Projectile : MonoBehaviour {
     [HideInInspector]
     public Hook hook;
     RaycastHit2D raycast;
+    RaycastHit2D raycastLeft;
+    RaycastHit2D raycastRight;
+    PolygonCollider2D coll;
+    bool pivotUpdated;
 
     void Start(){
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -28,13 +36,34 @@ public class Projectile : MonoBehaviour {
         hookheadDamage = balanceData.hookheadDamage;
 
         rigid = GetComponent<Rigidbody2D>();
+        coll = GetComponent<PolygonCollider2D>();        
+
+        switch (playerNumber)
+        {
+            case "_P1":
+                gameObject.layer = 12;
+                break;
+            case "_P2":
+                gameObject.layer = 13;
+                break;
+            case "_P3":
+                gameObject.layer = 14;
+                break;
+            case "_P4":
+                gameObject.layer = 15;
+                break;
+            default:
+                print("Default case switch start Projectile.cs");
+                break;
+        }
+
         /*direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
 		direction = direction.normalized;
         if(direction == Vector3.zero)
         {
             direction = Vector3.right;
         }*/
-	}
+    }
 
 	void Update () {
         if (!hooked)
@@ -42,14 +71,23 @@ public class Projectile : MonoBehaviour {
             rigid.AddForce(direction / speed);
             RaycastNoBounce();
         }
+        else if (!pivotUpdated)
+        {
+            hook.line.SetPosition(1,transform.GetChild(0).transform.position);
+            pivotUpdated = true;
+        }
 	}
 
     void RaycastNoBounce()
     {
         if (!inDestruction)
         {
-            Debug.DrawRay(transform.position, direction, Color.black);
-            raycast = Physics2D.Raycast(transform.position, direction, 1f, hook.layerMaskRaycast);
+            Debug.DrawRay(transform.position, direction * raycastRange, Color.black);
+            Debug.DrawRay((Vector2)coll.transform.TransformPoint(coll.points[13]), direction * raycastRange, Color.black);
+            Debug.DrawRay((Vector2)coll.transform.TransformPoint(coll.points[37]), direction * raycastRange, Color.black);
+            raycast = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskRaycast);
+            raycastLeft = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[13]), direction, raycastRange, hook.layerMaskRaycast);
+            raycastRight = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[37]), direction, raycastRange, hook.layerMaskRaycast);
             if (raycast.collider != null)
             {
                 //S'accroche si jamais le gameObject à le bon tag
@@ -58,6 +96,18 @@ public class Projectile : MonoBehaviour {
                     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     hooked = true;
                     transform.position = raycast.point;
+                }
+                else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
+                {
+                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    hooked = true;
+                    transform.position = raycastLeft.point;
+                }
+                else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
+                {
+                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                    hooked = true;
+                    transform.position = raycastRight.point;
                 }
             }
         }

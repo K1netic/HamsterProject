@@ -9,22 +9,16 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector]
 	public Rigidbody2D rigid;
-	public Transform feetPos;
     [HideInInspector]
     public bool hooked;
     [HideInInspector]
     public Vector2 jointDirection;
 
 	//Movement
-    float maxSpeed = 100;
-	float smoothTime = 0.3f;
-	float xVelocity = 0.0f;
-    int playerDirection = 1;
+	
     [HideInInspector]
     public bool lockMovementKnockBack;
 	bool lockMovement = false;
-    [HideInInspector]
-    public float bonusSpeed = 1;
     /*[HideInInspector]
     public Vector3 childRedAxis;*/
     float airControlForce;
@@ -34,20 +28,16 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float speed;
 
-    //Ground Check
-    [HideInInspector]
-    public bool isGrounded = false;
-	float checkRadius = 1.0f;
-	LayerMask groundLayer;
-
-	//Fast Fall
-	/*float fastFallSpeed = 200;
+    //Fast Fall
+    /*float smoothTime = 0.3f;
+    float xVelocity = 0.0f;
+    float fastFallSpeed = 200;
 	// Value under which vertical joystick input will trigger fastFall
 	float fastFallVerticalThreshold = - 0.5f;
 	// Value over which horizontal joystick input will cancel fastFall 
 	float fastFallHorizontalThreshold = 0.1f;*/
 
-	[SerializeField] public string playerNumber;
+    [SerializeField] public string playerNumber;
 
     void Start()
 	{
@@ -56,33 +46,37 @@ public class PlayerMovement : MonoBehaviour
 
         hookMovementForce = balanceData.hookMovementForce;
         airControlForce = balanceData.airControlForce;
-        maxSpeed = balanceData.maxSpeedPlayer;
-        checkRadius = balanceData.checkRadius;
-        groundLayer = balanceData.groundLayer;
         /*fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
         fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */      
 
         rigid = this.GetComponent<Rigidbody2D> ();
+
+        switch (playerNumber)
+        {
+            case "_P1":
+                gameObject.layer = 8;
+                break;
+            case "_P2":
+                gameObject.layer = 9;
+                break;
+            case "_P3":
+                gameObject.layer = 10;
+                break;
+            case "_P4":
+                gameObject.layer = 11;
+                break;
+            default:
+                break;
+        }
     }
 
     void FixedUpdate()
     {
-        //Vérifie si le joueur est sur le sol
-        //isGrounded = Physics2D.OverlapCircle (feetPos.position, checkRadius, groundLayer);
+        speed = rigid.velocity.magnitude;
 
         if (currentState != State.hooked)
             currentState = State.inAir;
-
-        //Gère l'état du joueur
-        /*if (isGrounded && currentState != State.hooked)
-        {
-            currentState = State.grounded;
-        }
-        else if(currentState != State.hooked)
-        {
-            currentState = State.inAir;
-        }*/
 
 		//Movement Lock
 		if (Input.GetButton ("Lock" + playerNumber))
@@ -93,28 +87,6 @@ public class PlayerMovement : MonoBehaviour
         //Switch permettant de gérer le mouvement en fonction de l'état du joueur
         if(!lockMovementKnockBack){
             switch (currentState){
-                case State.grounded:
-                    //Movement
-                    if (!lockMovement)
-                    {
-                        //Handling player direction
-                        if (Input.GetAxisRaw("Horizontal" + playerNumber) > 0)
-                        {
-                            playerDirection = 1;
-                        }
-                        if (Input.GetAxisRaw("Horizontal" + playerNumber) < 0)
-                        {
-                            playerDirection = -1;
-                        }
-
-                        //Input -> start moving
-                        if (Input.GetAxisRaw("Horizontal" + playerNumber) != 0)
-                        {
-                            float acceleration = Mathf.SmoothDamp(0, playerDirection * maxSpeed * bonusSpeed, ref xVelocity, smoothTime);
-                            rigid.velocity = new Vector2(acceleration, rigid.velocity.y);
-                        }
-                    }
-                    break;
                 case State.hooked:
                     //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
                     //Test si le joueur est dans un des 2 triangles de gauche ou de droite
@@ -164,6 +136,6 @@ public class PlayerMovement : MonoBehaviour
 
     enum State
     {
-        grounded, hooked, inAir
+        inAir, hooked,
     }
 }

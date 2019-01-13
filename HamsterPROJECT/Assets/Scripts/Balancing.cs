@@ -19,13 +19,8 @@ public class Balancing : MonoBehaviour {
     public float timeBtwShots;
 	public float TimeHooked = 8f;
     public float lineWidth = 0.05f;
-    public Sprite arrowSprite;
-    public Sprite shieldSprite;
 
     [Header("PLAYER MOVEMENT")]
-    public float maxSpeedPlayer = 100;
-    public float checkRadius = 1.0f;
-    public LayerMask groundLayer;
     /*public float fastFallSpeed = 200;
     public float fastFallVerticalThreshold = -0.5f;
     public float fastFallHorizontalThreshold = 0.1f;*/
