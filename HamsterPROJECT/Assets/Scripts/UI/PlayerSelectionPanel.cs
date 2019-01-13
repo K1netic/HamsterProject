@@ -8,8 +8,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	public string playerSelectionPanelID;
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
-	[SerializeField] Color activationColor;
-	[SerializeField] Sprite[] charactersSprites;
+	[SerializeField] GameObject[] Characters;
 	int nbCharactersAvailable;
 	[SerializeField] public int characterSelected = 0;
 	 
@@ -24,6 +23,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	float delay = 0.1f;
 	AudioManager mngr;
 	bool validate = false;
+	bool activate = false;
 
 	void Start()
 	{
@@ -31,7 +31,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
 
-		nbCharactersAvailable = charactersSprites.Length -1;
+		nbCharactersAvailable = Characters.Length -1;
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 	}
 
@@ -67,13 +67,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		switch (state)
 		{
 		case SelectionPanelState.Deactivated:
+			activate = false;
 			backgroundImg.color = Color.gray;
 			characterSprite.gameObject.SetActive(false);
 			break;
 		case SelectionPanelState.Activated:
 			validate = false;
-			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
-			characterSprite.color = Color.white;
+			PlayActivationSound();
+			backgroundImg.color = Color.gray;
 			//Hiding "ready" text
 			this.transform.GetChild (1).gameObject.SetActive (false);
 			//Activate character selection
@@ -82,7 +83,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			break;
 		case SelectionPanelState.Validated:
 			PlayValidateSound();
-			characterSprite.color = activationColor;
+			backgroundImg.color = Color.green;
 			this.transform.GetChild (1).gameObject.SetActive (true);
 			break;
 		}
@@ -98,7 +99,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected += 1;
 			else
 				characterSelected = 0;
-			characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + characterSelected.ToString ());
+			characterSprite.sprite = Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
@@ -109,12 +110,21 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected -= 1;
 			else
 				characterSelected = nbCharactersAvailable;
-			characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + characterSelected.ToString ());
+			characterSprite.sprite = Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
 		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) < 0.2 && Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) > -0.2)
 			blockStickMovement = false;
+	}
+
+	void PlayActivationSound()
+	{
+		if (!activate)
+		{
+			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
+			activate = true;
+		}
 	}
 
 	void PlayValidateSound()

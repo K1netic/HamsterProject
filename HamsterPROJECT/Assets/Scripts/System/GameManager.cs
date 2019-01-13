@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
 	public static int goal = 1;
 		
 	public static bool[] playersActive = new bool[4];
-	public static int[] playersSprites = new int[4];
+	public static int[] playersCharacters = new int[4];
 	public static bool[] playersAlive = new bool[4];
 	public static int[] playersScores = new int[4];
 
