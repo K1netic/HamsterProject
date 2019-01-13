@@ -67,9 +67,10 @@ public class Hook : MonoBehaviour {
     PolygonCollider2D[] colliders;
     PolygonCollider2D arrowCollider;
     PolygonCollider2D shieldCollider ;
+    Texture rope;
 
-	//COLOR
-	Color colorRope;
+    //COLOR
+    Color colorRope;
 	float t;
     Color zizi;
 
@@ -124,6 +125,9 @@ public class Hook : MonoBehaviour {
 		line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
         line.transform.parent = gameObject.transform.parent;
+        rope = Resources.Load<Texture>("ArrowSprites/Rope");
+        rope.wrapMode = TextureWrapMode.Repeat;
+        line.material.SetTexture("_MainTex", rope);
         
         //Ajoutet un collider à la corde ainsi que le script qui permet de la couper
         line.gameObject.AddComponent<BoxCollider2D>();
@@ -132,6 +136,7 @@ public class Hook : MonoBehaviour {
         lineCollider = line.GetComponent<BoxCollider2D>();
         lineCollider.isTrigger = true;   
         line.gameObject.tag = "Rope";
+        
 
         //Charge les sprites en fonction du personnage sélectionné
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
@@ -400,6 +405,10 @@ public class Hook : MonoBehaviour {
         lineCollider.size = new Vector3(Vector3.Distance(startPos, endPos), balanceData.lineWidth, 0);
         lineCollider.transform.position = (startPos + endPos) / 2;
         lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
+
+        //Gère la déformation de la texture selon la taille de la corde
+        float scaleX = Vector3.Distance(line.GetPosition(0), line.GetPosition(1));
+        line.GetComponent<LineRenderer>().material.mainTextureScale = new Vector2(scaleX, 1f);
     }
 
     void CreateJoint(){
