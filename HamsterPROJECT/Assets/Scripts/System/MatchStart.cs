@@ -6,15 +6,8 @@ using UnityEngine.UI;
 public class MatchStart : MonoBehaviour {
 
 	//Players Prefabs
-	[SerializeField] GameObject P1;
-	[SerializeField] GameObject P2;
-	[SerializeField] GameObject P3;
-	[SerializeField] GameObject P4;
-//	[SerializeField] Transform[] spawnPoints;
-	[SerializeField] Transform spawnPoint1;
-	[SerializeField] Transform spawnPoint2;
-	[SerializeField] Transform spawnPoint3;
-	[SerializeField] Transform spawnPoint4;
+	[SerializeField] GameObject[] Characters;
+	[SerializeField] Transform[] spawnPoints;
 
 	// Ready/Fight countdown
 	Text beginText;
@@ -25,6 +18,8 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] Texture2D emptyProgressBar;
 	[SerializeField] Texture2D fullProgressBar;
 	float timeAtBegin;
+
+	string plyrNmbr;
 
 	void Awake ()
 	{
@@ -49,7 +44,7 @@ public class MatchStart : MonoBehaviour {
 		{
 			if (GameManager.playersActive[i] == true)
 			{
-				Invoke("Instantiate_P" + (i + 1).ToString() ,0);
+				InstantiatePlayer (i);
 			}
 		}
 //		FreezePlayers ();
@@ -97,36 +92,14 @@ public class MatchStart : MonoBehaviour {
 		beginText.text = "";
 	}
 
-	void Instantiate_P1()
+	void InstantiatePlayer(int playerIndex)
 	{
-		P1.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[0].ToString ());
-		P1.transform.position = spawnPoint1.transform.position;
-		P1.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		Instantiate (P1);
-	}
-
-	void Instantiate_P2()
-	{
-		P2.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[1].ToString ());
-		P2.transform.position = spawnPoint2.transform.position;
-		P2.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		Instantiate (P2);
-	}
-
-	void Instantiate_P3()
-	{
-		P3.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[2].ToString ());
-		P3.transform.position = spawnPoint3.transform.position;
-		P3.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		Instantiate (P3);
-	}
-
-	void Instantiate_P4()
-	{
-		P4.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite> ("CharacterSprites/InGame/" + GameManager.playersSprites[3].ToString ());
-		P4.transform.position = spawnPoint4.transform.position;
-		P4.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		Instantiate (P4);
+		plyrNmbr = "_P" + (playerIndex +1).ToString ();
+		GameObject inst = Characters[GameManager.playersCharacters[playerIndex]];
+		inst.transform.position = spawnPoints[playerIndex].transform.position;
+		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = plyrNmbr;
+		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+		Instantiate (inst);
 	}
 
 //	void FreezePlayers()

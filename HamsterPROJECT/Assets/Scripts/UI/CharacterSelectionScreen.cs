@@ -15,6 +15,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	public int activatedPlayers = 0;
 	[SerializeField] string previousScene;
 
+	[SerializeField] GameObject[] Characters;
+
 	//Audio
 	float delay = 0.1f;
 	AudioManager mngr;
@@ -29,8 +31,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			if (GameManager.playersActive[i] == true)
 			{
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = GameManager.playersSprites[i] ;
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = Resources.Load<Sprite> ("CharacterSprites/SelectionScreen/" + panels[i].GetComponent<PlayerSelectionPanel>().characterSelected.ToString ());
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = GameManager.playersCharacters[i] ;
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			}
 		}
 		#endregion
@@ -89,7 +91,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			if (panels [i].state == PlayerSelectionPanel.SelectionPanelState.Validated)
 			{
 				GameManager.playersActive [i] = true;
-				GameManager.playersSprites [i] = panels [i].characterSelected;
+				GameManager.playersCharacters [i] = panels [i].characterSelected;
+				Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panels[i].characterSelected + 1).ToString() ;
 			}
 		}
 	}
