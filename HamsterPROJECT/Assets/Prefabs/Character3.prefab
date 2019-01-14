@@ -417,7 +417,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2c72c3cedd89e43a09421a6dc43be7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastRange: 0.135
+  raycastRange: 0.3
+  layerMaskRaycast:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &114776634378249994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -429,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f463dd355eaa9b48bfb418c249c1f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manualSwitchOn: 0
   playerMovement: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2

@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Hook : MonoBehaviour {
+
+    [SerializeField]
+    bool manualSwitchOn;
 
     Balancing balanceData;
 
@@ -205,13 +209,14 @@ public class Hook : MonoBehaviour {
             default:
                 print("Default case switch start Hook.cs");
             break;
-        }     
+        }
+        GetComponent<ShieldCollider>().layerMaskRaycast = layerMaskArrow;
     }
 	
 	// Update is called once per frame
 	void Update () {
         //S'assure que le joint ne peut pas être actif sans rigidbody connecté
-        if(joint.connectedBody == null && joint.enabled){
+        if (joint.connectedBody == null && joint.enabled){
             joint.enabled = false;
             jointNotCreated = true;
         }
@@ -220,7 +225,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-            if (Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState){
+            if ((Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState) || manualSwitchOn){
 				ArrowState();
 			}
             UpdateArrow();
@@ -333,6 +338,7 @@ public class Hook : MonoBehaviour {
     }
 
     void ArrowState(){
+        manualSwitchOn = false;
         switchingState = true;
         switch (currentState){
             case HookState.Arrow:

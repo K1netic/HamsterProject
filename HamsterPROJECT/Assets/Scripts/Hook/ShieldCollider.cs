@@ -10,7 +10,8 @@ public class ShieldCollider : MonoBehaviour {
     [SerializeField]
     float raycastRange = 1;
 
-    LayerMask layerMaskRaycast;
+    [HideInInspector]
+    public LayerMask layerMaskRaycast;
 
     PolygonCollider2D coll;
 
@@ -45,7 +46,6 @@ public class ShieldCollider : MonoBehaviour {
         raycasts = new RaycastHit2D[coll.points.Length];
         halfwayRaycasts = new RaycastHit2D[coll.points.Length];
         arrow = GetComponent<Hook>();
-        layerMaskRaycast = arrow.layerMaskArrow;
     }
 
     private void Update()
@@ -93,8 +93,10 @@ public class ShieldCollider : MonoBehaviour {
         {
             if(raycasts[i].collider != null)
             {
+                print(raycasts[i].collider.gameObject.name);
                 if (raycasts[i].collider.gameObject.CompareTag("Arrow"))
                 {
+                    print("arrow");
                     opponentArrow = raycasts[i].collider.gameObject.GetComponent<Hook>();
                     if (opponentArrow.currentState == Hook.HookState.Arrow)
                     {
