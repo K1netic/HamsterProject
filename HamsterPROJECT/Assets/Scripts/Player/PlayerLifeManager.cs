@@ -23,6 +23,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackSpikes;
     float knockBackLaser;
     float laserDamage;
+	TrailRenderer trail;
 
     // Use this for initialization
     void Start () {
@@ -155,7 +156,8 @@ public class PlayerLifeManager : MonoBehaviour {
     }
 
     void Flashing()
-    {
+	{ 
+		trail.enabled = !trail.enabled;
         sprite.enabled = !sprite.enabled;
     }
 
@@ -164,7 +166,8 @@ public class PlayerLifeManager : MonoBehaviour {
         //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke();
         inRecovery = false;
-        sprite.enabled = true;
+		sprite.enabled = true;
+		trail.enabled = true;
     }
 
     void UpdateLifeUI()
