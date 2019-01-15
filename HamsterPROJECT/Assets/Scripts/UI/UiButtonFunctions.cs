@@ -10,7 +10,6 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] string sceneToLoadOnClick;
 	[SerializeField] GameManager.gameModes gameModeToSet;
 	[SerializeField] Text textToChange;
-	float delay = 0.1f;
 	AudioManager mngr;
 
 	void Start()

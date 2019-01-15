@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class MatchStart : MonoBehaviour {
 
-	//Players Prefabs
-	[SerializeField] GameObject[] Characters;
 	[SerializeField] Transform[] spawnPoints;
 
 	// Ready/Fight countdown
@@ -47,7 +45,6 @@ public class MatchStart : MonoBehaviour {
 				InstantiatePlayer (i);
 			}
 		}
-//		FreezePlayers ();
 	}
 	
 	// Update is called once per frame
@@ -77,15 +74,9 @@ public class MatchStart : MonoBehaviour {
 
 	IEnumerator BeginCount()
 	{
-		
-//		beginText.text = "3";
-//		yield return new WaitForSeconds (1.0f);
-//		beginText.text = "2";
-//		yield return new WaitForSeconds (1.0f);
 		beginText.text = "Ready ?";
 		yield return new WaitForSeconds (1.0f);
 		beginText.text = "Fight !";
-//		GUIElement.Destroy()
 		UnfreezePlayers ();
 		gameHasStarted = true;
 		yield return new WaitForSeconds (0.5f);
@@ -94,22 +85,13 @@ public class MatchStart : MonoBehaviour {
 
 	void InstantiatePlayer(int playerIndex)
 	{
-		plyrNmbr = "_P" + (playerIndex +1).ToString ();
-		GameObject inst = Characters[GameManager.playersCharacters[playerIndex]];
+		plyrNmbr = "_P" + (playerIndex + 1).ToString ();
+		GameObject inst = GameManager.playersCharacters[playerIndex];
 		inst.transform.position = spawnPoints[playerIndex].transform.position;
 		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = plyrNmbr;
 		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
 		Instantiate (inst);
 	}
-
-//	void FreezePlayers()
-//	{
-//		foreach (GameObject player in players)
-//		{
-//			Debug.Log ("freezing player");
-//			player.GetComponent<Rigidbody2D> ().isKinematic = true;
-//		}
-//	}
 
 	void UnfreezePlayers()
 	{

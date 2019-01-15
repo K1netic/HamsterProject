@@ -9,7 +9,6 @@ public class PlayerResultPanel : MonoBehaviour {
 	public int playerResultPanelID;
 	public Image background;
 	Image characterSprite;
-	[SerializeField] GameObject[] Characters;
 
 	void Awake()
 	{
@@ -29,7 +28,7 @@ public class PlayerResultPanel : MonoBehaviour {
 
 		if (this.gameObject.activeSelf)
 		{
-			characterSprite.sprite = Characters [GameManager.playersCharacters [playerResultPanelID -1]].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
+			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID -1].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
 		}
 	}
 }

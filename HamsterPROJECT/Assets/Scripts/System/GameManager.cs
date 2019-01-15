@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour {
 
@@ -31,8 +32,11 @@ public class GameManager : MonoBehaviour {
 	public static int goal = 1;
 		
 	public static bool[] playersActive = new bool[4];
-	public static int[] playersCharacters = new int[4];
 	public static bool[] playersAlive = new bool[4];
+	//Base characters
+	public static List<GameObject> Characters = new List<GameObject>();
+	//Characters selected by players
+	public static GameObject[] playersCharacters = new GameObject[4];
 	public static int[] playersScores = new int[4];
 
 	public static string lastBattleMap;

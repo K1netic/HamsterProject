@@ -21,7 +21,6 @@ public class MatchEnd : MonoBehaviour {
 	bool arrowSet = false;
 
 	// Audio
-	float delay = 0.1f;
 	AudioManager mngr;
 
 	// Use this for initialization

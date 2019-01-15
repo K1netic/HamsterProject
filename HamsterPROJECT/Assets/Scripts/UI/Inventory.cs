@@ -15,10 +15,10 @@ public class Inventory : MonoBehaviour {
     public string currentItem;
 
     float timeCDItem = 1f;
-    float bonusCroquettes;
+//    float bonusCroquettes;
     float timeBonusCroquettes;
-    float gravityWithParachute;
-    float timeWithParachute;
+//    float gravityWithParachute;
+//    float timeWithParachute;
 
     string playerNumber;
     PlayerMovement playerMovementScript;
@@ -31,10 +31,10 @@ public class Inventory : MonoBehaviour {
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
         timeCDItem = balanceData.timeCDItem;
-        bonusCroquettes = balanceData.bonusCroquettes;
+//        bonusCroquettes = balanceData.bonusCroquettes;
         timeBonusCroquettes = balanceData.timeBonusCroquettes;
-        gravityWithParachute = balanceData.gravityWithParachute;
-        timeWithParachute = balanceData.timeWithParachute;
+//        gravityWithParachute = balanceData.gravityWithParachute;
+//        timeWithParachute = balanceData.timeWithParachute;
 
         playerMovementScript = GetComponent<PlayerMovement>();
         playerRigid = GetComponent<Rigidbody2D>();
