@@ -317,8 +317,6 @@ public class Hook : MonoBehaviour {
         //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
         checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
         checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
-
-        Debug.DrawRay(player.transform.position, -jointDirection * .85f, Color.red, 5);
     }
 
     void UpdateArrow(){
