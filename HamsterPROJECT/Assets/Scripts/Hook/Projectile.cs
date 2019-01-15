@@ -28,6 +28,8 @@ public class Projectile : MonoBehaviour {
     PolygonCollider2D coll;
     bool pivotUpdated;
 
+    GameObject hookedObject;
+
     void Start(){
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
@@ -66,17 +68,27 @@ public class Projectile : MonoBehaviour {
     }
 
 	void Update () {
-        if (!hooked)
+        switch (hooked)
         {
-            rigid.AddForce(direction / speed);
-            RaycastNoBounce();
+            case true:
+                if (!pivotUpdated)
+                {
+                    hook.line.SetPosition(1, transform.GetChild(0).transform.position);
+                    pivotUpdated = true;
+                }
+                if(hookedObject.CompareTag("Untagged"))
+                {
+                    hook.DisableRope();
+                }
+                break;
+            case false:
+                rigid.AddForce(direction / speed);
+                RaycastNoBounce();
+                break;
+            default:
+                break;
         }
-        else if (!pivotUpdated)
-        {
-            hook.line.SetPosition(1,transform.GetChild(0).transform.position);
-            pivotUpdated = true;
-        }
-	}
+    }
 
     void RaycastNoBounce()
     {
@@ -96,18 +108,21 @@ public class Projectile : MonoBehaviour {
                     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     hooked = true;
                     transform.position = raycast.point;
+                    hookedObject = raycast.collider.gameObject;
                 }
                 else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
                 {
                     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     hooked = true;
                     transform.position = raycastLeft.point;
+                    hookedObject = raycastLeft.collider.gameObject;
                 }
                 else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
                 {
                     GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     hooked = true;
                     transform.position = raycastRight.point;
+                    hookedObject = raycastRight.collider.gameObject;
                 }
             }
         }
