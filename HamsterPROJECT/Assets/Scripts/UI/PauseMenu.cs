@@ -11,7 +11,6 @@ public class PauseMenu : MonoBehaviour {
 	bool arrowSet = false;
 
 	// Audio
-	float delay = 0.1f;
 	AudioManager mngr;
 
 	void Start()

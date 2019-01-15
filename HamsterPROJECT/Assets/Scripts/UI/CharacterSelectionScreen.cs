@@ -15,11 +15,16 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	public int activatedPlayers = 0;
 	[SerializeField] string previousScene;
 
-	[SerializeField] GameObject[] Characters;
-
 	//Audio
 	float delay = 0.1f;
 	AudioManager mngr;
+
+	void Awake()
+	{
+		// Load Characters
+		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
+		GameManager.Characters = new List<GameObject>(tab);
+	}
 
 	void Start()
 	{
@@ -31,8 +36,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			if (GameManager.playersActive[i] == true)
 			{
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = GameManager.playersCharacters[i] ;
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = GameManager.Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			}
 		}
 		#endregion
@@ -85,14 +90,15 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	// Writing playerInfos in the GameManager
 	void PlayerInfos()
 	{
-		//Player 1 -> PlayerSelectionPanel 
 		for (int i = 0; i < panels.Length; i++)
 		{
 			if (panels [i].state == PlayerSelectionPanel.SelectionPanelState.Validated)
 			{
 				GameManager.playersActive [i] = true;
-				GameManager.playersCharacters [i] = panels [i].characterSelected;
-				Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panels[i].characterSelected + 1).ToString() ;
+				//Set selected characters
+				GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel>().validatedCharacter;
+				GameManager.playersCharacters [i].transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panels[i].characterSelected + 1).ToString() ;
+//				GameManager.Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panels[i].characterSelected + 1).ToString() ;
 			}
 		}
 	}

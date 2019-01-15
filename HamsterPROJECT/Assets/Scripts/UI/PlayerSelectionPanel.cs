@@ -8,7 +8,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	public string playerSelectionPanelID;
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
-	[SerializeField] GameObject[] Characters;
 	int nbCharactersAvailable;
 	[SerializeField] public int characterSelected = 0;
 	 
@@ -18,12 +17,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool blockStickMovement = false;
 
 	CharacterSelectionScreen select;
+	public GameObject validatedCharacter;
 
 	//Audio
-	float delay = 0.1f;
 	AudioManager mngr;
 	bool validate = false;
 	bool activate = false;
+
+	List<GameObject> charactersToSelect = new List<GameObject>();
 
 	void Start()
 	{
@@ -31,7 +32,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
 
-		nbCharactersAvailable = Characters.Length -1;
+		charactersToSelect = new List<GameObject> (GameManager.Characters);
+		nbCharactersAvailable = charactersToSelect.Count -1;
+
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 	}
 
@@ -47,6 +50,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
 		{
 			state = SelectionPanelState.Validated;
+			validatedCharacter = GameManager.Characters[characterSelected];
+			charactersToSelect.RemoveAt(characterSelected);
+			nbCharactersAvailable -= 1;
 		}
 
 		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
@@ -60,6 +66,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			mngr.PlaySound ("UI_cancel", mngr.UIsource);
 			state = SelectionPanelState.Activated;
 			select.ready = false;
+			charactersToSelect.Insert(characterSelected, validatedCharacter);
+			nbCharactersAvailable += 1;
 		}
 		#endregion
 
@@ -96,10 +104,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		{
 			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected < nbCharactersAvailable)
+			{
 				characterSelected += 1;
+			}
 			else
+			{
 				characterSelected = 0;
-			characterSprite.sprite = Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			}
+			characterSprite.sprite = charactersToSelect[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
@@ -107,10 +119,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		{
 			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected > 0)
+			{
 				characterSelected -= 1;
+			}
 			else
+			{
 				characterSelected = nbCharactersAvailable;
-			characterSprite.sprite = Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			}
+			characterSprite.sprite = charactersToSelect[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
