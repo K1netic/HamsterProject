@@ -41,7 +41,9 @@ public class PlayerLifeManager : MonoBehaviour {
         laserDamage= balanceData.laserDamage;
 
         sprite = GetComponent<SpriteRenderer>();
-        playerMovement = GetComponent<PlayerMovement>();        
+        playerMovement = GetComponent<PlayerMovement>();
+
+        trail = GetComponent<TrailRenderer>();
 
         lifeBackground = GameObject.Find("HPBar" + playerMovement.playerNumber).GetComponent<Image>();
         lifeImage = GameObject.Find("HP" + playerMovement.playerNumber).GetComponent<Image>();
@@ -78,6 +80,11 @@ public class PlayerLifeManager : MonoBehaviour {
         {
             Dead();
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print('i');
     }
 
     //Fonction qui applique des dégâts au joueur
