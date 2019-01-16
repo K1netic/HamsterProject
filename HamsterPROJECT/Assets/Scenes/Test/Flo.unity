@@ -1801,6 +1801,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
         type: 2}
+      propertyPath: LifeBars.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
+        type: 2}
       propertyPath: Characters.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -1921,6 +1926,26 @@ Prefab:
       propertyPath: spawnPoints.Array.data[3]
       value: 
       objectReference: {fileID: 2115416933}
+    - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
+        type: 2}
+      propertyPath: LifeBars.Array.data[0]
+      value: 
+      objectReference: {fileID: 1245127652}
+    - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
+        type: 2}
+      propertyPath: LifeBars.Array.data[1]
+      value: 
+      objectReference: {fileID: 1245127651}
+    - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
+        type: 2}
+      propertyPath: LifeBars.Array.data[2]
+      value: 
+      objectReference: {fileID: 1245127650}
+    - target: {fileID: 114368122497681744, guid: 44f8691906efd8349b577cdb22ebe18d,
+        type: 2}
+      propertyPath: LifeBars.Array.data[3]
+      value: 
+      objectReference: {fileID: 1245127649}
     m_RemovedComponents:
     - {fileID: 114052301182128656, guid: 44f8691906efd8349b577cdb22ebe18d, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 44f8691906efd8349b577cdb22ebe18d, type: 2}
@@ -4937,6 +4962,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1357151007582156, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1904654784969054, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941024154558096, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713589518936640, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44dab5ef839a45c4b83f13d2bc05604e, type: 2}
   m_IsPrefabAsset: 0
@@ -5170,6 +5211,26 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!1 &1245127649 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1713589518936640, guid: 44dab5ef839a45c4b83f13d2bc05604e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1245127630}
+--- !u!1 &1245127650 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1941024154558096, guid: 44dab5ef839a45c4b83f13d2bc05604e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1245127630}
+--- !u!1 &1245127651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1904654784969054, guid: 44dab5ef839a45c4b83f13d2bc05604e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1245127630}
+--- !u!1 &1245127652 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1357151007582156, guid: 44dab5ef839a45c4b83f13d2bc05604e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1245127630}
 --- !u!1 &1250248191
 GameObject:
   m_ObjectHideFlags: 0
@@ -5582,6 +5643,10 @@ Prefab:
     - target: {fileID: 22323452, guid: 81154777d5417884981849c5243f6c01, type: 2}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 22488988, guid: 81154777d5417884981849c5243f6c01, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81154777d5417884981849c5243f6c01, type: 2}
@@ -7873,7 +7938,7 @@ Prefab:
     - target: {fileID: 114934012383551894, guid: d21791be8885c864caaf4cb3be6a2233,
         type: 2}
       propertyPath: playerMaxHP
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d21791be8885c864caaf4cb3be6a2233, type: 2}

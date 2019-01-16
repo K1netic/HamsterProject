@@ -5,23 +5,26 @@ using UnityEngine.UI;
 
 public class MatchStart : MonoBehaviour {
 
-	[SerializeField] Transform[] spawnPoints;
-
 	// Ready/Fight countdown
 	Text beginText;
 	bool coroutineLimiter = false;
 	bool activateBegin = false;
 	public static bool gameHasStarted = false;
-	[SerializeField] GameObject[] players;
 	[SerializeField] Texture2D emptyProgressBar;
 	[SerializeField] Texture2D fullProgressBar;
 	float timeAtBegin;
 
+	// Players 
+	[SerializeField] GameObject[] Players;
 	string plyrNmbr;
+
+	[SerializeField] Transform[] spawnPoints;
+
+	[SerializeField] GameObject[] LifeBars;
 
 	void Awake ()
 	{
-		// Set all active players to Alive (true) at beginning of match
+		// Set all active Players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
 			if (GameManager.playersActive [i] == true)
@@ -31,13 +34,15 @@ public class MatchStart : MonoBehaviour {
 		}
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
+
+		ShowLifeBars ();
 	}
 
 	void Start()
 	{
 		gameHasStarted = false;
 		coroutineLimiter = false;
-		// Instantiate players depending on which were validated in the character selection screen
+		// Instantiate Players depending on which were validated in the character selection screen
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
 			if (GameManager.playersActive[i] == true)
@@ -65,6 +70,7 @@ public class MatchStart : MonoBehaviour {
 
 	void OnGUI()
 	{
+		// Draw progress bar
 		if (activateBegin && !gameHasStarted)
 		{
 			GUI.DrawTexture (new Rect (1920f/2f - 250, 700, 500, 50), emptyProgressBar);
@@ -95,10 +101,19 @@ public class MatchStart : MonoBehaviour {
 
 	void UnfreezePlayers()
 	{
-		players = GameObject.FindGameObjectsWithTag("Player");
-		foreach (GameObject player in players)
+		Players = GameObject.FindGameObjectsWithTag("Player");
+		foreach (GameObject player in Players)
 		{
 			player.GetComponent<Rigidbody2D> ().isKinematic = false;
+		}
+	}
+
+	void ShowLifeBars()
+	{
+		for(int i = 0; i < GameManager.playersActive.Length; i++)
+		{
+			if (GameManager.playersActive [i])
+				LifeBars [i].SetActive (true);
 		}
 	}
 
