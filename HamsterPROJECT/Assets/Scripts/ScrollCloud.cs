@@ -13,7 +13,6 @@ public class ScrollCloud : MonoBehaviour {
 	void Start () {
 		startPos = transform.position;
 		scale = transform.parent.GetComponent<Transform>().localScale.x;
-		print (scale);
 	}
 	
 	// Update is called once per frame

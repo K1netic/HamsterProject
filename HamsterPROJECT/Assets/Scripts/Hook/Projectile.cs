@@ -147,14 +147,8 @@ public class Projectile : MonoBehaviour {
         //Vérifie les collisions uniquement si le projectile n'est pas pas aggripé
         if (!hooked)
         {
-            //S'accroche si jamais le gameObject à le bon tag
-            /*if (collision.gameObject.CompareTag("Hookable"))
-            {
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                hooked = true;
-            }
             //Inflige des dégâts et détruit le projectile s'il touche un player
-            else*/ if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player"))
             {
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
@@ -164,9 +158,15 @@ public class Projectile : MonoBehaviour {
             {
                 Destruction();
             }
+            //S'immobilise si jamais il touche une platforme aggripable, en attendant que les raycasts fassent la suite
+            else if (collision.gameObject.CompareTag("Hookable"))
+            {
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            }
         }
     }
-    //Appel la méthode qui permet de couper la corde si le grappin est attaché
+
+    //Appelle la méthode qui permet de couper la corde si le grappin est attaché
     void OnTriggerEnter2D(Collider2D col){
         if(col.gameObject.CompareTag("Rope")){
             col.gameObject.GetComponent<LineCutter>().CutRope();

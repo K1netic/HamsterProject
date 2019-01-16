@@ -128,7 +128,6 @@ public class PlayerLifeManager : MonoBehaviour {
                         break;
                 }
             }
-            print(damage);
             playerHP -= damage;
             UpdateLifeUI();
             //Rend le player invulnérable pendant recoveryTime secondes
