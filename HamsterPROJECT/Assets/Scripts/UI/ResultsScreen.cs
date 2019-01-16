@@ -28,7 +28,7 @@ public class ResultsScreen : MonoBehaviour {
 	{
 		if (Input.GetButtonDown("Pause_P1"))
 		{
-			GameManager.ResetScore ();
+			GameManager.ResetScores ();
 			SceneManager.LoadScene (sceneToLoad);
 		}
 	}
