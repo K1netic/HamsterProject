@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114368122497681744}
   - component: {fileID: 114384222126403934}
   - component: {fileID: 114786336703485410}
-  - component: {fileID: 114052301182128656}
   m_Layer: 0
   m_Name: LevelScripts
   m_TagString: Untagged
@@ -43,17 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114052301182128656
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1664342038212124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed930f0483979948a077788f54f4912, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114368122497681744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,14 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5344a7df802362647a7094a8100a437d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  P1: {fileID: 1320202228956494, guid: a6918e4054b36e54ea692901b9a9aade, type: 2}
-  P2: {fileID: 1561990239454186, guid: 2c80d71a63894d942a15d9f4098b6b29, type: 2}
-  P3: {fileID: 1490937746107604, guid: aed131f696ed5b049a6376d296e84e38, type: 2}
-  P4: {fileID: 1426465713960588, guid: 9653735a02c2aca4fa07abe2a9f21f32, type: 2}
-  spawnPoint1: {fileID: 0}
-  spawnPoint2: {fileID: 0}
-  spawnPoint3: {fileID: 0}
-  spawnPoint4: {fileID: 0}
+  spawnPoints: []
   players: []
   emptyProgressBar: {fileID: 2800000, guid: 491d1d22608a2364e97fcbd9d2ee43b1, type: 3}
   fullProgressBar: {fileID: 2800000, guid: b2bd281e02b993e4f8cbac94290c32e8, type: 3}
@@ -88,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreDisplay: {fileID: 0}
+  arrows: []
 --- !u!114 &114786336703485410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,3 +82,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+  arrows: []

@@ -9,6 +9,9 @@ public class PlayerResultPanel : MonoBehaviour {
 	public int playerResultPanelID;
 	public Image background;
 	Image characterSprite;
+	[SerializeField] Text scoreText;
+	[SerializeField] Text killsText;
+	[SerializeField] Text deathsText;
 
 	void Awake()
 	{
@@ -30,5 +33,10 @@ public class PlayerResultPanel : MonoBehaviour {
 		{
 			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID -1].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
 		}
+
+		// Text infos
+		scoreText.text = "Score : " + GameManager.playersScores [playerResultPanelID - 1].ToString ();
+		killsText.text = "Kills : " + GameManager.playersKills [playerResultPanelID - 1].ToString ();
+		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID - 1].ToString ();	
 	}
 }

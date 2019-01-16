@@ -37,7 +37,11 @@ public class GameManager : MonoBehaviour {
 	public static List<GameObject> Characters = new List<GameObject>();
 	//Characters selected by players
 	public static GameObject[] playersCharacters = new GameObject[4];
+
+	//Players metrics
 	public static int[] playersScores = new int[4];
+	public static int[] playersKills = new int[4];
+	public static int[] playersDeaths = new int[4];
 
 	public static string lastBattleMap;
 
@@ -51,12 +55,13 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 3);
 	}
 
-	public static void ResetScore()
+	public static void ResetScores()
 	{
 		for (int i = 0; i < GameManager.playersScores.Length; i ++)
 		{
 			GameManager.playersScores [i] = 0;
+			GameManager.playersKills [i] = 0;
+			GameManager.playersScores [i] = 0;
 		}
 	}
-
 }

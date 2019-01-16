@@ -25,6 +25,9 @@ public class PlayerLifeManager : MonoBehaviour {
     float laserDamage;
 	TrailRenderer trail;
 
+	// Makes sure Dead function is only called once at a time
+	bool deadLimiter = false;
+
     // Use this for initialization
     void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -76,8 +79,9 @@ public class PlayerLifeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
-        if (playerHP <= 0)
+		if (playerHP <= 0 && !deadLimiter)
         {
+			deadLimiter = true;
             Dead();
         }
     }
@@ -135,10 +139,15 @@ public class PlayerLifeManager : MonoBehaviour {
             //Fait clignoter le joueur tant qu'il est invulnérable
             InvokeRepeating("Flashing", 0, flashingRate);
 
-			// Counting kills for the player score
-			if (GameManager.gameModeType == GameManager.gameModes.Kills && playerHP <= 0 && (attacker.tag == "Arrow" || attacker.tag == "Hook"))
+			// Player metrics setting
+			if (playerHP <= 0 && (attacker.tag == "Arrow" || attacker.tag == "Hook"))
 			{
-				GameManager.playersScores[(int.Parse(attacker.gameObject.transform.parent.name.Substring (2, 1))) - 1] += 1; 
+				GameManager.playersKills[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
+				// Counting kills for the player score if GameMode is set to Kills
+				if (GameManager.gameModeType == GameManager.gameModes.Kills)
+				{
+					GameManager.playersScores[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
+				}
 			}
         }
         
@@ -183,9 +192,11 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Dead()
     {
-        // Set player as dead in the game manager
         lifeImage.fillAmount = 0;
+		// Set player as dead in the game manager
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
+		// Add a death in metrics
+		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1; 
         Destroy(transform.parent.gameObject, 0.05f);
     }
 }

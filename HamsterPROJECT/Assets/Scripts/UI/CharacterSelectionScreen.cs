@@ -15,6 +15,10 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	public int activatedPlayers = 0;
 	[SerializeField] string previousScene;
 
+	// Dynamic selectable characters
+	public static int nbCharactersAvailable;
+	public static bool[] selectableCharacters;
+
 	//Audio
 	float delay = 0.1f;
 	AudioManager mngr;
@@ -24,6 +28,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		// Load Characters
 		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
 		GameManager.Characters = new List<GameObject>(tab);
+		nbCharactersAvailable = GameManager.Characters.Count -1;
+		selectableCharacters = new bool[GameManager.Characters.Count];
+
+		selectableCharacters.SetValue (true, 0);
+		selectableCharacters.SetValue (true, 1);
+		selectableCharacters.SetValue (true, 2);
+		selectableCharacters.SetValue (true, 3);
+		selectableCharacters.SetValue (true, 4);
 	}
 
 	void Start()

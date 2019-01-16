@@ -8,11 +8,11 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	public string playerSelectionPanelID;
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
-	int nbCharactersAvailable;
-	[SerializeField] public int characterSelected = 0;
+	public int characterSelected = 0;
 	 
 	[SerializeField] Image backgroundImg;
 	[SerializeField] public Image characterSprite;
+	[SerializeField] Image notAvailable;
 
 	bool blockStickMovement = false;
 
@@ -24,16 +24,11 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool validate = false;
 	bool activate = false;
 
-	List<GameObject> charactersToSelect = new List<GameObject>();
-
 	void Start()
 	{
 		mngr = FindObjectOfType<AudioManager> ();
 		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
-
-		charactersToSelect = new List<GameObject> (GameManager.Characters);
-		nbCharactersAvailable = charactersToSelect.Count -1;
 
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 	}
@@ -47,12 +42,21 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			state = SelectionPanelState.Activated;
 		}
 			
-		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
+		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) 
+			&& state == SelectionPanelState.Activated 
+			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true)
 		{
 			state = SelectionPanelState.Validated;
 			validatedCharacter = GameManager.Characters[characterSelected];
-			charactersToSelect.RemoveAt(characterSelected);
-			nbCharactersAvailable -= 1;
+			CharacterSelectionScreen.selectableCharacters[characterSelected] = false;
+		}
+
+		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) 
+			&& state == SelectionPanelState.Activated 
+			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == false)
+		{
+			//Play error sound
+			//Display "not available text"
 		}
 
 		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
@@ -66,8 +70,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			mngr.PlaySound ("UI_cancel", mngr.UIsource);
 			state = SelectionPanelState.Activated;
 			select.ready = false;
-			charactersToSelect.Insert(characterSelected, validatedCharacter);
-			nbCharactersAvailable += 1;
+			CharacterSelectionScreen.selectableCharacters[characterSelected] = true;
 		}
 		#endregion
 
@@ -100,10 +103,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	void CharacterSelection()
 	{
+		// Display character as unavailable if that's the case
+		if (!CharacterSelectionScreen.selectableCharacters [characterSelected])
+			notAvailable.gameObject.SetActive (true);
+		else
+			notAvailable.gameObject.SetActive (false);
+
 		if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == 1 && !blockStickMovement)
 		{
 			mngr.PlaySound ("UI_pick", mngr.UIsource);
-			if (characterSelected < nbCharactersAvailable)
+			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable)
 			{
 				characterSelected += 1;
 			}
@@ -111,7 +120,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				characterSelected = 0;
 			}
-			characterSprite.sprite = charactersToSelect[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			characterSprite.sprite = GameManager.Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
@@ -124,9 +133,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			}
 			else
 			{
-				characterSelected = nbCharactersAvailable;
+				characterSelected = CharacterSelectionScreen.nbCharactersAvailable;
 			}
-			characterSprite.sprite = charactersToSelect[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			characterSprite.sprite = GameManager.Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 			blockStickMovement = true;
 		} 
 
