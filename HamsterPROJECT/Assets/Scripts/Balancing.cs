@@ -43,4 +43,19 @@ public class Balancing : MonoBehaviour {
     public float knockBackShieldHit = 10;
     public float knockBackSpikes = 5;
     public float knockBackLaser = 10;
+
+	[Header("VIBRATION & SCREENSHAKE")]
+	public float lightScreeShakeMagnitude = 4f;
+	public float mediumScreenShakeMagnitude = 8f;
+	public float heavyScreenShakeMagnitude = 12f;
+	public float screenShakeRoughness = 4f;
+	public float screenShakeFadeIn = 0.1f;
+	public float screenShakeFadeOut = 1f;
+	public float lightRumble = 0.1f;
+	public float mediumRumble = 0.5f;
+	public float heavyRumble = 1f;
+	public float lightVibration = 0.1f;
+	public float mediumVibration = 0.5f;
+	public float heavyVibration = 1.0f;
+
 }
