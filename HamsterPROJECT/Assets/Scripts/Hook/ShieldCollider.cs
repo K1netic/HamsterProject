@@ -93,10 +93,8 @@ public class ShieldCollider : MonoBehaviour {
         {
             if(raycasts[i].collider != null)
             {
-                print(raycasts[i].collider.gameObject.name);
                 if (raycasts[i].collider.gameObject.CompareTag("Arrow"))
                 {
-                    print("arrow");
                     opponentArrow = raycasts[i].collider.gameObject.GetComponent<Hook>();
                     if (opponentArrow.currentState == Hook.HookState.Arrow)
                     {

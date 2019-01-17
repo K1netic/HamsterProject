@@ -20,7 +20,6 @@ public class DontGoThroughThings : MonoBehaviour {
 	//initialize values 
 	void Start() 
 	{ 
-		layerMask = GetComponent<Hook>().layerMaskArrow;
 		myRigidbody = GetComponent<Rigidbody2D>();
 		myCollider = GetComponent<Collider2D>();
 		previousPosition = myRigidbody.position; 
