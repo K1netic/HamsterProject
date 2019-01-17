@@ -162,6 +162,9 @@ public class Projectile : MonoBehaviour {
             else if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                hooked = true;
+                transform.position = collision.GetContact(0).point;
+                hookedObject = collision.gameObject;
             }
         }
     }

@@ -37,8 +37,8 @@ public class MultipleTargetsCamera : MonoBehaviour {
     float zoomMinLimitY;
     //bool zoomViaX;
 
-    Vector3 afzf;
-    Vector3 azz;
+    Vector3 gizmoCenter;
+    Vector3 gizmoSize;
 
     private void Start()
     {
@@ -84,7 +84,7 @@ public class MultipleTargetsCamera : MonoBehaviour {
             //zoomViaX = false;
         } 
 
-        afzf = bounds.size;
+        gizmoSize = bounds.size;
 
         if (targets.Count == 1)
         {
@@ -93,14 +93,14 @@ public class MultipleTargetsCamera : MonoBehaviour {
         else
         {
             targetPos = bounds.center;
-            azz = bounds.center;
+            gizmoCenter = bounds.center;
         }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawCube(azz, afzf);
+        Gizmos.DrawCube(gizmoCenter, gizmoSize);
     }
 
     void Move()

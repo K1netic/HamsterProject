@@ -26,10 +26,11 @@ public class Hook : MonoBehaviour {
     Vector3 jointDirection;
     RaycastHit2D checkOppositeToJoint;
     RaycastHit2D checkToJoint ;
+    LayerMask layerMaskLineCast;
 
     //AIM
     //float offset;
-	public GameObject player;
+    public GameObject player;
 	private Vector2 screenPoint;
     [HideInInspector]
     public LineRenderer line;
@@ -189,28 +190,33 @@ public class Hook : MonoBehaviour {
             case "_P1":
                 line.gameObject.layer = 17;
                 gameObject.layer = 17;
-                layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20);
-            break;
+                layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
+                layerMaskLineCast = (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
+                break;
             case "_P2":
                 line.gameObject.layer = 18;
                 gameObject.layer = 18;
-                layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20);
+                layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
+                layerMaskLineCast = (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
                 break;
             case "_P3":
                 line.gameObject.layer = 19;
                 gameObject.layer = 19;
-                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20);
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
+                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
                 break;
             case "_P4":
                 line.gameObject.layer = 20;
                 gameObject.layer = 20;
-                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19);
+                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
+                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
                 break;
             default:
                 print("Default case switch start Hook.cs");
             break;
         }
-        GetComponent<ShieldCollider>().layerMaskRaycast = layerMaskArrow;
+        /*GetComponent<ShieldCollider>().layerMaskRaycast = layerMaskArrow;
+        GetComponent<DontGoThroughThings>().layerMask = layerMaskArrow;*/
     }
 	
 	// Update is called once per frame
@@ -417,7 +423,7 @@ public class Hook : MonoBehaviour {
 
     void CreateJoint(){
         t = 0;
-        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        //player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = true;
         joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
         joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
@@ -465,7 +471,7 @@ public class Hook : MonoBehaviour {
     public void DisableRope(){
         StartCoroutine("ResetHookCD");
         playerMovement.StateNotHooked();
-        player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
+        //player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = false;
         projectileScript.End();
         line.gameObject.SetActive(false);
@@ -499,30 +505,66 @@ public class Hook : MonoBehaviour {
             //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
             if (collision.gameObject.CompareTag("Arrow"))
             {
-                playerMovement.lockMovementKnockBack = true;
-                Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
-                playerMovement.rigid.velocity = Vector3.zero;
-                switch (collision.gameObject.GetComponent<Hook>().currentState){
-                    case HookState.Arrow:
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                        
-                    break;
-                    case HookState.Shield:
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-                    break;
-                    default:
-                    break;
-                }
-                Invoke("UnlockMovement", knockBackTime);
+                ArrowHit(collision);
             }
             //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
             else if (collision.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage +
-                playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio, gameObject, true);
+                RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
+                if (collisionFail.collider != null)
+                {
+                    print(collisionFail.collider.gameObject.GetComponent<Hook>().playerNumber);
+                    ArrowHit(collisionFail.collider);
+                }
+                else
+                {
+                    collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage +
+                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio, gameObject, true);
+                }
+ 
             }
         }
         
+    }
+
+    void ArrowHit(Collision2D collision)
+    {
+        playerMovement.lockMovementKnockBack = true;
+        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+        playerMovement.rigid.velocity = Vector3.zero;
+        switch (collision.gameObject.GetComponent<Hook>().currentState)
+        {
+            case HookState.Arrow:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+
+                break;
+            case HookState.Shield:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
+                break;
+            default:
+                break;
+        }
+        Invoke("UnlockMovement", knockBackTime);
+    }
+
+    void ArrowHit(Collider2D collision)
+    {
+        playerMovement.lockMovementKnockBack = true;
+        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+        playerMovement.rigid.velocity = Vector3.zero;
+        switch (collision.gameObject.GetComponent<Hook>().currentState)
+        {
+            case HookState.Arrow:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+
+                break;
+            case HookState.Shield:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
+                break;
+            default:
+                break;
+        }
+        Invoke("UnlockMovement", knockBackTime);
     }
 
     void UnlockMovement()
