@@ -30,12 +30,6 @@ public class Inventory : MonoBehaviour {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
-        timeCDItem = balanceData.timeCDItem;
-//        bonusCroquettes = balanceData.bonusCroquettes;
-        timeBonusCroquettes = balanceData.timeBonusCroquettes;
-//        gravityWithParachute = balanceData.gravityWithParachute;
-//        timeWithParachute = balanceData.timeWithParachute;
-
         playerMovementScript = GetComponent<PlayerMovement>();
         playerRigid = GetComponent<Rigidbody2D>();
         playerNumber = playerMovementScript.playerNumber;

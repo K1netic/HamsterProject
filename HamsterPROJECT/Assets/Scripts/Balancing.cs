@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Balancing : MonoBehaviour {
 
-    [Header("ITEM")]
+    /*[Header("ITEM")]
     public float timeCDItem = 1f;
     public float bonusCroquettes;
     public float timeBonusCroquettes;
     public float gravityWithParachute;
-    public float timeWithParachute;
+    public float timeWithParachute;*/
 
     [Header("HOOK")]
     public float speedHookhead;
@@ -26,6 +26,7 @@ public class Balancing : MonoBehaviour {
     public float fastFallHorizontalThreshold = 0.1f;*/
     public float airControlForce = 10;
     public float hookMovementForce = 25;
+    public float speedThresholdDestruction = 20f;
 
     [Header("DAMAGE & LIFE")]
     public float playerMaxHP = 100;
