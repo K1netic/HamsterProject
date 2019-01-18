@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545980345487652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.2, y: -27.1, z: 0}
+  m_LocalPosition: {x: 20.270012, y: -3.9896278, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4683089742932734}
@@ -498,9 +498,10 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hooked: 0
   jointDirection: {x: 0, y: 0}
-  lockMovementKnockBack: 0
+  lockMovement: 0
   currentState: 0
   speed: 0
+  shootPos: {fileID: 1134602903314838}
   playerNumber: 
 --- !u!114 &114863868676670470
 MonoBehaviour:

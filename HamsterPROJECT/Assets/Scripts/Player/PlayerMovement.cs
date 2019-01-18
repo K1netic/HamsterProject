@@ -25,6 +25,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float speed;
 
+    //Dash
+    float dashTime;
+    float dashForce;
+    float dashCDTime;
+    bool dashInCD;
+    bool lockMovementDash;
+    [SerializeField]
+    GameObject shootPos;
+
     Text counter;
 
     //Fast Fall
@@ -45,9 +54,12 @@ public class PlayerMovement : MonoBehaviour
 
         hookMovementForce = balanceData.hookMovementForce;
         airControlForce = balanceData.airControlForce;
+        dashTime = balanceData.dashTime;
+        dashForce = balanceData.dashForce;
+        dashCDTime = balanceData.dashCDTime;
         /*fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
-        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */      
+        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */
 
         rigid = this.GetComponent<Rigidbody2D> ();
 
@@ -80,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
             currentState = State.inAir;
 
         Movement();
+        Dash();
+
 
         //FastFall
         /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
@@ -99,10 +113,26 @@ public class PlayerMovement : MonoBehaviour
         counter.text = (int)speed + " km/h";
     }
 
+    void Dash()
+    {
+        if (!lockMovement && !lockMovementDash)
+        {
+            if (Input.GetButtonDown("Dash" + playerNumber) && !dashInCD)
+            {
+                dashInCD = true;
+                lockMovementDash = true;
+                rigid.velocity = Vector2.zero;
+                rigid.AddForce((shootPos.transform.position - transform.position).normalized* dashForce, ForceMode2D.Impulse);
+                Invoke("UnlockMovementDash", dashTime);
+                Invoke("ResetDashCD", dashCDTime);
+            }
+        }
+    }
+
     void Movement()
     {
         //Switch permettant de gérer le mouvement en fonction de l'état du joueur
-        if (!lockMovement)
+        if (!lockMovement && !lockMovementDash)
         {
             switch (currentState)
             {
@@ -130,6 +160,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void ResetDashCD()
+    {
+        dashInCD = false;
+    }
+
     public void StateHooked()
     {
         currentState = State.hooked;
@@ -138,6 +173,11 @@ public class PlayerMovement : MonoBehaviour
     public void StateNotHooked()
     {
         currentState = State.inAir;
+    }
+
+    void UnlockMovementDash()
+    {
+        lockMovementDash = false;
     }
 
     enum State

@@ -42,7 +42,12 @@ public class Balancing : MonoBehaviour {
     public float knockBackShieldHit = 10;
     public float knockBackLaser = 10;
 
-	[Header("VIBRATION & SCREENSHAKE")]
+    [Header("Dash")]
+    public float dashTime;
+    public float dashForce;
+    public float dashCDTime;
+
+    [Header("VIBRATION & SCREENSHAKE")]
 	public float lightScreeShakeMagnitude = 4f;
 	public float mediumScreenShakeMagnitude = 8f;
 	public float heavyScreenShakeMagnitude = 12f;
