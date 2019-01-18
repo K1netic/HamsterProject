@@ -13,6 +13,7 @@ public class Explodable : MonoBehaviour
     public int subshatterSteps = 0;
 
     public string fragmentLayer = "Default";
+    [HideInInspector]
     public string sortingLayerName = "Default";
 	public string sortingTag = "Untagged";
     public int orderInLayer = 0;
@@ -29,6 +30,8 @@ public class Explodable : MonoBehaviour
     private List<List<Vector2>> polygons = new List<List<Vector2>>();
    
 	void Start() {
+        sortingLayerName = fragmentLayer;
+
         deleteFragments();
         explode ();
 	}

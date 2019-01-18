@@ -121,7 +121,7 @@ public class ShieldCollider : MonoBehaviour {
     //Applique un knockback sur l'adversaire
     void KnockBack(Hook opponentArrow, GameObject opponent)
     {
-        opponentArrow.playerMovement.lockMovementKnockBack = true;
+        opponentArrow.playerMovement.lockMovement = true;
         Vector2 directionKnockBack = -(opponent.transform.position - transform.position).normalized;
         opponentArrow.playerMovement.rigid.velocity = Vector3.zero;
         opponentArrow.playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
@@ -131,6 +131,6 @@ public class ShieldCollider : MonoBehaviour {
     IEnumerator UnlockMovement(PlayerMovement p)
     {
         yield return new WaitForSeconds(knockBackTime);
-        opponentArrow.playerMovement.lockMovementKnockBack = false;
+        opponentArrow.playerMovement.lockMovement = false;
     }
 }

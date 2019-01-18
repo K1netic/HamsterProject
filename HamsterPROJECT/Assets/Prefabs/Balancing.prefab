@@ -51,11 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23b3c803d3e4564aa526e0286e2bad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeCDItem: 1
-  bonusCroquettes: 2
-  timeBonusCroquettes: 3
-  gravityWithParachute: 0.5
-  timeWithParachute: 3
   speedHookhead: 15
   distanceMaxHook: 15
   retractationStep: 0.25
@@ -65,16 +60,26 @@ MonoBehaviour:
   lineWidth: 0.125
   airControlForce: 7.5
   hookMovementForce: 45
+  speedThresholdDestruction: 20
   playerMaxHP: 100
   hookheadDamage: 5
   recoveryTime: 1.5
   flashingRate: 0.1
-  arrowDamage: 10
-  spikesDamage: 10
-  velocityArrowDamageRatio: 2
-  laserDamage: 10
+  arrowDamage: 20
+  laserDamage: 20
   knockBackTime: 0.5
   knockBackPlayerHit: 10
   knockBackShieldHit: 20
-  knockBackSpikes: 10
-  knockBackLaser: 10
+  knockBackLaser: 20
+  lightScreeShakeMagnitude: 4
+  mediumScreenShakeMagnitude: 8
+  heavyScreenShakeMagnitude: 12
+  screenShakeRoughness: 4
+  screenShakeFadeIn: 0.1
+  screenShakeFadeOut: 1
+  lightRumble: 0.1
+  mediumRumble: 0.5
+  heavyRumble: 1
+  lightVibration: 0.1
+  mediumVibration: 0.5
+  heavyVibration: 1

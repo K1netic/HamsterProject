@@ -17,10 +17,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float recoveryTime;
     float flashingRate;
     SpriteRenderer sprite;
-    float spikesDamage;
     float knockBackTime;
     float knockBackPlayerHit;
-    float knockBackSpikes;
     float knockBackLaser;
     float laserDamage;
 	TrailRenderer trail;
@@ -38,8 +36,6 @@ public class PlayerLifeManager : MonoBehaviour {
         flashingRate = balanceData.flashingRate;
         knockBackTime = balanceData.knockBackTime;
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
-        knockBackSpikes = balanceData.knockBackSpikes;
-        spikesDamage = balanceData.spikesDamage;
         knockBackLaser= balanceData.knockBackLaser;
         laserDamage= balanceData.laserDamage;
 
@@ -104,7 +100,7 @@ public class PlayerLifeManager : MonoBehaviour {
             if (knockBack)
             {
                 //Bloque le mouvement du joueur pour ne pas override le knockback
-                playerMovement.lockMovementKnockBack = true;
+                playerMovement.lockMovement = true;
                 //Calcul la direction du knockback
                 Vector2 directionKnockBack = (attacker.transform.position - transform.position).normalized;
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
@@ -117,13 +113,10 @@ public class PlayerLifeManager : MonoBehaviour {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
                         playerMovement.rigid.AddForce(-directionKnockBack * (knockBackPlayerHit
-                        /*+ attacker.GetComponent<Hook>().playerMovement.rigid.velocity.magnitude * velocityKnockBackRatio*/), ForceMode2D.Impulse);
+                        + attacker.GetComponent<Hook>().playerMovement.speed /2), ForceMode2D.Impulse);
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                        break;
-                    case "Spikes":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackSpikes, ForceMode2D.Impulse);
                         break;
                     case "Laser":
                         playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
@@ -154,20 +147,23 @@ public class PlayerLifeManager : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D col){
-        if(col.gameObject.CompareTag("Spikes")){
-            TakeDamage(spikesDamage,col.gameObject,true);
+        if (col.gameObject.CompareTag("Laser"))
+        {
+            TakeDamage(laserDamage, col.gameObject, true);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col){
-        if(col.gameObject.CompareTag("Laser")){
-            TakeDamage(laserDamage,col.gameObject, true);
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Laser"))
+        {
+            TakeDamage(laserDamage, col.gameObject, true);
         }
     }
 
     void UnlockMovement()
     {
-        playerMovement.lockMovementKnockBack = false ;
+        playerMovement.lockMovement = false ;
     }
 
     void Flashing()

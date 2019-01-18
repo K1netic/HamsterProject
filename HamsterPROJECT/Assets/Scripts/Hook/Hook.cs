@@ -53,7 +53,6 @@ public class Hook : MonoBehaviour {
     float knockBackTime;
     float knockBackShieldHit;
     float arrowDamage;
-    float velocityArrowDamageRatio;
     Vector2 start1;
     Vector2 start2;
     Vector2 end;
@@ -112,7 +111,6 @@ public class Hook : MonoBehaviour {
         knockBackShieldHit = balanceData.knockBackShieldHit;
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         arrowDamage = balanceData.arrowDamage;
-        velocityArrowDamageRatio = balanceData.velocityArrowDamageRatio;
 
         timeRemaining = timeHooked;
 
@@ -513,13 +511,13 @@ public class Hook : MonoBehaviour {
                 RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
                 if (collisionFail.collider != null)
                 {
-                    print(collisionFail.collider.gameObject.GetComponent<Hook>().playerNumber);
-                    ArrowHit(collisionFail.collider);
+                    if(collisionFail.collider.gameObject.CompareTag("Arrow"))
+                        ArrowHit(collisionFail.collider);
                 }
                 else
                 {
                     collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage +
-                    playerMovement.rigid.velocity.magnitude / velocityArrowDamageRatio, gameObject, true);
+                    playerMovement.rigid.velocity.magnitude, gameObject, true);
                 }
  
             }
@@ -529,7 +527,7 @@ public class Hook : MonoBehaviour {
 
     void ArrowHit(Collision2D collision)
     {
-        playerMovement.lockMovementKnockBack = true;
+        playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
         switch (collision.gameObject.GetComponent<Hook>().currentState)
@@ -549,7 +547,7 @@ public class Hook : MonoBehaviour {
 
     void ArrowHit(Collider2D collision)
     {
-        playerMovement.lockMovementKnockBack = true;
+        playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
         switch (collision.gameObject.GetComponent<Hook>().currentState)
@@ -569,7 +567,7 @@ public class Hook : MonoBehaviour {
 
     void UnlockMovement()
     {
-        playerMovement.lockMovementKnockBack = false;
+        playerMovement.lockMovement = false;
     }
 
     void ResetCDSwitch(){

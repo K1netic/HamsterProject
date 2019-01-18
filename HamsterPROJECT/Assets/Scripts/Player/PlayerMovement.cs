@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,8 +15,7 @@ public class PlayerMovement : MonoBehaviour
 	//Movement
 	
     [HideInInspector]
-    public bool lockMovementKnockBack;
-	bool lockMovement = false;
+    public bool lockMovement;
     /*[HideInInspector]
     public Vector3 childRedAxis;*/
     float airControlForce;
@@ -27,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     State currentState;
     [HideInInspector]
     public float speed;
+
+    Text counter;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -52,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = this.GetComponent<Rigidbody2D> ();
 
+        counter = GameObject.Find("Counter" + playerNumber).GetComponent<Text>();
+
         switch (playerNumber)
         {
             case "_P1":
@@ -73,44 +74,12 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        speed = rigid.velocity.magnitude;
+        UpdateSpeed();
 
         if (currentState != State.hooked)
             currentState = State.inAir;
 
-		//Movement Lock
-		if (Input.GetButton ("Lock" + playerNumber))
-			lockMovement = true;
-		else
-			lockMovement = false;
-
-        //Switch permettant de gérer le mouvement en fonction de l'état du joueur
-        if(!lockMovementKnockBack){
-            switch (currentState){
-                case State.hooked:
-                    //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
-                    //Test si le joueur est dans un des 2 triangles de gauche ou de droite
-                    if((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f) 
-                    || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
-                    {//LEFT & RIGHT
-                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
-                    }
-                    //Test si le joueur est en haut ou en bas
-                    else if((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
-                    || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
-                    {//BOT & TOP
-                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
-                    }
-                    break;
-                case State.inAir:
-                    if(!lockMovement)
-                        rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
-                    break;
-                default:
-                    break;
-            }
-        }
-        
+        Movement();
 
         //FastFall
         /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
@@ -122,6 +91,43 @@ public class PlayerMovement : MonoBehaviour
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
 		}*/
+    }
+
+    void UpdateSpeed()
+    {
+        speed = rigid.velocity.magnitude;
+        counter.text = (int)speed + " km/h";
+    }
+
+    void Movement()
+    {
+        //Switch permettant de gérer le mouvement en fonction de l'état du joueur
+        if (!lockMovement)
+        {
+            switch (currentState)
+            {
+                case State.hooked:
+                    //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
+                    //Test si le joueur est dans un des 2 triangles de gauche ou de droite
+                    if ((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
+                    || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
+                    {//LEFT & RIGHT
+                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+                    }
+                    //Test si le joueur est en haut ou en bas
+                    else if ((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
+                    || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
+                    {//BOT & TOP
+                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
+                    }
+                    break;
+                case State.inAir:
+                    rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void StateHooked()
