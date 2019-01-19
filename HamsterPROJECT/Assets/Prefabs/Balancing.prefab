@@ -51,12 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23b3c803d3e4564aa526e0286e2bad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedHookhead: 20
+  speedHookhead: 25
   distanceMaxHook: 15
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.3
-  TimeHooked: 8
+  TimeHooked: 10
   lineWidth: 0.125
   airControlForce: 7.5
   hookMovementForce: 45
@@ -71,6 +71,9 @@ MonoBehaviour:
   knockBackPlayerHit: 10
   knockBackShieldHit: 20
   knockBackLaser: 20
+  dashTime: 0.05
+  dashForce: 50
+  dashCDTime: 2
   lightScreeShakeMagnitude: 4
   mediumScreenShakeMagnitude: 8
   heavyScreenShakeMagnitude: 12
