@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     GameObject shootPos;
 
+    float drag;
+
     Text counter;
 
     //Fast Fall
@@ -86,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            Vector3.MoveTowards(transform.position, transform.GetChild(0).transform.position, 100*Time.deltaTime);
+        }
+
         UpdateSpeed();
 
         if (currentState != State.hooked)
@@ -178,6 +185,14 @@ public class PlayerMovement : MonoBehaviour
     void UnlockMovementDash()
     {
         lockMovementDash = false;
+        drag = rigid.drag;
+        rigid.drag = 10;
+        Invoke("ResetDrag", .1f);
+    }
+
+    void ResetDrag()
+    {
+        rigid.drag = drag;
     }
 
     enum State
