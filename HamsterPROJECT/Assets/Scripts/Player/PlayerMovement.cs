@@ -128,7 +128,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 dashInCD = true;
                 lockMovementDash = true;
-                rigid.velocity = Vector2.zero;
                 rigid.AddForce((shootPos.transform.position - transform.position).normalized* dashForce, ForceMode2D.Impulse);
                 Invoke("UnlockMovementDash", dashTime);
                 Invoke("ResetDashCD", dashCDTime);
