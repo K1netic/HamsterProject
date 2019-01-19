@@ -166,6 +166,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastRange: 0.75
+  hitHookOrange: {fileID: 198546040475013250, guid: 0686c26aebeb69945be06fc2efc62840,
+    type: 2}
+  hitHookPink: {fileID: 198387620057346810, guid: e18d6bd2b6c73364d9695657ff55a08a,
+    type: 2}
+  hitHookGreen: {fileID: 198304153485013904, guid: 6c056476fd62fbe4baf24371e82a0dce,
+    type: 2}
+  hitHookYellow: {fileID: 198183255515729472, guid: 1cdfc3c14227e6a428016cfedc2471f9,
+    type: 2}
+  hitHookBlue: {fileID: 198238788537961496, guid: 90cbe84c142f5e0448f651062af2cd41,
+    type: 2}
   direction: {x: 0, y: 0, z: 0}
   playerNumber: 
   hooked: 0
@@ -204,7 +214,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

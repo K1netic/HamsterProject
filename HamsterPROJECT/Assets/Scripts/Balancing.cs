@@ -35,6 +35,7 @@ public class Balancing : MonoBehaviour {
     public float flashingRate = .1f;
     public float arrowDamage = 10;
     public float laserDamage = 10;
+    public float criticalSpeed = 35;
 
     [Header("Knockback")]
     public float knockBackTime = 0.5f;

@@ -182,12 +182,16 @@ public class PlayerMovement : MonoBehaviour
         currentState = State.inAir;
     }
 
+    //Rend le contrôle au joueur et modifie le drag pendant 0.1 secondes pour freiner le dash
     void UnlockMovementDash()
     {
         lockMovementDash = false;
-        drag = rigid.drag;
-        rigid.drag = 10;
-        Invoke("ResetDrag", .1f);
+        if (!lockMovement)
+        {
+            drag = rigid.drag;
+            rigid.drag = 10;
+            Invoke("ResetDrag", .1f);
+        }
     }
 
     void ResetDrag()

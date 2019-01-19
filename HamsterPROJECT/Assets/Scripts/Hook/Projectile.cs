@@ -10,6 +10,18 @@ public class Projectile : MonoBehaviour {
     [SerializeField]
     float raycastRange = 1;
 
+    [SerializeField]
+    ParticleSystem hitHookOrange;
+    [SerializeField]
+    ParticleSystem hitHookPink;
+    [SerializeField]
+    ParticleSystem hitHookGreen;
+    [SerializeField]
+    ParticleSystem hitHookYellow;
+    [SerializeField]
+    ParticleSystem hitHookBlue;
+    ParticleSystem hitHook;
+
     float speed;
     [HideInInspector]
 	public Vector3 direction;
@@ -56,6 +68,27 @@ public class Projectile : MonoBehaviour {
                 break;
             default:
                 print("Default case switch start Projectile.cs");
+                break;
+        }
+
+        switch (hook.player.GetComponent<SpriteRenderer>().sprite.name)
+        {
+            case "Perso1":
+                hitHook = hitHookOrange;
+                break;
+            case "Perso2":
+                hitHook = hitHookPink;
+                break;
+            case "Perso3":
+                hitHook = hitHookGreen;
+                break;
+            case "Perso4":
+                hitHook = hitHookYellow;
+                break;
+            case "Perso5":
+                hitHook = hitHookBlue;
+                break;
+            default:
                 break;
         }
 
@@ -109,6 +142,7 @@ public class Projectile : MonoBehaviour {
                     hooked = true;
                     transform.position = raycast.point;
                     hookedObject = raycast.collider.gameObject;
+                    Instantiate(hitHook, transform.position, transform.rotation);
                 }
                 else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
                 {
@@ -116,6 +150,7 @@ public class Projectile : MonoBehaviour {
                     hooked = true;
                     transform.position = raycastLeft.point;
                     hookedObject = raycastLeft.collider.gameObject;
+                    Instantiate(hitHook, transform.position, transform.rotation);
                 }
                 else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
                 {
@@ -123,6 +158,7 @@ public class Projectile : MonoBehaviour {
                     hooked = true;
                     transform.position = raycastRight.point;
                     hookedObject = raycastRight.collider.gameObject;
+                    Instantiate(hitHook, transform.position, transform.rotation);
                 }
             }
         }
@@ -150,21 +186,24 @@ public class Projectile : MonoBehaviour {
             //Inflige des dégâts et détruit le projectile s'il touche un player
             if (collision.gameObject.CompareTag("Player"))
             {
+                Instantiate(hitHook, transform.position, transform.rotation);
                 collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
                 Destruction();
             }
             
             else if(!collision.gameObject.CompareTag("Hookable"))
             {
+                Instantiate(hitHook, transform.position, transform.rotation);
                 Destruction();
             }
-            //S'immobilise si jamais il touche une platforme aggripable, en attendant que les raycasts fassent la suite
+            //S'accroche sur une plateforme si les raycast ne l'ont pas détecté
             else if (collision.gameObject.CompareTag("Hookable"))
             {
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 hooked = true;
                 transform.position = collision.GetContact(0).point;
                 hookedObject = collision.gameObject;
+                Instantiate(hitHook, transform.position, transform.rotation);
             }
         }
     }

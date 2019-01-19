@@ -7,6 +7,10 @@ public class Hook : MonoBehaviour {
 
     [SerializeField]
     bool manualSwitchOn;
+    [SerializeField]
+    ParticleSystem hitLittle;
+    [SerializeField]
+    ParticleSystem hitHard;
 
     Balancing balanceData;
 
@@ -72,6 +76,7 @@ public class Hook : MonoBehaviour {
     PolygonCollider2D arrowCollider;
     PolygonCollider2D shieldCollider ;
     Texture rope;
+    float criticalSpeed;
 
     //COLOR
     Color colorRope;
@@ -80,6 +85,7 @@ public class Hook : MonoBehaviour {
 
 	// Pause menu
 	public bool isFrozen = false;
+    private bool doubleFXprotection;
 
     private void Awake()
     {
@@ -111,6 +117,7 @@ public class Hook : MonoBehaviour {
         knockBackShieldHit = balanceData.knockBackShieldHit;
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         arrowDamage = balanceData.arrowDamage;
+        criticalSpeed = balanceData.criticalSpeed;
 
         timeRemaining = timeHooked;
 
@@ -504,6 +511,7 @@ public class Hook : MonoBehaviour {
             if (collision.gameObject.CompareTag("Arrow"))
             {
                 ArrowHit(collision);
+                HitFX(collision.GetContact(0).point);
             }
             //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
             else if (collision.gameObject.CompareTag("Player"))
@@ -512,17 +520,43 @@ public class Hook : MonoBehaviour {
                 if (collisionFail.collider != null)
                 {
                     if(collisionFail.collider.gameObject.CompareTag("Arrow"))
+                    {
                         ArrowHit(collisionFail.collider);
+                        HitFX(collision.GetContact(0).point);
+                    }
                 }
                 else
                 {
-                    collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage +
-                    playerMovement.rigid.velocity.magnitude, gameObject, true);
+                    collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
+                    HitFX(collision.GetContact(0).point);
                 }
  
             }
         }
         
+    }
+
+    void HitFX(Vector3 position)
+    {
+        if (!doubleFXprotection)
+        {
+            doubleFXprotection = true;
+            if (playerMovement.speed > criticalSpeed)
+            {
+                Instantiate(hitHard, position, transform.rotation);
+            }
+            else
+            {
+                Instantiate(hitLittle, position, transform.rotation);
+            }
+            Invoke("CancelFXProtection", .1f);
+        }
+           
+    }
+
+    void CancelFXProtection()
+    {
+        doubleFXprotection = false;
     }
 
     void ArrowHit(Collision2D collision)

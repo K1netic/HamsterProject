@@ -485,6 +485,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manualSwitchOn: 0
+  hitLittle: {fileID: 198273105362867362, guid: ca14b3448c40e5346bb0259789b50b14,
+    type: 2}
+  hitHard: {fileID: 198666884186482918, guid: f3976823dd2b07e41b0517f0711fb630, type: 2}
   playerMovement: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2
@@ -509,6 +512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathParticle: {fileID: 198341624431874994, guid: dba20a9dcde91244ea11b82d486cddbc,
+    type: 2}
 --- !u!114 &114960904358429182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -562,7 +567,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -608,7 +613,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 03d3cd1ab72186847aa4871b71916081, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

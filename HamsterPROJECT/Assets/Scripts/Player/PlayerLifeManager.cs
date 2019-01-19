@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerLifeManager : MonoBehaviour {
 
+    [SerializeField]
+    ParticleSystem deathParticle;
+
     Balancing balanceData;
 
     Image lifeBackground;
@@ -194,5 +197,6 @@ public class PlayerLifeManager : MonoBehaviour {
 		// Add a death in metrics
 		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1; 
         Destroy(transform.parent.gameObject, 0.05f);
+        Instantiate(deathParticle, transform.position, transform.rotation);
     }
 }
