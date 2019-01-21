@@ -18,7 +18,7 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] GameObject[] Players;
 	string plyrNmbr;
 
-	[SerializeField] Transform[] spawnPoints;
+	[SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
 	[SerializeField] GameObject[] LifeBars;
 
@@ -42,6 +42,11 @@ public class MatchStart : MonoBehaviour {
 	{
 		gameHasStarted = false;
 		coroutineLimiter = false;
+
+        foreach (GameObject spawn in GameObject.FindGameObjectsWithTag("Spawn"))
+        {
+            spawnPoints.Add(spawn.transform);
+        }
 		// Instantiate Players depending on which were validated in the character selection screen
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
@@ -93,7 +98,9 @@ public class MatchStart : MonoBehaviour {
 	{
 		plyrNmbr = "_P" + (playerIndex + 1).ToString ();
 		GameObject inst = GameManager.playersCharacters[playerIndex];
-		inst.transform.position = spawnPoints[playerIndex].transform.position;
+        int i = Random.Range(0, spawnPoints.Count + 1);
+		inst.transform.position = spawnPoints[i].transform.position;
+        spawnPoints.Remove(spawnPoints[i]);
 		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = plyrNmbr;
 		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
 		Instantiate (inst);

@@ -81,7 +81,6 @@ public class Hook : MonoBehaviour {
     //COLOR
     Color colorRope;
 	float t;
-    Color zizi;
 
 	// Pause menu
 	public bool isFrozen = false;
@@ -511,7 +510,7 @@ public class Hook : MonoBehaviour {
             if (collision.gameObject.CompareTag("Arrow"))
             {
                 ArrowHit(collision);
-                HitFX(collision.GetContact(0).point);
+                HitFX(collision.GetContact(0).point, collision.gameObject);
             }
             //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
             else if (collision.gameObject.CompareTag("Player"))
@@ -522,13 +521,15 @@ public class Hook : MonoBehaviour {
                     if(collisionFail.collider.gameObject.CompareTag("Arrow"))
                     {
                         ArrowHit(collisionFail.collider);
-                        HitFX(collision.GetContact(0).point);
+                        HitFX(collisionFail.point, collisionFail.collider.gameObject);
                     }
                 }
                 else
                 {
-                    collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
-                    HitFX(collision.GetContact(0).point);
+                    PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                    //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
+                    foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
+                    foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
                 }
  
             }
@@ -536,9 +537,9 @@ public class Hook : MonoBehaviour {
         
     }
 
-    void HitFX(Vector3 position)
+    void HitFX(Vector3 position, GameObject hook)
     {
-        if (!doubleFXprotection)
+        if (!doubleFXprotection && !hook.GetComponent<Hook>().player.GetComponent<PlayerLifeManager>().inRecovery)
         {
             doubleFXprotection = true;
             if (playerMovement.speed > criticalSpeed)

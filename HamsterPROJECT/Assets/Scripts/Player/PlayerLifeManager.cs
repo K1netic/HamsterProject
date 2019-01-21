@@ -8,6 +8,10 @@ public class PlayerLifeManager : MonoBehaviour {
 
     [SerializeField]
     ParticleSystem deathParticle;
+    [SerializeField]
+    ParticleSystem hitLittle;
+    [SerializeField]
+    ParticleSystem hitHard;
 
     Balancing balanceData;
 
@@ -16,7 +20,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
     PlayerMovement playerMovement;
     float playerHP;
-    bool inRecovery;
+    [HideInInspector]
+    public bool inRecovery;
     float recoveryTime;
     float flashingRate;
     SpriteRenderer sprite;
@@ -28,6 +33,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
 	// Makes sure Dead function is only called once at a time
 	bool deadLimiter = false;
+    private bool doubleFXprotection;
+    private float criticalSpeed;
 
     // Use this for initialization
     void Start () {
@@ -41,6 +48,7 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         knockBackLaser= balanceData.knockBackLaser;
         laserDamage= balanceData.laserDamage;
+        criticalSpeed = balanceData.criticalSpeed;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -149,10 +157,43 @@ public class PlayerLifeManager : MonoBehaviour {
         
     }
 
+    public void HitFX(Vector3 position, float speed)
+    {
+        if (!doubleFXprotection && !inRecovery)
+        {
+            doubleFXprotection = true;
+            if (speed > criticalSpeed)
+            {
+                Instantiate(hitHard, position, transform.rotation);
+            }
+            else
+            {
+                Instantiate(hitLittle, position, transform.rotation);
+            }
+            Invoke("CancelFXProtection", .1f);
+        }
+
+    }
+
+    void CancelFXProtection()
+    {
+        doubleFXprotection = false;
+    }
+
     void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.CompareTag("Laser"))
         {
-            TakeDamage(laserDamage, col.gameObject, true);
+            if(!inRecovery)
+                TakeDamage(laserDamage, col.gameObject, true);
+            else
+            {
+                //Bloque le mouvement du joueur pour ne pas override le knockback
+                playerMovement.lockMovement = true;
+                //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+                playerMovement.rigid.velocity = Vector3.zero;
+                Invoke("UnlockMovement", knockBackTime);
+                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+            }
         }
     }
 
