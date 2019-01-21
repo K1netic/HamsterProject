@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Delaunay;
 using Delaunay.Geo;
+using UnityEngine.U2D;
 
 public static class SpriteExploder {
     public static List<GameObject> GenerateTriangularPieces(GameObject source, int extraPoints = 0, int subshatterSteps = 0, Material mat = null)
