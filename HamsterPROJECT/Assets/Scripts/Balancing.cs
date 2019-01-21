@@ -61,5 +61,6 @@ public class Balancing : MonoBehaviour {
 	public float lightVibration = 0.1f;
 	public float mediumVibration = 0.5f;
 	public float heavyVibration = 1.0f;
+	public float damageToVibrationDivisor = 10.0f;
 
 }

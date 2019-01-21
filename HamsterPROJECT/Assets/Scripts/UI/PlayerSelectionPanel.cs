@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public class PlayerSelectionPanel : MonoBehaviour {
 
-	public string playerSelectionPanelID;
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
 	public int characterSelected = 0;
@@ -24,6 +24,10 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool validate = false;
 	bool activate = false;
 
+	// Alternative to unity input method
+	public PlayerIndex selectionPanelPlayerIndex;
+	bool coroutineLimiter = false;
+
 	void Start()
 	{
 		mngr = FindObjectOfType<AudioManager> ();
@@ -35,42 +39,57 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
 		#region StateManagement
-		if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) && state == SelectionPanelState.Deactivated )
+		// Activation
+		if (GamePad.GetState (selectionPanelPlayerIndex).Buttons.A == ButtonState.Pressed 
+			&& state == SelectionPanelState.Deactivated
+			&& !coroutineLimiter)
 		{
-			state = SelectionPanelState.Activated;
-		}
-			
-		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) 
-			&& state == SelectionPanelState.Activated 
-			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true)
-		{
-			state = SelectionPanelState.Validated;
-			validatedCharacter = GameManager.Characters[characterSelected];
-			CharacterSelectionScreen.selectableCharacters[characterSelected] = false;
+			coroutineLimiter = true;
+			StartCoroutine(ChangeState(SelectionPanelState.Activated));
 		}
 
-		else if (Input.GetButtonDown ("Submit" + playerSelectionPanelID) 
+		// Validation
+		else if (GamePad.GetState (selectionPanelPlayerIndex).Buttons.A == ButtonState.Pressed 
 			&& state == SelectionPanelState.Activated 
-			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == false)
+			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true
+			&& !coroutineLimiter)
+		{
+			coroutineLimiter = true;
+			StartCoroutine(ChangeState(SelectionPanelState.Validated, false));
+			validatedCharacter = GameManager.Characters[characterSelected];
+		}
+			
+		// Deactivation
+		if (GamePad.GetState (selectionPanelPlayerIndex).Buttons.B == ButtonState.Pressed 
+			&& state == SelectionPanelState.Activated
+			&& !coroutineLimiter)
+		{
+			coroutineLimiter = true;
+			StartCoroutine(ChangeState(SelectionPanelState.Deactivated));
+			mngr.PlaySound ("UI_cancel", mngr.UIsource);
+		}
+
+		// Unvalidation
+		else if (GamePad.GetState (selectionPanelPlayerIndex).Buttons.B == ButtonState.Pressed
+			&& state == SelectionPanelState.Validated
+			&& !coroutineLimiter)
+		{
+			coroutineLimiter = true;
+			StartCoroutine(ChangeState(SelectionPanelState.Activated, true));
+			mngr.PlaySound ("UI_cancel", mngr.UIsource);
+			select.ready = false;
+		}
+
+		// Trying to validate on a character not avalaible
+		else if (GamePad.GetState (selectionPanelPlayerIndex).Buttons.A == ButtonState.Pressed
+			&& state == SelectionPanelState.Activated 
+			&& CharacterSelectionScreen.selectableCharacters[characterSelected] == false
+			&& !coroutineLimiter)
 		{
 			//Play error sound
 			//Display "not available text"
-		}
-
-		if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Activated)
-		{
-			mngr.PlaySound ("UI_cancel", mngr.UIsource);
-			state = SelectionPanelState.Deactivated;
-		}
-
-		else if (Input.GetButtonDown("Cancel" + playerSelectionPanelID) && state == SelectionPanelState.Validated)
-		{
-			mngr.PlaySound ("UI_cancel", mngr.UIsource);
-			state = SelectionPanelState.Activated;
-			select.ready = false;
-			CharacterSelectionScreen.selectableCharacters[characterSelected] = true;
 		}
 		#endregion
 
@@ -82,6 +101,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			backgroundImg.color = Color.gray;
 			characterSprite.gameObject.SetActive(false);
 			break;
+
 		case SelectionPanelState.Activated:
 			validate = false;
 			PlayActivationSound();
@@ -92,6 +112,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			characterSprite.gameObject.SetActive(true);
 			CharacterSelection();
 			break;
+
 		case SelectionPanelState.Validated:
 			PlayValidateSound();
 			backgroundImg.color = Color.green;
@@ -101,6 +122,21 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		#endregion
 	}
 
+	IEnumerator ChangeState(SelectionPanelState stateToApply)
+	{
+		yield return new WaitForSeconds(0.1f);
+		state = stateToApply;
+		coroutineLimiter = false;
+	}
+
+	IEnumerator ChangeState(SelectionPanelState stateToApply, bool stateToSetCharacterSelect)
+	{
+		yield return new WaitForSeconds(0.1f);
+		state = stateToApply;
+		CharacterSelectionScreen.selectableCharacters [characterSelected] = stateToSetCharacterSelect;
+		coroutineLimiter = false;
+	}
+		
 	void CharacterSelection()
 	{
 		// Display character as unavailable if that's the case
@@ -109,9 +145,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		else
 			notAvailable.gameObject.SetActive (false);
 
-		if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == 1 && !blockStickMovement)
+		if (GamePad.GetState (selectionPanelPlayerIndex).ThumbSticks.Left.X == 1.0f && !blockStickMovement)
 		{
-			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable)
 			{
 				characterSelected += 1;
@@ -124,9 +159,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == -1 && !blockStickMovement)
+		//else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == -1 && !blockStickMovement)
+		else if (GamePad.GetState (selectionPanelPlayerIndex).ThumbSticks.Left.X == -1.0f && !blockStickMovement)
 		{
-			mngr.PlaySound ("UI_pick", mngr.UIsource);
 			if (characterSelected > 0)
 			{
 				characterSelected -= 1;
@@ -139,7 +174,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) < 0.2 && Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) > -0.2)
+		else if (Mathf.Abs(GamePad.GetState (selectionPanelPlayerIndex).ThumbSticks.Left.X) < 0.2f)
 			blockStickMovement = false;
 	}
 

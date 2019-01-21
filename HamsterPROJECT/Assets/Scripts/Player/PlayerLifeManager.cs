@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 
 public class PlayerLifeManager : MonoBehaviour {
@@ -25,6 +26,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackLaser;
     float laserDamage;
 	TrailRenderer trail;
+	PlayerIndex plyrIndex;
 
 	// Makes sure Dead function is only called once at a time
 	bool deadLimiter = false;
@@ -73,10 +75,38 @@ public class PlayerLifeManager : MonoBehaviour {
         }
 
         UpdateLifeUI();
+
+		// Set PlayerIndex for vibrations
+		switch(playerMovement.playerNumber)
+		{
+		case "_P1":
+			plyrIndex = PlayerIndex.One;
+			break;
+		case "_P2":
+			plyrIndex = PlayerIndex.Two;
+			break;
+		case "_P3":
+			plyrIndex = PlayerIndex.Three;
+			break;
+		case "_P4":
+			plyrIndex = PlayerIndex.Four;
+			break;
+		default:
+			break;
+		}
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+//		for (int i = 0; i < Input.GetJoystickNames ().Length; i++)
+//		{
+//			if (Input.GetAxis ("Horizontal_P" + (i + 1).ToString()) > 0 || Input.GetAxis ("Vertical_P" + (i + 1).ToString()) > 0)
+//			{
+//				Debug.Log (i.ToString());
+//			}
+//		}
+	
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
 		if (playerHP <= 0 && !deadLimiter)
         {
@@ -145,8 +175,13 @@ public class PlayerLifeManager : MonoBehaviour {
 					GameManager.playersScores[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
 				}
 			}
+
+			//Vibrations
+			// Apply a lighter/heavier vibration depending on the damage taken
+			Debug.Log("vibrating on : " + plyrIndex.ToString());
+			GamePad.SetVibration (plyrIndex, 0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
+			StartCoroutine(CancelVibration (0.2f));
         }
-        
     }
 
     void OnCollisionEnter2D(Collision2D col){
@@ -196,7 +231,18 @@ public class PlayerLifeManager : MonoBehaviour {
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
 		// Add a death in metrics
 		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1; 
+
+		// Vibration on death
+//		GamePad.SetVibration (plyrIndex, 0f, balanceData.heavyRumble);
+//		StartCoroutine(CancelVibration (0.05f));
+
         Destroy(transform.parent.gameObject, 0.05f);
         Instantiate(deathParticle, transform.position, transform.rotation);
     }
+		
+	IEnumerator CancelVibration(float delay)
+	{
+		yield return new WaitForSeconds (delay);
+		GamePad.SetVibration (plyrIndex, 0f, 0f);
+	}
 }
