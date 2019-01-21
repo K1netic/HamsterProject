@@ -96,12 +96,10 @@ public class MatchStart : MonoBehaviour {
 
 	void InstantiatePlayer(int playerIndex)
 	{
-		plyrNmbr = "_P" + (playerIndex + 1).ToString ();
 		GameObject inst = GameManager.playersCharacters[playerIndex];
         int i = Random.Range(0, spawnPoints.Count + 1);
 		inst.transform.position = spawnPoints[i].transform.position;
         spawnPoints.Remove(spawnPoints[i]);
-		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = plyrNmbr;
 		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
 		Instantiate (inst);
 	}

@@ -109,7 +109,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				GameManager.playersActive [i] = true;
 				//Set selected characters
 				GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel>().validatedCharacter;
-				GameManager.playersCharacters [i].transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panels[i].characterSelected + 1).ToString() ;
+				GameManager.playersCharacters [i].transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
 			}
 		}
 	}

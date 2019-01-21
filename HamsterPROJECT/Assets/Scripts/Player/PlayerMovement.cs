@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -47,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
 	// Value over which horizontal joystick input will cancel fastFall 
 	float fastFallHorizontalThreshold = 0.1f;*/
 
-    [SerializeField] public string playerNumber;
+    public string playerNumber;
+	public PlayerIndex plyrIndex;
 
     void Start()
 	{
@@ -70,15 +72,19 @@ public class PlayerMovement : MonoBehaviour
         switch (playerNumber)
         {
             case "_P1":
+				plyrIndex = PlayerIndex.One;
                 gameObject.layer = 8;
                 break;
             case "_P2":
+				plyrIndex = PlayerIndex.Two;
                 gameObject.layer = 9;
                 break;
             case "_P3":
+				plyrIndex = PlayerIndex.Three;
                 gameObject.layer = 10;
                 break;
             case "_P4":
+				plyrIndex = PlayerIndex.Four;
                 gameObject.layer = 11;
                 break;
             default:

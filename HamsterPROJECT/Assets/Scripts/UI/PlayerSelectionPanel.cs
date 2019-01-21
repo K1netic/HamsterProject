@@ -159,7 +159,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		//else if (Input.GetAxisRaw ("Horizontal" + playerSelectionPanelID) == -1 && !blockStickMovement)
 		else if (GamePad.GetState (selectionPanelPlayerIndex).ThumbSticks.Left.X == -1.0f && !blockStickMovement)
 		{
 			if (characterSelected > 0)
