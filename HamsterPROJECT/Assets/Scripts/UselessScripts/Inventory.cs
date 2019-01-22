@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
 
-    Balancing balanceData;
+//    Balancing balanceData;
 
     [HideInInspector]
     public Text item;
@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour {
 
     float timeCDItem = 1f;
 //    float bonusCroquettes;
-    float timeBonusCroquettes;
+//    float timeBonusCroquettes;
 //    float gravityWithParachute;
 //    float timeWithParachute;
 
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour {
     private void Start()
     {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
-        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
+//        balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
         playerMovementScript = GetComponent<PlayerMovement>();
         playerRigid = GetComponent<Rigidbody2D>();
@@ -86,7 +86,7 @@ public class Inventory : MonoBehaviour {
                     currentItem = "None";
                     item.text = "None";
                     //playerMovementScript.bonusSpeed = bonusCroquettes;
-                    Invoke("ResetCroquettesBonus", timeBonusCroquettes);
+//                    Invoke("ResetCroquettesBonus", timeBonusCroquettes);
                     break;
                 case "ExplosivePoop":
                     currentItem = "None";

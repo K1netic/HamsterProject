@@ -155,7 +155,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
 			//Vibrations
 			// Apply a lighter/heavier vibration depending on the damage taken
-			GamePad.SetVibration (playerMovement.plyrIndex, 0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
+//			GamePad.SetVibration (playerMovement.plyrIndex, 0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (0.2f));
         }
     }
@@ -252,6 +252,6 @@ public class PlayerLifeManager : MonoBehaviour {
 	IEnumerator CancelVibration(float delay)
 	{
 		yield return new WaitForSeconds (delay);
-		GamePad.SetVibration (playerMovement.plyrIndex, 0f, 0f);
+//		GamePad.SetVibration (playerMovement.plyrIndex, 0f, 0f);
 	}
 }

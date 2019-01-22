@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class CharacterSelectionScreen : MonoBehaviour {
 
-	[SerializeField] PlayerSelectionPanel[] panels;
+	[SerializeField] public List<PlayerSelectionPanel> panels = new List<PlayerSelectionPanel>();
 	public bool ready = false;
 	int readyCount = 0;
 	//Used to make sure all panels are checked before the players are considered all ready
@@ -85,7 +86,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		if (ready)
 		{
 			readyText.SetActive (true);
-			//Load Map Selection Screen when all players are ready and P1 presses A
+			//Load Game Modes Screen when all players are ready and P1 presses A
 			if (Input.GetButtonDown ("Pause_P1") && ready)
 			{
 				PlayerInfos ();
@@ -99,10 +100,69 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		}
 	}
 
+	void Update()
+	{
+		InputDevice inputDevice = InputManager.ActiveDevice;
+
+		if (inputDevice.Action1.WasPressed)
+		{
+			if (ThereIsNoPanelUsingDevice( inputDevice))
+			{
+				ActivatePlayerSelectionPanel(inputDevice);
+			}
+		}
+	}
+
+	bool ThereIsNoPanelUsingDevice( InputDevice inputDevice )
+	{
+		return FindPanelUsingDevice( inputDevice ) == null;
+	}
+
+	PlayerSelectionPanel FindPanelUsingDevice( InputDevice inputDevice )
+	{
+		for (var i = 0; i < panels.Count; i++)
+		{
+			if (panels[i].device == inputDevice)
+			{
+				return panels[i];
+			}
+		}
+
+		return null;
+	}
+
+	void ActivatePlayerSelectionPanel( InputDevice inputDevice )
+	{
+		for (var i = 0; i < GameManager.nbOfPlayers; i++)
+		{
+			if (panels [i].device == null)
+			{
+				panels [i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
+				panels [i].device = inputDevice;
+				return;
+			}
+		}
+	}
+
+	#region Deactivating Panel when a device is detached
+	void OnDeviceDetached( InputDevice inputDevice )
+	{
+		for (var i = 0; i < panels.Count; i++)
+		{
+			if (GameManager.playersInputDevices[i] == inputDevice)
+			{
+				GameManager.playersInputDevices[i] = null;
+				panels [i].device = null;
+				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Deactivated;
+			}
+		}
+	}
+	#endregion
+
 	// Writing playerInfos in the GameManager
 	void PlayerInfos()
 	{
-		for (int i = 0; i < panels.Length; i++)
+		for (int i = 0; i < panels.Count; i++)
 		{
 			if (panels [i].state == PlayerSelectionPanel.SelectionPanelState.Validated)
 			{
@@ -110,6 +170,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				//Set selected characters
 				GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel>().validatedCharacter;
 				GameManager.playersCharacters [i].transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
+				GameManager.playersInputDevices [i] = panels [i].device;
 			}
 		}
 	}

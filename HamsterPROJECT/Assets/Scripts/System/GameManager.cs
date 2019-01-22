@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using InControl;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,22 +27,26 @@ public class GameManager : MonoBehaviour {
 		Kills
 	}
 
+	public static int nbOfPlayers = 4;
+
 	public static gameModes gameModeType;
 		
 	// Numbers of matches won to win a full game
 	public static int goal = 1;
 		
-	public static bool[] playersActive = new bool[4];
-	public static bool[] playersAlive = new bool[4];
+	public static bool[] playersActive = new bool[nbOfPlayers];
+	public static bool[] playersAlive = new bool[nbOfPlayers];
 	//Base characters
 	public static List<GameObject> Characters = new List<GameObject>();
 	//Characters selected by players
-	public static GameObject[] playersCharacters = new GameObject[4];
+	public static GameObject[] playersCharacters = new GameObject[nbOfPlayers];
 
 	//Players metrics
-	public static int[] playersScores = new int[4];
-	public static int[] playersKills = new int[4];
-	public static int[] playersDeaths = new int[4];
+	public static int[] playersScores = new int[nbOfPlayers];
+	public static int[] playersKills = new int[nbOfPlayers];
+	public static int[] playersDeaths = new int[nbOfPlayers];
+
+	public static InputDevice[] playersInputDevices = new InputDevice[nbOfPlayers];
 
 	public static string lastBattleMap;
 
