@@ -186,8 +186,10 @@ public class Projectile : MonoBehaviour {
             //Inflige des dégâts et détruit le projectile s'il touche un player
             if (collision.gameObject.CompareTag("Player"))
             {
-                Instantiate(hitHook, transform.position, transform.rotation);
-                collision.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(hookheadDamage,gameObject,true);
+                PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
+                foeScript.HitFX(collision.GetContact(0).point, 0);
+                foeScript.TakeDamage(hookheadDamage, gameObject, true);
                 Destruction();
             }
             
