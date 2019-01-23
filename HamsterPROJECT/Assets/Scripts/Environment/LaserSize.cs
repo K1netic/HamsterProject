@@ -18,13 +18,16 @@ public class LaserSize : MonoBehaviour {
     [SerializeField]
     ParticleSystem sparks;
     [SerializeField]
-    LayerMask layerMaskRaycast;
+    ParticleSystem endLaser;
     [SerializeField]
     GameObject boxCollider;
+    [SerializeField]
+    LayerMask layerMaskRaycast;
+    
     BoxCollider2D coll;
-
     RaycastHit2D raycast;
     bool FXinstantiate;
+    ParticleSystem instEndLaser;
     ParticleSystem.ShapeModule pShape;
     ParticleSystem.EmissionModule pEmission;
     float startRate;
@@ -59,7 +62,11 @@ public class LaserSize : MonoBehaviour {
             if (!FXinstantiate)
             {
                 FXinstantiate = true;
-                //Instantiate
+                instEndLaser = Instantiate(endLaser, raycast.point, transform.rotation);
+            }
+            if(instEndLaser != null)
+            {
+                instEndLaser.transform.position = raycast.point;
             }
             center.SetPosition(1, transform.InverseTransformPoint(raycast.point));
             glow.SetPosition(1, transform.InverseTransformPoint(raycast.point));
@@ -77,7 +84,7 @@ public class LaserSize : MonoBehaviour {
             if (FXinstantiate)
             {
                 FXinstantiate = false;
-                //Destroy old FX
+                Destroy(instEndLaser);
             }
             center.SetPosition(1, -start.transform.right * 10);
             glow.SetPosition(1, -start.transform.right * 10);

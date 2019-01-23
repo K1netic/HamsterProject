@@ -13,6 +13,8 @@ public class PlayerLifeManager : MonoBehaviour {
     ParticleSystem hitLittle;
     [SerializeField]
     ParticleSystem hitHard;
+    [SerializeField]
+    ParticleSystem hitLaser;
 
     Balancing balanceData;
 
@@ -36,6 +38,7 @@ public class PlayerLifeManager : MonoBehaviour {
 	bool deadLimiter = false;
     private bool doubleFXprotection;
     private float criticalSpeed;
+    private bool doubleFXprotectionLaser;
 
 
 
@@ -186,7 +189,8 @@ public class PlayerLifeManager : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.CompareTag("Laser"))
         {
-            if(!inRecovery)
+            LaserHitFX(col.GetContact(0).point);
+            if (!inRecovery)
                 TakeDamage(laserDamage, col.gameObject, true);
             else
             {
@@ -204,8 +208,24 @@ public class PlayerLifeManager : MonoBehaviour {
     {
         if (col.gameObject.CompareTag("Laser"))
         {
+            LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);
         }
+    }
+
+    void LaserHitFX(Vector3 position)
+    {
+        if (!doubleFXprotectionLaser)
+        {
+            doubleFXprotectionLaser = true;
+            Instantiate(hitLaser, position, transform.rotation);
+            Invoke("CancelFXProtectionLaser", .1f);
+        }
+    }
+
+    void CancelFXProtectionLaser()
+    {
+        doubleFXprotectionLaser = false;
     }
 
     void UnlockMovement()
