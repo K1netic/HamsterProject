@@ -51,6 +51,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = GameManager.Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+				panels[i].device = GameManager.playersInputDevices[i];
 			}
 		}
 		#endregion
@@ -86,15 +87,18 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		if (ready)
 		{
 			readyText.SetActive (true);
-			//Load Game Modes Screen when all players are ready and P1 presses A
-			if (Input.GetButtonDown ("Pause_P1") && ready)
+			//Load Game Modes Screen when any players pressed a command (start, select...)
+			if (InputManager.CommandWasPressed && ready)
 			{
 				PlayerInfos ();
 				StartCoroutine(LoadGameModes ());
 			}
 		}
 
-		if (Input.GetButtonDown("Cancel_P1") && previousScene != null && previousScene != "" && activatedPlayers == 0 && panels[0].state != PlayerSelectionPanel.SelectionPanelState.Validated)
+		if (InputManager.ActiveDevice.Action2.WasPressed
+			&& previousScene != null && previousScene != "" 
+			&& activatedPlayers == 0 
+			&& readyCount == 0)
 		{
 			StartCoroutine (LoadPreviousScene ());
 		}

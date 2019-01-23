@@ -1502,16 +1502,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1774727048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: b24994c7bab8d436a8b302ce62dfa856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal_P1
-  m_VerticalAxis: Vertical_P1
-  m_SubmitButton: Submit_P1
-  m_CancelButton: Cancel_P1
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.2
-  m_ForceModuleActive: 0
+  submitButton: 19
+  cancelButton: 20
+  analogMoveThreshold: 0.5
+  moveRepeatFirstDuration: 0.8
+  moveRepeatDelayDuration: 0.1
+  forceModuleActive: 0
+  allowMouseInput: 1
+  focusOnMouseHover: 0
+  allowTouchInput: 1
 --- !u!114 &1774727050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1758,48 +1760,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2012315713
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4036520393074214, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 50385102aa786414c9e0ecd48219a35f, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &2059375350
 GameObject:
   m_ObjectHideFlags: 0

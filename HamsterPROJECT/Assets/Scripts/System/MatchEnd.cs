@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class MatchEnd : MonoBehaviour {
 
@@ -98,20 +99,20 @@ public class MatchEnd : MonoBehaviour {
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			// Keep playing if nobody reached the game goal
-			if (Input.GetButton ("Submit_P1") && GameManager.playersScores[winner] < GameManager.goal )
+			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] < GameManager.goal )
 			{
 				// Reload Scene
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 
 			// Stop playing if one player reached the game goal
-			if (Input.GetButton ("Submit_P1") && GameManager.playersScores[winner] == GameManager.goal )
+			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] == GameManager.goal )
 			{
 				EndOfMatch ();
 			}
 		}
 			
-		if (GameManager.gameModeType == GameManager.gameModes.Kills && Input.GetButton("Submit_P1"))
+		if (GameManager.gameModeType == GameManager.gameModes.Kills && InputManager.ActiveDevice.Action1)
 		{
 			for (int i = 0; i < GameManager.playersActive.Length; i ++)
 			{

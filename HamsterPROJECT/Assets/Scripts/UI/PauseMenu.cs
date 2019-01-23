@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
+using InControl;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -20,12 +21,12 @@ public class PauseMenu : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Pause_P1") && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
+		if (InputManager.CommandWasPressed && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
 		{
 			OpenPauseMenu ();
 		}
 
-		else if ((Input.GetButtonDown("Pause_P1") || Input.GetButtonDown("Cancel_P1")) && pauseMenu.activeSelf) 
+		else if ((InputManager.CommandWasPressed || InputManager.ActiveDevice.Action2.WasPressed) && pauseMenu.activeSelf) 
 		{
 			ClosePauseMenu ();
 		}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using InControl;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
 	float fastFallHorizontalThreshold = 0.1f;*/
 
     public string playerNumber;
+	public InputDevice playerInputDevice;
 
     void Start()
 	{

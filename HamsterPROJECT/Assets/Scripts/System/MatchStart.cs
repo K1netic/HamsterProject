@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using InControl;
 
 public class MatchStart : MonoBehaviour {
 
@@ -47,12 +48,20 @@ public class MatchStart : MonoBehaviour {
         {
             spawnPoints.Add(spawn.transform);
         }
+
 		// Instantiate Players depending on which were validated in the character selection screen
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
 			if (GameManager.playersActive[i] == true)
 			{
-				InstantiatePlayer (i);
+//				InstantiatePlayer (i);
+				GameObject inst = GameManager.playersCharacters[i];
+				int j = Random.Range(0, spawnPoints.Count);
+				inst.transform.position = spawnPoints[j].transform.position;
+				spawnPoints.Remove(spawnPoints[j]);
+				inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+				inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [i];
+				Instantiate (inst);
 			}
 		}
 	}
@@ -94,15 +103,16 @@ public class MatchStart : MonoBehaviour {
 		beginText.text = "";
 	}
 
-	void InstantiatePlayer(int playerIndex)
-	{
-		GameObject inst = GameManager.playersCharacters[playerIndex];
-        int i = Random.Range(0, spawnPoints.Count + 1);
-		inst.transform.position = spawnPoints[i].transform.position;
-        spawnPoints.Remove(spawnPoints[i]);
-		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		Instantiate (inst);
-	}
+//	void InstantiatePlayer(int playerIndex)
+//	{
+//		GameObject inst = GameManager.playersCharacters[playerIndex];
+//        int i = Random.Range(0, spawnPoints.Count + 1);
+//		inst.transform.position = spawnPoints[i].transform.position;
+//        spawnPoints.Remove(spawnPoints[i]);
+//		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+//		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [playerIndex];
+//		Instantiate (inst);
+//	}
 
 	void UnfreezePlayers()
 	{
