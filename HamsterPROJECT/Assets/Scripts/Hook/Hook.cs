@@ -412,10 +412,6 @@ public class Hook : MonoBehaviour {
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
 
-        lineCollider.size = new Vector3(Vector3.Distance(startPos, endPos), balanceData.lineWidth, 0);
-        lineCollider.transform.position = (startPos + endPos) / 2;
-        lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
-
         //Aligne le trigger de la corde sur la corde
         lineCollider.size = new Vector3(Vector3.Distance(startPos, endPos), balanceData.lineWidth, 0);
         lineCollider.transform.position = (startPos + endPos) / 2;
