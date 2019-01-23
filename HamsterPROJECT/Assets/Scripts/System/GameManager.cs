@@ -60,6 +60,14 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 3);
 	}
 
+//	void Update()
+//	{
+//		if (gameModeType == gameModes.LastManStanding)
+//			goal = 5;
+//		else if (gameModeType == gameModes.Kills)
+//			goal = 8;
+//	}
+
 	public static void ResetScores()
 	{
 		for (int i = 0; i < GameManager.playersScores.Length; i ++)

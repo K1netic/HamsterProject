@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class TitleScreen : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class TitleScreen : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if (Input.anyKeyDown)
+		if (InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
 		{
 			StartCoroutine(TitleScreenValidation());
 		}

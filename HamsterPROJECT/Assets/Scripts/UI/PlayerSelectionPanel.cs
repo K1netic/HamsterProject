@@ -43,7 +43,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		if (device != null)
 		{
-			Debug.Log (device.Name);
 			#region StateManagement
 			// Activation
 			if (device.Action1.WasPressed
@@ -59,6 +58,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Validated;
 				validatedCharacter = GameManager.Characters[characterSelected];
+				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
 			}
 
 			// Deactivation
@@ -77,6 +77,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				state = SelectionPanelState.Activated;
 				mngr.PlaySound ("UI_cancel", mngr.UIsource);
 				select.ready = false;
+				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 			}
 
 			// Trying to validate on a character not avalaible
@@ -117,21 +118,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			break;
 		}
 		#endregion
-	}
-
-	IEnumerator ChangeState(SelectionPanelState stateToApply)
-	{
-		yield return new WaitForSeconds(0.1f);
-		state = stateToApply;
-		coroutineLimiter = false;
-	}
-
-	IEnumerator ChangeState(SelectionPanelState stateToApply, bool stateToSetCharacterSelect)
-	{
-		yield return new WaitForSeconds(0.1f);
-		state = stateToApply;
-		CharacterSelectionScreen.selectableCharacters [characterSelected] = stateToSetCharacterSelect;
-		coroutineLimiter = false;
 	}
 		
 	void CharacterSelection()

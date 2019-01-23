@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using InControl;
 
 public class ResultsScreen : MonoBehaviour {
 
@@ -26,7 +27,7 @@ public class ResultsScreen : MonoBehaviour {
 		
 	void Update()
 	{
-		if (Input.GetButtonDown("Pause_P1"))
+		if (InputManager.ActiveDevice.AnyButtonWasPressed)
 		{
 			GameManager.ResetScores ();
 			SceneManager.LoadScene (sceneToLoad);
