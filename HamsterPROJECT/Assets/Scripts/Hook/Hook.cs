@@ -236,7 +236,7 @@ public class Hook : MonoBehaviour {
 		if (!isFrozen)
 		{
             //Change entre la flèche et le bouclier
-            if ((Input.GetButtonDown("SwitchState"+playerNumber) && !switchingState) || manualSwitchOn){
+			if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
 				ArrowState();
 			}
             UpdateArrow();
@@ -276,13 +276,13 @@ public class Hook : MonoBehaviour {
                 RaycastingDistanceJoint();
                 
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
-                if(Input.GetAxisRaw("RT"+ playerNumber) < 0 && checkToJoint.collider == null)
+				if(playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
                 }
 
                 //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
-                if (Input.GetAxisRaw("LT" + playerNumber) > 0 && checkOppositeToJoint.collider == null)
+				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
                     //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
                     if (joint.distance < distanceMax - retractationStep)
@@ -303,17 +303,30 @@ public class Hook : MonoBehaviour {
         }
 
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
-		if (Input.GetButtonDown("Hook" + playerNumber) && !hookInCD && !isFrozen)
+
+		if ((playerMovement.playerInputDevice.Action1.WasPressed 
+			|| playerMovement.playerInputDevice.Action2.WasPressed
+			|| playerMovement.playerInputDevice.Action3.WasPressed
+			|| playerMovement.playerInputDevice.Action4.WasPressed)
+			&& !hookInCD && !isFrozen)
         {
             ThrowHookhead();
         }
         //Si le joueur relache le bouton on désactive le grappin
-        else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null)
+		else if ((playerMovement.playerInputDevice.Action1.WasReleased 
+			|| playerMovement.playerInputDevice.Action2.WasReleased
+			|| playerMovement.playerInputDevice.Action3.WasReleased
+			|| playerMovement.playerInputDevice.Action4.WasReleased)
+			&& currentProjectile != null)
         {
             DisableRope();
         }
 
-		else if (Input.GetButtonUp("Hook" + playerNumber) && currentProjectile != null && isFrozen)
+		else if ((playerMovement.playerInputDevice.Action1.WasReleased 
+			|| playerMovement.playerInputDevice.Action2.WasReleased
+			|| playerMovement.playerInputDevice.Action3.WasReleased
+			|| playerMovement.playerInputDevice.Action4.WasReleased)
+			&& currentProjectile != null && isFrozen)
 		{
 			StartCoroutine(Unfrozen());
 		}
@@ -340,9 +353,9 @@ public class Hook : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
 
         //Gère l'orientation de la flèche en fonction de l'input du player
-        if(Input.GetAxisRaw("Horizontal"+playerNumber) != 0 || Input.GetAxisRaw("Vertical"+playerNumber) != 0){
+		if(playerMovement.playerInputDevice.LeftStickX.Value != 0 || playerMovement.playerInputDevice.LeftStickY.Value != 0){
             transform.rotation = Quaternion.FromToRotation(Vector3.right,
-            new Vector3(Input.GetAxis("Horizontal"+playerNumber),Input.GetAxis("Vertical"+playerNumber)));
+				new Vector3(playerMovement.playerInputDevice.LeftStickX.Value, playerMovement.playerInputDevice.LeftStickY.Value));
         }     
     }
 
@@ -497,7 +510,10 @@ public class Hook : MonoBehaviour {
 		yield return new WaitUntil(() => !isFrozen);
 
 		// Disable rope if button is not held at the moment the game is unpaused/unfrozen
-		if (!Input.GetButton("Hook" + playerNumber))
+		if (!(playerMovement.playerInputDevice.Action1.IsPressed
+			|| playerMovement.playerInputDevice.Action2.IsPressed
+			|| playerMovement.playerInputDevice.Action3.IsPressed
+			|| playerMovement.playerInputDevice.Action4.IsPressed))
 		{
 			DisableRope ();
 		}

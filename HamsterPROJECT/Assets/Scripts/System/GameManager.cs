@@ -70,11 +70,12 @@ public class GameManager : MonoBehaviour {
 
 	public static void ResetScores()
 	{
-		for (int i = 0; i < GameManager.playersScores.Length; i ++)
+		for (int i = 0; i < playersScores.Length; i ++)
 		{
-			GameManager.playersScores [i] = 0;
-			GameManager.playersKills [i] = 0;
-			GameManager.playersScores [i] = 0;
+			playersScores [i] = 0;
+			playersKills [i] = 0;
+			playersScores [i] = 0;
+			playersDeaths [i] = 0;
 		}
 	}
 }

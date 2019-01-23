@@ -72,19 +72,15 @@ public class PlayerMovement : MonoBehaviour
         switch (playerNumber)
         {
             case "_P1":
-//				plyrIndex = PlayerIndex.One;
                 gameObject.layer = 8;
                 break;
             case "_P2":
-//				plyrIndex = PlayerIndex.Two;
                 gameObject.layer = 9;
                 break;
             case "_P3":
-//				plyrIndex = PlayerIndex.Three;
                 gameObject.layer = 10;
                 break;
             case "_P4":
-//				plyrIndex = PlayerIndex.Four;
                 gameObject.layer = 11;
                 break;
             default:
@@ -94,19 +90,14 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Vector3.MoveTowards(transform.position, transform.GetChild(0).transform.position, 100*Time.deltaTime);
-        }
 
-        UpdateSpeed();
+		UpdateSpeed();
 
-        if (currentState != State.hooked)
-            currentState = State.inAir;
+		if (currentState != State.hooked)
+			currentState = State.inAir;
 
-        Movement();
-        Dash();
-
+		Movement();
+		Dash();
 
         //FastFall
         /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
@@ -130,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!lockMovement && !lockMovementDash)
         {
-            if (Input.GetButtonDown("Dash" + playerNumber) && !dashInCD)
+			if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
             {
                 dashInCD = true;
                 lockMovementDash = true;
@@ -154,17 +145,17 @@ public class PlayerMovement : MonoBehaviour
                     if ((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
                     || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
                     {//LEFT & RIGHT
-                        rigid.AddForce(new Vector2(0, Input.GetAxis("Vertical" + playerNumber)) * hookMovementForce);
+					rigid.AddForce(new Vector2(0, playerInputDevice.LeftStickY.Value) * hookMovementForce);
                     }
                     //Test si le joueur est en haut ou en bas
                     else if ((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
                     || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
                     {//BOT & TOP
-                        rigid.AddForce(new Vector2(Input.GetAxis("Horizontal" + playerNumber), 0) * hookMovementForce);
+					rigid.AddForce(new Vector2(playerInputDevice.LeftStickX.Value, 0) * hookMovementForce);
                     }
                     break;
                 case State.inAir:
-                    rigid.AddForce(Vector3.right * Input.GetAxisRaw("Horizontal" + playerNumber) * airControlForce);
+				rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * airControlForce);
                     break;
                 default:
                     break;

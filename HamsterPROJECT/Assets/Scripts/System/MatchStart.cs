@@ -60,8 +60,8 @@ public class MatchStart : MonoBehaviour {
 				inst.transform.position = spawnPoints[j].transform.position;
 				spawnPoints.Remove(spawnPoints[j]);
 				inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
-				inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [i];
-				Instantiate (inst);
+				GameObject newPlayer = Instantiate (inst);
+				newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [i];
 			}
 		}
 	}
