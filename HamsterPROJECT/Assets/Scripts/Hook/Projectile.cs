@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour {
     float raycastRange = 1;
 
     [SerializeField]
+    GameObject child;
+    [SerializeField]
     ParticleSystem hitHookOrange;
     [SerializeField]
     ParticleSystem hitHookPink;
@@ -38,7 +40,8 @@ public class Projectile : MonoBehaviour {
     RaycastHit2D raycastLeft;
     RaycastHit2D raycastRight;
     PolygonCollider2D coll;
-    bool pivotUpdated;
+    [HideInInspector]
+    public Vector2 pivot;
 
     GameObject hookedObject;
 
@@ -50,7 +53,7 @@ public class Projectile : MonoBehaviour {
         hookheadDamage = balanceData.hookheadDamage;
 
         rigid = GetComponent<Rigidbody2D>();
-        coll = GetComponent<PolygonCollider2D>();        
+        coll = GetComponent<PolygonCollider2D>();
 
         switch (playerNumber)
         {
@@ -101,14 +104,10 @@ public class Projectile : MonoBehaviour {
     }
 
 	void Update () {
+        pivot =child.transform.position;
         switch (hooked)
         {
             case true:
-                if (!pivotUpdated)
-                {
-                    hook.line.SetPosition(1, transform.GetChild(0).transform.position);
-                    pivotUpdated = true;
-                }
                 if(hookedObject.CompareTag("Untagged"))
                 {
                     hook.DisableRope();

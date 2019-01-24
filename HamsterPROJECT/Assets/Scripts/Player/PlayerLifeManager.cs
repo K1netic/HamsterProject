@@ -65,12 +65,6 @@ public class PlayerLifeManager : MonoBehaviour {
         trail = GetComponent<TrailRenderer>();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawSphere(transform.position, deathRadius);
-    }
-
     // Update is called once per frame
     void Update () {
 
