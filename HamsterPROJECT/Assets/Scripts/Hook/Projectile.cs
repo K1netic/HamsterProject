@@ -143,6 +143,7 @@ public class Projectile : MonoBehaviour {
                     transform.position = raycast.point;
                     hookedObject = raycast.collider.gameObject;
                     Instantiate(hitHook, transform.position, transform.rotation);
+                    gameObject.transform.parent = hookedObject.transform;
                 }
                 else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
                 {
@@ -151,6 +152,7 @@ public class Projectile : MonoBehaviour {
                     transform.position = raycastLeft.point;
                     hookedObject = raycastLeft.collider.gameObject;
                     Instantiate(hitHook, transform.position, transform.rotation);
+                    gameObject.transform.parent = hookedObject.transform;
                 }
                 else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
                 {
@@ -159,6 +161,7 @@ public class Projectile : MonoBehaviour {
                     transform.position = raycastRight.point;
                     hookedObject = raycastRight.collider.gameObject;
                     Instantiate(hitHook, transform.position, transform.rotation);
+                    gameObject.transform.parent = hookedObject.transform;
                 }
             }
         }
@@ -206,6 +209,7 @@ public class Projectile : MonoBehaviour {
                 transform.position = collision.GetContact(0).point;
                 hookedObject = collision.gameObject;
                 Instantiate(hitHook, transform.position, transform.rotation);
+                gameObject.transform.parent = hookedObject.transform;
             }
         }
     }

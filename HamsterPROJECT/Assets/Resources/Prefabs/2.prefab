@@ -486,6 +486,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   hooked: 0
   jointDirection: {x: 0, y: 0}
+  dashEcho: {fileID: 1005786816833230, guid: 4a9d6389045976c4abddad6e66452dc0, type: 2}
   lockMovement: 0
   currentState: 0
   speed: 0
@@ -530,12 +531,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  diefdp: 0
   deathParticle: {fileID: 198062502320223672, guid: bfa6d0a478f90234c9bf66f8a1845867,
     type: 2}
   hitLittle: {fileID: 198422912477992586, guid: 9e9d3bee8e97aa24482472146a970dec,
     type: 2}
   hitHard: {fileID: 198267868073150084, guid: f8f0c0994c317154f88aaa3525436a9e, type: 2}
   hitLaser: {fileID: 198074226193424720, guid: 0a9dd9b1a158b8f479f3369441030a6c, type: 2}
+  deathRadius: 0
+  layerMaskDeath:
+    serializedVersion: 2
+    m_Bits: 0
   inRecovery: 0
 --- !u!212 &212231202111563760
 SpriteRenderer:

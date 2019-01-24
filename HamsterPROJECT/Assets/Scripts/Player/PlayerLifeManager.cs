@@ -8,8 +8,6 @@ using XInputDotNetPure;
 public class PlayerLifeManager : MonoBehaviour {
 
     [SerializeField]
-    bool diefdp;
-    [SerializeField]
     ParticleSystem deathParticle;
     [SerializeField]
     ParticleSystem hitLittle;
@@ -18,9 +16,8 @@ public class PlayerLifeManager : MonoBehaviour {
     [SerializeField]
     ParticleSystem hitLaser;
     [SerializeField]
-    float deathRadius;
-    [SerializeField]
-    LayerMask layerMaskDeath;
+    public LayerMask layerMaskDeath;
+
 
     Balancing balanceData;
 
@@ -39,6 +36,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float criticalSpeed;
     bool doubleFXprotection;
     bool doubleFXprotectionLaser;
+    float knockBackNuke;
+    float deathRadius;
     Collider2D[] deathOverlap = new Collider2D[3];
 
     // Makes sure Dead function is only called once at a time
@@ -57,6 +56,8 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackLaser= balanceData.knockBackLaser;
         laserDamage= balanceData.laserDamage;
         criticalSpeed = balanceData.criticalSpeed;
+        knockBackNuke = balanceData.knockBackNuke;
+        deathRadius = balanceData.deathRadius;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -72,21 +73,6 @@ public class PlayerLifeManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
-        foreach (Collider2D player in deathOverlap)
-        {
-            if (player.gameObject.CompareTag("Player"))
-            {
-                print(player.gameObject.GetComponent<SpriteRenderer>());
-            }
-        }
-
-        if (diefdp)
-        {
-            diefdp = false;
-            Dead();
-        }
 
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
 		if (playerHP <= 0 && !deadLimiter)
@@ -111,7 +97,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
                 //Calcul la direction du knockback
-                Vector2 directionKnockBack = (attacker.transform.position - transform.position).normalized;
+                Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                 playerMovement.rigid.velocity = Vector3.zero;
                 Invoke("UnlockMovement", knockBackTime);
@@ -121,11 +107,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
-                        playerMovement.rigid.AddForce(-directionKnockBack * (knockBackPlayerHit
+                        playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
                         + attacker.GetComponent<Hook>().playerMovement.speed /2), ForceMode2D.Impulse);
                         break;
                     case "Hook":
-                        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
                     case "Laser":
                         playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
@@ -254,8 +240,29 @@ public class PlayerLifeManager : MonoBehaviour {
 		playerMovement.playerInputDevice.Vibrate(balanceData.heavyVibration);
 		StartCoroutine(CancelVibration (0.08f));
 
-        Destroy(transform.parent.gameObject, 0.1f);
+        Destroy(transform.parent.gameObject, 0.2f);
+
         Instantiate(deathParticle, transform.position, transform.rotation);
+        deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
+        foreach (Collider2D player in deathOverlap)
+        {
+            if (player.gameObject.CompareTag("Player"))
+            {
+                player.gameObject.GetComponent<PlayerLifeManager>().NukeKnockBack(transform.position);
+            }
+        }
+    }
+
+    public void NukeKnockBack(Vector3 position)
+    {
+        //Bloque le mouvement du joueur pour ne pas override le knockback
+        playerMovement.lockMovement = true;
+        //Calcul la direction du knockback
+        Vector2 directionKnockBack = -(position - transform.position).normalized;
+        //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+        playerMovement.rigid.velocity = Vector3.zero;
+        Invoke("UnlockMovement", knockBackTime);
+        playerMovement.rigid.AddForce(directionKnockBack * knockBackNuke, ForceMode2D.Impulse);
     }
 		
 	IEnumerator CancelVibration(float delay)
