@@ -270,6 +270,8 @@ public class Hook : MonoBehaviour {
                 //Si le temps est négatif le grappin est alors détruit
                 if (timeRemaining <= 0) 
                 {
+					playerMovement.playerInputDevice.Vibrate (balanceData.mediumRumble, 0f);
+					StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
                     DisableRope();
                 }
 
@@ -617,4 +619,10 @@ public class Hook : MonoBehaviour {
     void ResetCDSwitch(){
         switchingState = false;
     }
+
+	IEnumerator CancelVibration(float delay)
+	{
+		yield return new WaitForSeconds (delay);
+		playerMovement.playerInputDevice.StopVibration ();
+	}
 }

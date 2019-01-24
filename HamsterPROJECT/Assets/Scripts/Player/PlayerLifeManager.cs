@@ -134,7 +134,7 @@ public class PlayerLifeManager : MonoBehaviour {
 			//Vibrations
 			// Apply a lighter/heavier vibration depending on the damage taken
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
-			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration * (damage / balanceData.damageToVibrationDivisor)));
+			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
         }
     }
 
@@ -234,7 +234,7 @@ public class PlayerLifeManager : MonoBehaviour {
 		playerMovement.playerInputDevice.Vibrate(balanceData.heavyVibration);
 		StartCoroutine(CancelVibration (0.08f));
 
-        Destroy(transform.parent.gameObject, 0.2f);
+        Destroy(transform.parent.gameObject, 0.1f);
 
         Instantiate(deathParticle, transform.position, transform.rotation);
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
