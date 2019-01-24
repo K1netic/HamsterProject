@@ -8,6 +8,8 @@ using XInputDotNetPure;
 public class PlayerLifeManager : MonoBehaviour {
 
     [SerializeField]
+    bool diefdp;
+    [SerializeField]
     ParticleSystem deathParticle;
     [SerializeField]
     ParticleSystem hitLittle;
@@ -15,11 +17,12 @@ public class PlayerLifeManager : MonoBehaviour {
     ParticleSystem hitHard;
     [SerializeField]
     ParticleSystem hitLaser;
+    [SerializeField]
+    float deathRadius;
+    [SerializeField]
+    LayerMask layerMaskDeath;
 
     Balancing balanceData;
-
-    Image lifeBackground;
-    Image lifeImage;
 
     PlayerMovement playerMovement;
     float playerHP;
@@ -33,14 +36,13 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackLaser;
     float laserDamage;
 	TrailRenderer trail;
+    float criticalSpeed;
+    bool doubleFXprotection;
+    bool doubleFXprotectionLaser;
+    Collider2D[] deathOverlap = new Collider2D[3];
 
-	// Makes sure Dead function is only called once at a time
-	bool deadLimiter = false;
-    private bool doubleFXprotection;
-    private float criticalSpeed;
-    private bool doubleFXprotectionLaser;
-
-
+    // Makes sure Dead function is only called once at a time
+    bool deadLimiter = false;
 
     // Use this for initialization
     void Start () {
@@ -60,38 +62,32 @@ public class PlayerLifeManager : MonoBehaviour {
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
+    }
 
-        lifeBackground = GameObject.Find("HPBar" + playerMovement.playerNumber).GetComponent<Image>();
-        lifeImage = GameObject.Find("HP" + playerMovement.playerNumber).GetComponent<Image>();
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawSphere(transform.position, deathRadius);
+    }
 
-        switch (GetComponent<SpriteRenderer>().sprite.name)
+    // Update is called once per frame
+    void Update () {
+
+        deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
+        foreach (Collider2D player in deathOverlap)
         {
-            case "Perso1":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar1");
-                break;
-            case "Perso2":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar2");
-                break;
-            case "Perso3":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar3");
-                break;
-            case "Perso4":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar4");
-                break;
-            case "Perso5":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar5");
-                break;
-            default:
-                print("Default case switch start PlayerLifeManager.cs");
-                break;
+            if (player.gameObject.CompareTag("Player"))
+            {
+                print(player.gameObject.GetComponent<SpriteRenderer>());
+            }
         }
 
-        UpdateLifeUI();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
+        if (diefdp)
+        {
+            diefdp = false;
+            Dead();
+        }
+
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
 		if (playerHP <= 0 && !deadLimiter)
         {
@@ -139,7 +135,6 @@ public class PlayerLifeManager : MonoBehaviour {
                 }
             }
             playerHP -= damage;
-            UpdateLifeUI();
             //Rend le player invulnérable pendant recoveryTime secondes
             Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
@@ -248,14 +243,8 @@ public class PlayerLifeManager : MonoBehaviour {
 		trail.enabled = true;
     }
 
-    void UpdateLifeUI()
-    {
-        lifeImage.fillAmount = playerHP/100;
-    }
-
     void Dead()
     {
-        lifeImage.fillAmount = 0;
 		// Set player as dead in the game manager
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
 		// Add a death in metrics

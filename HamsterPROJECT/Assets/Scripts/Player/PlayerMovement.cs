@@ -37,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     float drag;
 
-    Text counter;
-
     //Fast Fall
     /*float smoothTime = 0.3f;
     float xVelocity = 0.0f;
@@ -67,8 +65,6 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = this.GetComponent<Rigidbody2D> ();
 
-        counter = GameObject.Find("Counter" + playerNumber).GetComponent<Text>();
-
         switch (playerNumber)
         {
             case "_P1":
@@ -91,9 +87,9 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-		UpdateSpeed();
+        speed = rigid.velocity.magnitude;
 
-		if (currentState != State.hooked)
+        if (currentState != State.hooked)
 			currentState = State.inAir;
 
 		Movement();
@@ -109,12 +105,6 @@ public class PlayerMovement : MonoBehaviour
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
 		}*/
-    }
-
-    void UpdateSpeed()
-    {
-        speed = rigid.velocity.magnitude;
-        counter.text = (int)speed + " km/h";
     }
 
     void Dash()
