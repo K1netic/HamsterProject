@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using InControl;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -67,8 +68,6 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = this.GetComponent<Rigidbody2D> ();
 
-        counter = GameObject.Find("Counter" + playerNumber).GetComponent<Text>();
-
         switch (playerNumber)
         {
             case "_P1":
@@ -114,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
     void UpdateSpeed()
     {
         speed = rigid.velocity.magnitude;
-        counter.text = (int)speed + " km/h";
     }
 
     void Dash()
@@ -128,6 +126,8 @@ public class PlayerMovement : MonoBehaviour
                 rigid.AddForce((shootPos.transform.position - transform.position).normalized* dashForce, ForceMode2D.Impulse);
                 Invoke("UnlockMovementDash", dashTime);
                 Invoke("ResetDashCD", dashCDTime);
+				playerInputDevice.Vibrate (0f, balanceData.mediumVibration);
+				StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
             }
         }
     }
@@ -199,4 +199,10 @@ public class PlayerMovement : MonoBehaviour
     {
         inAir, hooked,
     }
+
+	IEnumerator CancelVibration(float delay)
+	{
+		yield return new WaitForSeconds (delay);
+		playerInputDevice.StopVibration ();
+	}
 }

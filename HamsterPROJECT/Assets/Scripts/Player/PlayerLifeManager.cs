@@ -18,9 +18,6 @@ public class PlayerLifeManager : MonoBehaviour {
 
     Balancing balanceData;
 
-    Image lifeBackground;
-    Image lifeImage;
-
     PlayerMovement playerMovement;
     float playerHP;
     [HideInInspector]
@@ -60,33 +57,6 @@ public class PlayerLifeManager : MonoBehaviour {
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
-
-        lifeBackground = GameObject.Find("HPBar" + playerMovement.playerNumber).GetComponent<Image>();
-        lifeImage = GameObject.Find("HP" + playerMovement.playerNumber).GetComponent<Image>();
-
-        switch (GetComponent<SpriteRenderer>().sprite.name)
-        {
-            case "Perso1":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar1");
-                break;
-            case "Perso2":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar2");
-                break;
-            case "Perso3":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar3");
-                break;
-            case "Perso4":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar4");
-                break;
-            case "Perso5":
-                lifeBackground.sprite = Resources.Load<Sprite>("UISprites/LifeBar5");
-                break;
-            default:
-                print("Default case switch start PlayerLifeManager.cs");
-                break;
-        }
-
-        UpdateLifeUI();
     }
 	
 	// Update is called once per frame
@@ -139,7 +109,6 @@ public class PlayerLifeManager : MonoBehaviour {
                 }
             }
             playerHP -= damage;
-            UpdateLifeUI();
             //Rend le player invulnérable pendant recoveryTime secondes
             Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
@@ -158,8 +127,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
 			//Vibrations
 			// Apply a lighter/heavier vibration depending on the damage taken
-//			GamePad.SetVibration (playerMovement.plyrIndex, 0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
-			StartCoroutine(CancelVibration (0.2f));
+			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
+			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration * (damage / balanceData.damageToVibrationDivisor)));
         }
     }
 
@@ -248,30 +217,24 @@ public class PlayerLifeManager : MonoBehaviour {
 		trail.enabled = true;
     }
 
-    void UpdateLifeUI()
-    {
-        lifeImage.fillAmount = playerHP/100;
-    }
-
     void Dead()
     {
-        lifeImage.fillAmount = 0;
 		// Set player as dead in the game manager
-        GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false; 
+        GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false;
 		// Add a death in metrics
-		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1; 
+		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
 
 		// Vibration on death
-//		GamePad.SetVibration (playerMovement.plyrIndex, 0f, balanceData.heavyRumble);
-//		StartCoroutine(CancelVibration (0.05f));
+		playerMovement.playerInputDevice.Vibrate(balanceData.heavyVibration);
+		StartCoroutine(CancelVibration (0.08f));
 
-        Destroy(transform.parent.gameObject, 0.05f);
+        Destroy(transform.parent.gameObject, 0.1f);
         Instantiate(deathParticle, transform.position, transform.rotation);
     }
 		
 	IEnumerator CancelVibration(float delay)
 	{
 		yield return new WaitForSeconds (delay);
-//		GamePad.SetVibration (playerMovement.plyrIndex, 0f, 0f);
+		playerMovement.playerInputDevice.StopVibration ();
 	}
 }

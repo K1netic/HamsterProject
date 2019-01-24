@@ -67,13 +67,14 @@ MonoBehaviour:
   flashingRate: 0.1
   arrowDamage: 20
   laserDamage: 20
+  criticalSpeed: 35
   knockBackTime: 0.5
   knockBackPlayerHit: 10
   knockBackShieldHit: 20
   knockBackLaser: 20
   dashTime: 0.05
   dashForce: 50
-  dashCDTime: 2
+  dashCDTime: 1.5
   lightScreeShakeMagnitude: 4
   mediumScreenShakeMagnitude: 8
   heavyScreenShakeMagnitude: 12
@@ -86,3 +87,4 @@ MonoBehaviour:
   lightVibration: 0.1
   mediumVibration: 0.5
   heavyVibration: 1
+  damageToVibrationDivisor: 10

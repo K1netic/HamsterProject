@@ -21,7 +21,7 @@ public class MatchStart : MonoBehaviour {
 
 	[SerializeField] List<Transform> spawnPoints = new List<Transform>();
 
-	[SerializeField] GameObject[] LifeBars;
+	[SerializeField] bool TestWithoutUI;
 
 	void Awake ()
 	{
@@ -36,7 +36,7 @@ public class MatchStart : MonoBehaviour {
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
 
-		ShowLifeBars ();
+
 	}
 
 	void Start()
@@ -49,19 +49,29 @@ public class MatchStart : MonoBehaviour {
             spawnPoints.Add(spawn.transform);
         }
 
-		// Instantiate Players depending on which were validated in the character selection screen
-		for (int i = 0; i < GameManager.playersActive.Length; i ++)
+		if (TestWithoutUI)
 		{
-			if (GameManager.playersActive[i] == true)
+			Players = GameObject.FindGameObjectsWithTag("Player");
+
+			for (int i = 0; i < Players.Length; i ++)
 			{
-//				InstantiatePlayer (i);
-				GameObject inst = GameManager.playersCharacters[i];
-				int j = Random.Range(0, spawnPoints.Count);
-				inst.transform.position = spawnPoints[j].transform.position;
-				spawnPoints.Remove(spawnPoints[j]);
-				inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
-				GameObject newPlayer = Instantiate (inst);
-				newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [i];
+				GameObject newPlayer = Instantiate (Players [i].transform.parent.gameObject);
+				newPlayer.transform.position = Players[i].transform.position;
+				newPlayer.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+				Destroy (Players [i].transform.parent.gameObject);
+				newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = InputManager.Devices [i];
+			}
+		}
+
+		else
+		{
+			// Instantiate Players depending on which were validated in the character selection screen
+			for (int i = 0; i < GameManager.playersActive.Length; i ++)
+			{
+				if (GameManager.playersActive[i] == true)
+				{
+					InstantiatePlayer (i);
+				}
 			}
 		}
 	}
@@ -103,16 +113,18 @@ public class MatchStart : MonoBehaviour {
 		beginText.text = "";
 	}
 
-//	void InstantiatePlayer(int playerIndex)
-//	{
-//		GameObject inst = GameManager.playersCharacters[playerIndex];
-//        int i = Random.Range(0, spawnPoints.Count + 1);
-//		inst.transform.position = spawnPoints[i].transform.position;
-//        spawnPoints.Remove(spawnPoints[i]);
-//		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
-//		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [playerIndex];
-//		Instantiate (inst);
-//	}
+	void InstantiatePlayer(int playerIndex)
+	{
+		GameObject inst = GameManager.playersCharacters[playerIndex];
+		int j = Random.Range(0, spawnPoints.Count);
+		inst.transform.position = spawnPoints[j].transform.position;
+		spawnPoints.Remove(spawnPoints[j]);
+		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+		GameObject newPlayer = Instantiate (inst);
+
+		// Setting InputDevice
+		newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [playerIndex];
+	}
 
 	void UnfreezePlayers()
 	{
@@ -123,14 +135,14 @@ public class MatchStart : MonoBehaviour {
 		}
 	}
 
-	void ShowLifeBars()
-	{
-		for(int i = 0; i < GameManager.playersActive.Length; i++)
-		{
-			if (GameManager.playersActive [i])
-				LifeBars [i].SetActive (true);
-		}
-	}
+//	void ShowLifeBars()
+//	{
+//		for(int i = 0; i < GameManager.playersActive.Length; i++)
+//		{
+//			if (GameManager.playersActive [i])
+//				LifeBars [i].SetActive (true);
+//		}
+//	}
 
 //	void RandomSpawnPoint()
 //	{
