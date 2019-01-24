@@ -154,7 +154,7 @@ public class PlayerLifeManager : MonoBehaviour {
 			//Vibrations
 			// Apply a lighter/heavier vibration depending on the damage taken
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
-			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration * (damage / balanceData.damageToVibrationDivisor)));
+			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
         }
     }
 
