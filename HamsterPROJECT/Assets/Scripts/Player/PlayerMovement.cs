@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public bool hooked;
     [HideInInspector]
     public Vector2 jointDirection;
+    [SerializeField]
+    GameObject dashEcho;
 
 	//Movement
 	
@@ -70,15 +72,19 @@ public class PlayerMovement : MonoBehaviour
         {
             case "_P1":
                 gameObject.layer = 8;
+                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 9) | (1 << 10) | (1 << 11);
                 break;
             case "_P2":
                 gameObject.layer = 9;
+                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 10) | (1 << 11);
                 break;
             case "_P3":
                 gameObject.layer = 10;
+                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 9) | (1 << 11);
                 break;
             case "_P4":
                 gameObject.layer = 11;
+                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 9) | (1 << 10);
                 break;
             default:
                 break;
@@ -117,12 +123,24 @@ public class PlayerMovement : MonoBehaviour
                 dashInCD = true;
                 lockMovementDash = true;
                 rigid.AddForce((shootPos.transform.position - transform.position).normalized* dashForce, ForceMode2D.Impulse);
+                InvokeRepeating("DashEffect", 0, 0.04f);
                 Invoke("UnlockMovementDash", dashTime);
+                Invoke("CancelDashEffect", dashTime * 3.5f);
                 Invoke("ResetDashCD", dashCDTime);
 				playerInputDevice.Vibrate (0f, balanceData.mediumVibration);
 				StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
             }
         }
+    }
+
+    void DashEffect()
+    {
+        Instantiate(dashEcho, transform.position, transform.rotation);
+    }
+
+    void CancelDashEffect()
+    {
+        CancelInvoke("DashEffect");
     }
 
     void Movement()

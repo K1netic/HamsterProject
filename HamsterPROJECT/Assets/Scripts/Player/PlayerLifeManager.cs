@@ -20,7 +20,7 @@ public class PlayerLifeManager : MonoBehaviour {
     [SerializeField]
     float deathRadius;
     [SerializeField]
-    LayerMask layerMaskDeath;
+    public LayerMask layerMaskDeath;
 
     Balancing balanceData;
 

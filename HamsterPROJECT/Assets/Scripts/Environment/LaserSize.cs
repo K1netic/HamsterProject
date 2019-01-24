@@ -81,11 +81,6 @@ public class LaserSize : MonoBehaviour {
         }
         else
         {
-            if (FXinstantiate)
-            {
-                FXinstantiate = false;
-                Destroy(instEndLaser);
-            }
             center.SetPosition(1, -start.transform.right * 10);
             glow.SetPosition(1, -start.transform.right * 10);
             ring.SetPosition(1, -start.transform.right * 10);

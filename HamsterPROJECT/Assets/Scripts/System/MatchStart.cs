@@ -57,7 +57,7 @@ public class MatchStart : MonoBehaviour {
 			{
 				GameObject newPlayer = Instantiate (Players [i].transform.parent.gameObject);
 				newPlayer.transform.position = Players[i].transform.position;
-				newPlayer.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
+				newPlayer.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = false;
 				Destroy (Players [i].transform.parent.gameObject);
 				newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = InputManager.Devices [i];
 			}
