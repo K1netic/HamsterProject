@@ -135,18 +135,4 @@ public class MatchStart : MonoBehaviour {
 		}
 	}
 
-//	void ShowLifeBars()
-//	{
-//		for(int i = 0; i < GameManager.playersActive.Length; i++)
-//		{
-//			if (GameManager.playersActive [i])
-//				LifeBars [i].SetActive (true);
-//		}
-//	}
-
-//	void RandomSpawnPoint()
-//	{
-//		Random.Range (1, spawnPoints.Length);
-//	}
-
 }
