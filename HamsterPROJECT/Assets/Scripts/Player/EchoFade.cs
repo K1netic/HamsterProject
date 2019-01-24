@@ -11,10 +11,12 @@ public class EchoFade : MonoBehaviour {
     [SerializeField]
 	float timeRemaining = 1;
 	float t;
+    public Sprite playerSprite;
 
 	// Use this for initialization
 	void Start () {
 		Sprite = GetComponent<SpriteRenderer>();
+        Sprite.sprite = playerSprite;
 		Color1 = Sprite.color;
 	}
 	

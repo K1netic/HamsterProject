@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     bool lockMovementDash;
     [SerializeField]
     GameObject shootPos;
+    Sprite playerSprite;
 
     float drag;
 
@@ -67,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */
 
         rigid = this.GetComponent<Rigidbody2D> ();
+        playerSprite = GetComponent<SpriteRenderer>().sprite;
 
         switch (playerNumber)
         {
@@ -135,7 +137,8 @@ public class PlayerMovement : MonoBehaviour
 
     void DashEffect()
     {
-        Instantiate(dashEcho, transform.position, transform.rotation);
+        GameObject effect = Instantiate(dashEcho, transform.position, transform.rotation);
+        effect.GetComponent<EchoFade>().playerSprite = playerSprite;
     }
 
     void CancelDashEffect()
