@@ -36,12 +36,14 @@ public class Balancing : MonoBehaviour {
     public float arrowDamage = 10;
     public float laserDamage = 10;
     public float criticalSpeed = 35;
+    public float deathRadius = 2.5f;
 
     [Header("Knockback")]
     public float knockBackTime = 0.5f;
     public float knockBackPlayerHit = 5;
     public float knockBackShieldHit = 10;
     public float knockBackLaser = 10;
+    public float knockBackNuke = 15;
 
     [Header("Dash")]
     public float dashTime;

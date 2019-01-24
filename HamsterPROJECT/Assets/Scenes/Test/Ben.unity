@@ -834,6 +834,16 @@ Prefab:
       propertyPath: m_BodyType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114413453832531408, guid: 65495d1d14bb22c459c0df5a291ae78e,
+        type: 2}
+      propertyPath: knockBackNuke
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114413453832531408, guid: 65495d1d14bb22c459c0df5a291ae78e,
+        type: 2}
+      propertyPath: deathRadius
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65495d1d14bb22c459c0df5a291ae78e, type: 2}
   m_IsPrefabAsset: 0
@@ -919,11 +929,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4727740142744576, guid: b373490a25ae76a4895f02387260c890, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.42
+      value: -4.52
       objectReference: {fileID: 0}
     - target: {fileID: 4727740142744576, guid: b373490a25ae76a4895f02387260c890, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.34
+      value: 5.46
       objectReference: {fileID: 0}
     - target: {fileID: 4727740142744576, guid: b373490a25ae76a4895f02387260c890, type: 2}
       propertyPath: m_LocalPosition.z
@@ -962,6 +972,32 @@ Prefab:
     - target: {fileID: 1545680149551296, guid: b373490a25ae76a4895f02387260c890, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114935030097015892, guid: b373490a25ae76a4895f02387260c890,
+        type: 2}
+      propertyPath: deathRadius
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4814354432824946, guid: b373490a25ae76a4895f02387260c890, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973348850108326, guid: b373490a25ae76a4895f02387260c890, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114935030097015892, guid: b373490a25ae76a4895f02387260c890,
+        type: 2}
+      propertyPath: knockBackNuke
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727740142744576, guid: b373490a25ae76a4895f02387260c890, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727740142744576, guid: b373490a25ae76a4895f02387260c890, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b373490a25ae76a4895f02387260c890, type: 2}
