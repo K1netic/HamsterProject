@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
                 Invoke("UnlockMovementDash", dashTime);
                 Invoke("ResetDashCD", dashCDTime);
 				playerInputDevice.Vibrate (0f, balanceData.mediumVibration);
-				StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
+				StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
             }
         }
     }
