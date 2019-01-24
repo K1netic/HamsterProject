@@ -8,6 +8,8 @@ using XInputDotNetPure;
 public class PlayerLifeManager : MonoBehaviour {
 
     [SerializeField]
+    bool diefdp;
+    [SerializeField]
     ParticleSystem deathParticle;
     [SerializeField]
     ParticleSystem hitLittle;
@@ -15,6 +17,10 @@ public class PlayerLifeManager : MonoBehaviour {
     ParticleSystem hitHard;
     [SerializeField]
     ParticleSystem hitLaser;
+    [SerializeField]
+    float deathRadius;
+    [SerializeField]
+    LayerMask layerMaskDeath;
 
     Balancing balanceData;
 
@@ -30,14 +36,13 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackLaser;
     float laserDamage;
 	TrailRenderer trail;
+    float criticalSpeed;
+    bool doubleFXprotection;
+    bool doubleFXprotectionLaser;
+    Collider2D[] deathOverlap = new Collider2D[3];
 
-	// Makes sure Dead function is only called once at a time
-	bool deadLimiter = false;
-    private bool doubleFXprotection;
-    private float criticalSpeed;
-    private bool doubleFXprotectionLaser;
-
-
+    // Makes sure Dead function is only called once at a time
+    bool deadLimiter = false;
 
     // Use this for initialization
     void Start () {
@@ -58,10 +63,31 @@ public class PlayerLifeManager : MonoBehaviour {
 
         trail = GetComponent<TrailRenderer>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawSphere(transform.position, deathRadius);
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+        deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
+        foreach (Collider2D player in deathOverlap)
+        {
+            if (player.gameObject.CompareTag("Player"))
+            {
+                print(player.gameObject.GetComponent<SpriteRenderer>());
+            }
+        }
+
+        if (diefdp)
+        {
+            diefdp = false;
+            Dead();
+        }
+
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
 		if (playerHP <= 0 && !deadLimiter)
         {
