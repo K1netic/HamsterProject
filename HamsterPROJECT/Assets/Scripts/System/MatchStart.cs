@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] GameObject[] Players;
 	string plyrNmbr;
 
-	[SerializeField] List<Transform> spawnPoints = new List<Transform>();
+    List<Transform> spawnPoints = new List<Transform>();
 
 	[SerializeField] bool TestWithoutUI;
 
