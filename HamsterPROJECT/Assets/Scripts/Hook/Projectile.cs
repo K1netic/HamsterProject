@@ -203,6 +203,7 @@ public class Projectile : MonoBehaviour {
             else if(!collision.gameObject.CompareTag("Hookable"))
             {
                 Instantiate(hitHook, transform.position, transform.rotation);
+				hook.VibrationOnProjectileDestroyed ();
                 Destruction();
             }
             //S'accroche sur une plateforme si les raycast ne l'ont pas détecté

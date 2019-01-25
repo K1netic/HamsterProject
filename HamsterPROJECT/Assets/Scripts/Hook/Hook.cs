@@ -583,7 +583,10 @@ public class Hook : MonoBehaviour {
 
                 break;
             case HookState.Shield:
+			// Collision avec shield
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
+				playerMovement.playerInputDevice.Vibrate (0f, 0.2f);
+				StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
                 break;
             default:
                 break;
@@ -603,7 +606,10 @@ public class Hook : MonoBehaviour {
 
                 break;
             case HookState.Shield:
+				// Collision avec shield
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
+				playerMovement.playerInputDevice.Vibrate (0f, 0.2f);
+				StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
                 break;
             default:
                 break;
@@ -619,6 +625,12 @@ public class Hook : MonoBehaviour {
     void ResetCDSwitch(){
         switchingState = false;
     }
+
+	public void VibrationOnProjectileDestroyed()
+	{
+		playerMovement.playerInputDevice.Vibrate (0f, balanceData.lightVibration);
+		StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
+	}
 
 	IEnumerator CancelVibration(float delay)
 	{

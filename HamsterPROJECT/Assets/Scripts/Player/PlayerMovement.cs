@@ -177,6 +177,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		// Collision avec plateformes ou joueur
+		if (collision.gameObject.layer == 16 || collision.gameObject.tag == "Player")
+		{
+			playerInputDevice.Vibrate (0f, balanceData.lightVibration);
+			StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
+		}
+	}
+
     void ResetDashCD()
     {
         dashInCD = false;

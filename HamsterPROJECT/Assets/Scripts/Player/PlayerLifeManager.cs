@@ -185,6 +185,8 @@ public class PlayerLifeManager : MonoBehaviour {
         {
             LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);
+			playerMovement.playerInputDevice.Vibrate(balanceData.mediumRumble, balanceData.mediumVibration);
+			StartCoroutine(CancelVibration (balanceData.smallVibrationDuration));
         }
     }
 
