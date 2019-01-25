@@ -65,12 +65,6 @@ public class PlayerLifeManager : MonoBehaviour {
         trail = GetComponent<TrailRenderer>();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(1, 0, 0, 0.5f);
-        Gizmos.DrawSphere(transform.position, deathRadius);
-    }
-
     // Update is called once per frame
     void Update () {
 
@@ -240,8 +234,7 @@ public class PlayerLifeManager : MonoBehaviour {
 		playerMovement.playerInputDevice.Vibrate(balanceData.heavyVibration);
 		StartCoroutine(CancelVibration (0.08f));
 
-        Destroy(transform.parent.gameObject, 0.1f);
-
+        //Nuke
         Instantiate(deathParticle, transform.position, transform.rotation);
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
         foreach (Collider2D player in deathOverlap)
@@ -251,6 +244,8 @@ public class PlayerLifeManager : MonoBehaviour {
                 player.gameObject.GetComponent<PlayerLifeManager>().NukeKnockBack(transform.position);
             }
         }
+
+        Destroy(transform.parent.gameObject, 0.1f);
     }
 
     public void NukeKnockBack(Vector3 position)

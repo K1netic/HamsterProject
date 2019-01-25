@@ -419,11 +419,7 @@ public class Hook : MonoBehaviour {
     void UpdateRope(){
         //Aligne la position de la corde sur le player et la tete de grappin
         line.SetPosition(0, player.transform.position);
-        //Aligne la ligne sur la tete de grappin que si le projectile n'est pas fixé
-        if (!projectileScript.hooked)
-        {
-            line.SetPosition(1, currentProjectile.transform.position);
-        }
+        line.SetPosition(1, projectileScript.pivot);
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
 
@@ -467,10 +463,10 @@ public class Hook : MonoBehaviour {
         projectileScript = currentProjectile.GetComponent<Projectile>();
         shootPos = transform.GetChild(0).GetComponent<Transform>().position;
         projectileScript.direction = (shootPos - transform.position).normalized;
+        line.SetPosition(1, currentProjectile.transform.position);
         currentProjectile.transform.parent = gameObject.transform.parent;
         projectileScript.playerNumber = playerNumber;
         projectileScript.hook = this;
-        line.SetPosition(1, currentProjectile.transform.position);
 
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
