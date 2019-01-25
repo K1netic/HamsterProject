@@ -45,6 +45,11 @@ public class Projectile : MonoBehaviour {
 
     GameObject hookedObject;
 
+    private void Awake()
+    {
+        pivot = pivot = child.transform.position;
+    }
+
     void Start(){
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();

@@ -463,10 +463,10 @@ public class Hook : MonoBehaviour {
         projectileScript = currentProjectile.GetComponent<Projectile>();
         shootPos = transform.GetChild(0).GetComponent<Transform>().position;
         projectileScript.direction = (shootPos - transform.position).normalized;
+        line.SetPosition(1, currentProjectile.transform.position);
         currentProjectile.transform.parent = gameObject.transform.parent;
         projectileScript.playerNumber = playerNumber;
         projectileScript.hook = this;
-        line.SetPosition(1, projectileScript.pivot);
 
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
