@@ -270,8 +270,7 @@ public class Hook : MonoBehaviour {
                 //Si le temps est négatif le grappin est alors détruit
                 if (timeRemaining <= 0) 
                 {
-					playerMovement.playerInputDevice.Vibrate (balanceData.mediumRumble, 0f);
-					StartCoroutine (CancelVibration (balanceData.mediumVibrationDuration));
+					StartCoroutine (CancelVibration (Vibrations.PlayVibration("HookDestruction", playerMovement.playerInputDevice)));
                     DisableRope();
                 }
 
@@ -283,7 +282,7 @@ public class Hook : MonoBehaviour {
                     joint.distance -= retractationStep;
                 }
 
-                //Permet de s'éloigner du joint uniquemet s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
+                //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
 				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
                     //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
@@ -479,7 +478,7 @@ public class Hook : MonoBehaviour {
         hookInCD = true;
     }
 
-    //Désactive tout ce qu'il est relatif au grappin
+    //Désactive tout ce qui est relatif au grappin
     public void DisableRope(){
         StartCoroutine("ResetHookCD");
         playerMovement.StateNotHooked();
@@ -541,6 +540,7 @@ public class Hook : MonoBehaviour {
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
+					StartCoroutine (CancelVibration (Vibrations.PlayVibration ("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                 }
  
             }
@@ -579,14 +579,14 @@ public class Hook : MonoBehaviour {
         switch (collision.gameObject.GetComponent<Hook>().currentState)
         {
             case HookState.Arrow:
+				// Collision Arrow - Arrow
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-
+				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
                 break;
             case HookState.Shield:
-			// Collision avec shield
+				// Collision Arrow - Shield
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-				playerMovement.playerInputDevice.Vibrate (0f, 0.2f);
-				StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
+				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
                 break;
             default:
                 break;
@@ -602,14 +602,14 @@ public class Hook : MonoBehaviour {
         switch (collision.gameObject.GetComponent<Hook>().currentState)
         {
             case HookState.Arrow:
+				// Collision Arrow - Arrow
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-
+				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
                 break;
             case HookState.Shield:
-				// Collision avec shield
+				// Collision Arrow - Shield
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-				playerMovement.playerInputDevice.Vibrate (0f, 0.2f);
-				StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
+				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
                 break;
             default:
                 break;
@@ -628,8 +628,12 @@ public class Hook : MonoBehaviour {
 
 	public void VibrationOnProjectileDestroyed()
 	{
-		playerMovement.playerInputDevice.Vibrate (0f, balanceData.lightVibration);
-		StartCoroutine (CancelVibration (balanceData.smallVibrationDuration));
+		StartCoroutine (CancelVibration (Vibrations.PlayVibration("HookProjectileDestroyed", playerMovement.playerInputDevice)));
+	}
+
+	public void VibrationOnTouchingPlayerWithHookhead()
+	{
+		StartCoroutine (CancelVibration (Vibrations.PlayVibration("HookheadOnPlayer", playerMovement.playerInputDevice)));
 	}
 
 	IEnumerator CancelVibration(float delay)

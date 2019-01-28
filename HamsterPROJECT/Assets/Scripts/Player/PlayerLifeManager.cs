@@ -131,7 +131,7 @@ public class PlayerLifeManager : MonoBehaviour {
 				}
 			}
 
-			//Vibrations
+			// DAMAGE TAKEN VIBRATION
 			// Apply a lighter/heavier vibration depending on the damage taken
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
@@ -185,8 +185,7 @@ public class PlayerLifeManager : MonoBehaviour {
         {
             LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);
-			playerMovement.playerInputDevice.Vibrate(balanceData.mediumRumble, balanceData.mediumVibration);
-			StartCoroutine(CancelVibration (balanceData.smallVibrationDuration));
+			StartCoroutine(CancelVibration (Vibrations.PlayVibration("Laser", playerMovement.playerInputDevice)));
         }
     }
 
@@ -227,14 +226,14 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Dead()
     {
+		Debug.Log ("death - " + playerMovement.playerNumber);
 		// Set player as dead in the game manager
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false;
 		// Add a death in metrics
 		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
 
 		// Vibration on death
-		playerMovement.playerInputDevice.Vibrate(balanceData.heavyVibration);
-		StartCoroutine(CancelVibration (0.08f));
+		StartCoroutine(CancelVibration (Vibrations.PlayVibration("Death", playerMovement.playerInputDevice)));
 
         //Nuke
         Instantiate(deathParticle, transform.position, transform.rotation);

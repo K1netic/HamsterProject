@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1881543661112302}
   m_IsPrefabAsset: 1
+--- !u!1 &1114447578684600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4436030759517146}
+  - component: {fileID: 114710416968142926}
+  m_Layer: 0
+  m_Name: Vibrations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1393047430249138
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +190,19 @@ Transform:
   m_Father: {fileID: 4751875963779444}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4436030759517146
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114447578684600}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.3089704, y: 0.76534975, z: 6.421875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4751875963779444}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4751875963779444
 Transform:
   m_ObjectHideFlags: 1
@@ -189,6 +218,7 @@ Transform:
   - {fileID: 4032969803736872}
   - {fileID: 4017690036563252}
   - {fileID: 4014214969621420}
+  - {fileID: 4436030759517146}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -220,11 +250,6 @@ MonoBehaviour:
   emptyProgressBar: {fileID: 2800000, guid: 491d1d22608a2364e97fcbd9d2ee43b1, type: 3}
   fullProgressBar: {fileID: 2800000, guid: b2bd281e02b993e4f8cbac94290c32e8, type: 3}
   Players: []
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   TestWithoutUI: 1
 --- !u!114 &114290630516915756
 MonoBehaviour:
@@ -254,10 +279,12 @@ MonoBehaviour:
   arrowDamage: 20
   laserDamage: 20
   criticalSpeed: 35
+  deathRadius: 2.5
   knockBackTime: 0.5
   knockBackPlayerHit: 10
   knockBackShieldHit: 20
   knockBackLaser: 20
+  knockBackNuke: 15
   dashTime: 0.05
   dashForce: 50
   dashCDTime: 1.5
@@ -270,10 +297,10 @@ MonoBehaviour:
   lightRumble: 0.1
   mediumRumble: 0.5
   heavyRumble: 1
-  lightVibration: 0.1
+  lightVibration: 0.2
   mediumVibration: 0.5
   heavyVibration: 1
-  damageToVibrationDivisor: 10
+  damageToVibrationDivisor: 20
   smallVibrationDuration: 0.1
   mediumVibrationDuration: 0.2
   longVibrationDuration: 0.5
@@ -321,6 +348,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreDisplay: {fileID: 0}
   arrows: []
+--- !u!114 &114710416968142926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114447578684600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69f516c7eaa1e4468a932eb6cd7855e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114901882338816972
 MonoBehaviour:
   m_ObjectHideFlags: 1

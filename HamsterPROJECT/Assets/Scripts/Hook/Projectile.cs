@@ -197,6 +197,7 @@ public class Projectile : MonoBehaviour {
                 //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                 foeScript.HitFX(collision.GetContact(0).point, 0);
                 foeScript.TakeDamage(hookheadDamage, gameObject, true);
+				hook.VibrationOnTouchingPlayerWithHookhead ();
                 Destruction();
             }
             

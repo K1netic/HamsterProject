@@ -245,7 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 328717391}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: BACKGROUND
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,11 +1095,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: spawnPoints.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4751875963779444, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1132,56 +1127,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114123774874603972, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: m_FirstSelected
-      value: 
-      objectReference: {fileID: 1245127633}
-    - target: {fileID: 114659529333575882, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: scoreDisplay
-      value: 
-      objectReference: {fileID: 1245127632}
     - target: {fileID: 114901882338816972, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
       propertyPath: pauseMenu
       value: 
       objectReference: {fileID: 1245127631}
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+    - target: {fileID: 114659529333575882, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
-      propertyPath: spawnPoints.Array.data[0]
+      propertyPath: scoreDisplay
       value: 
-      objectReference: {fileID: 2115416936}
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+      objectReference: {fileID: 1245127632}
+    - target: {fileID: 114123774874603972, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
-      propertyPath: spawnPoints.Array.data[1]
+      propertyPath: m_FirstSelected
       value: 
-      objectReference: {fileID: 2115416935}
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: spawnPoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 2115416934}
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: spawnPoints.Array.data[3]
-      value: 
-      objectReference: {fileID: 2115416933}
-    - target: {fileID: 114235915217936864, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: TestWithoutUI
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114290630516915756, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: lightVibration
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114290630516915756, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: damageToVibrationDivisor
-      value: 20
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1245127633}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
   m_IsPrefabAsset: 0
@@ -2639,26 +2599,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffeb7fea22ffc1c458dd882d1120356f, type: 2}
   m_IsPrefabAsset: 0
---- !u!4 &2115416933 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4428372561526004, guid: ffeb7fea22ffc1c458dd882d1120356f,
-    type: 2}
-  m_PrefabInternal: {fileID: 2115416932}
---- !u!4 &2115416934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4897367283660064, guid: ffeb7fea22ffc1c458dd882d1120356f,
-    type: 2}
-  m_PrefabInternal: {fileID: 2115416932}
---- !u!4 &2115416935 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4346955740511858, guid: ffeb7fea22ffc1c458dd882d1120356f,
-    type: 2}
-  m_PrefabInternal: {fileID: 2115416932}
---- !u!4 &2115416936 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4316372848433050, guid: ffeb7fea22ffc1c458dd882d1120356f,
-    type: 2}
-  m_PrefabInternal: {fileID: 2115416932}
 --- !u!4 &2115416937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4160531948644420, guid: ffeb7fea22ffc1c458dd882d1120356f,

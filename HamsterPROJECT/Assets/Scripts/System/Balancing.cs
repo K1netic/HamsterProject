@@ -58,13 +58,15 @@ public class Balancing : MonoBehaviour {
 	public float screenShakeFadeIn = 0.1f;
 	public float screenShakeFadeOut = 1f;
 	public float lightRumble = 0.1f;
+	public float mediumlightRumble = 0.25f;
 	public float mediumRumble = 0.5f;
 	public float heavyRumble = 0.9f;
 	public float lightVibration = 0.1f;
+	public float mediumLightVibration = 0.25f;
 	public float mediumVibration = 0.5f;
 	public float heavyVibration = 0.9f;
 	public float damageToVibrationDivisor = 10.0f;
-	public float smallVibrationDuration = 0.1f;
+	public float shortVibrationDuration = 0.1f;
 	public float mediumVibrationDuration = 0.2f;
 	public float longVibrationDuration = 0.5f;
 
