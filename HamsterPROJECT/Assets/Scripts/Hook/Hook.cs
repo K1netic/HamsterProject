@@ -31,6 +31,7 @@ public class Hook : MonoBehaviour {
     RaycastHit2D checkOppositeToJoint;
     RaycastHit2D checkToJoint ;
     LayerMask layerMaskLineCast;
+    float initialDistance;
 
     //AIM
     //float offset;
@@ -275,11 +276,14 @@ public class Hook : MonoBehaviour {
                 }
 
                 RaycastingDistanceJoint();
-                
+
+                joint.distance = initialDistance;
+
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
-				if(playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
+                if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
+                    initialDistance = joint.distance;
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
@@ -289,6 +293,7 @@ public class Hook : MonoBehaviour {
                     if (joint.distance < distanceMax - retractationStep)
                     {
                         joint.distance += retractationStep;
+                        initialDistance = joint.distance;
                         //permet de faire reculer le joueur avec le changement de distance max
                         joint.maxDistanceOnly = false;
                     }
@@ -438,6 +443,7 @@ public class Hook : MonoBehaviour {
         joint.enabled = true;
         joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
         joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
+        initialDistance = joint.distance;
         joint.maxDistanceOnly = true;
         jointNotCreated = false;
     }
