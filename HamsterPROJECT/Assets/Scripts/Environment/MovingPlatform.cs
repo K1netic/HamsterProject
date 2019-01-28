@@ -9,18 +9,23 @@ public class MovingPlatform : MonoBehaviour {
     [SerializeField]
     GameObject node2;
     [SerializeField]
-    float moveSpeed;
+    public float moveSpeed;
 
-    Vector2 target;
-    Vector2 node1pos;
-    Vector2 node2pos;
+    public Vector2 target;
+    public Vector2 node1pos;
+    public Vector2 node2pos;
+
+    public bool isDuplicated;
 
     private void Start()
     {
-        node1pos = (Vector2)node1.transform.position;
-        node2pos = (Vector2)node2.transform.position;
+        if (!isDuplicated)
+        {
+            node1pos = (Vector2)node1.transform.position;
+            node2pos = (Vector2)node2.transform.position;
 
-        target = node1pos;
+            target = node1pos;
+        }
     }
 
     private void FixedUpdate()

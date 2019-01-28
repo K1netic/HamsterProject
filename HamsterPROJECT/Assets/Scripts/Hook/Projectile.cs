@@ -142,32 +142,40 @@ public class Projectile : MonoBehaviour {
                 //S'accroche si jamais le gameObject à le bon tag
                 if (raycast.collider.gameObject.CompareTag("Hookable"))
                 {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    hooked = true;
-                    transform.position = raycast.point;
-                    hookedObject = raycast.collider.gameObject;
-                    Instantiate(hitHook, transform.position, transform.rotation);
-                    gameObject.transform.parent = hookedObject.transform;
+                    GetHooked(raycast.point, raycast.collider.gameObject);
                 }
                 else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
                 {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    hooked = true;
-                    transform.position = raycastLeft.point;
-                    hookedObject = raycastLeft.collider.gameObject;
-                    Instantiate(hitHook, transform.position, transform.rotation);
-                    gameObject.transform.parent = hookedObject.transform;
+                    GetHooked(raycastLeft.point, raycastLeft.collider.gameObject);
                 }
                 else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
                 {
-                    GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                    hooked = true;
-                    transform.position = raycastRight.point;
-                    hookedObject = raycastRight.collider.gameObject;
-                    Instantiate(hitHook, transform.position, transform.rotation);
-                    gameObject.transform.parent = hookedObject.transform;
+                    GetHooked(raycastRight.point, raycastRight.collider.gameObject);
                 }
             }
+        }
+    }
+
+    void GetHooked(Vector2 position, GameObject platform)
+    {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        hooked = true;
+        transform.position = position;
+        hookedObject = platform;
+        Instantiate(hitHook, transform.position, transform.rotation);
+        //gameObject.transform.parent = hookedObject.transform;
+        if (hookedObject.GetComponent<MovingPlatform>())
+        {
+            MovingPlatform plat = hookedObject.GetComponent<MovingPlatform>();
+            gameObject.AddComponent<MovingPlatform>();
+            MovingPlatform movingHookhead = GetComponent<MovingPlatform>();
+            movingHookhead.isDuplicated = true;
+            movingHookhead.moveSpeed = plat.moveSpeed;
+            Vector2 Offset = new Vector2(hookedObject.transform.position.x - transform.position.x, hookedObject.transform.position.y - transform.position.y);
+            movingHookhead.target = plat.target - Offset;
+            movingHookhead.node1pos = plat.node1pos - Offset;
+            movingHookhead.node2pos = plat.node2pos - Offset;
+
         }
     }
 
@@ -209,12 +217,7 @@ public class Projectile : MonoBehaviour {
             //S'accroche sur une plateforme si les raycast ne l'ont pas détecté
             else if (collision.gameObject.CompareTag("Hookable"))
             {
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                hooked = true;
-                transform.position = collision.GetContact(0).point;
-                hookedObject = collision.gameObject;
-                Instantiate(hitHook, transform.position, transform.rotation);
-                gameObject.transform.parent = hookedObject.transform;
+                GetHooked(collision.GetContact(0).point, collision.gameObject);
             }
         }
     }
