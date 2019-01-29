@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 jointDirection;
     [SerializeField]
     GameObject dashEcho;
+    [SerializeField]
+    GameObject speedEffect;
 
 	//Movement
 	
@@ -38,8 +40,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     GameObject shootPos;
     Sprite playerSprite;
+    SpeedEffect speedEffectScript;
 
     float drag;
+    Vector2 lastFramePosition;
+    public Vector2 playerDirection;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -69,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = this.GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer>().sprite;
+        speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
 
         switch (playerNumber)
         {
@@ -91,12 +97,15 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
+
+        lastFramePosition = transform.position;
     }
 
     void FixedUpdate()
     {
 
         speed = rigid.velocity.magnitude;
+        speedEffectScript.playerSpeed = speed;
 
         if (currentState != State.hooked)
 			currentState = State.inAir;
@@ -130,7 +139,6 @@ public class PlayerMovement : MonoBehaviour
                 Invoke("CancelDashEffect", dashTime * 3.5f);
                 Invoke("ResetDashCD", dashCDTime);
 				StartCoroutine (CancelVibration (Vibrations.PlayVibration("Dash", playerInputDevice)));
-
             }
         }
     }
@@ -148,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement()
     {
+        playerDirection = (Vector2)transform.position - lastFramePosition;
+        speedEffectScript.playerDirection = playerDirection;
         //Switch permettant de gérer le mouvement en fonction de l'état du joueur
         if (!lockMovement && !lockMovementDash)
         {
@@ -175,6 +185,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
         }
+        lastFramePosition = transform.position;
     }
 
 	void OnCollisionEnter2D(Collision2D collision)

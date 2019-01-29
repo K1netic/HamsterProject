@@ -163,8 +163,8 @@ public class Projectile : MonoBehaviour {
         transform.position = position;
         hookedObject = platform;
         Instantiate(hitHook, transform.position, transform.rotation);
-        //gameObject.transform.parent = hookedObject.transform;
-        if (hookedObject.GetComponent<MovingPlatform>())
+        gameObject.transform.parent = hookedObject.transform;
+        /*if (hookedObject.GetComponent<MovingPlatform>())
         {
             MovingPlatform plat = hookedObject.GetComponent<MovingPlatform>();
             gameObject.AddComponent<MovingPlatform>();
@@ -176,7 +176,7 @@ public class Projectile : MonoBehaviour {
             movingHookhead.node1pos = plat.node1pos - Offset;
             movingHookhead.node2pos = plat.node2pos - Offset;
 
-        }
+        }*/
     }
 
 	void Destruction(){

@@ -124,6 +124,7 @@ public class Hook : MonoBehaviour {
         playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
