@@ -22,61 +22,52 @@ public class Vibrations : MonoBehaviour {
 			device.Vibrate (balanceData.mediumRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		case "Dash":
 			device.Vibrate (0f, balanceData.mediumVibration);
 			duration = balanceData.shortVibrationDuration;
 			return duration;
-			break;
 		// TO DEBUG
 		case "Death":
-			CameraShaker.Instance.ShakeOnce (2.0f, 40.0f, 0.10f, 0.60f);
+			CameraShaker.Instance.ShakeOnce (balanceData.heavyMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut * 2f);
 			device.Vibrate (balanceData.heavyVibration);
 			duration = 0.08f;
 			return duration;
-			break;
 		// Works for both player to player collision and player to platform collision
 		case "CollisionPlayerPlayer":
 			device.Vibrate (0f, balanceData.lightVibration);
 			duration = balanceData.shortVibrationDuration;
 			return duration;
-			break;
 		case "CollisionArrowPlayer":
 			Debug.Log (CameraShaker.Instance.name);
-			CameraShaker.Instance.ShakeOnce (1.0f, 40.0f, 0.10f, 0.40f);
+			CameraShaker.Instance.ShakeOnce (balanceData.lightMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut);
 			device.Vibrate (0f, balanceData.mediumLightVibration);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		case "CollisionArrowShield":
 			device.Vibrate (balanceData.mediumlightRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		case "CollisionArrowArrow":
+			CameraShaker.Instance.ShakeOnce (balanceData.lightMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut);
 			device.Vibrate (balanceData.mediumRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		case "Laser":
+			CameraShaker.Instance.ShakeOnce (balanceData.lightMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut / 2f);
 			device.Vibrate (balanceData.mediumRumble, balanceData.mediumVibration);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		case "HookheadOnPlayer":
 			device.Vibrate (0f, balanceData.lightVibration);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		// TO TEST
 		case "HookProjectileDestroyed":
 			device.Vibrate (balanceData.lightRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-			break;
 		default:
 			return 0f;
-			break;
 		}
 
 		return 0f;
