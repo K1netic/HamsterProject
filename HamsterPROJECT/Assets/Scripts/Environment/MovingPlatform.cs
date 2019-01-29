@@ -11,7 +11,7 @@ public class MovingPlatform : MonoBehaviour {
     [SerializeField]
     float moveSpeed;
 
-    float target;
+    Vector2 target;
 
     Vector2 node1pos;
     Vector2 node2pos;
@@ -31,7 +31,7 @@ public class MovingPlatform : MonoBehaviour {
             node2pos = (Vector2)node1.transform.position;
         }
 
-        target = node1pos.x - transform.position.x;
+        target = node1pos - (Vector2)transform.position;
 
         rigid = GetComponent<Rigidbody2D>();
     }
@@ -40,14 +40,14 @@ public class MovingPlatform : MonoBehaviour {
     {
         if (transform.position.x <= node1pos.x)
         {
-            target = node2pos.x - transform.position.x;
+            target = node2pos - (Vector2)transform.position;
         }
         else if (transform.position.x >= node2pos.x)
         {
-            target = node1pos.x - transform.position.x;
+            target = node1pos - (Vector2)transform.position;
         }
 
-        rigid.velocity = moveSpeed * new Vector2(target,0).normalized;
+        rigid.velocity = moveSpeed * target.normalized;
     }
 }
 
