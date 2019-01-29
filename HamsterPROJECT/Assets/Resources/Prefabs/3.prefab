@@ -67,6 +67,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1740428382392474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4527669525030188}
+  - component: {fileID: 33765752024425636}
+  - component: {fileID: 23589385011018460}
+  - component: {fileID: 114985836487436192}
+  m_Layer: 0
+  m_Name: Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1866006631560692
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,6 +127,19 @@ Transform:
   m_Father: {fileID: 4542062745837750}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4527669525030188
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740428382392474}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_Children: []
+  m_Father: {fileID: 4542062745837750}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4542062745837750
 Transform:
   m_ObjectHideFlags: 1
@@ -116,11 +147,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1866006631560692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7, y: -5.96, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4240694414711530}
   - {fileID: 4290343538625742}
+  - {fileID: 4527669525030188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -137,6 +169,48 @@ Transform:
   m_Father: {fileID: 4290343538625742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23589385011018460
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740428382392474}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: cc5c8328422e712459e82de8e157f3ef, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33765752024425636
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740428382392474}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &50244407281902452
 Rigidbody2D:
   serializedVersion: 4
@@ -511,18 +585,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diefdp: 0
   deathParticle: {fileID: 198533208567549446, guid: 76e6975fc0a72b94eb2f4d346746ac39,
     type: 2}
   hitLittle: {fileID: 198775664595910956, guid: 50c646ac8921eca4590b2d150485dfa9,
     type: 2}
   hitHard: {fileID: 198872512655672670, guid: 1f30d5f479e1f1c438c97af6ef89b73c, type: 2}
   hitLaser: {fileID: 198669570057532868, guid: 0a4d2d4f28024e74e9b976677c8d5791, type: 2}
-  deathRadius: 0
   layerMaskDeath:
     serializedVersion: 2
     m_Bits: 0
   inRecovery: 0
+  spriteArrow: {fileID: 0}
 --- !u!114 &114763349551634954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -538,11 +611,28 @@ MonoBehaviour:
   hooked: 0
   jointDirection: {x: 0, y: 0}
   dashEcho: {fileID: 1005786816833230, guid: 4a9d6389045976c4abddad6e66452dc0, type: 2}
+  speedEffect: {fileID: 1740428382392474}
   lockMovement: 0
   currentState: 0
   speed: 0
   shootPos: {fileID: 1188736990288442}
+  playerDirection: {x: 0, y: 0}
   playerNumber: _P1
+--- !u!114 &114985836487436192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1740428382392474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704229df8ec2d8e41b6f1d905f0335af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyRenderer: {fileID: 23589385011018460}
+  player: {fileID: 1096393771396208}
+  playerDirection: {x: 0, y: 0}
+  playerSpeed: 0
 --- !u!212 &212057747878558250
 SpriteRenderer:
   m_ObjectHideFlags: 1

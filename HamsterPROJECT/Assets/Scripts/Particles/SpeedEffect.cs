@@ -6,16 +6,16 @@ public class SpeedEffect : MonoBehaviour {
 
 	[SerializeField]
 	MeshRenderer MyRenderer;
-	[SerializeField]
-	float Emmission = 1;
-	[SerializeField]
+
+	float Emmission = 10;
 	Vector4 SpeedAnim = new Vector4 (0f,0f,0f,1f);
-	[SerializeField]
 	Color ColorEffect = Color.white;
-	[SerializeField]
-	Vector2 MainTexOffSet = new Vector2 (0f, 0f);
+	Vector2 MainTexOffSet = new Vector2 (0f, 0.1f);
+
 	[SerializeField]
 	GameObject player;
+
+	float SpeedScale;
 
     [HideInInspector]
     public Vector2 playerDirection;
@@ -50,11 +50,22 @@ public class SpeedEffect : MonoBehaviour {
     }
 
 	void Update (){
-		transform.position = player.transform.position;
 
-		MyRenderer.material.SetFloat ("_Emission", Emmission );
-		MyRenderer.material.SetVector ("_SpeedMainTexUVNoiseZW", SpeedAnim );
+
+		transform.position = player.transform.position;
+		transform.rotation = Quaternion.FromToRotation(Vector3.up, playerDirection);
 		MyRenderer.material.SetColor ("_TintColor", ColorEffect );
+
+		Emmission = Mathf.Clamp((playerSpeed * 6 /65), 1f, 5f);
+		MyRenderer.material.SetFloat ("_Emission", Emmission );
+
+		SpeedAnim =new Vector4(0,0,0, Mathf.Clamp((playerSpeed * 6 /65), 1f, 6f));
+		MyRenderer.material.SetVector ("_SpeedMainTexUVNoiseZW", SpeedAnim );
+
+		SpeedScale = Mathf.Clamp((playerSpeed * 3 /65), 1.2f, 1.35f);
+		transform.localScale = new Vector2(SpeedScale,SpeedScale); ;
+
+		MainTexOffSet =new Vector2 (0, (playerSpeed * 0.4f /65)-0.6f );
 		MyRenderer.material.SetTextureOffset ("_MainTex", MainTexOffSet);
 
 	}
