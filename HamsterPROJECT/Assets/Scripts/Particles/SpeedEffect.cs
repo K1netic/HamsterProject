@@ -13,6 +13,17 @@ public class SpeedEffect : MonoBehaviour {
 	Vector2 MainTexOffSet = new Vector2 (0f, 0.1f);
 
 	[SerializeField]
+	Color Color1;
+	[SerializeField]
+	Color Color2;
+	[SerializeField]
+	Color Color3;
+	[SerializeField]
+	Color Color4;
+	[SerializeField]
+	Color Color5;
+
+	[SerializeField]
 	GameObject player;
 
 	float SpeedScale;
@@ -29,19 +40,19 @@ public class SpeedEffect : MonoBehaviour {
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {
             case "Perso1":
-                ColorEffect = new Color(.784f, .451f, .173f);
+			ColorEffect = Color1;
                 break;
             case "Perso2":
-                ColorEffect = new Color(.596f, .31f, .624f);
+			ColorEffect = Color2;
                 break;
             case "Perso3":
-                ColorEffect = new Color(0.310f, 0.624f, 0.318f);
+			ColorEffect = Color3;
                 break;
             case "Perso4":
-                ColorEffect = new Color(.847f, .761f, .271f);
+			ColorEffect = Color4;
                 break;
             case "Perso5":
-                ColorEffect = new Color(.216f, .384f, .529f);
+			ColorEffect = Color5;
                 break;
             default:
                 print("Default case switch start Hook.cs");
@@ -56,16 +67,16 @@ public class SpeedEffect : MonoBehaviour {
 		transform.rotation = Quaternion.FromToRotation(Vector3.up, playerDirection);
 		MyRenderer.material.SetColor ("_TintColor", ColorEffect );
 
-		Emmission = Mathf.Clamp((playerSpeed * 6 /65), 1f, 5f);
+		Emmission = Mathf.Clamp((playerSpeed * 6 /65), 1f, 3f);
 		MyRenderer.material.SetFloat ("_Emission", Emmission );
 
-		SpeedAnim =new Vector4(0,0,0, Mathf.Clamp((playerSpeed * 6 /65), 1f, 6f));
+		SpeedAnim =new Vector4(0,0,0, Mathf.Clamp((playerSpeed * 6 /65), 1f, 2f));
 		MyRenderer.material.SetVector ("_SpeedMainTexUVNoiseZW", SpeedAnim );
 
 		SpeedScale = Mathf.Clamp((playerSpeed * 3 /65), 1.2f, 1.35f);
 		transform.localScale = new Vector2(SpeedScale,SpeedScale); ;
 
-		MainTexOffSet =new Vector2 (0, (playerSpeed * 0.4f /65)-0.6f );
+		MainTexOffSet =new Vector2 (0, (playerSpeed * 0.4f /65)-0.35f );
 		MyRenderer.material.SetTextureOffset ("_MainTex", MainTexOffSet);
 
 	}
