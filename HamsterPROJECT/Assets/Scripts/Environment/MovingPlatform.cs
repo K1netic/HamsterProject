@@ -9,31 +9,45 @@ public class MovingPlatform : MonoBehaviour {
     [SerializeField]
     GameObject node2;
     [SerializeField]
-    public float moveSpeed;
+    float moveSpeed;
 
-    public Vector2 target;
-    public Vector2 node1pos;
-    public Vector2 node2pos;
+    float target;
 
-    public bool isDuplicated;
+    Vector2 node1pos;
+    Vector2 node2pos;
+
+    Rigidbody2D rigid;
 
     private void Start()
     {
-        if (!isDuplicated)
+        if(node1.transform.position.x < node2.transform.position.x)
         {
             node1pos = (Vector2)node1.transform.position;
             node2pos = (Vector2)node2.transform.position;
-
-            target = node1pos;
         }
+        else
+        {
+            node1pos = (Vector2)node2.transform.position;
+            node2pos = (Vector2)node1.transform.position;
+        }
+
+        target = node1pos.x - transform.position.x;
+
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
-        if ((Vector2)this.transform.position == node1pos)
-            target = node2pos;
-        else if ((Vector2)this.transform.position == node2pos)
-            target = node1pos;
-        this.transform.position = Vector2.MoveTowards(this.transform.position, target, moveSpeed * Time.fixedDeltaTime);
+        if (transform.position.x <= node1pos.x)
+        {
+            target = node2pos.x - transform.position.x;
+        }
+        else if (transform.position.x >= node2pos.x)
+        {
+            target = node1pos.x - transform.position.x;
+        }
+
+        rigid.velocity = moveSpeed * new Vector2(target,0).normalized;
     }
 }
+

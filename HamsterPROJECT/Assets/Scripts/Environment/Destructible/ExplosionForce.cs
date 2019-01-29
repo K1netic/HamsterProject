@@ -46,9 +46,15 @@ public class ExplosionForce : MonoBehaviour {
 	{
 		body.gameObject.tag = "Untagged";
         body.gameObject.layer = LayerMask.NameToLayer("Scraps");
-
         body.bodyType = RigidbodyType2D.Dynamic;
-		var dir = (body.transform.position - explosionPosition);	
+        body.angularDrag = 0;
+        body.gravityScale = 0;
+        body.drag = 0;
+        body.mass = 5;
+
+        body.gameObject.GetComponent<PolygonCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>("Bounciness");
+
+        var dir = (body.transform.position - explosionPosition);	
 		float wearoff = 1 - (dir.magnitude / explosionRadius);
         Vector3 baseForce = dir.normalized * explosionForce * wearoff;
         baseForce.z = 0;
