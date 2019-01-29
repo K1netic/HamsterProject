@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InControl;
+using EZCameraShake;
 
 public class Vibrations : MonoBehaviour {
 
@@ -29,6 +30,7 @@ public class Vibrations : MonoBehaviour {
 			break;
 		// TO DEBUG
 		case "Death":
+			CameraShaker.Instance.ShakeOnce (2.0f, 40.0f, 0.10f, 0.60f);
 			device.Vibrate (balanceData.heavyVibration);
 			duration = 0.08f;
 			return duration;
@@ -40,6 +42,8 @@ public class Vibrations : MonoBehaviour {
 			return duration;
 			break;
 		case "CollisionArrowPlayer":
+			Debug.Log (CameraShaker.Instance.name);
+			CameraShaker.Instance.ShakeOnce (1.0f, 40.0f, 0.10f, 0.40f);
 			device.Vibrate (0f, balanceData.mediumLightVibration);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;

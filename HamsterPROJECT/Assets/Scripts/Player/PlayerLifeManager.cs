@@ -226,7 +226,6 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Dead()
     {
-		Debug.Log ("death - " + playerMovement.playerNumber);
 		// Set player as dead in the game manager
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false;
 		// Add a death in metrics
