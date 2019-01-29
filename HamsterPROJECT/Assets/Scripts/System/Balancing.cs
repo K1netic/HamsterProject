@@ -50,13 +50,7 @@ public class Balancing : MonoBehaviour {
     public float dashForce;
     public float dashCDTime;
 
-    [Header("VIBRATION & SCREENSHAKE")]
-	public float lightScreeShakeMagnitude = 4f;
-	public float mediumScreenShakeMagnitude = 8f;
-	public float heavyScreenShakeMagnitude = 12f;
-	public float screenShakeRoughness = 4f;
-	public float screenShakeFadeIn = 0.1f;
-	public float screenShakeFadeOut = 1f;
+    [Header("VIBRATIONS")]
 	public float lightRumble = 0.1f;
 	public float mediumlightRumble = 0.25f;
 	public float mediumRumble = 0.5f;
@@ -69,5 +63,12 @@ public class Balancing : MonoBehaviour {
 	public float shortVibrationDuration = 0.1f;
 	public float mediumVibrationDuration = 0.2f;
 	public float longVibrationDuration = 0.5f;
+
+	[Header("SCREENSHAKE")]
+	public float lightMagnitude = 1f;
+	public float heavyMagnitude = 3f;
+	public float roughness = 40f;
+	public float fadeIn = 0.1f;
+	public float fadeOut = 0.4f;
 
 }
