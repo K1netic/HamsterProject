@@ -18,7 +18,6 @@ public class PlayerLifeManager : MonoBehaviour {
     [SerializeField]
     public LayerMask layerMaskDeath;
 
-
     Balancing balanceData;
 
     PlayerMovement playerMovement;
@@ -28,6 +27,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float recoveryTime;
     float flashingRate;
     SpriteRenderer sprite;
+    [HideInInspector]
+    public SpriteRenderer spriteArrow;
     float knockBackTime;
     float knockBackPlayerHit;
     float knockBackLaser;
@@ -213,6 +214,7 @@ public class PlayerLifeManager : MonoBehaviour {
 	{ 
 		trail.enabled = !trail.enabled;
         sprite.enabled = !sprite.enabled;
+        spriteArrow.enabled = !spriteArrow.enabled;
     }
 
     void ResetRecovery()
@@ -222,6 +224,7 @@ public class PlayerLifeManager : MonoBehaviour {
         inRecovery = false;
 		sprite.enabled = true;
 		trail.enabled = true;
+        spriteArrow.enabled = true;
     }
 
     void Dead()
