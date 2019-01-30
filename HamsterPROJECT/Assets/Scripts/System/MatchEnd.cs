@@ -10,7 +10,7 @@ public class MatchEnd : MonoBehaviour {
 //	[SerializeField] float delayBeforeEndOfGame;
 	int nbPlayersAlive;
 	[SerializeField] GameObject scoreDisplay;
-	public GameObject[] arrows;
+	[HideInInspector] public GameObject[] arrows;
 	int winner;
 	bool gameOver = false;
 	int nbPlayersActive;

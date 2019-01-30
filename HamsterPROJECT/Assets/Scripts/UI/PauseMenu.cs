@@ -8,7 +8,7 @@ using InControl;
 public class PauseMenu : MonoBehaviour {
 
 	[SerializeField] GameObject pauseMenu;
-	public GameObject[] arrows;
+	[HideInInspector] public GameObject[] arrows;
 	bool arrowSet = false;
 
 	// Audio

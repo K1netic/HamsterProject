@@ -30,7 +30,7 @@ public class Vibrations : MonoBehaviour {
 		case "Death":
 			CameraShaker.Instance.ShakeOnce (balanceData.heavyMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut * 2f);
 			device.Vibrate (balanceData.heavyVibration);
-			duration = 0.08f;
+			duration = balanceData.longVibrationDuration;
 			return duration;
 		// Works for both player to player collision and player to platform collision
 		case "CollisionPlayerPlayer":
@@ -38,7 +38,6 @@ public class Vibrations : MonoBehaviour {
 			duration = balanceData.shortVibrationDuration;
 			return duration;
 		case "CollisionArrowPlayer":
-			Debug.Log (CameraShaker.Instance.name);
 			CameraShaker.Instance.ShakeOnce (balanceData.lightMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut);
 			device.Vibrate (0f, balanceData.mediumLightVibration);
 			duration = balanceData.mediumVibrationDuration;

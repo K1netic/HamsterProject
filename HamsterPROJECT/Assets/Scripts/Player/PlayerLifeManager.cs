@@ -44,6 +44,8 @@ public class PlayerLifeManager : MonoBehaviour {
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
 
+	FeedbacksOnDeath FbOnDeath;
+
     // Use this for initialization
     void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -64,6 +66,8 @@ public class PlayerLifeManager : MonoBehaviour {
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
+
+		FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
     }
 
     // Update is called once per frame
@@ -234,9 +238,6 @@ public class PlayerLifeManager : MonoBehaviour {
 		// Add a death in metrics
 		GameManager.playersDeaths [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
 
-		// Vibration on death
-		StartCoroutine(CancelVibration (Vibrations.PlayVibration("Death", playerMovement.playerInputDevice)));
-
         //Nuke
         Instantiate(deathParticle, transform.position, transform.rotation);
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
@@ -248,7 +249,9 @@ public class PlayerLifeManager : MonoBehaviour {
             }
         }
 
-        Destroy(transform.parent.gameObject, 0.1f);
+		FbOnDeath.SendFeedbacks (playerMovement.playerInputDevice, transform.parent.name.Substring(0, 1));
+
+        Destroy(transform.parent.gameObject);
     }
 
     public void NukeKnockBack(Vector3 position)
@@ -262,7 +265,7 @@ public class PlayerLifeManager : MonoBehaviour {
         Invoke("UnlockMovement", knockBackTime);
         playerMovement.rigid.AddForce(directionKnockBack * knockBackNuke, ForceMode2D.Impulse);
     }
-		
+
 	IEnumerator CancelVibration(float delay)
 	{
 		yield return new WaitForSeconds (delay);

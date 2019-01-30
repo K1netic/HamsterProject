@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public static int nbOfPlayers = 4;
+	public static int nbOfCharacters = 5;
 
 	public static gameModes gameModeType;
 		
