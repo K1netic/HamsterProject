@@ -164,19 +164,10 @@ public class Projectile : MonoBehaviour {
         hookedObject = platform;
         Instantiate(hitHook, transform.position, transform.rotation);
         gameObject.transform.parent = hookedObject.transform;
-        /*if (hookedObject.GetComponent<MovingPlatform>())
+        if (hookedObject.GetComponent<Rigidbody2D>())
         {
-            MovingPlatform plat = hookedObject.GetComponent<MovingPlatform>();
-            gameObject.AddComponent<MovingPlatform>();
-            MovingPlatform movingHookhead = GetComponent<MovingPlatform>();
-            movingHookhead.isDuplicated = true;
-            movingHookhead.moveSpeed = plat.moveSpeed;
-            Vector2 Offset = new Vector2(hookedObject.transform.position.x - transform.position.x, hookedObject.transform.position.y - transform.position.y);
-            movingHookhead.target = plat.target - Offset;
-            movingHookhead.node1pos = plat.node1pos - Offset;
-            movingHookhead.node2pos = plat.node2pos - Offset;
-
-        }*/
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        }
     }
 
 	void Destruction(){

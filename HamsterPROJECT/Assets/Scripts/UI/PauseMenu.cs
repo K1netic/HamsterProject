@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void Start()
 	{
+        GameObject.Find("PauseMenu");
 		mngr = FindObjectOfType<AudioManager> ();
 	}
 

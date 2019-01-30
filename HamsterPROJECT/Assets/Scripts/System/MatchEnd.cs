@@ -27,7 +27,7 @@ public class MatchEnd : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+        mngr = FindObjectOfType<AudioManager> ();
 		scoreDisplay.SetActive (false);
 		matchEnded = false;
 		// default value, stays at 42 if nobody won
