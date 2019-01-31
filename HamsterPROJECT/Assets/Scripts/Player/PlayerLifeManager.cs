@@ -232,7 +232,7 @@ public class PlayerLifeManager : MonoBehaviour {
     void ResetRecovery()
     {
         //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
-        CancelInvoke();
+        CancelInvoke("Flashing");
         inRecovery = false;
 		sprite.enabled = true;
 		trail.enabled = true;

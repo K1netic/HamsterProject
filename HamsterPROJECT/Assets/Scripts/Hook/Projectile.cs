@@ -216,10 +216,9 @@ public class Projectile : MonoBehaviour {
 
     //Appelle la méthode qui permet de couper la corde si le grappin est attaché
     void OnTriggerEnter2D(Collider2D col){
-        if(col.gameObject.CompareTag("Rope")){
+        if (col.gameObject.CompareTag("Rope"))
+        {
             col.gameObject.GetComponent<LineCutter>().CutRope();
-        }else if (col.gameObject.CompareTag("Laser")){
-            Destruction();
         }
     }
 

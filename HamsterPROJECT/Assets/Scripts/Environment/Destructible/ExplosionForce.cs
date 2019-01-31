@@ -50,7 +50,7 @@ public class ExplosionForce : MonoBehaviour {
         body.angularDrag = 0;
         body.gravityScale = 0;
         body.drag = 0;
-        body.mass = 5;
+        body.mass = 10;
 
         body.gameObject.GetComponent<PolygonCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>("Bounciness");
 
