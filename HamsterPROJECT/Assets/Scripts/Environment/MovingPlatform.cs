@@ -11,6 +11,8 @@ public class MovingPlatform : MonoBehaviour {
     GameObject node2;
     [SerializeField]
     float moveSpeed;
+    [SerializeField]
+    bool inverseMovement;
 
     Vector2 target;
 
@@ -21,7 +23,7 @@ public class MovingPlatform : MonoBehaviour {
 
     private void Start()
     {
-        if(node1.transform.position.x < node2.transform.position.x)
+        if (node1.transform.position.x < node2.transform.position.x)
         {
             node1pos = (Vector2)node1.transform.position;
             node2pos = (Vector2)node2.transform.position;
@@ -32,7 +34,10 @@ public class MovingPlatform : MonoBehaviour {
             node2pos = (Vector2)node1.transform.position;
         }
 
-        target = node1pos - (Vector2)transform.position;
+        if(!inverseMovement)
+            target = node1pos - (Vector2)transform.position;
+        else
+            target = node2pos - (Vector2)transform.position;
 
         rigid = GetComponent<Rigidbody2D>();
     }
