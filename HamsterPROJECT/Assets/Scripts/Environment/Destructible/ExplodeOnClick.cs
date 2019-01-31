@@ -25,7 +25,7 @@ public class ExplodeOnClick : MonoBehaviour {
             if (!explosionDone)
             {
                 if (speed > threshold) {
-					GameObject.FindObjectOfType<ExplosionForce> ().doExplosion (transform.position, speed);
+					GameObject.Find("ExplosionForce"+collision.gameObject.GetComponent<PlayerMovement>().playerNumber).GetComponent<ExplosionForce>().doExplosion (transform.position, speed);
                     explosionDone = true;
 				}
 			}
