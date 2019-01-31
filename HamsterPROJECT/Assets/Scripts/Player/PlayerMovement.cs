@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using InControl;
 using System.Collections;
@@ -103,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-
         speed = rigid.velocity.magnitude;
         speedEffectScript.playerSpeed = speed;
 
