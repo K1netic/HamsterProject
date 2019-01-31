@@ -18,10 +18,15 @@ public class PlayerLifeManager : MonoBehaviour {
     [SerializeField]
     public LayerMask layerMaskDeath;
 
+	[SerializeField]
+	GameObject lifeParticlesManager;
+	LifeParticlesManager lifeParticlesManagerScript;
+
     Balancing balanceData;
 
     PlayerMovement playerMovement;
-    float playerHP;
+	[HideInInspector]
+    public float playerHP;
     [HideInInspector]
     public bool inRecovery;
     float recoveryTime;
@@ -66,12 +71,15 @@ public class PlayerLifeManager : MonoBehaviour {
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
+		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();
 
 		FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
     }
 
     // Update is called once per frame
     void Update () {
+
+		lifeParticlesManagerScript.playerHP = playerHP;
 
         //Vérifie si le player à toujours des PV sinon appelle la fonction Dead()
 		if (playerHP <= 0 && !deadLimiter)
