@@ -67,7 +67,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void CancelAllVibrations()
 	{
-		foreach (InputDevice device in InputManager.ActiveDevices)
+		foreach(InputDevice device in InputManager.Devices)
 		{
 			device.StopVibration ();
 		}
