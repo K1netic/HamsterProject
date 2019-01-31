@@ -39,6 +39,7 @@ public class Projectile : MonoBehaviour {
     RaycastHit2D raycast;
     RaycastHit2D raycastLeft;
     RaycastHit2D raycastRight;
+    RaycastHit2D raycastRope;
     PolygonCollider2D coll;
     [HideInInspector]
     public Vector2 pivot;
@@ -121,6 +122,7 @@ public class Projectile : MonoBehaviour {
             case false:
                 rigid.AddForce(direction / speed);
                 RaycastNoBounce();
+                RaycastRope();
                 break;
             default:
                 break;
@@ -153,6 +155,18 @@ public class Projectile : MonoBehaviour {
                     GetHooked(raycastRight.point, raycastRight.collider.gameObject);
                 }
             }
+        }
+    }
+
+    void RaycastRope()
+    {
+        raycastRope = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskLineCast);
+        if (raycastRope.collider)
+        {
+            if (raycastRope.collider.gameObject.CompareTag("Rope"))
+            {
+                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope();
+            }      
         }
     }
 

@@ -7,6 +7,8 @@ public class ExplosionForce : MonoBehaviour {
 	public float force = 50;
 	public float radius = 5;
 	public float upliftModifer = 5;
+    [SerializeField]
+    PhysicsMaterial2D bouncinnes;
 	
     /// <summary>
     /// create an explosion force
@@ -47,12 +49,12 @@ public class ExplosionForce : MonoBehaviour {
 		body.gameObject.tag = "Untagged";
         body.gameObject.layer = LayerMask.NameToLayer("Scraps");
         body.bodyType = RigidbodyType2D.Dynamic;
-        body.angularDrag = 0;
+        body.angularDrag = 0.02f;
         body.gravityScale = 0;
-        body.drag = 0;
+        body.drag = 0.15f;
         body.mass = 10;
 
-        body.gameObject.GetComponent<PolygonCollider2D>().sharedMaterial = Resources.Load<PhysicsMaterial2D>("Bounciness");
+        body.gameObject.GetComponent<PolygonCollider2D>().sharedMaterial = bouncinnes;
 
         var dir = (body.transform.position - explosionPosition);	
 		float wearoff = 1 - (dir.magnitude / explosionRadius);

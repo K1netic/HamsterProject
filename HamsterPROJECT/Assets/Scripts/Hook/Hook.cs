@@ -23,14 +23,14 @@ public class Hook : MonoBehaviour {
     float retractationStep;
     [SerializeField]
     public LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
-    [SerializeField]
-    public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche dans DontGoThroughThings (anciennement utilisé pour le raycast de la flèche)
+    //[SerializeField]
+    //public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche dans DontGoThroughThings (anciennement utilisé pour le raycast de la flèche)
 	float timeHooked;
 	float timeRemaining;
     Vector3 jointDirection;
     RaycastHit2D checkOppositeToJoint;
     RaycastHit2D checkToJoint ;
-    LayerMask layerMaskLineCast;
+    public LayerMask layerMaskLineCast;
     float initialDistance;
 
     //AIM
@@ -197,25 +197,25 @@ public class Hook : MonoBehaviour {
             case "_P1":
                 line.gameObject.layer = 17;
                 gameObject.layer = 17;
-                layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
+                //layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
                 layerMaskLineCast = (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
                 break;
             case "_P2":
                 line.gameObject.layer = 18;
                 gameObject.layer = 18;
-                layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
+                //layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
                 layerMaskLineCast = (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
                 break;
             case "_P3":
                 line.gameObject.layer = 19;
                 gameObject.layer = 19;
-                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
+                //layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
                 layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
                 break;
             case "_P4":
                 line.gameObject.layer = 20;
                 gameObject.layer = 20;
-                layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
+                //layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
                 layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
                 break;
             default:
