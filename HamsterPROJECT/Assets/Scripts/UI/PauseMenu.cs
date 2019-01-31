@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
 	{
 		mngr.PlaySound ("UI_pauseMenuEnabled", mngr.UIsource);
 		FreezePlayers ();
+		CancelAllVibrations ();
 		pauseMenu.SetActive (true);
 		Time.timeScale = 0;
 	}
@@ -61,6 +62,14 @@ public class PauseMenu : MonoBehaviour {
 		foreach (GameObject arrow in arrows)
 		{
 			if (arrow != null) arrow.GetComponent<Hook> ().isFrozen = true;
+		}
+	}
+
+	void CancelAllVibrations()
+	{
+		foreach (InputDevice device in InputManager.ActiveDevices)
+		{
+			device.StopVibration ();
 		}
 	}
 
