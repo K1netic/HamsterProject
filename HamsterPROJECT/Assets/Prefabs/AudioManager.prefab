@@ -229,7 +229,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -324,7 +324,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -419,7 +419,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -514,7 +514,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -609,7 +609,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -739,14 +739,14 @@ MonoBehaviour:
   crackVolume: 0
   breakPlatform: {fileID: 0}
   breakPlatformVolume: 0
-  UI_highlight: {fileID: 8300000, guid: 82d0deacfd0cae24cb04652ede73a017, type: 3}
-  UI_highlightVolume: 1
-  UI_validate: {fileID: 8300000, guid: 22a3769f4bab0cb458f2cecd314acc12, type: 3}
-  UI_validateVolume: 1
-  UI_cancel: {fileID: 0}
+  UI_highlight: {fileID: 0}
+  UI_highlightVolume: 0
+  UI_validate: {fileID: 8300000, guid: 8ddbb3cb406d045698e3f086efb20942, type: 3}
+  UI_validateVolume: 0
+  UI_cancel: {fileID: 8300000, guid: 0d3b4c2d4887644c98500ea677917ff4, type: 3}
   UI_cancelVolume: 0
-  UI_pick: {fileID: 8300000, guid: c6d54f290f6c0cc4fae33283fbd3e3bf, type: 3}
-  UI_pickVolume: 1
+  UI_pick: {fileID: 0}
+  UI_pickVolume: 0
   UI_highlightPlus: {fileID: 0}
   UI_highlightPlusVolume: 0
   UI_validatePlus: {fileID: 0}
@@ -763,9 +763,8 @@ MonoBehaviour:
   UI_pauseMenuDisabledVolume: 0
   UI_panelActivation: {fileID: 0}
   UI_panelActivationVolume: 0
-  UI_titleScreenValidation: {fileID: 8300000, guid: ccfd31e73fa1d5c4fae0227741734869,
-    type: 3}
-  UI_titleScreenValidationVolume: 0.5
+  UI_titleScreenValidation: {fileID: 0}
+  UI_titleScreenValidationVolume: 0
   P1source: {fileID: 82239681915808194}
   P2source: {fileID: 82732385018354254}
   P3source: {fileID: 82030563775631576}
