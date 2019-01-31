@@ -58,9 +58,7 @@ public class FeedbacksOnDeath : MonoBehaviour {
 	IEnumerator ColorBlink()
 	{
 		colorBlinkAnimator.SetBool ("colorblink", true);
-		yield return new WaitForSeconds (0.16f);
+		yield return new WaitForSeconds (0.1f);
 		colorBlinkAnimator.SetBool ("colorblink", false);
-		overlaySprite.color = new Color(0, 0, 0);
-
 	}
 }
