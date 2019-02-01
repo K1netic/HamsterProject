@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
 	public Rigidbody2D rigid;
     [HideInInspector]
-    public bool hooked;
-    [HideInInspector]
     public Vector2 jointDirection;
     [SerializeField]
     GameObject dashEcho;
@@ -41,9 +39,9 @@ public class PlayerMovement : MonoBehaviour
     GameObject shootPos;
     Sprite playerSprite;
     SpeedEffect speedEffectScript;
-
     float drag;
     Vector2 lastFramePosition;
+    [HideInInspector]
     public Vector2 playerDirection;
 
     //Fast Fall
