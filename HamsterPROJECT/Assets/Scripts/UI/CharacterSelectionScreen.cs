@@ -41,7 +41,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+		//mngr = FindObjectOfType<AudioManager> ();
 
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
@@ -88,7 +88,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		{
 			readyText.SetActive (true);
 			//Load Game Modes Screen when any players pressed a command (start, select...)
-			if ((InputManager.CommandWasPressed || InputManager.ActiveDevice.AnyButtonWasPressed) && ready)
+			if (InputManager.CommandWasPressed && ready)
 			{
 				PlayerInfos ();
 				StartCoroutine(LoadGameModes ());
@@ -181,14 +181,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		mngr.PlaySound ("UI_cancel", mngr.UIsource);
+		//mngr.PlaySound ("UI_cancel", //mngr.UIsource);
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}
 
 	IEnumerator LoadGameModes()
 	{
-		mngr.PlaySound ("UI_validatePlus", mngr.UIsource);
+		//mngr.PlaySound ("UI_validatePlus", //mngr.UIsource);
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
 	}

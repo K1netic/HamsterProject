@@ -31,7 +31,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+		//mngr = FindObjectOfType<AudioManager> ();
 		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
 
@@ -66,7 +66,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Activated)
 			{
 				state = SelectionPanelState.Deactivated;
-				mngr.PlaySound ("UI_cancel", mngr.UIsource);
+				//mngr.PlaySound ("UI_cancel", //mngr.UIsource);
 				device = null;
 			}
 
@@ -75,7 +75,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Validated)
 			{
 				state = SelectionPanelState.Activated;
-				mngr.PlaySound ("UI_cancel", mngr.UIsource);
+				//mngr.PlaySound ("UI_cancel", //mngr.UIsource);
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 			}
@@ -164,7 +164,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!activate)
 		{
-			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
+			//mngr.PlaySound ("UI_panelActivation", //mngr.UIsource);
 			activate = true;
 		}
 	}
@@ -173,7 +173,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!validate)
 		{
-			mngr.PlaySound ("UI_validate", mngr.UIsource);
+			//mngr.PlaySound ("UI_validate", //mngr.UIsource);
 			validate = true;
 		}
 	}

@@ -12,7 +12,7 @@ public class TitleScreen : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+		//mngr = FindObjectOfType<AudioManager> ();
 	}
 
 	void FixedUpdate () {
@@ -24,7 +24,7 @@ public class TitleScreen : MonoBehaviour {
 
 	IEnumerator TitleScreenValidation()
 	{
-		mngr.PlaySound ("UI_titleScreenValidation", mngr.UIsource);
+		//mngr.PlaySound ("UI_titleScreenValidation", //mngr.UIsource);
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
 	}

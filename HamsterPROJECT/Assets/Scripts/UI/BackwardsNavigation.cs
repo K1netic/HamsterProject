@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using InControl;
 
 public class BackwardsNavigation : MonoBehaviour {
 
@@ -11,12 +12,12 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+		//mngr = FindObjectOfType<AudioManager> ();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (Input.GetButtonDown("Cancel_P1") && previousScene != null && previousScene != "")
+		if (InputManager.ActiveDevice.Action2.WasPressed && previousScene != null && previousScene != "")
 		{
 			StartCoroutine (LoadPreviousScene ());
 		}
@@ -24,7 +25,7 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		mngr.PlaySound ("UI_cancel", mngr.UIsource);
+		//mngr.PlaySound ("UI_cancel", //mngr.UIsource);
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}

@@ -11,10 +11,12 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] GameManager.gameModes gameModeToSet;
 	[SerializeField] Text textToChange;
 	AudioManager mngr;
+	LevelSelection lvlSelect;
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
+		//mngr = FindObjectOfType<AudioManager> ();
+		lvlSelect = FindObjectOfType<LevelSelection>();
 	}
 
 	void FixedUpdate()
@@ -43,7 +45,7 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	public void ChangeValue()
 	{
-		mngr.PlaySound ("UI_pick", mngr.UIsource);
+		//mngr.PlaySound ("UI_pick", //mngr.UIsource);
 		switch (GameManager.rounds)
 		{
 		case 1:
@@ -75,31 +77,37 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	public void HighlightSound()
 	{
-		mngr.PlaySound ("UI_highlight", mngr.UIsource);
+		//mngr.PlaySound ("UI_highlight", //mngr.UIsource);
 	}
 
 	public void ClickSound()
 	{
-		mngr.PlaySound ("UI_validate", mngr.UIsource);
+		//mngr.PlaySound ("UI_validate", //mngr.UIsource);
 	}
 
 	public void PickSound()
 	{
-		mngr.PlaySound ("UI_pick", mngr.UIsource);
+		//mngr.PlaySound ("UI_pick", //mngr.UIsource);
 	}
 
 	public void HighlightPlusSound()
 	{
-		mngr.PlaySound ("UI_highlightPlus", mngr.UIsource);
+		//mngr.PlaySound ("UI_highlightPlus", //mngr.UIsource);
 	}
 
 	public void ValidatePlusSound()
 	{
-		mngr.PlaySound ("UI_validatePlus", mngr.UIsource);
+		//mngr.PlaySound ("UI_validatePlus", //mngr.UIsource);
 	}
 
 	public void GameLaunchSound()
 	{
-		mngr.PlaySound ("UI_gameLaunch", mngr.UIsource);
+		//mngr.PlaySound ("UI_gameLaunch", //mngr.UIsource);
+	}
+
+	// Load a series of rounds (pack)
+	public void LoadMatch()
+	{
+		lvlSelect.LoadNextLevel ("");
 	}
 }

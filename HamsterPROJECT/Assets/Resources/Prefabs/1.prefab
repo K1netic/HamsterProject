@@ -254,7 +254,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1545980345487652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25, y: 16, z: 0}
+  m_LocalPosition: {x: -30, y: 12, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4683089742932734}
@@ -748,7 +748,7 @@ MonoBehaviour:
   speed: 0
   shootPos: {fileID: 1134602903314838}
   playerDirection: {x: 0, y: 0}
-  playerNumber: _P2
+  playerNumber: _P1
 --- !u!114 &114863868676670470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,7 +768,7 @@ MonoBehaviour:
   layerMaskRaycast:
     serializedVersion: 2
     m_Bits: 65536
-  layerMaskArrow:
+  layerMaskLineCast:
     serializedVersion: 2
     m_Bits: 0
   player: {fileID: 1673034949036050}

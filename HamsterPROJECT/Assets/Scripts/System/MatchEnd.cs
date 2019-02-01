@@ -24,15 +24,18 @@ public class MatchEnd : MonoBehaviour {
 	// Audio
 	AudioManager mngr;
 
+	LevelSelection lvlSelect;
+
 	// Use this for initialization
 	void Start ()
 	{
-        mngr = FindObjectOfType<AudioManager> ();
+        //mngr = FindObjectOfType<AudioManager> ();
 		scoreDisplay.SetActive (false);
 		matchEnded = false;
 		// default value, stays at 42 if nobody won
 		// 0, 1, 2 and 3 are reserved to players
 		winner = 42;
+		lvlSelect = FindObjectOfType<LevelSelection> ();
 	}
 
 	// Update is called once per frame
@@ -92,7 +95,7 @@ public class MatchEnd : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		FreezeGame ();
 		scoreDisplay.SetActive (true);
-		mngr.PlaySound ("UI_matchEnd", mngr.UIsource);
+		//mngr.PlaySound ("UI_matchEnd", //mngr.UIsource);
 
 		yield return new WaitForSeconds (1f);
 
@@ -101,8 +104,8 @@ public class MatchEnd : MonoBehaviour {
 			// Keep playing if nobody reached the game goal
 			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] < GameManager.rounds )
 			{
-				// Reload Scene
-				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+				GameManager.lastLevelPlayed = "";
+				lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
 			}
 
 			// Stop playing if one player reached the game goal
@@ -129,7 +132,8 @@ public class MatchEnd : MonoBehaviour {
 			}
 			else 
 			{
-				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+				GameManager.lastLevelPlayed = "";
+				lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
 			}
 		}
 	}
@@ -156,7 +160,7 @@ public class MatchEnd : MonoBehaviour {
 	void EndOfMatch()
 	{
 		GameManager.lastLevelPlayed = SceneManager.GetActiveScene ().name;
-		mngr.PlaySound ("UI_matchEndValidation", mngr.UIsource);
+//		//mngr.PlaySound ("UI_matchEndValidation", //mngr.UIsource);
 		SceneManager.LoadScene ("Results");
 	}
 }
