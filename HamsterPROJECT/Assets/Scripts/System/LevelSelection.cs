@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelSelection : MonoBehaviour {
 
-	public static AudioManager instance = null;
+	public static LevelSelection instance = null;
 
 	void Awake()
 	{
