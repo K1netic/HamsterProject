@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
 	public static int[] playersScores = new int[nbOfPlayers];
 	public static int[] playersKills = new int[nbOfPlayers];
 	public static int[] playersDeaths = new int[nbOfPlayers];
+	public static int[] playersSelfDestructs = new int[nbOfPlayers];
 
 	public static InputDevice[] playersInputDevices = new InputDevice[nbOfPlayers];
 

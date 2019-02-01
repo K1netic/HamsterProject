@@ -139,13 +139,21 @@ public class PlayerLifeManager : MonoBehaviour {
             InvokeRepeating("Flashing", 0, flashingRate);
 
 			// Player metrics setting
-			if (playerHP <= 0 && (attacker.tag == "Arrow" || attacker.tag == "Hook"))
+			if (playerHP <= 0)
 			{
-				GameManager.playersKills[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
-				// Counting kills for the player score if GameMode is set to Kills
-				if (GameManager.gameModeType == GameManager.gameModes.Kills)
+				if (attacker.tag == "Arrow" || attacker.tag == "Hook")
 				{
-					GameManager.playersScores[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
+					GameManager.playersKills[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
+					// Counting kills for the player score if GameMode is set to Kills
+					if (GameManager.gameModeType == GameManager.gameModes.Kills)
+					{
+						GameManager.playersScores[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
+					}
+				}
+
+				else if (attacker.tag == "Laser")
+				{
+					GameManager.playersSelfDestructs [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
 				}
 			}
 

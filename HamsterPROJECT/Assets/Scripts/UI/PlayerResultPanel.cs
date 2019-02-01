@@ -12,6 +12,7 @@ public class PlayerResultPanel : MonoBehaviour {
 	[SerializeField] Text scoreText;
 	[SerializeField] Text killsText;
 	[SerializeField] Text deathsText;
+	[SerializeField] Text selfDestructsText;
 
 	void Awake()
 	{
@@ -37,6 +38,7 @@ public class PlayerResultPanel : MonoBehaviour {
 		// Text infos
 		scoreText.text = "Score : " + GameManager.playersScores [playerResultPanelID - 1].ToString ();
 		killsText.text = "Kills : " + GameManager.playersKills [playerResultPanelID - 1].ToString ();
-		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID - 1].ToString ();	
+		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID - 1].ToString ();
+		selfDestructsText.text = "Self : " + GameManager.playersSelfDestructs [playerResultPanelID - 1].ToString ();
 	}
 }
