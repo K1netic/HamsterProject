@@ -23,7 +23,8 @@ public class PlayerLifeManager : MonoBehaviour {
 	LifeParticlesManager lifeParticlesManagerScript;
 
     Balancing balanceData;
-
+    [HideInInspector]
+    public Hook hookScript;
     PlayerMovement playerMovement;
 	[HideInInspector]
     public float playerHP;
@@ -101,6 +102,10 @@ public class PlayerLifeManager : MonoBehaviour {
             inRecovery = true;
             if (knockBack)
             {
+                if (hookScript.hooked)
+                {
+                    hookScript.DisableRope();
+                }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
                 //Calcul la direction du knockback
@@ -181,7 +186,11 @@ public class PlayerLifeManager : MonoBehaviour {
             if (!inRecovery)
                 TakeDamage(laserDamage, col.gameObject, true);
             else
-            {
+            {//Le joueur retouche le laser alors qu'il est encore en recovery
+                if (hookScript.hooked)
+                {
+                    hookScript.DisableRope();
+                }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
@@ -194,8 +203,13 @@ public class PlayerLifeManager : MonoBehaviour {
 
     private void OnCollisionStay2D(Collision2D col)
     {
+        //Normalement ceci ne peux pas se produire, mais je le rajoute par sécurité
         if (col.gameObject.CompareTag("Laser"))
         {
+            if (hookScript.hooked)
+            {
+                hookScript.DisableRope();
+            }
             LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);
 			StartCoroutine(CancelVibration (Vibrations.PlayVibration("Laser", playerMovement.playerInputDevice)));

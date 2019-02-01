@@ -32,6 +32,8 @@ public class Hook : MonoBehaviour {
     RaycastHit2D checkToJoint ;
     public LayerMask layerMaskLineCast;
     float initialDistance;
+    [HideInInspector]
+    public bool hooked;
 
     //AIM
     //float offset;
@@ -125,6 +127,7 @@ public class Hook : MonoBehaviour {
         playerMovement = player.GetComponent<PlayerMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
+        player.GetComponent<PlayerLifeManager>().hookScript = this;
 
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
@@ -248,7 +251,7 @@ public class Hook : MonoBehaviour {
         if (currentProjectile != null)
         {
             UpdateRope();
-
+            hooked = projectileScript.hooked;
             //Désactive le grappin s'il est trop loin du joueur
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
@@ -307,6 +310,7 @@ public class Hook : MonoBehaviour {
         }
         else{
             playerMovement.StateNotHooked();
+            hooked = false;
         }
 
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
