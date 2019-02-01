@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 	public static gameModes gameModeType;
 		
 	// Numbers of matches won to win a full game
-	public static int goal = 1;
+	public static int rounds = 5;
 		
 	public static bool[] playersActive = new bool[nbOfPlayers];
 	public static bool[] playersAlive = new bool[nbOfPlayers];
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
 	public static InputDevice[] playersInputDevices = new InputDevice[nbOfPlayers];
 
-	public static string lastBattleMap;
+	public static string lastLevelPlayed;
 
 	void Awake()
 	{
@@ -60,14 +60,6 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 2);
 		playersActive.SetValue (false, 3);
 	}
-
-//	void Update()
-//	{
-//		if (gameModeType == gameModes.LastManStanding)
-//			goal = 5;
-//		else if (gameModeType == gameModes.Kills)
-//			goal = 8;
-//	}
 
 	public static void ResetScores()
 	{

@@ -80,7 +80,7 @@ public class MatchEnd : MonoBehaviour {
 
 		// Stop the game if one player reached the targeted number of kills
 		if (GameManager.gameModeType == GameManager.gameModes.Kills && 
-			System.Array.IndexOf(GameManager.playersScores, GameManager.goal) != -1)
+			System.Array.IndexOf(GameManager.playersScores, GameManager.rounds) != -1)
 		{
 			StartCoroutine(DisplayScore ());
 		}
@@ -99,14 +99,14 @@ public class MatchEnd : MonoBehaviour {
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			// Keep playing if nobody reached the game goal
-			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] < GameManager.goal )
+			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] < GameManager.rounds )
 			{
 				// Reload Scene
 				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 
 			// Stop playing if one player reached the game goal
-			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] == GameManager.goal )
+			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] == GameManager.rounds )
 			{
 				EndOfMatch ();
 			}
@@ -116,7 +116,7 @@ public class MatchEnd : MonoBehaviour {
 		{
 			for (int i = 0; i < GameManager.playersActive.Length; i ++)
 			{
-				if (GameManager.playersScores [i] >= GameManager.goal )
+				if (GameManager.playersScores [i] >= GameManager.rounds )
 				{
 					count++;
 				}
@@ -155,7 +155,7 @@ public class MatchEnd : MonoBehaviour {
 	// Instruction for when the match is over
 	void EndOfMatch()
 	{
-		GameManager.lastBattleMap = SceneManager.GetActiveScene ().name;
+		GameManager.lastLevelPlayed = SceneManager.GetActiveScene ().name;
 		mngr.PlaySound ("UI_matchEndValidation", mngr.UIsource);
 		SceneManager.LoadScene ("Results");
 	}

@@ -27,7 +27,7 @@ public class ResultsScreen : MonoBehaviour {
 		
 	void Update()
 	{
-		if (InputManager.ActiveDevice.AnyButtonWasPressed)
+		if (InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
 		{
 			GameManager.ResetScores ();
 			SceneManager.LoadScene (sceneToLoad);

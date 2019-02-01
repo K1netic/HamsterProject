@@ -88,7 +88,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		{
 			readyText.SetActive (true);
 			//Load Game Modes Screen when any players pressed a command (start, select...)
-			if (InputManager.CommandWasPressed && ready)
+			if ((InputManager.CommandWasPressed || InputManager.ActiveDevice.AnyButtonWasPressed) && ready)
 			{
 				PlayerInfos ();
 				StartCoroutine(LoadGameModes ());

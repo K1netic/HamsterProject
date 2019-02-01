@@ -21,7 +21,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		// Update text to match GameManager value
 		if (textToChange != null)
-			textToChange.text = GameManager.goal.ToString ();
+			textToChange.text = GameManager.rounds.ToString ();
 	}
 
 	public void LoadScene()
@@ -44,22 +44,22 @@ public class UiButtonFunctions : MonoBehaviour {
 	public void ChangeValue()
 	{
 		mngr.PlaySound ("UI_pick", mngr.UIsource);
-		switch (GameManager.goal)
+		switch (GameManager.rounds)
 		{
 		case 1:
-			GameManager.goal = 3;
+			GameManager.rounds = 3;
 			break;
 		case 3:
-			GameManager.goal = 5;
+			GameManager.rounds = 5;
 			break;
 		case 5:
-			GameManager.goal = 8;
+			GameManager.rounds = 8;
 			break;
 		case 8: 
-			GameManager.goal = 10;
+			GameManager.rounds = 10;
 			break;
 		case 10:
-			GameManager.goal = 1;
+			GameManager.rounds = 1;
 			break;
 		default:
 			break;
@@ -70,7 +70,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		//reset timeScale in case a scene is loaded from the pause menu
 		if (Time.timeScale != 1) Time.timeScale = 1;
-		SceneManager.LoadScene (GameManager.lastBattleMap);
+		SceneManager.LoadScene (GameManager.lastLevelPlayed);
 	}
 
 	public void HighlightSound()
