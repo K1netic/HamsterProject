@@ -151,7 +151,6 @@ public class Hook : MonoBehaviour {
         lineCollider.isTrigger = true;   
         line.gameObject.tag = "Rope";
         line.sortingOrder = 2;
-        
 
         //Charge les sprites en fonction du personnage sélectionné
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
@@ -319,7 +318,7 @@ public class Hook : MonoBehaviour {
 			|| playerMovement.playerInputDevice.Action2.WasPressed
 			|| playerMovement.playerInputDevice.Action3.WasPressed
 			|| playerMovement.playerInputDevice.Action4.WasPressed)
-			&& !hookInCD && !isFrozen)
+			&& !hookInCD && !isFrozen && MatchStart.gameHasStarted)
         {
             ThrowHookhead();
         }
