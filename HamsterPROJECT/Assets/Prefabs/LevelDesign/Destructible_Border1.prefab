@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484041329011728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.99861, y: -15.503397, z: 0}
+  m_LocalPosition: {x: -11.252515, y: 6.176067, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,14 +87,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.8773613, y: 0.8931733}
-      - {x: 0.52015114, y: 0.69248307}
-      - {x: 0.32478905, y: 0.29606128}
-      - {x: 0.0945282, y: 0.59505177}
-      - {x: -1.024, y: 0.16800001}
+    - - {x: -1.0206165, y: 0.25463247}
       - {x: -1.024, y: -1.024}
       - {x: 1.024, y: -1.024}
-      - {x: 1.024, y: 0.8}
+      - {x: 1.0240002, y: 0.93622494}
 --- !u!114 &114509929750315942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowRuntimeFragmentation: 1
-  extraPoints: 2
+  extraPoints: 1
   subshatterSteps: 0
   fragmentLayer: Ground
   sortingLayerName: Ground

@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1616100853601176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.610287, y: -10.927726, z: 0}
+  m_LocalPosition: {x: -12.807476, y: 3.6103804, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -90,9 +90,6 @@ PolygonCollider2D:
     - - {x: -1.024, y: 1.024}
       - {x: -1.024, y: -1.024}
       - {x: 1.024, y: -1.024}
-      - {x: 0.99794585, y: -0.25494075}
-      - {x: 0.81366503, y: -0.14871547}
-      - {x: 1.0334525, y: 0.53201395}
       - {x: 1.024, y: 1.024}
 --- !u!114 &114123213424445726
 MonoBehaviour:
@@ -106,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowRuntimeFragmentation: 1
-  extraPoints: 2
+  extraPoints: 1
   subshatterSteps: 0
   fragmentLayer: Ground
   sortingLayerName: Ground
@@ -149,9 +146,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 1debb409b867bfe4dafa7eada3c757d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f7757bd9418636448be3eb3a31caea66, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.12, y: 5.12}

@@ -54,6 +54,7 @@ public class MovingPlatform : MonoBehaviour {
         }
 
         rigid.velocity = moveSpeed * target.normalized;
+        //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.FromToRotation(-Vector3.right, target),Time.deltaTime);
     }
 }
 

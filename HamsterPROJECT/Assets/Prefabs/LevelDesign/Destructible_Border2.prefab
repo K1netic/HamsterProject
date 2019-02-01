@@ -36,8 +36,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1372351717938260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.43762, y: -14.985398, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -87,11 +87,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.13789296, y: 0.6056379}
-      - {x: -0.3413843, y: 0.30289817}
-      - {x: -0.51922464, y: 0.6710883}
-      - {x: -0.88905597, y: 0.8985505}
-      - {x: -1.024, y: 0.7966881}
+    - - {x: -1.0283504, y: 0.9199805}
       - {x: -1.024, y: -1.024}
       - {x: 1.024, y: -1.024}
       - {x: 1.0240002, y: 0.17884105}
@@ -107,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowRuntimeFragmentation: 1
-  extraPoints: 2
+  extraPoints: 1
   subshatterSteps: 0
   fragmentLayer: Ground
   sortingLayerName: Ground
@@ -150,9 +146,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: b99b86dc28c9f8d47b5682785b55912a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72887d6c8ef9aa84e8778e7f460f6390, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 5.12, y: 5.12}

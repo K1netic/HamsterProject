@@ -22,5 +22,5 @@ public class CircularPlatform : MonoBehaviour {
 	void Update () {
 		rigid.velocity = moveSpeed * Vector2.Perpendicular(pivotPos - (Vector2)transform.position).normalized;
 		Debug.DrawRay(transform.position, Vector2.Perpendicular(pivotPos - (Vector2)transform.position).normalized,Color.red,1000);
-	}
+    }
 }
