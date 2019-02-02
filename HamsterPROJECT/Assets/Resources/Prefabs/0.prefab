@@ -254,7 +254,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1148251399467980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 12, z: 0}
+  m_LocalPosition: {x: 25, y: -10, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4059604085271052}
@@ -678,6 +678,7 @@ MonoBehaviour:
   layerMaskLineCast:
     serializedVersion: 2
     m_Bits: 0
+  hooked: 0
   player: {fileID: 1063597460724624}
   line: {fileID: 0}
   projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
@@ -752,6 +753,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   lifeParticlesManager: {fileID: 1484713578422444}
+  hookScript: {fileID: 0}
   playerHP: 0
   inRecovery: 0
   spriteArrow: {fileID: 0}
@@ -767,7 +769,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigid: {fileID: 0}
-  hooked: 0
   jointDirection: {x: 0, y: 0}
   dashEcho: {fileID: 1005786816833230, guid: 4a9d6389045976c4abddad6e66452dc0, type: 2}
   speedEffect: {fileID: 1329272854469796}
@@ -776,7 +777,7 @@ MonoBehaviour:
   speed: 0
   shootPos: {fileID: 1771994535045496}
   playerDirection: {x: 0, y: 0}
-  playerNumber: _P2
+  playerNumber: _P1
 --- !u!198 &198208901690734344
 ParticleSystem:
   m_ObjectHideFlags: 1
