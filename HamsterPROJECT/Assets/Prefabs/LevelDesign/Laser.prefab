@@ -243,7 +243,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1772451124244544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.489, y: 0.24000041, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.06666667, y: 1.3333334, z: 1}
   m_Children:
   - {fileID: 4460656997567256}
@@ -271,7 +271,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1579939298084802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.41, y: -20.77, z: 0}
+  m_LocalPosition: {x: -6.3, y: -20.77, z: 0}
   m_LocalScale: {x: 30, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4242474402775396}
@@ -326,7 +326,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.6}
+  m_Size: {x: 0.01, y: 0.6}
   m_EdgeRadius: 0
 --- !u!95 &95272238060369598
 Animator:
@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba6456a2b7406a40bb7abdffb99ebba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  side: 0
   particle: {fileID: 198565199555246012, guid: 9bc5dc69996d433488e721cfc689e8b7, type: 2}
 --- !u!120 &120655739951455456
 LineRenderer:

@@ -126,7 +126,24 @@ public class PlayerLifeManager : MonoBehaviour {
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
                     case "Laser":
-                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
+                        switch (laserScript.side)
+                        {
+                            case LaserColliderDetection.LaserSide.bot:
+                                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.top:
+                                playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.right:
+                                playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.left:
+                                playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     default:
                         break;
@@ -204,7 +221,24 @@ public class PlayerLifeManager : MonoBehaviour {
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                 playerMovement.rigid.velocity = Vector3.zero;
                 Invoke("UnlockMovement", knockBackTime);
-                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                LaserColliderDetection laserScript = col.gameObject.GetComponent<LaserColliderDetection>();
+                switch (laserScript.side)
+                {
+                    case LaserColliderDetection.LaserSide.bot:
+                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.top:
+                        playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.right:
+                        playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.left:
+                        playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
