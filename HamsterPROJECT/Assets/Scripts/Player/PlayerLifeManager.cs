@@ -151,7 +151,10 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             playerHP -= damage;
             //Rend le player invulnérable pendant recoveryTime secondes
-            Invoke("ResetRecovery", recoveryTime);
+            if(attacker.CompareTag("Hook"))
+                Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
+            else
+                Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
             InvokeRepeating("Flashing", 0, flashingRate);
 
