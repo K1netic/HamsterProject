@@ -196,6 +196,53 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1001 &118948337
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 37.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -20.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624381553001596, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522138794982732, guid: eb2273fce8930ef4d9ca9593526a42d7,
+        type: 2}
+      propertyPath: ring
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &175047483
 Prefab:
   m_ObjectHideFlags: 0
@@ -356,48 +403,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4458997520820400, guid: 6334a9615f7fe224e85fa68cbeed988d,
     type: 2}
   m_PrefabInternal: {fileID: 250018907}
---- !u!1001 &252559764
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 37.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -20.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4867875737016512, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: eb2273fce8930ef4d9ca9593526a42d7, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1001 &269165981
 Prefab:
   m_ObjectHideFlags: 0
@@ -2034,10 +2039,10 @@ Transform:
   - {fileID: 1269358655}
   - {fileID: 1618972252}
   - {fileID: 331883537}
-  - {fileID: 1063602790}
   - {fileID: 1988865765}
   - {fileID: 1134955599}
   - {fileID: 990048354}
+  - {fileID: 1063602790}
   - {fileID: 269165982}
   - {fileID: 1804325485}
   - {fileID: 1139238761}

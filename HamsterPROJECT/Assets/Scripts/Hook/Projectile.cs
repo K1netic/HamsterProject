@@ -114,7 +114,8 @@ public class Projectile : MonoBehaviour {
         switch (hooked)
         {
             case true:
-                if(hookedObject.CompareTag("Untagged"))
+                Debug.DrawRay(transform.position, Vector3.up * .1f, Color.cyan, 1000);
+                if (hookedObject.CompareTag("Untagged"))
                 {
                     hook.DisableRope();
                 }
