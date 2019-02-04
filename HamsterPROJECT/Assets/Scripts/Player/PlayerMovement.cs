@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
 
     //Dash
+    [HideInInspector]
+    public bool dashRecoveryWithHook;
     float dashTime;
     float dashForce;
     float dashCDTime;
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 lastFramePosition;
     [HideInInspector]
     public Vector2 playerDirection;
+    float dragEndOfDash;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -66,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
         dashTime = balanceData.dashTime;
         dashForce = balanceData.dashForce;
         dashCDTime = balanceData.dashCDTime;
+        dragEndOfDash = balanceData.dragEndOfDash;
+        dashRecoveryWithHook = balanceData.dashRecoveryWithHook;
         /*fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
         fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */
@@ -130,14 +135,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 dashInCD = true;
                 lockMovementDash = true;
-                rigid.AddForce((shootPos.transform.position - transform.position).normalized* dashForce, ForceMode2D.Impulse);
-                InvokeRepeating("DashEffect", 0, 0.04f);
-                Invoke("UnlockMovementDash", dashTime);
-                Invoke("CancelDashEffect", dashTime * 3.5f);
-                Invoke("ResetDashCD", dashCDTime);
-				StartCoroutine (CancelVibration (Vibrations.PlayVibration("Dash", playerInputDevice)));
+                StartCoroutine("DoDash");
             }
         }
+    }
+
+    IEnumerator DoDash()
+    {
+        rigid.velocity = Vector3.zero;
+        yield return new WaitForSeconds(.1f);
+        rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
+        InvokeRepeating("DashEffect", 0, 0.04f);
+        Invoke("UnlockMovementDash", dashTime);
+        Invoke("CancelDashEffect", dashTime * 3.5f);
+        if(!dashRecoveryWithHook)
+            Invoke("ResetDashCD", dashCDTime);
+        StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
     }
 
     void DashEffect()
@@ -194,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-    void ResetDashCD()
+    public void ResetDashCD()
     {
         dashInCD = false;
     }
@@ -216,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         if (!lockMovement)
         {
             drag = rigid.drag;
-            rigid.drag = 10;
+            rigid.drag = dragEndOfDash;
             Invoke("ResetDrag", .1f);
         }
     }

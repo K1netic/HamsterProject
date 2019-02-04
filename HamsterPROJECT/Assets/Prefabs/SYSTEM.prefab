@@ -501,7 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedHookhead: 15
-  distanceMaxHook: 15
+  distanceMaxHook: 17.5
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.3
@@ -524,8 +524,10 @@ MonoBehaviour:
   knockBackLaser: 20
   knockBackNuke: 15
   dashTime: 0.05
-  dashForce: 50
-  dashCDTime: 1.5
+  dashForce: 75
+  dashCDTime: 3
+  dragEndOfDash: 20
+  dashRecoveryWithHook: 1
   lightRumble: 0.1
   mediumlightRumble: 0.25
   mediumRumble: 0.5

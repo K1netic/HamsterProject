@@ -49,6 +49,8 @@ public class Balancing : MonoBehaviour {
     public float dashTime;
     public float dashForce;
     public float dashCDTime;
+    public float dragEndOfDash = 20;
+    public bool dashRecoveryWithHook;
 
     [Header("VIBRATIONS")]
 	public float lightRumble = 0.1f;

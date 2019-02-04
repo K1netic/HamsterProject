@@ -343,7 +343,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &58980752998490184
 CircleCollider2D:
@@ -746,6 +746,7 @@ MonoBehaviour:
   lockMovement: 0
   currentState: 0
   speed: 0
+  dashRecoveryWithHook: 0
   shootPos: {fileID: 1134602903314838}
   playerDirection: {x: 0, y: 0}
   playerNumber: _P2
