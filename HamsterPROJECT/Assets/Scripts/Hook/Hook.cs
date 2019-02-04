@@ -525,7 +525,7 @@ public class Hook : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D collision){
-        //Les collisions ne sont gérés que si le player est en mode offensif
+        //Les collisions ne sont gérés que si le player est en mode offensif sauf si 2 shield entrent en collision
         if(currentState == HookState.Arrow)
         {
             //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
@@ -557,6 +557,17 @@ public class Hook : MonoBehaviour {
  
             }
         }
+        else
+        {
+            if (collision.gameObject.CompareTag("Arrow"))
+            {
+                if(collision.gameObject.GetComponent<Hook>().currentState == HookState.Shield)
+                {
+                    DoubleShieldCollide(collision);
+                    HitFX(collision.GetContact(0).point, collision.gameObject);
+                }
+            }
+        }
         
     }
 
@@ -581,6 +592,16 @@ public class Hook : MonoBehaviour {
     void CancelFXProtection()
     {
         doubleFXprotection = false;
+    }
+
+    void DoubleShieldCollide(Collision2D collision)
+    {
+        playerMovement.lockMovement = true;
+        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
+        Invoke("UnlockMovement", knockBackTime);
     }
 
     void ArrowHit(Collision2D collision)
