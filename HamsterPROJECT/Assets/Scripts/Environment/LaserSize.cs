@@ -55,7 +55,6 @@ public class LaserSize : MonoBehaviour {
         
         if(raycast.collider != null)
         {
-            print(raycast.collider.name);
             Debug.DrawLine(startPos, raycast.point, Color.red);
             if (!FXinstantiate)
             {
