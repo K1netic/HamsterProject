@@ -9,7 +9,7 @@ public class MatchEnd : MonoBehaviour {
 
 //	[SerializeField] float delayBeforeEndOfGame;
 	int nbPlayersAlive;
-	[SerializeField] GameObject scoreDisplay;
+	GameObject scoreDisplay;
 	[HideInInspector] public GameObject[] arrows;
 	int winner;
 	bool gameOver = false;
@@ -26,11 +26,16 @@ public class MatchEnd : MonoBehaviour {
 
 	LevelSelection lvlSelect;
 
-	// Use this for initialization
-	void Start ()
+    private void Awake()
+    {
+        scoreDisplay = GameObject.Find("ScoreDisplayer");
+    }
+
+    // Use this for initialization
+    void Start ()
 	{
         //mngr = FindObjectOfType<AudioManager> ();
-		scoreDisplay.SetActive (false);
+        scoreDisplay.SetActive (false);
 		matchEnded = false;
 		// default value, stays at 42 if nobody won
 		// 0, 1, 2 and 3 are reserved to players

@@ -182,85 +182,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114785833461155082, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: scoreDisplay
-      value: 
-      objectReference: {fileID: 1224698159}
-    - target: {fileID: 114834280797739368, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 1906033458}
     - target: {fileID: 114872159372350432, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
       propertyPath: TestWithoutUI
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+    - target: {fileID: 114834280797739368, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
-      propertyPath: dashCDTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: dashForce
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: dashTime
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: dragEndOfDash
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: TimeHooked
-      value: 100000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114046274986369662, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: radius
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114046274986369662, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: force
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 114784534166829126, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: force
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 114784534166829126, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: radius
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006376433871546, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: force
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 114006376433871546, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: radius
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114409854355809182, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: force
-      value: 3000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114409854355809182, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: radius
-      value: 2.5
+      propertyPath: pauseMenu
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
@@ -396,11 +326,6 @@ Prefab:
     m_Modifications:
     - target: {fileID: 224747956666321988, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 224747956666321988, guid: 222b32e809c5eba49ae297ec517e33d5,
-        type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -488,6 +413,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383492573988866, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
@@ -598,11 +527,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0af1e2f4809881f45a978b8ea19578df, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &1224698159 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1635416725948316, guid: 222b32e809c5eba49ae297ec517e33d5,
-    type: 2}
-  m_PrefabInternal: {fileID: 770311956}
 --- !u!1001 &1253677295
 Prefab:
   m_ObjectHideFlags: 0
@@ -1031,11 +955,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1906033458 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1383492573988866, guid: 222b32e809c5eba49ae297ec517e33d5,
-    type: 2}
-  m_PrefabInternal: {fileID: 770311956}
 --- !u!1001 &1977318103
 Prefab:
   m_ObjectHideFlags: 0
