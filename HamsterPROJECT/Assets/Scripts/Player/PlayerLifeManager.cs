@@ -104,7 +104,7 @@ public class PlayerLifeManager : MonoBehaviour {
             {
                 if (hookScript.hooked)
                 {
-                    hookScript.DisableRope();
+                    hookScript.DisableRope(false);
                 }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
@@ -217,7 +217,7 @@ public class PlayerLifeManager : MonoBehaviour {
             {//Le joueur retouche le laser alors qu'il est encore en recovery
                 if (hookScript.hooked)
                 {
-                    hookScript.DisableRope();
+                    hookScript.DisableRope(false);
                 }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
@@ -253,7 +253,7 @@ public class PlayerLifeManager : MonoBehaviour {
         {
             if (hookScript.hooked)
             {
-                hookScript.DisableRope();
+                hookScript.DisableRope(false);
             }
             LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);

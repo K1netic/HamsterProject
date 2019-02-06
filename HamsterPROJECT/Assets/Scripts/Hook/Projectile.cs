@@ -117,7 +117,7 @@ public class Projectile : MonoBehaviour {
                 Debug.DrawRay(transform.position, Vector3.up * .1f, Color.cyan, 1000);
                 if (hookedObject.CompareTag("Untagged"))
                 {
-                    hook.DisableRope();
+                    hook.DisableRope(false);
                 }
                 break;
             case false:
@@ -166,7 +166,7 @@ public class Projectile : MonoBehaviour {
         {
             if (raycastRope.collider.gameObject.CompareTag("Rope"))
             {
-                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope();
+                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
             }      
         }
     }
@@ -234,7 +234,7 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.CompareTag("Rope"))
         {
-            col.gameObject.GetComponent<LineCutter>().CutRope();
+            col.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
         }
     }
 

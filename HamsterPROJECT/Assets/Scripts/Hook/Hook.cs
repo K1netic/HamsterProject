@@ -34,6 +34,8 @@ public class Hook : MonoBehaviour {
     float initialDistance;
     [HideInInspector]
     public bool hooked;
+    Projectile stockedProjectileScript;
+    float timeBeforeDestroy;
 
     //AIM
     //float offset;
@@ -120,6 +122,7 @@ public class Hook : MonoBehaviour {
         knockBackPlayerHit = balanceData.knockBackPlayerHit;
         arrowDamage = balanceData.arrowDamage;
         criticalSpeed = balanceData.criticalSpeed;
+        timeBeforeDestroy = balanceData.timeRopeCut;
 
         timeRemaining = timeHooked;
 
@@ -140,13 +143,12 @@ public class Hook : MonoBehaviour {
         line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
         line.transform.parent = gameObject.transform.parent;
         rope = Resources.Load<Texture>("ArrowSprites/Rope");
-        rope.wrapMode = TextureWrapMode.Repeat;
         line.material.SetTexture("_MainTex", rope);
         
         //Ajoutet un collider à la corde ainsi que le script qui permet de la couper
         line.gameObject.AddComponent<BoxCollider2D>();
         line.gameObject.AddComponent<LineCutter>();
-        line.gameObject.GetComponent<LineCutter>().line = this;
+        line.gameObject.GetComponent<LineCutter>().hook = this;
         lineCollider = line.GetComponent<BoxCollider2D>();
         lineCollider.isTrigger = true;   
         line.gameObject.tag = "Rope";
@@ -254,7 +256,7 @@ public class Hook : MonoBehaviour {
             //Désactive le grappin s'il est trop loin du joueur
             if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
             {
-                DisableRope();
+                DisableRope(false);
             }
 
             //Test si le grappin est aggripé
@@ -275,7 +277,7 @@ public class Hook : MonoBehaviour {
                 if (timeRemaining <= 0) 
                 {
 					StartCoroutine (CancelVibration (Vibrations.PlayVibration("HookDestruction", playerMovement.playerInputDevice)));
-                    DisableRope();
+                    DisableRope(false);
                 }
 
                 RaycastingDistanceJoint();
@@ -329,7 +331,7 @@ public class Hook : MonoBehaviour {
 			|| playerMovement.playerInputDevice.Action4.WasReleased)
 			&& currentProjectile != null)
         {
-            DisableRope();
+            DisableRope(false);
         }
 
 		else if ((playerMovement.playerInputDevice.Action1.WasReleased 
@@ -488,20 +490,37 @@ public class Hook : MonoBehaviour {
         lineCollider.transform.rotation = Quaternion.FromToRotation(Vector3.right, (endPos - startPos).normalized);
 
         hookInCD = true;
+
+        line.gameObject.GetComponent<LineCutter>().projectile = currentProjectile;
     }
 
     //Désactive tout ce qui est relatif au grappin
-    public void DisableRope(){
+    public void DisableRope(bool cut){
         StartCoroutine("ResetHookCD");
         playerMovement.StateNotHooked();
         //player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = false;
-        projectileScript.End();
+        if (!cut)
+        {
+            projectileScript.End();
+        } 
+        else
+        {
+            stockedProjectileScript = projectileScript;
+            projectileScript = null;
+            currentProjectile = null;
+            Invoke("DestroyProjectile", timeBeforeDestroy);
+        }
         line.gameObject.SetActive(false);
         jointNotCreated = true;
         timeRemaining = timeHooked;
         line.startColor = colorRope;
         line.endColor = colorRope;
+    }
+
+    void DestroyProjectile()
+    {
+        stockedProjectileScript.End();
     }
 
     public IEnumerator ResetHookCD()
@@ -520,7 +539,7 @@ public class Hook : MonoBehaviour {
 			|| playerMovement.playerInputDevice.Action3.IsPressed
 			|| playerMovement.playerInputDevice.Action4.IsPressed))
 		{
-			DisableRope ();
+			DisableRope (false);
 		}
 	}
 
