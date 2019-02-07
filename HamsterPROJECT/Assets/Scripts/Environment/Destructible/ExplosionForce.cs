@@ -48,7 +48,7 @@ public class ExplosionForce : MonoBehaviour {
 	{
 		body.gameObject.tag = "Untagged";
         body.gameObject.layer = LayerMask.NameToLayer("Scraps");
-        body.gameObject.GetComponent<MeshRenderer>().sortingOrder = 7;
+        body.gameObject.GetComponent<MeshRenderer>().sortingOrder = 4;
         body.bodyType = RigidbodyType2D.Dynamic;
         //body.gravityScale = 0;
         /*body.angularDrag = 0.02f;
