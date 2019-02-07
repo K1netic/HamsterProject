@@ -502,7 +502,8 @@ public class Hook : MonoBehaviour {
         joint.enabled = false;
         if (!cut)
         {
-            projectileScript.End();
+            if(projectileScript)
+                projectileScript.End();
         } 
         else
         {
