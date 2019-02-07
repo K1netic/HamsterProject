@@ -138,6 +138,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1742738572937030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4236966405257946}
+  - component: {fileID: 58101768083734782}
+  - component: {fileID: 114731564223471612}
+  m_Layer: 25
+  m_Name: CollisionScraps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1849859366580038
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +200,7 @@ Transform:
   - {fileID: 4524919916462316}
   - {fileID: 4475773668335272}
   - {fileID: 4344875669877452}
+  - {fileID: 4236966405257946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -200,6 +218,19 @@ Transform:
   - {fileID: 4677255110501634}
   m_Father: {fileID: 4524919916462316}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4236966405257946
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742738572937030}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4116563872922602}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4292877997053214
 Transform:
@@ -377,6 +408,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!58 &58101768083734782
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742738572937030}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!58 &58604093750814542
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -781,6 +827,18 @@ MonoBehaviour:
   P2: {fileID: 21300000, guid: 0178d7acdc8f9a54b81765440d8aa2b9, type: 3}
   P3: {fileID: 21300000, guid: 8223cc74d939bb3499b142b7018b4583, type: 3}
   P4: {fileID: 21300000, guid: a405f147d38bd8c4c8f1148d4cc1d06e, type: 3}
+--- !u!114 &114731564223471612
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742738572937030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89fa78bde3eff0448ce011a3e6d9ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1374181166817648}
 --- !u!114 &114813468632860596
 MonoBehaviour:
   m_ObjectHideFlags: 1
