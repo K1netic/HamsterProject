@@ -18,7 +18,7 @@ public class PlayerNumberDisplay : MonoBehaviour {
 
     private void Start()
     {
-        transform.localPosition = new Vector2(0, 2.5f);
+        transform.localPosition = new Vector2(0, 1.75f);
 
         render = GetComponent<SpriteRenderer>();
         player = transform.parent.gameObject;
