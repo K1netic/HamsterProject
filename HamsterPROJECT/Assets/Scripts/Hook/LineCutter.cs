@@ -12,6 +12,7 @@ public class LineCutter : MonoBehaviour {
     public void CutRope(Vector3 cuttingPos){
         if (hook.currentProjectile.GetComponent<Projectile>().hooked)
         {
+
             GameObject cutRope = new GameObject();
 
             cutRope.AddComponent<LineRenderer>();
@@ -23,6 +24,8 @@ public class LineCutter : MonoBehaviour {
             script.startPosition = projectile.GetComponent<Projectile>().pivot;
             script.endPosition = cuttingPos;
             script.projectile = projectile;
+
+            Instantiate(Resources.Load<ParticleSystem>("Prefabs/CutHook/Cut"), cuttingPos, transform.rotation);
 
             hook.DisableRope(true);
         }

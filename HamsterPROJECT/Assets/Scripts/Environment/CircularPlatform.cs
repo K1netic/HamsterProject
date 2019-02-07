@@ -6,8 +6,6 @@ using UnityEngine;
 public class CircularPlatform : MonoBehaviour {
 
 	[SerializeField]
-	GameObject pivot;
-	[SerializeField]
 	float moveSpeed;
 
     Rigidbody2D rigid;
@@ -16,7 +14,7 @@ public class CircularPlatform : MonoBehaviour {
     float radius;
 
     void Start () {
-		pivotPos = pivot.transform.position;
+        pivotPos = transform.parent.transform.position;
 		rigid = GetComponent<Rigidbody2D>();
         radius = Vector2.Distance(pivotPos, transform.position);
     }
