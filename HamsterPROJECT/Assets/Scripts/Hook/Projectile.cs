@@ -173,7 +173,7 @@ public class Projectile : MonoBehaviour {
 
     void GetHooked(Vector2 position, GameObject platform)
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        rigid.bodyType = RigidbodyType2D.Static;
         hooked = true;
         transform.position = position;
         hookedObject = platform;
@@ -182,7 +182,8 @@ public class Projectile : MonoBehaviour {
         if (hookedObject.GetComponent<Rigidbody2D>())
         {
             gameObject.layer = 27;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            rigid.bodyType = RigidbodyType2D.Kinematic;
+            rigid.interpolation = RigidbodyInterpolation2D.None;
         }
     }
 
