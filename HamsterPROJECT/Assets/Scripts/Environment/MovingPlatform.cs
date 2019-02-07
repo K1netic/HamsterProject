@@ -13,6 +13,8 @@ public class MovingPlatform : MonoBehaviour {
     float moveSpeed;
     [SerializeField]
     bool inverseMovement;
+    [SerializeField]
+    bool fullVerticalMovement;
 
     Vector2 target;
 
@@ -23,18 +25,34 @@ public class MovingPlatform : MonoBehaviour {
 
     private void Start()
     {
-        if (node1.transform.position.x < node2.transform.position.x)
+        if (fullVerticalMovement)
         {
-            node1pos = (Vector2)node1.transform.position;
-            node2pos = (Vector2)node2.transform.position;
+            if (node1.transform.position.y < node2.transform.position.y)
+            {
+                node1pos = (Vector2)node1.transform.position;
+                node2pos = (Vector2)node2.transform.position;
+            }
+            else
+            {
+                node1pos = (Vector2)node2.transform.position;
+                node2pos = (Vector2)node1.transform.position;
+            }
         }
         else
         {
-            node1pos = (Vector2)node2.transform.position;
-            node2pos = (Vector2)node1.transform.position;
+            if (node1.transform.position.x < node2.transform.position.x)
+            {
+                node1pos = (Vector2)node1.transform.position;
+                node2pos = (Vector2)node2.transform.position;
+            }
+            else
+            {
+                node1pos = (Vector2)node2.transform.position;
+                node2pos = (Vector2)node1.transform.position;
+            }
         }
 
-        if(!inverseMovement)
+        if (!inverseMovement)
             target = node1pos - (Vector2)transform.position;
         else
             target = node2pos - (Vector2)transform.position;
@@ -44,13 +62,27 @@ public class MovingPlatform : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (transform.position.x <= node1pos.x)
+        if (fullVerticalMovement)
         {
-            target = node2pos - (Vector2)transform.position;
+            if (transform.position.y <= node1pos.y)
+            {
+                target = node2pos - (Vector2)transform.position;
+            }
+            else if (transform.position.y >= node2pos.y)
+            {
+                target = node1pos - (Vector2)transform.position;
+            }
         }
-        else if (transform.position.x >= node2pos.x)
+        else
         {
-            target = node1pos - (Vector2)transform.position;
+            if (transform.position.x <= node1pos.x)
+            {
+                target = node2pos - (Vector2)transform.position;
+            }
+            else if (transform.position.x >= node2pos.x)
+            {
+                target = node1pos - (Vector2)transform.position;
+            }
         }
 
         rigid.velocity = moveSpeed * target.normalized;

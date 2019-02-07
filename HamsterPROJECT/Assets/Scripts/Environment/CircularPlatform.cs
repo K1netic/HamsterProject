@@ -10,8 +10,10 @@ public class CircularPlatform : MonoBehaviour {
 
     Rigidbody2D rigid;
     Vector3 pivotPos;
+    Vector3 vectorToTarget;
     float t;
     float radius;
+    float angle;
 
     void Start () {
         pivotPos = transform.parent.transform.position;
@@ -23,6 +25,10 @@ public class CircularPlatform : MonoBehaviour {
         Debug.DrawRay(transform.position, Vector3.up * .1f, Color.red,10000);
         t += Time.deltaTime;
         rigid.MovePosition(pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0));
+
+        vectorToTarget = pivotPos - transform.position;
+        angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        rigid.MoveRotation(angle);
     }
 
     
