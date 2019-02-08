@@ -65,14 +65,28 @@ public class MatchStart : MonoBehaviour {
 
 		else
 		{
-			// Instantiate Players depending on which were validated in the character selection screen
-			for (int i = 0; i < GameManager.playersActive.Length; i ++)
-			{
-				if (GameManager.playersActive[i] == true)
-				{
-					InstantiatePlayer (i);
-				}
-			}
+            if(GameManager.playersActive.Length == 2)
+            {
+                // Instantiate Players depending on which were validated in the character selection screen
+                for (int i = 0; i < GameManager.playersActive.Length; i++)
+                {
+                    if (GameManager.playersActive[i] == true)
+                    {
+                        InstantiateTwoPlayers(i);
+                    }
+                }
+            }
+            else
+            {
+                // Instantiate Players depending on which were validated in the character selection screen
+                for (int i = 0; i < GameManager.playersActive.Length; i++)
+                {
+                    if (GameManager.playersActive[i] == true)
+                    {
+                        InstantiatePlayer(i);
+                    }
+                }
+            }
 		}
 	}
 	
@@ -92,7 +106,52 @@ public class MatchStart : MonoBehaviour {
 		}
 	}
 
-	void OnGUI()
+    void InstantiateTwoPlayers(int playerIndex)
+    {
+        GameObject inst = GameManager.playersCharacters[playerIndex];
+        int j = Random.Range(0, spawnPoints.Count);
+        inst.transform.position = spawnPoints[j].transform.position;
+        spawnPoints.Remove(spawnPoints[j]);
+        switch (j)
+        {
+            case 0:
+                spawnPoints.Remove(spawnPoints[1]);
+                break;
+            case 1:
+                spawnPoints.Remove(spawnPoints[0]);
+                spawnPoints.Remove(spawnPoints[2]);
+                break;
+            case 2:
+                spawnPoints.Remove(spawnPoints[3]);
+                spawnPoints.Remove(spawnPoints[1]);
+                break;
+            case 3:
+                spawnPoints.Remove(spawnPoints[2]);
+                break;
+            default:
+                break;
+        }
+        inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+        GameObject newPlayer = Instantiate(inst);
+
+        // Setting InputDevice
+        newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+    }
+
+    void InstantiatePlayer(int playerIndex)
+    {
+        GameObject inst = GameManager.playersCharacters[playerIndex];
+        int j = Random.Range(0, spawnPoints.Count);
+        inst.transform.position = spawnPoints[j].transform.position;
+        spawnPoints.Remove(spawnPoints[j]);
+        inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+        GameObject newPlayer = Instantiate(inst);
+
+        // Setting InputDevice
+        newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+    }
+
+    void OnGUI()
 	{
 		// Draw progress bar
 		if (activateBegin && !gameHasStarted)
@@ -111,19 +170,6 @@ public class MatchStart : MonoBehaviour {
 		gameHasStarted = true;
 		yield return new WaitForSeconds (0.5f);
 		beginText.text = "";
-	}
-
-	void InstantiatePlayer(int playerIndex)
-	{
-		GameObject inst = GameManager.playersCharacters[playerIndex];
-		int j = Random.Range(0, spawnPoints.Count);
-		inst.transform.position = spawnPoints[j].transform.position;
-		spawnPoints.Remove(spawnPoints[j]);
-		inst.transform.GetChild (0).GetComponent<Rigidbody2D> ().isKinematic = true;
-		GameObject newPlayer = Instantiate (inst);
-
-		// Setting InputDevice
-		newPlayer.transform.GetChild (0).GetComponent<PlayerMovement> ().playerInputDevice = GameManager.playersInputDevices [playerIndex];
 	}
 
 	void UnfreezePlayers()
