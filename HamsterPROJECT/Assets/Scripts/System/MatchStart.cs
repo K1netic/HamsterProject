@@ -19,7 +19,7 @@ public class MatchStart : MonoBehaviour {
 	[SerializeField] GameObject[] Players;
 	string plyrNmbr;
 
-    List<Transform> spawnPoints = new List<Transform>();
+    public List<Transform> spawnPoints = new List<Transform>();
 
 	[SerializeField] bool TestWithoutUI;
 
