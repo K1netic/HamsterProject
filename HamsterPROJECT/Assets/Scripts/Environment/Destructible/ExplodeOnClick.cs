@@ -32,9 +32,19 @@ public class ExplodeOnClick : MonoBehaviour {
 		}
 	}
 
-    private void OnMouseDown()
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        GameObject.FindObjectOfType<ExplosionForce>().doExplosion(transform.position, speed);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            speed = collision.gameObject.GetComponent<PlayerMovement>().speed;
+            if (!explosionDone)
+            {
+                if (speed > threshold)
+                {
+                    GameObject.Find("ExplosionForce" + collision.gameObject.GetComponent<PlayerMovement>().playerNumber).GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
+                    explosionDone = true;
+                }
+            }
+        }
     }
-
 }

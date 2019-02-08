@@ -40,6 +40,7 @@ public class Projectile : MonoBehaviour {
     RaycastHit2D raycastLeft;
     RaycastHit2D raycastRight;
     RaycastHit2D raycastRope;
+    RaycastHit2D raycastBackRope;
     PolygonCollider2D coll;
     [HideInInspector]
     public Vector2 pivot;
@@ -133,9 +134,6 @@ public class Projectile : MonoBehaviour {
     {
         if (!inDestruction)
         {
-            Debug.DrawRay(transform.position, direction * raycastRange, Color.black);
-            Debug.DrawRay((Vector2)coll.transform.TransformPoint(coll.points[13]), direction * raycastRange, Color.black);
-            Debug.DrawRay((Vector2)coll.transform.TransformPoint(coll.points[37]), direction * raycastRange, Color.black);
             raycast = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskRaycast);
             raycastLeft = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[13]), direction, raycastRange, hook.layerMaskRaycast);
             raycastRight = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[37]), direction, raycastRange, hook.layerMaskRaycast);
@@ -161,13 +159,18 @@ public class Projectile : MonoBehaviour {
     void RaycastRope()
     {
         raycastRope = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskLineCast);
+        raycastBackRope = Physics2D.Raycast(transform.position, -direction, raycastRange * 2.25f, hook.layerMaskLineCast);
         if (raycastRope.collider)
         {
             if (raycastRope.collider.gameObject.CompareTag("Rope"))
             {
                 raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
             }      
-        }
+        }else if (raycastBackRope.collider)
+            if (raycastBackRope.collider.gameObject.CompareTag("Rope"))
+            {
+                raycastBackRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
+            }
     }
 
     void GetHooked(Vector2 position, GameObject platform)
