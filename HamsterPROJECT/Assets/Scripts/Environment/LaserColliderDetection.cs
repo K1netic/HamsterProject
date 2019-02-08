@@ -5,6 +5,8 @@ using UnityEngine;
 public class LaserColliderDetection : MonoBehaviour {
 
     [SerializeField]
+    public LaserSide side;
+    [SerializeField]
     ParticleSystem particle;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -14,5 +16,10 @@ public class LaserColliderDetection : MonoBehaviour {
             Destroy(collision.gameObject);
             Instantiate(particle, collision.GetContact(0).point, particle.transform.rotation);
         }
+    }
+
+    public enum LaserSide
+    {
+        bot, top, right, left
     }
 }

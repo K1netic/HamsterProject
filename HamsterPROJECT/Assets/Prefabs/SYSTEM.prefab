@@ -343,8 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf36b478d9cb64f910da99ad61d231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 200
-  radius: 0.5
+  force: 300
+  radius: 2.5
   upliftModifer: 5
   bouncinnes: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
 --- !u!114 &114046274986369662
@@ -358,8 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf36b478d9cb64f910da99ad61d231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 200
-  radius: 0.5
+  force: 300
+  radius: 2.5
   upliftModifer: 5
   bouncinnes: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
 --- !u!114 &114246969291902606
@@ -393,8 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf36b478d9cb64f910da99ad61d231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 200
-  radius: 0.5
+  force: 300
+  radius: 2.5
   upliftModifer: 5
   bouncinnes: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
 --- !u!114 &114464750304548780
@@ -433,8 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaf36b478d9cb64f910da99ad61d231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 200
-  radius: 0.5
+  force: 300
+  radius: 2.5
   upliftModifer: 5
   bouncinnes: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
 --- !u!114 &114785833461155082
@@ -501,15 +501,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedHookhead: 15
-  distanceMaxHook: 15
+  distanceMaxHook: 17.5
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.3
   TimeHooked: 10
-  lineWidth: 0.125
+  lineWidth: 0.175
   airControlForce: 7.5
   hookMovementForce: 45
-  speedThresholdDestruction: 20
+  speedThresholdDestruction: 25
   playerMaxHP: 100
   hookheadDamage: 5
   recoveryTime: 1.5
@@ -524,8 +524,10 @@ MonoBehaviour:
   knockBackLaser: 20
   knockBackNuke: 15
   dashTime: 0.05
-  dashForce: 50
-  dashCDTime: 1.5
+  dashForce: 75
+  dashCDTime: 3
+  dragEndOfDash: 20
+  dashRecoveryWithHook: 1
   lightRumble: 0.1
   mediumlightRumble: 0.25
   mediumRumble: 0.5

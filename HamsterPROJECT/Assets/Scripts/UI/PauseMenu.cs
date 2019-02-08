@@ -7,16 +7,21 @@ using InControl;
 
 public class PauseMenu : MonoBehaviour {
 
-	[SerializeField] GameObject pauseMenu;
+	GameObject pauseMenu;
 	[HideInInspector] public GameObject[] arrows;
 	bool arrowSet = false;
 
 	// Audio
 	AudioManager mngr;
 
-	void Start()
+    private void Awake()
+    {
+        pauseMenu = GameObject.Find("PauseMenu");
+    }
+
+    void Start()
 	{
-        GameObject.Find("PauseMenu");
+        pauseMenu.SetActive(false);
 		//mngr = FindObjectOfType<AudioManager> ();
 	}
 

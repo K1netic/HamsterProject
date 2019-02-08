@@ -114,9 +114,10 @@ public class Projectile : MonoBehaviour {
         switch (hooked)
         {
             case true:
-                if(hookedObject.CompareTag("Untagged"))
+                Debug.DrawRay(transform.position, Vector3.up * .1f, Color.cyan, 1000);
+                if (hookedObject.CompareTag("Untagged"))
                 {
-                    hook.DisableRope();
+                    hook.DisableRope(false);
                 }
                 break;
             case false:
@@ -165,14 +166,14 @@ public class Projectile : MonoBehaviour {
         {
             if (raycastRope.collider.gameObject.CompareTag("Rope"))
             {
-                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope();
+                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
             }      
         }
     }
 
     void GetHooked(Vector2 position, GameObject platform)
     {
-        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        rigid.bodyType = RigidbodyType2D.Static;
         hooked = true;
         transform.position = position;
         hookedObject = platform;
@@ -181,7 +182,8 @@ public class Projectile : MonoBehaviour {
         if (hookedObject.GetComponent<Rigidbody2D>())
         {
             gameObject.layer = 27;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            rigid.bodyType = RigidbodyType2D.Kinematic;
+            rigid.interpolation = RigidbodyInterpolation2D.None;
         }
     }
 
@@ -233,13 +235,14 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.CompareTag("Rope"))
         {
-            col.gameObject.GetComponent<LineCutter>().CutRope();
+            col.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
         }
     }
 
 
     public void End()
     {
-        Destroy(gameObject);
+        if(gameObject)
+            Destroy(gameObject);
     }
 }

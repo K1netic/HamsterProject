@@ -6,30 +6,29 @@ using UnityEngine;
 public class CircularPlatform : MonoBehaviour {
 
 	[SerializeField]
-	GameObject pivot;
-	[SerializeField]
 	float moveSpeed;
-    [SerializeField]
-    float rigidBodyMass = 1;
 
     Rigidbody2D rigid;
-    Vector2 pivotPos;
-    public Vector2 initialVelocity;
-    public float force;
+    Vector3 pivotPos;
+    Vector3 vectorToTarget;
+    float t;
+    float radius;
+    float angle;
 
     void Start () {
-		pivotPos = pivot.transform.position;
+        pivotPos = transform.parent.transform.position;
 		rigid = GetComponent<Rigidbody2D>();
-
-        initialVelocity = moveSpeed * Vector2.Perpendicular(pivotPos - (Vector2)transform.position).normalized;
-
-        force = Mathf.Pow(initialVelocity.magnitude, 2.0f) * Vector2.Distance(pivotPos,(Vector2)transform.position) / rigidBodyMass;
+        radius = Vector2.Distance(pivotPos, transform.position);
     }
 	
 	void FixedUpdate () {
-        rigid.AddForce((pivotPos - (Vector2)transform.position).normalized * force);
+        Debug.DrawRay(transform.position, Vector3.up * .1f, Color.red,10000);
+        t += Time.deltaTime;
+        rigid.MovePosition(pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0));
 
-        Debug.DrawRay(transform.position, Vector2.Perpendicular(pivotPos - (Vector2)transform.position).normalized,Color.red,1000);
+        vectorToTarget = pivotPos - transform.position;
+        angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        rigid.MoveRotation(angle);
     }
 
     

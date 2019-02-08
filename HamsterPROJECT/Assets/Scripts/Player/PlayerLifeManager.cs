@@ -104,7 +104,7 @@ public class PlayerLifeManager : MonoBehaviour {
             {
                 if (hookScript.hooked)
                 {
-                    hookScript.DisableRope();
+                    hookScript.DisableRope(false);
                 }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
@@ -126,7 +126,24 @@ public class PlayerLifeManager : MonoBehaviour {
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
                     case "Laser":
-                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
+                        switch (laserScript.side)
+                        {
+                            case LaserColliderDetection.LaserSide.bot:
+                                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.top:
+                                playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.right:
+                                playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.left:
+                                playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     default:
                         break;
@@ -134,7 +151,10 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             playerHP -= damage;
             //Rend le player invulnérable pendant recoveryTime secondes
-            Invoke("ResetRecovery", recoveryTime);
+            if(attacker.CompareTag("Hook"))
+                Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
+            else
+                Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
             InvokeRepeating("Flashing", 0, flashingRate);
 
@@ -197,14 +217,31 @@ public class PlayerLifeManager : MonoBehaviour {
             {//Le joueur retouche le laser alors qu'il est encore en recovery
                 if (hookScript.hooked)
                 {
-                    hookScript.DisableRope();
+                    hookScript.DisableRope(false);
                 }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                 playerMovement.rigid.velocity = Vector3.zero;
                 Invoke("UnlockMovement", knockBackTime);
-                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                LaserColliderDetection laserScript = col.gameObject.GetComponent<LaserColliderDetection>();
+                switch (laserScript.side)
+                {
+                    case LaserColliderDetection.LaserSide.bot:
+                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.top:
+                        playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.right:
+                        playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.left:
+                        playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -216,7 +253,7 @@ public class PlayerLifeManager : MonoBehaviour {
         {
             if (hookScript.hooked)
             {
-                hookScript.DisableRope();
+                hookScript.DisableRope(false);
             }
             LaserHitFX(col.GetContact(0).point);
             TakeDamage(laserDamage, col.gameObject, true);

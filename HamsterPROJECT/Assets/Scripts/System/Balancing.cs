@@ -19,6 +19,7 @@ public class Balancing : MonoBehaviour {
     public float timeBtwShots;
 	public float TimeHooked = 8f;
     public float lineWidth = 0.05f;
+    public float timeRopeCut = 1.5f;
 
     [Header("PLAYER MOVEMENT")]
     /*public float fastFallSpeed = 200;
@@ -49,6 +50,8 @@ public class Balancing : MonoBehaviour {
     public float dashTime;
     public float dashForce;
     public float dashCDTime;
+    public float dragEndOfDash = 20;
+    public bool dashRecoveryWithHook;
 
     [Header("VIBRATIONS")]
 	public float lightRumble = 0.1f;

@@ -14,8 +14,6 @@ public class LaserSize : MonoBehaviour {
     [SerializeField]
     LineRenderer glow;
     [SerializeField]
-    LineRenderer ring;
-    [SerializeField]
     ParticleSystem sparks;
     [SerializeField]
     ParticleSystem endLaser;
@@ -39,7 +37,6 @@ public class LaserSize : MonoBehaviour {
         startPos = start.transform.position;
         center.SetPosition(0, transform.InverseTransformPoint(startPos));
         glow.SetPosition(0, transform.InverseTransformPoint(startPos));
-        ring.SetPosition(0, transform.InverseTransformPoint(startPos));
         pShape = sparks.GetComponent<ParticleSystem>().shape;
         pEmission = sparks.GetComponent<ParticleSystem>().emission;
         startRate = pEmission.rateOverTime.constantMax;
@@ -70,7 +67,6 @@ public class LaserSize : MonoBehaviour {
             }
             center.SetPosition(1, transform.InverseTransformPoint(raycast.point));
             glow.SetPosition(1, transform.InverseTransformPoint(raycast.point));
-            ring.SetPosition(1, transform.InverseTransformPoint(raycast.point));
 
             coll.size = new Vector3(Vector3.Distance(center.GetPosition(0), center.GetPosition(1)), coll.size.y, 0);
             coll.transform.position = transform.TransformPoint((center.GetPosition(0) + center.GetPosition(1)) / 2);
@@ -83,7 +79,6 @@ public class LaserSize : MonoBehaviour {
         {
             center.SetPosition(1, -start.transform.right * 10);
             glow.SetPosition(1, -start.transform.right * 10);
-            ring.SetPosition(1, -start.transform.right * 10);
         }
     }
 }
