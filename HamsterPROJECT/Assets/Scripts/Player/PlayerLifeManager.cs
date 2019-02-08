@@ -145,7 +145,7 @@ public class PlayerLifeManager : MonoBehaviour {
 				{
 					GameManager.playersKills[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
 					// Counting kills for the player score if GameMode is set to Kills
-					if (GameManager.gameModeType == GameManager.gameModes.Kills)
+					if (GameManager.gameModeType == GameManager.gameModes.Deathmatch)
 					{
 						GameManager.playersScores[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
 					}
