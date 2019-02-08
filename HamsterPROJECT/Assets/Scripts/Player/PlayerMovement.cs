@@ -174,18 +174,25 @@ public class PlayerMovement : MonoBehaviour
             switch (currentState)
             {
                 case State.hooked:
-                    //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
-                    //Test si le joueur est dans un des 2 triangles de gauche ou de droite
-                    if ((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
-                    || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
-                    {//LEFT & RIGHT
-					rigid.AddForce(new Vector2(0, playerInputDevice.LeftStickY.Value) * hookMovementForce);
+                    if(speed < 10)
+                    {
+                        rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);
                     }
-                    //Test si le joueur est en haut ou en bas
-                    else if ((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
-                    || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
-                    {//BOT & TOP
-					rigid.AddForce(new Vector2(playerInputDevice.LeftStickX.Value, 0) * hookMovementForce);
+                    else
+                    {
+                        //Il faut imaginer l'espace découpé selon les diagonales avec comme centre la tete de grappin, cela découpe alors l'espace en 4 triangles
+                        //Test si le joueur est dans un des 2 triangles de gauche ou de droite
+                        if ((jointDirection.x >= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f)
+                        || (jointDirection.x <= 0 && jointDirection.y >= -.5f && jointDirection.y <= .5f))
+                        {//LEFT & RIGHT
+                            rigid.AddForce(new Vector2(0, playerInputDevice.LeftStickY.Value) * hookMovementForce);
+                        }
+                        //Test si le joueur est en haut ou en bas
+                        else if ((jointDirection.y >= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f)
+                        || (jointDirection.y <= 0 && jointDirection.x >= -.5f && jointDirection.x <= .5f))
+                        {//BOT & TOP
+                            rigid.AddForce(new Vector2(playerInputDevice.LeftStickX.Value, 0) * hookMovementForce);
+                        }
                     }
                     break;
                 case State.inAir:

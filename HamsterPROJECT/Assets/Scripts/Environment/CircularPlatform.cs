@@ -22,11 +22,10 @@ public class CircularPlatform : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
-        Debug.DrawRay(transform.position, Vector3.up * .1f, Color.red,10000);
         t += Time.deltaTime;
         rigid.MovePosition(pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0));
 
-        vectorToTarget = pivotPos - transform.position;
+        vectorToTarget = transform.position - pivotPos;
         angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
         rigid.MoveRotation(angle);
     }
