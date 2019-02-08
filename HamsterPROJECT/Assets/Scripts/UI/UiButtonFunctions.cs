@@ -9,7 +9,6 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] string previousScene;
 	[SerializeField] string sceneToLoadOnClick;
 	[SerializeField] GameManager.gameModes gameModeToSet;
-	[SerializeField] Text textToChange;
 	AudioManager mngr;
 	LevelSelection lvlSelect;
 
@@ -21,9 +20,9 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		// Update text to match GameManager value
-		if (textToChange != null)
-			textToChange.text = GameManager.rounds.ToString ();
+//		// Update text to match GameManager value
+//		if (textToChange != null)
+//			textToChange.text = GameManager.rounds.ToString ();
 	}
 
 	public void LoadScene()
@@ -36,11 +35,6 @@ public class UiButtonFunctions : MonoBehaviour {
 	public void Quit()
 	{
 		Application.Quit ();
-	}
-
-	public void SetGameMode()
-	{
-		GameManager.gameModeType = gameModeToSet;
 	}
 
 	public void ChangeValue()
@@ -75,34 +69,54 @@ public class UiButtonFunctions : MonoBehaviour {
 		SceneManager.LoadScene (GameManager.lastLevelPlayed);
 	}
 
-	public void HighlightSound()
+	public void Select()
 	{
+		this.GetComponent<Text> ().color = new Color (216, 191, 0);
+		this.transform.GetChild (0).gameObject.SetActive (true);
 		//mngr.PlaySound ("UI_highlight", //mngr.UIsource);
 	}
 
-	public void ClickSound()
+	public void Deselect()
+	{
+		this.GetComponent<Text> ().color = new Color (255, 255, 255);
+		this.transform.GetChild (0).gameObject.SetActive (false);
+		//mngr.PlaySound ("UI_highlight", //mngr.UIsource);
+	}
+
+	// Utilisé pour les éléments qui ont deux flèches de sélection
+	public void TwoWaySelect()
+	{
+		this.GetComponent<Text> ().color = new Color (216, 191, 0);
+		this.transform.GetChild (0).gameObject.SetActive (true);
+		this.transform.GetChild (1).gameObject.SetActive (true);
+	}
+
+	// Utilisé pour les éléments qui ont deux flèches de sélection
+	public void TwoWayDeselect()
+	{
+		this.GetComponent<Text> ().color = new Color (255, 255, 255);
+		this.transform.GetChild (0).gameObject.SetActive (false);
+		this.transform.GetChild (1).gameObject.SetActive (false);
+	}
+
+	// Utilisé au changement de valeur sur un élément à deux flèches de sélection (ex : game mode)
+	public void ChangeGameMode()
+	{
+		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
+		{
+			GameManager.gameModeType = GameManager.gameModes.Deathmatch;
+			this.GetComponent<Text> ().text = GameManager.gameModeType.ToString ();
+		}
+		else
+		{
+			GameManager.gameModeType = GameManager.gameModes.LastManStanding;
+			this.GetComponent<Text> ().text = GameManager.gameModeType.ToString ();
+		}
+	}
+
+	public void Click()
 	{
 		//mngr.PlaySound ("UI_validate", //mngr.UIsource);
-	}
-
-	public void PickSound()
-	{
-		//mngr.PlaySound ("UI_pick", //mngr.UIsource);
-	}
-
-	public void HighlightPlusSound()
-	{
-		//mngr.PlaySound ("UI_highlightPlus", //mngr.UIsource);
-	}
-
-	public void ValidatePlusSound()
-	{
-		//mngr.PlaySound ("UI_validatePlus", //mngr.UIsource);
-	}
-
-	public void GameLaunchSound()
-	{
-		//mngr.PlaySound ("UI_gameLaunch", //mngr.UIsource);
 	}
 
 	// Load a series of rounds (pack)

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	public enum gameModes
 	{
 		LastManStanding,
-		Kills
+		Deathmatch
 	}
 
 	public static int nbOfPlayers = 4;

@@ -87,7 +87,7 @@ public class MatchEnd : MonoBehaviour {
 		}
 
 		// Stop the game if one player reached the targeted number of kills
-		if (GameManager.gameModeType == GameManager.gameModes.Kills && 
+		if (GameManager.gameModeType == GameManager.gameModes.Deathmatch && 
 			System.Array.IndexOf(GameManager.playersScores, GameManager.rounds) != -1)
 		{
 			StartCoroutine(DisplayScore ());
@@ -120,7 +120,7 @@ public class MatchEnd : MonoBehaviour {
 			}
 		}
 			
-		if (GameManager.gameModeType == GameManager.gameModes.Kills && InputManager.ActiveDevice.Action1)
+		if (GameManager.gameModeType == GameManager.gameModes.Deathmatch && InputManager.ActiveDevice.Action1)
 		{
 			for (int i = 0; i < GameManager.playersActive.Length; i ++)
 			{
