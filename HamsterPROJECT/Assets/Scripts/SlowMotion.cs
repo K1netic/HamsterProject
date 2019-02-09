@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class SlowMotion : MonoBehaviour {
 
-    public float slowdownFactor = 0.05f;
-    public float slowdownLength = 2f;
+	[SerializeField]
+    float slowdownFactor = 0.5f;
+	[SerializeField]
+    float slowdownLength = 0.18f;
+	float TimeEx;
 
-    // Update is called once per frame
-    void Update()
-    {
-        Time.timeScale += (1f / slowdownLength) * Time.unscaledDeltaTime;
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
-    }
+	void Start ()
+	{
+		TimeEx = Time.fixedDeltaTime;
+	}
 
     public void DoSlowmotion()
     {
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
+		StartCoroutine (UndoSlowmotion());
     }
+
+	IEnumerator UndoSlowmotion()
+	{
+		yield return new WaitForSecondsRealtime (0.18f);
+		Time.fixedDeltaTime = TimeEx;
+		Time.timeScale = 1;
+	}
+
 }
