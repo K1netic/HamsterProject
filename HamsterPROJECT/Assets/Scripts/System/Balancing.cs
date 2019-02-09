@@ -45,6 +45,7 @@ public class Balancing : MonoBehaviour {
     public float knockBackShieldHit = 10;
     public float knockBackLaser = 10;
     public float knockBackNuke = 15;
+    public float freezeFrameDuration = 0.18f;
 
     [Header("Dash")]
     public float dashTime;

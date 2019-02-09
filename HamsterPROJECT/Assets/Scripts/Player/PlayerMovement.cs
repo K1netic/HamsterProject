@@ -182,7 +182,8 @@ public class PlayerMovement : MonoBehaviour
                 case State.hooked:
                     if(speed < 10)
                     {
-                        rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);
+                        if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
+                            rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);
                     }
                     else
                     {

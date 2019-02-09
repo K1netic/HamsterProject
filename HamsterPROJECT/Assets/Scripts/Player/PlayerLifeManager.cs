@@ -46,7 +46,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackNuke;
     float deathRadius;
     Collider2D[] deathOverlap = new Collider2D[3];
-    IEnumerator knockBackCoroutine;
+    float freezeFrameDuration;
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -68,6 +68,7 @@ public class PlayerLifeManager : MonoBehaviour {
         criticalSpeed = balanceData.criticalSpeed;
         knockBackNuke = balanceData.knockBackNuke;
         deathRadius = balanceData.deathRadius;
+        freezeFrameDuration = balanceData.freezeFrameDuration;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -107,8 +108,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     hookScript.DisableRope(false);
                 }
-                knockBackCoroutine = DoKnockBack(attacker);
-                StartCoroutine(knockBackCoroutine);
+                StartCoroutine(DoKnockBack(attacker));
             }
             playerHP -= damage;
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -155,7 +155,7 @@ public class PlayerLifeManager : MonoBehaviour {
         playerMovement.rigid.velocity = Vector3.zero;
         playerMovement.rigid.gravityScale = 0;
         playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(freezeFrameDuration);
         Invoke("UnlockMovement", knockBackTime);
         playerMovement.rigid.gravityScale = playerMovement.gravity;
         //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué

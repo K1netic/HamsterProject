@@ -82,6 +82,7 @@ public class Hook : MonoBehaviour {
     PolygonCollider2D shieldCollider ;
     Texture rope;
     float criticalSpeed;
+    float freezeFrameDuration;
 
     //COLOR
     Color colorRope;
@@ -123,6 +124,7 @@ public class Hook : MonoBehaviour {
         arrowDamage = balanceData.arrowDamage;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
+        freezeFrameDuration = balanceData.freezeFrameDuration;
 
         timeRemaining = timeHooked;
 
@@ -552,7 +554,7 @@ public class Hook : MonoBehaviour {
             //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
             if (collision.gameObject.CompareTag("Arrow"))
             {
-                ArrowHit(collision);
+                StartCoroutine(ArrowHit(collision));
                 HitFX(collision.GetContact(0).point, collision.gameObject);
             }
             //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
@@ -563,7 +565,7 @@ public class Hook : MonoBehaviour {
                 {
                     if(collisionFail.collider.gameObject.CompareTag("Arrow"))
                     {
-                        ArrowHit(collisionFail.collider);
+                        StartCoroutine(ArrowHit(collisionFail.collider));
                         HitFX(collisionFail.point, collisionFail.collider.gameObject);
                     }
                 }
@@ -573,6 +575,7 @@ public class Hook : MonoBehaviour {
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
+                    StartCoroutine(FreezeAttacker());
 					StartCoroutine (CancelVibration (Vibrations.PlayVibration ("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                 }
  
@@ -625,11 +628,28 @@ public class Hook : MonoBehaviour {
         Invoke("UnlockMovement", knockBackTime);
     }
 
-    void ArrowHit(Collision2D collision)
+    IEnumerator FreezeAttacker()
+    {
+        float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
+        Vector2 tmpVelocity = playerMovement.rigid.velocity;
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        playerMovement.rigid.velocity = tmpVelocity;
+        playerMovement.rigid.angularVelocity = tmpAngularVelocity;
+    }
+
+    IEnumerator ArrowHit(Collision2D collision)
     {
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
         switch (collision.gameObject.GetComponent<Hook>().currentState)
         {
             case HookState.Arrow:
@@ -648,11 +668,15 @@ public class Hook : MonoBehaviour {
         Invoke("UnlockMovement", knockBackTime);
     }
 
-    void ArrowHit(Collider2D collision)
+    IEnumerator ArrowHit(Collider2D collision)
     {
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
         switch (collision.gameObject.GetComponent<Hook>().currentState)
         {
             case HookState.Arrow:
