@@ -18,6 +18,7 @@ public class MatchStart : MonoBehaviour {
 	// Players 
 	[SerializeField] GameObject[] Players;
 	string plyrNmbr;
+    int howManyPlayers = 0;
 
     public List<Transform> spawnPoints = new List<Transform>();
 
@@ -30,7 +31,8 @@ public class MatchStart : MonoBehaviour {
 		{
 			if (GameManager.playersActive [i] == true)
 			{
-				GameManager.playersAlive [i] = true;
+                howManyPlayers++;
+                GameManager.playersAlive [i] = true;
 			}
 		}
 
@@ -65,7 +67,7 @@ public class MatchStart : MonoBehaviour {
 
 		else
 		{
-            if(GameManager.playersActive.Length == 2)
+            if(howManyPlayers == 2)
             {
                 // Instantiate Players depending on which were validated in the character selection screen
                 for (int i = 0; i < GameManager.playersActive.Length; i++)
@@ -111,25 +113,32 @@ public class MatchStart : MonoBehaviour {
         GameObject inst = GameManager.playersCharacters[playerIndex];
         int j = Random.Range(0, spawnPoints.Count);
         inst.transform.position = spawnPoints[j].transform.position;
-        spawnPoints.Remove(spawnPoints[j]);
-        switch (j)
+        if(playerIndex == 0)
         {
-            case 0:
-                spawnPoints.Remove(spawnPoints[1]);
-                break;
-            case 1:
-                spawnPoints.Remove(spawnPoints[0]);
-                spawnPoints.Remove(spawnPoints[2]);
-                break;
-            case 2:
-                spawnPoints.Remove(spawnPoints[3]);
-                spawnPoints.Remove(spawnPoints[1]);
-                break;
-            case 3:
-                spawnPoints.Remove(spawnPoints[2]);
-                break;
-            default:
-                break;
+            switch (j)
+            {
+                case 0:
+                    spawnPoints.Remove(spawnPoints[1]);
+                    spawnPoints.Remove(spawnPoints[0]);
+                    break;
+                case 1:
+                    spawnPoints.Remove(spawnPoints[2]);
+                    spawnPoints.Remove(spawnPoints[1]);
+                    spawnPoints.Remove(spawnPoints[0]);
+                    
+                    break;
+                case 2:
+                    spawnPoints.Remove(spawnPoints[3]);
+                    spawnPoints.Remove(spawnPoints[2]);
+                    spawnPoints.Remove(spawnPoints[1]);
+                    break;
+                case 3:
+                    spawnPoints.Remove(spawnPoints[3]);
+                    spawnPoints.Remove(spawnPoints[2]);
+                    break;
+                default:
+                    break;
+            }
         }
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
         GameObject newPlayer = Instantiate(inst);
