@@ -46,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Vector2 playerDirection;
     float dragEndOfDash;
+    [HideInInspector]
+    public float gravity;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -78,6 +80,8 @@ public class PlayerMovement : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer>().sprite;
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
+
+        gravity = rigid.gravityScale;
 
         switch (playerNumber)
         {
@@ -143,7 +147,9 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DoDash()
     {
         rigid.velocity = Vector3.zero;
+        rigid.gravityScale = 0;
         yield return new WaitForSeconds(.1f);
+        rigid.gravityScale = gravity;
         rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
         InvokeRepeating("DashEffect", 0, 0.04f);
         Invoke("UnlockMovementDash", dashTime);

@@ -46,6 +46,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackNuke;
     float deathRadius;
     Collider2D[] deathOverlap = new Collider2D[3];
+    IEnumerator knockBackCoroutine;
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -106,48 +107,8 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     hookScript.DisableRope(false);
                 }
-                //Bloque le mouvement du joueur pour ne pas override le knockback
-                playerMovement.lockMovement = true;
-                //Calcul la direction du knockback
-                Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
-                //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-                playerMovement.rigid.velocity = Vector3.zero;
-                Invoke("UnlockMovement", knockBackTime);
-                //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
-                //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
-                switch (attacker.tag)
-                {
-                    //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
-                    case "Arrow":
-                        playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                        + attacker.GetComponent<Hook>().playerMovement.speed /2), ForceMode2D.Impulse);
-                        break;
-                    case "Hook":
-                        playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                        break;
-                    case "Laser":
-                        LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
-                        switch (laserScript.side)
-                        {
-                            case LaserColliderDetection.LaserSide.bot:
-                                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
-                                break;
-                            case LaserColliderDetection.LaserSide.top:
-                                playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
-                                break;
-                            case LaserColliderDetection.LaserSide.right:
-                                playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
-                                break;
-                            case LaserColliderDetection.LaserSide.left:
-                                playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                knockBackCoroutine = DoKnockBack(attacker);
+                StartCoroutine(knockBackCoroutine);
             }
             playerHP -= damage;
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -181,6 +142,56 @@ public class PlayerLifeManager : MonoBehaviour {
 			// Apply a lighter/heavier vibration depending on the damage taken
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
+        }
+    }
+
+    IEnumerator DoKnockBack(GameObject attacker)
+    {
+        //Bloque le mouvement du joueur pour ne pas override le knockback
+        playerMovement.lockMovement = true;
+        //Calcul la direction du knockback
+        Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
+        //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(.1f);
+        Invoke("UnlockMovement", knockBackTime);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
+        //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
+        switch (attacker.tag)
+        {
+            //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
+            case "Arrow":
+                playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
+                + attacker.GetComponent<Hook>().playerMovement.speed / 2), ForceMode2D.Impulse);
+                break;
+            case "Hook":
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+                break;
+            case "Laser":
+                LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
+                switch (laserScript.side)
+                {
+                    case LaserColliderDetection.LaserSide.bot:
+                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.top:
+                        playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.right:
+                        playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    case LaserColliderDetection.LaserSide.left:
+                        playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
         }
     }
 

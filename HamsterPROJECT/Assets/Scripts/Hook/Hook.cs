@@ -241,11 +241,12 @@ public class Hook : MonoBehaviour {
         //Test si le jeu est en pause
 		if (!isFrozen)
 		{
-            //Change entre la flèche et le bouclier
-			if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
-				ArrowState();
-			}
-            UpdateArrow();
+            if (!playerMovement.lockMovement)
+                //Change entre la flèche et le bouclier
+		        if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
+			        ArrowState();
+		        }
+                UpdateArrow();
 		}
 
         //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
