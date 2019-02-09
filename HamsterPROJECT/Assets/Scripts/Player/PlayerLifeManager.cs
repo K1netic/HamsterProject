@@ -108,7 +108,49 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     hookScript.DisableRope(false);
                 }
-                StartCoroutine(DoKnockBack(attacker));
+                //Bloque le mouvement du joueur pour ne pas override le knockback
+                playerMovement.lockMovement = true;
+                //Calcul la direction du knockback
+                Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
+                //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+                playerMovement.rigid.velocity = Vector3.zero;
+                Invoke("UnlockMovement", knockBackTime);
+                //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
+                //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
+                switch (attacker.tag)
+                {
+                    //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
+                    case "Arrow":
+                        playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
+                        + attacker.GetComponent<Hook>().playerMovement.speed / 2), ForceMode2D.Impulse);
+                        break;
+                    case "Hook":
+                        playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
+                        break;
+                    case "Laser":
+                        LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
+                        switch (laserScript.side)
+                        {
+                            case LaserColliderDetection.LaserSide.bot:
+                                playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.top:
+                                playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.right:
+                                playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            case LaserColliderDetection.LaserSide.left:
+                                playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                //StartCoroutine(DoKnockBack(attacker));
             }
             playerHP -= damage;
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -221,6 +263,7 @@ public class PlayerLifeManager : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.CompareTag("Laser"))
         {
+            GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
             LaserHitFX(col.GetContact(0).point);
             if (!inRecovery)
                 TakeDamage(laserDamage, col.gameObject, true);

@@ -211,6 +211,7 @@ public class Projectile : MonoBehaviour {
             //Inflige des dégâts et détruit le projectile s'il touche un player
             if (collision.gameObject.CompareTag("Player"))
             {
+                GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                 PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
                 //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                 foeScript.HitFX(collision.GetContact(0).point, 0);
