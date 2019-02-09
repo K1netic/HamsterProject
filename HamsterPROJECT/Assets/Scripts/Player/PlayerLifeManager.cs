@@ -263,7 +263,6 @@ public class PlayerLifeManager : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col){
         if (col.gameObject.CompareTag("Laser"))
         {
-            GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
             LaserHitFX(col.GetContact(0).point);
             if (!inRecovery)
                 TakeDamage(laserDamage, col.gameObject, true);
