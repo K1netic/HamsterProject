@@ -251,6 +251,11 @@ Prefab:
       propertyPath: TimeHooked
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+        type: 2}
+      propertyPath: playerMaxHP
+      value: 1000000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
   m_IsPrefabAsset: 0
@@ -685,6 +690,76 @@ Prefab:
     - target: {fileID: 4519618289207284, guid: 84c9bbc7d57fd4e4db22a0e56683db39, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedColor.a
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key1.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key1.g
+      value: 0.2901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key1.a
+      value: 0.29411766
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.atime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.m_NumAlphaKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114051538969560032, guid: 84c9bbc7d57fd4e4db22a0e56683db39,
+        type: 2}
+      propertyPath: woundedGradient.key0.b
+      value: 0.31570005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84c9bbc7d57fd4e4db22a0e56683db39, type: 2}
