@@ -48,6 +48,13 @@ public class PlayerLifeManager : MonoBehaviour {
     Collider2D[] deathOverlap = new Collider2D[3];
     float freezeFrameDuration;
 
+    //Wounded animation
+    Color startColor = new Color(1, 1, 1, 1);
+    Color woundedColor = new Color(1, 1, 1, 0.49f);
+    bool wounded;
+    Gradient startGradient;
+    Gradient woundedGradient = new Gradient();
+
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
 
@@ -75,8 +82,14 @@ public class PlayerLifeManager : MonoBehaviour {
 
         trail = GetComponent<TrailRenderer>();
 		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();
+        startGradient = GetComponent<TrailRenderer>().colorGradient;
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0].alpha = .157f;
+        alphaKeys[0].time = 0;
+        alphaKeys[1] = startGradient.alphaKeys[1];
+        woundedGradient.SetKeys(startGradient.colorKeys, alphaKeys);
 
-		FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
+        FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
     }
 
     // Update is called once per frame
@@ -336,9 +349,23 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Flashing()
 	{ 
-		trail.enabled = !trail.enabled;
-        sprite.enabled = !sprite.enabled;
-        spriteArrow.enabled = !spriteArrow.enabled;
+		//trail.enabled = !trail.enabled;
+        //sprite.enabled = !sprite.enabled;
+        //spriteArrow.enabled = !spriteArrow.enabled;
+        if (wounded)
+        {
+            sprite.color = startColor;
+            spriteArrow.color = startColor;
+            trail.colorGradient = startGradient;
+            wounded = false;
+        }
+        else
+        {
+            sprite.color = woundedColor;
+            spriteArrow.color = woundedColor;
+            trail.colorGradient = woundedGradient;
+            wounded = true;
+        }
     }
 
     void ResetRecovery()
@@ -346,9 +373,13 @@ public class PlayerLifeManager : MonoBehaviour {
         //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke("Flashing");
         inRecovery = false;
-		sprite.enabled = true;
-		trail.enabled = true;
-        spriteArrow.enabled = true;
+        //sprite.enabled = true;
+        //trail.enabled = true;
+        //spriteArrow.enabled = true;
+        trail.colorGradient = startGradient;
+        sprite.color = startColor;
+        spriteArrow.color = startColor;
+        
     }
 
     void Dead()
