@@ -16,7 +16,7 @@ public class TitleScreen : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if (InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
+		if (InputManager.CommandWasPressed)
 		{
 			StartCoroutine(TitleScreenValidation());
 		}

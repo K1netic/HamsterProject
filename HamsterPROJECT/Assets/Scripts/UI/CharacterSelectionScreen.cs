@@ -29,8 +29,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		// Load Characters
 		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
 		GameManager.Characters = new List<GameObject>(tab);
-		nbCharactersAvailable = GameManager.Characters.Count -1;
-		selectableCharacters = new bool[GameManager.Characters.Count];
+		nbCharactersAvailable = GameManager.nbOfCharacters;
+		selectableCharacters = new bool[GameManager.nbOfCharacters];
 
 		selectableCharacters.SetValue (true, 0);
 		selectableCharacters.SetValue (true, 1);
@@ -50,7 +50,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = GameManager.Characters [panels [i].characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().activatedCharacterSprites[panels[i].characterSelected];
 				panels[i].device = GameManager.playersInputDevices[i];
 			}
 		}

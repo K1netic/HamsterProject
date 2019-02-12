@@ -7,35 +7,50 @@ using InControl;
 
 public class PlayerSelectionPanel : MonoBehaviour {
 
+	// Panel state
 	public enum SelectionPanelState {Deactivated, Activated, Validated};
 	public SelectionPanelState state;
-	public int characterSelected = 0;
-	 
-	[SerializeField] Image backgroundImg;
-	[SerializeField] public Image characterSprite;
+
+	// Collections of images to load and apply on various changes
+	Sprite[] validatedCharacterSprites = new Sprite[GameManager.nbOfCharacters];
+	public Sprite[] activatedCharacterSprites = new Sprite[GameManager.nbOfCharacters];
+	Sprite[] validatedBorders = new Sprite[GameManager.nbOfCharacters];
+	Sprite deactivatedBorder;
+	Sprite activatedBorder;
+
+	// Images to activate/deactive which receive the collections of images
 	[SerializeField] Image notAvailable;
+	[SerializeField] Image border;
+	public Image characterSprite;
+	[SerializeField] GameObject guid;
+	GameObject leftArrow;
+	GameObject rightArrow;
 
+	// Character selection
+	[HideInInspector] public int characterSelected = 0;
 	bool blockStickMovement = false;
-
 	CharacterSelectionScreen select;
-	public GameObject validatedCharacter;
+	[HideInInspector] public GameObject validatedCharacter;
 
 	//Audio
 	AudioManager mngr;
 	bool validate = false;
 	bool activate = false;
 
-	bool coroutineLimiter = false;
-
 	public InputDevice device;
 
 	void Start()
 	{
 		//mngr = FindObjectOfType<AudioManager> ();
-		backgroundImg = this.GetComponent<Image> ();
 		state = SelectionPanelState.Deactivated;
-
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
+		activatedCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ActivatedCharacters");
+		validatedCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
+		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
+		deactivatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordgray");
+		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
+		leftArrow = guid.transform.GetChild (0).gameObject;
+		rightArrow = guid.transform.GetChild (1).gameObject;
 	}
 
 	// Update is called once per frame
@@ -96,25 +111,32 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		{
 		case SelectionPanelState.Deactivated:
 			activate = false;
-			backgroundImg.color = Color.gray;
 			characterSprite.gameObject.SetActive(false);
+			guid.SetActive(true);
+			leftArrow.SetActive(false);
+			rightArrow.SetActive(false);
+			border.sprite = deactivatedBorder;
+			notAvailable.gameObject.SetActive (false);
 			break;
 
 		case SelectionPanelState.Activated:
 			validate = false;
 			PlayActivationSound();
-			backgroundImg.color = Color.gray;
-			//Hiding "ready" text
-			this.transform.GetChild (1).gameObject.SetActive (false);
-			//Activate character selection
 			characterSprite.gameObject.SetActive(true);
+			guid.SetActive(true);
+			leftArrow.SetActive(true);
+			rightArrow.SetActive(true);
+			characterSprite.sprite = activatedCharacterSprites[characterSelected];
+			border.sprite = activatedBorder;
+			//Activate character selection
 			CharacterSelection();
 			break;
 
 		case SelectionPanelState.Validated:
 			PlayValidateSound();
-			backgroundImg.color = Color.green;
-			this.transform.GetChild (1).gameObject.SetActive (true);
+			guid.SetActive(false);
+			characterSprite.sprite = validatedCharacterSprites[characterSelected];
+			border.sprite = validatedBorders[characterSelected];
 			break;
 		}
 		#endregion
@@ -130,7 +152,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		if (device.LeftStickX.Value >= 0.8f && !blockStickMovement)
 		{
-			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable)
+			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable - 1)
 			{
 				characterSelected += 1;
 			}
@@ -138,7 +160,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				characterSelected = 0;
 			}
-			characterSprite.sprite = GameManager.Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			characterSprite.sprite = activatedCharacterSprites[characterSelected];
 			blockStickMovement = true;
 		} 
 
@@ -150,9 +172,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			}
 			else
 			{
-				characterSelected = CharacterSelectionScreen.nbCharactersAvailable;
+				characterSelected = CharacterSelectionScreen.nbCharactersAvailable - 1;
 			}
-			characterSprite.sprite = GameManager.Characters[characterSelected].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+			characterSprite.sprite = activatedCharacterSprites[characterSelected];
 			blockStickMovement = true;
 		} 
 

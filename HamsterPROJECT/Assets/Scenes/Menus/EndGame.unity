@@ -384,7 +384,6 @@ MonoBehaviour:
   previousScene: 
   sceneToLoadOnClick: CharacterSelection
   gameModeToSet: 0
-  textToChange: {fileID: 0}
 --- !u!114 &453194298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,8 +478,8 @@ RectTransform:
   m_Father: {fileID: 790113736}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.125, y: 0}
-  m_AnchorMax: {x: 0.275, y: 1}
+  m_AnchorMin: {x: 0.025, y: 0}
+  m_AnchorMax: {x: 0.125, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -589,7 +588,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EXIT TO MENU
+  m_Text: EXIT TO TITLE SCREEN
 --- !u!114 &790113738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,7 +651,6 @@ MonoBehaviour:
   previousScene: 
   sceneToLoadOnClick: Title
   gameModeToSet: 0
-  textToChange: {fileID: 0}
 --- !u!114 &790113741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,7 +987,6 @@ MonoBehaviour:
   previousScene: 
   sceneToLoadOnClick: MapSelection
   gameModeToSet: 0
-  textToChange: {fileID: 0}
 --- !u!114 &1039810026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,7 +1437,6 @@ MonoBehaviour:
   previousScene: 
   sceneToLoadOnClick: 
   gameModeToSet: 0
-  textToChange: {fileID: 0}
 --- !u!114 &1561214073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1778,7 +1774,6 @@ MonoBehaviour:
   previousScene: 
   sceneToLoadOnClick: GameModes
   gameModeToSet: 0
-  textToChange: {fileID: 0}
 --- !u!114 &2095584378
 MonoBehaviour:
   m_ObjectHideFlags: 0

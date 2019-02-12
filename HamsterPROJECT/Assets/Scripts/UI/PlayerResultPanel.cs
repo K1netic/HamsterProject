@@ -8,6 +8,7 @@ public class PlayerResultPanel : MonoBehaviour {
 
 	public int playerResultPanelID;
 	public Image background;
+	public Image winBackground;
 	Image characterSprite;
 	[SerializeField] Text scoreText;
 	[SerializeField] Text killsText;
@@ -23,13 +24,12 @@ public class PlayerResultPanel : MonoBehaviour {
 			this.gameObject.SetActive (false);
 
 		characterSprite = this.transform.GetChild (1).GetComponent<Image>();
+		background = this.GetComponent<Image> ();
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		background = this.GetComponent<Image> ();
-
 		if (this.gameObject.activeSelf)
 		{
 			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID -1].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
