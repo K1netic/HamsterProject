@@ -7,9 +7,8 @@ using UnityEngine.SceneManagement;
 public class PlayerResultPanel : MonoBehaviour {
 
 	public int playerResultPanelID;
-	public Image background;
-	public Image winBackground;
-	Image characterSprite;
+	public Image borders;
+	[SerializeField] Image characterSprite;
 	[SerializeField] Text scoreText;
 	[SerializeField] Text killsText;
 	[SerializeField] Text deathsText;
@@ -18,13 +17,10 @@ public class PlayerResultPanel : MonoBehaviour {
 	void Awake()
 	{
 		// Determining if the panel must be activated (i.e. the corresponding player was registered)
-		if (GameManager.playersActive [playerResultPanelID - 1])
+		if (GameManager.playersActive [playerResultPanelID])
 			this.gameObject.SetActive (true);
 		else 
 			this.gameObject.SetActive (false);
-
-		characterSprite = this.transform.GetChild (1).GetComponent<Image>();
-		background = this.GetComponent<Image> ();
 	}
 
 	// Use this for initialization
@@ -32,13 +28,13 @@ public class PlayerResultPanel : MonoBehaviour {
 	{
 		if (this.gameObject.activeSelf)
 		{
-			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID -1].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
+			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
 		}
 
 		// Text infos
-		scoreText.text = "Score : " + GameManager.playersScores [playerResultPanelID - 1].ToString ();
-		killsText.text = "Kills : " + GameManager.playersKills [playerResultPanelID - 1].ToString ();
-		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID - 1].ToString ();
-		selfDestructsText.text = "Self : " + GameManager.playersSelfDestructs [playerResultPanelID - 1].ToString ();
+		scoreText.text = "Score : " + GameManager.playersScores [playerResultPanelID].ToString ();
+		killsText.text = "Kills : " + GameManager.playersKills [playerResultPanelID].ToString ();
+		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID ].ToString ();
+		selfDestructsText.text = "Self : " + GameManager.playersSelfDestructs [playerResultPanelID].ToString ();
 	}
 }

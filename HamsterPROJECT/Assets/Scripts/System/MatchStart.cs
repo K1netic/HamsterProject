@@ -37,8 +37,6 @@ public class MatchStart : MonoBehaviour {
 		}
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
-
-
 	}
 
 	void Start()
