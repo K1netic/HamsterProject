@@ -9,6 +9,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] string previousScene;
 	[SerializeField] string sceneToLoadOnClick;
 	[SerializeField] GameManager.gameModes gameModeToSet;
+	[SerializeField] GameObject controlsScheme;
 	AudioManager mngr;
 	LevelSelection lvlSelect;
 
@@ -123,5 +124,11 @@ public class UiButtonFunctions : MonoBehaviour {
 	public void LoadMatch()
 	{
 		lvlSelect.LoadNextLevel ("");
+	}
+
+	public void OpenControlsScheme()
+	{
+		controlsScheme.SetActive (true);
+		this.transform.parent.gameObject.SetActive (false);
 	}
 }

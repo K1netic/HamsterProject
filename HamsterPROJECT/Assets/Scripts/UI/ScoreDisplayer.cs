@@ -11,12 +11,12 @@ public class ScoreDisplayer : MonoBehaviour {
 		// Don't display score if the corresponding player is not in the game
 		for(int i = 0; i < GameManager.playersActive.Length; i++)
 		{
-			if (ScoreDisplayerID -1 == i && !GameManager.playersActive [i])
+			if (ScoreDisplayerID == i && !GameManager.playersActive [i])
 				this.gameObject.SetActive (false);
 		}
 
 		// Update score text
 		this.GetComponent<Text>().text = 
-			"Score P" + ScoreDisplayerID.ToString() + " : " + GameManager.playersScores [ScoreDisplayerID - 1].ToString ();	
+			"Score P" + (ScoreDisplayerID + 1).ToString() + " : " + GameManager.playersScores [ScoreDisplayerID].ToString ();
 	}
 }

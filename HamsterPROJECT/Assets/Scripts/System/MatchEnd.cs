@@ -29,13 +29,13 @@ public class MatchEnd : MonoBehaviour {
     private void Awake()
     {
         scoreDisplay = GameObject.Find("ScoreDisplayer");
+		scoreDisplay.SetActive (false);
     }
 
     // Use this for initialization
     void Start ()
 	{
         //mngr = FindObjectOfType<AudioManager> ();
-        scoreDisplay.SetActive (false);
 		matchEnded = false;
 		// default value, stays at 42 if nobody won
 		// 0, 1, 2 and 3 are reserved to players
@@ -107,14 +107,14 @@ public class MatchEnd : MonoBehaviour {
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			// Keep playing if nobody reached the game goal
-			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] < GameManager.rounds )
+			if (InputManager.ActiveDevice.AnyButtonWasPressed && GameManager.playersScores[winner] < GameManager.rounds )
 			{
 				GameManager.lastLevelPlayed = "";
 				lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
 			}
 
 			// Stop playing if one player reached the game goal
-			if (InputManager.ActiveDevice.Action1 && GameManager.playersScores[winner] == GameManager.rounds )
+			if (InputManager.ActiveDevice.AnyButtonWasPressed && GameManager.playersScores[winner] == GameManager.rounds )
 			{
 				EndOfMatch ();
 			}

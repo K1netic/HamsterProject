@@ -12,18 +12,23 @@ public class ResultsScreen : MonoBehaviour {
 	int winnerIndex;
 	[SerializeField] PlayerResultPanel[] panels;
 	[SerializeField] string sceneToLoad;
+	Sprite sprt;
 
 	// Audio
 	float delay = 0.1f;
 	AudioManager mngr;
 	RectTransform rect;
 
+	void Awake()
+	{
+		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
+	}
 	void Start()
 	{
 		//mngr = FindObjectOfType<AudioManager> ();
 		winnerScore = GameManager.playersScores.Max();
 		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
-		panels[winnerIndex].background = Resources.Load<Image>("Results/" + GameManager.playersCharacters [winnerIndex].name);
+		panels [winnerIndex].borders.sprite = sprt; 
 		rect = panels [winnerIndex].GetComponent<RectTransform> ();
 		rect.anchorMax = new Vector2(rect.anchorMax.x, rect.anchorMax.y + 0.15f);
 		rect.anchorMin = new Vector2(rect.anchorMin.x, rect.anchorMin.y + 0.15f);

@@ -22,6 +22,10 @@ public class Vibrations : MonoBehaviour {
 			device.Vibrate (balanceData.mediumRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
+		case "RopeCut":
+			device.Vibrate (balanceData.mediumRumble, 0f);
+			duration = balanceData.mediumVibrationDuration;
+			return duration;
 		case "Dash":
 			device.Vibrate (0f, balanceData.mediumVibration);
 			duration = balanceData.shortVibrationDuration;
