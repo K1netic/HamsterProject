@@ -172,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement()
     {
-        playerDirection = (Vector2)transform.position - lastFramePosition;
+        playerDirection = ((Vector2)transform.position - lastFramePosition).normalized;
         speedEffectScript.playerDirection = playerDirection;
         //Switch permettant de gérer le mouvement en fonction de l'état du joueur
         if (!lockMovement && !lockMovementDash)
@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
             switch (currentState)
             {
                 case State.hooked:
-                    if(speed < 10)
+                    if(speed < 8)
                     {
                         if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
                             rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);

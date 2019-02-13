@@ -124,7 +124,6 @@ public class Hook : MonoBehaviour {
         arrowDamage = balanceData.arrowDamage;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
-        freezeFrameDuration = balanceData.freezeFrameDuration;
 
         timeRemaining = timeHooked;
 
@@ -554,7 +553,6 @@ public class Hook : MonoBehaviour {
             //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
             if (collision.gameObject.CompareTag("Arrow"))
             {
-                //StartCoroutine(ArrowHit(collision));
                 GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                 ArrowHit(collision);
                 HitFX(collision.GetContact(0).point, collision.gameObject);
@@ -567,7 +565,6 @@ public class Hook : MonoBehaviour {
                 {
                     if(collisionFail.collider.gameObject.CompareTag("Arrow"))
                     {
-                        // StartCoroutine(ArrowHit(collisionFail.collider));
                         GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                         ArrowHit(collisionFail.collider);
                         HitFX(collisionFail.point, collisionFail.collider.gameObject);
@@ -577,7 +574,6 @@ public class Hook : MonoBehaviour {
                 {
                     PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                    //StartCoroutine(FreezeAttacker());
                     GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
@@ -633,19 +629,6 @@ public class Hook : MonoBehaviour {
         Invoke("UnlockMovement", knockBackTime);
     }
 
-    IEnumerator FreezeAttacker()
-    {
-        float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
-        Vector2 tmpVelocity = playerMovement.rigid.velocity;
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        playerMovement.rigid.velocity = tmpVelocity;
-        playerMovement.rigid.angularVelocity = tmpAngularVelocity;
-    }
-
     void ArrowHit(Collision2D collision)
     {
         playerMovement.lockMovement = true;
@@ -669,33 +652,6 @@ public class Hook : MonoBehaviour {
         Invoke("UnlockMovement", knockBackTime);
     }
 
-    /*IEnumerator ArrowHit(Collision2D collision)
-    {
-        playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        switch (collision.gameObject.GetComponent<Hook>().currentState)
-        {
-            case HookState.Arrow:
-				// Collision Arrow - Arrow
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-                break;
-            case HookState.Shield:
-				// Collision Arrow - Shield
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
-                break;
-            default:
-                break;
-        }
-        Invoke("UnlockMovement", knockBackTime);
-    }*/
-
     void ArrowHit(Collider2D collision)
     {
         playerMovement.lockMovement = true;
@@ -718,33 +674,6 @@ public class Hook : MonoBehaviour {
         }
         Invoke("UnlockMovement", knockBackTime);
     }
-
-    /*IEnumerator ArrowHit(Collider2D collision)
-    {
-        playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        switch (collision.gameObject.GetComponent<Hook>().currentState)
-        {
-            case HookState.Arrow:
-				// Collision Arrow - Arrow
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-                break;
-            case HookState.Shield:
-				// Collision Arrow - Shield
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-				StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
-                break;
-            default:
-                break;
-        }
-        Invoke("UnlockMovement", knockBackTime);
-    }*/
 
     void UnlockMovement()
     {

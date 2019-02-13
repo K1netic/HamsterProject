@@ -18,11 +18,14 @@ public class LaserSize : MonoBehaviour {
     [SerializeField]
     ParticleSystem endLaser;
     [SerializeField]
-    GameObject boxCollider;
+    GameObject capsCollider;
+    [SerializeField]
+    GameObject capsColliderTop;
     [SerializeField]
     LayerMask layerMaskRaycast;
     
-    BoxCollider2D coll;
+    CapsuleCollider2D colliderBot;
+    CapsuleCollider2D colliderTop;
     RaycastHit2D raycast;
     bool FXinstantiate;
     ParticleSystem instEndLaser;
@@ -31,21 +34,31 @@ public class LaserSize : MonoBehaviour {
     float startRate;
     float startScale;
 
+    [HideInInspector]
+    public Vector2 laserDirection;
+
     private void Start()
     {
-        coll = boxCollider.GetComponent<BoxCollider2D>();
+        if(gameObject.CompareTag("LaserEdge"))
+            colliderBot = capsCollider.GetComponent<CapsuleCollider2D>();
+        else
+        {
+            colliderBot = capsCollider.GetComponent<CapsuleCollider2D>();
+            colliderTop = capsColliderTop.GetComponent<CapsuleCollider2D>();
+        }
         startPos = start.transform.position;
         center.SetPosition(0, transform.InverseTransformPoint(startPos));
         glow.SetPosition(0, transform.InverseTransformPoint(startPos));
         pShape = sparks.GetComponent<ParticleSystem>().shape;
         pEmission = sparks.GetComponent<ParticleSystem>().emission;
         startRate = pEmission.rateOverTime.constantMax;
-        startScale = pShape.scale.x;
+        startScale = pShape.scale.x; 
     }
 
     private void Update()
     {
         Raycasting();
+        
     }
 
     void Raycasting()
@@ -68,12 +81,26 @@ public class LaserSize : MonoBehaviour {
             center.SetPosition(1, transform.InverseTransformPoint(raycast.point));
             glow.SetPosition(1, transform.InverseTransformPoint(raycast.point));
 
-            coll.size = new Vector3(Vector3.Distance(center.GetPosition(0), center.GetPosition(1)), coll.size.y, 0);
-            coll.transform.position = transform.TransformPoint((center.GetPosition(0) + center.GetPosition(1)) / 2);
-            sparks.transform.position = coll.transform.position;
+            if (gameObject.CompareTag("LaserEdge"))
+            {
+                colliderBot.size = new Vector3(Vector3.Distance(center.GetPosition(0), center.GetPosition(1)) - .2f, colliderBot.size.y, 0);
+                colliderBot.transform.position = transform.TransformPoint((center.GetPosition(0) + center.GetPosition(1)) / 2);
+                sparks.transform.position = colliderBot.transform.position;
+            }
+            else
+            {
+                colliderBot.size = new Vector3(Vector3.Distance(center.GetPosition(0), center.GetPosition(1)) - .2f, colliderBot.size.y, 0);
+                colliderTop.size = new Vector3(Vector3.Distance(center.GetPosition(0), center.GetPosition(1)) - .2f, colliderTop.size.y, 0);
+                colliderBot.transform.position = transform.TransformPoint((center.GetPosition(0) + center.GetPosition(1)) / 2);
+                colliderTop.transform.position = transform.TransformPoint((center.GetPosition(0) + center.GetPosition(1)) / 2);
+                sparks.transform.position = colliderBot.transform.position;
+            }
+            
             float newScale = Vector3.Distance(transform.TransformPoint(center.GetPosition(0)), transform.TransformPoint(center.GetPosition(1)));
             pShape.scale = new Vector2(newScale, 0);
             pEmission.rateOverTime = startRate * newScale / startScale;
+
+            laserDirection = raycast.point - (Vector2)start.transform.position;
         }
         else
         {

@@ -51,7 +51,7 @@ public class Vibrations : MonoBehaviour {
 			device.Vibrate (balanceData.mediumRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
-		case "Laser":
+		case "LaserEdge":
 			CameraShaker.Instance.ShakeOnce (balanceData.lightMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut / 2f);
 			device.Vibrate (balanceData.mediumRumble, balanceData.mediumVibration);
 			duration = balanceData.mediumVibrationDuration;

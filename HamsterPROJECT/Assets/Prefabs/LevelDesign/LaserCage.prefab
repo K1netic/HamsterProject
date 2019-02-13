@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 114606809418899424}
   m_Layer: 26
   m_Name: LaserRight
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 114256520453852596}
   m_Layer: 26
   m_Name: LaserLeft
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 114057776344762730}
   m_Layer: 26
   m_Name: LaserTop
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 50212756761123226}
   m_Layer: 26
   m_Name: Collider
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,7 +397,7 @@ GameObject:
   - component: {fileID: 50860347565753898}
   m_Layer: 26
   m_Name: Collider
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 50000121369884322}
   m_Layer: 26
   m_Name: Collider
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 114504156986656228}
   m_Layer: 26
   m_Name: LaserBot
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 50056273069393506}
   m_Layer: 26
   m_Name: Collider
-  m_TagString: Laser
+  m_TagString: LaserEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -795,7 +795,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092091681067750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10.390625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4288418123815200}
@@ -1617,7 +1617,6 @@ MonoBehaviour:
   start: {fileID: 1622138977583956}
   center: {fileID: 120647965948963168}
   glow: {fileID: 120998393014726530}
-  ring: {fileID: 120922208922996142}
   sparks: {fileID: 198431181441702126}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
   boxCollider: {fileID: 1914121842855566}
@@ -1638,7 +1637,6 @@ MonoBehaviour:
   start: {fileID: 1732207263742894}
   center: {fileID: 120621965250257620}
   glow: {fileID: 120862211311965398}
-  ring: {fileID: 120108766090224148}
   sparks: {fileID: 198549153621299434}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
   boxCollider: {fileID: 1310010801242900}
@@ -1659,7 +1657,6 @@ MonoBehaviour:
   start: {fileID: 1756535369906814}
   center: {fileID: 120298211063739642}
   glow: {fileID: 120368115617570172}
-  ring: {fileID: 120890536540413688}
   sparks: {fileID: 198707867802491100}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
   boxCollider: {fileID: 1577019327336020}
@@ -1706,7 +1703,6 @@ MonoBehaviour:
   start: {fileID: 1904097542631572}
   center: {fileID: 120512989709696296}
   glow: {fileID: 120355448276154584}
-  ring: {fileID: 120231544097232788}
   sparks: {fileID: 198610949690909618}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
   boxCollider: {fileID: 1584396262107792}
