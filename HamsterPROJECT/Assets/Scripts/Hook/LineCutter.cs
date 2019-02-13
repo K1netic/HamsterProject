@@ -28,7 +28,8 @@ public class LineCutter : MonoBehaviour {
             Instantiate(Resources.Load<ParticleSystem>("Prefabs/CutHook/Cut"), cuttingPos, transform.rotation);
 
             hook.DisableRope(true);
-			StartCoroutine (CancelVibration (Vibrations.PlayVibration("RopeCut", hook.GetComponent<PlayerMovement>().playerInputDevice)));
+			// fais autrement
+			//StartCoroutine (CancelVibration (Vibrations.PlayVibration("RopeCut", hook.playerMovement.playerInputDevice)));
         }
 
     }

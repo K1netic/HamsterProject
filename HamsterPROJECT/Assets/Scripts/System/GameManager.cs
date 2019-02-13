@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
 	public static gameModes gameModeType;
 		
 	// Numbers of matches won to win a full game
-	public static int rounds = 1;
+	public static int rounds = 5;
 		
 	public static bool[] playersActive = new bool[nbOfPlayers];
 	public static bool[] playersAlive = new bool[nbOfPlayers];
