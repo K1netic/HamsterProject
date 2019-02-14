@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
     float dashForce;
     float dashCDTime;
     bool dashInCD;
-    bool lockMovementDash;
+    [HideInInspector]
+    public bool lockMovementDash;
     [SerializeField]
     GameObject shootPos;
     Sprite playerSprite;
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     float dragEndOfDash;
     [HideInInspector]
     public float gravity;
+    float inDashStatusTime;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -63,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
 	{
+        Application.targetFrameRate = 60;
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
@@ -73,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         dashCDTime = balanceData.dashCDTime;
         dragEndOfDash = balanceData.dragEndOfDash;
         dashRecoveryWithHook = balanceData.dashRecoveryWithHook;
+        inDashStatusTime = balanceData.inDashStatusTime;
         /*fastFallSpeed = balanceData.fastFallSpeed;
         fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
         fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */
@@ -152,11 +156,17 @@ public class PlayerMovement : MonoBehaviour
         rigid.gravityScale = gravity;
         rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
         InvokeRepeating("DashEffect", 0, 0.04f);
-        Invoke("UnlockMovementDash", dashTime);
+        Invoke("StopDash", dashTime);
+        Invoke("UnlockMovementDash", inDashStatusTime);
         Invoke("CancelDashEffect", dashTime * 3.5f);
         if(!dashRecoveryWithHook)
             Invoke("ResetDashCD", dashCDTime);
         StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
+    }
+
+    void UnlockMovementDash()
+    {
+        lockMovementDash = false;
     }
 
     void DashEffect()
@@ -237,9 +247,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Rend le contrôle au joueur et modifie le drag pendant 0.1 secondes pour freiner le dash
-    void UnlockMovementDash()
+    void StopDash()
     {
-        lockMovementDash = false;
         if (!lockMovement)
         {
             drag = rigid.drag;

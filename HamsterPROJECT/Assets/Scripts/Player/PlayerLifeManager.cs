@@ -47,6 +47,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float deathRadius;
     Collider2D[] deathOverlap = new Collider2D[3];
     float freezeFrameDuration;
+    float dashDamage;
+    float maxKnockBackPlayerHit;
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -75,6 +77,8 @@ public class PlayerLifeManager : MonoBehaviour {
         criticalSpeed = balanceData.criticalSpeed;
         knockBackNuke = balanceData.knockBackNuke;
         deathRadius = balanceData.deathRadius;
+        dashDamage = balanceData.dashDamage;
+        maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -116,7 +120,7 @@ public class PlayerLifeManager : MonoBehaviour {
             inRecovery = true;
             if (knockBack)
             {
-                if (hookScript.hooked)
+                if (hookScript.hooked && !attacker.CompareTag("Hook"))
                 {
                     hookScript.DisableRope(false);
                 }
@@ -133,8 +137,10 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
+                        float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
+                        knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
                         playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                        + attacker.GetComponent<Hook>().playerMovement.speed / 2), ForceMode2D.Impulse);
+                                                + knockbackPower), ForceMode2D.Impulse);
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
@@ -170,7 +176,22 @@ public class PlayerLifeManager : MonoBehaviour {
                 }
                 //StartCoroutine(DoKnockBack(attacker));
             }
-            playerHP -= damage;
+            if (attacker.CompareTag("Arrow"))
+            {
+                if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
+                {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
+                    playerHP -= dashDamage;
+                }
+                else
+                {
+                    playerHP -= damage;
+                }
+            }
+            else
+            {
+                playerHP -= damage;
+            }
+            
             //Rend le player invulnérable pendant recoveryTime secondes
             if(attacker.CompareTag("Hook"))
                 Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
