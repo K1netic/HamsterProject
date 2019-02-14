@@ -9,11 +9,12 @@ public class TitleScreen : MonoBehaviour {
 	[SerializeField] string sceneToLoad;
 	float delay = 0.1f;
 	AudioManager mngr;
-//
-//	void Start()
-//	{
-//		//mngr = FindObjectOfType<AudioManager> ();
-//	}
+
+    void Start()
+	{
+        Cursor.visible = false;
+		//mngr = FindObjectOfType<AudioManager> ();
+	}
 
 	void FixedUpdate () {
 		if (InputManager.CommandWasPressed)
