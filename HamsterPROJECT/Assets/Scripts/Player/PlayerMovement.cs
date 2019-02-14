@@ -137,6 +137,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
+        if (!dashInCD)
+            CancelInvoke("ResetDashCD");
         if (!lockMovement && !lockMovementDash)
         {
 			if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
@@ -159,8 +161,7 @@ public class PlayerMovement : MonoBehaviour
         Invoke("StopDash", dashTime);
         Invoke("UnlockMovementDash", inDashStatusTime);
         Invoke("CancelDashEffect", dashTime * 3.5f);
-        if(!dashRecoveryWithHook)
-            Invoke("ResetDashCD", dashCDTime);
+        Invoke("ResetDashCD", dashCDTime);
         StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
     }
 

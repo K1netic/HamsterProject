@@ -534,7 +534,7 @@ MonoBehaviour:
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.3
-  TimeHooked: 10
+  TimeHooked: 8
   lineWidth: 0.175
   timeRopeCut: 1.5
   airControlForce: 7.5
@@ -548,17 +548,19 @@ MonoBehaviour:
   laserDamage: 20
   criticalSpeed: 35
   deathRadius: 2.5
+  dashDamage: 50
   knockBackTime: 0.5
   knockBackPlayerHit: 10
+  maxKnockBackPlayerHit: 40
   knockBackShieldHit: 20
   knockBackLaser: 20
   knockBackNuke: 15
-  freezeFrameDuration: 0.18
   dashTime: 0.05
   dashForce: 75
-  dashCDTime: 3
+  dashCDTime: 6
   dragEndOfDash: 20
   dashRecoveryWithHook: 1
+  inDashStatusTime: 0.5
   lightRumble: 0.1
   mediumlightRumble: 0.25
   mediumRumble: 0.5
