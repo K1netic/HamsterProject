@@ -446,7 +446,7 @@ public class Hook : MonoBehaviour {
     }
 
     void CreateJoint(){
-        if(playerMovement.dashRecoveryWithHook)
+        if (playerMovement.dashRecoveryWithHook)
             playerMovement.ResetDashCD();
         t = 0;
         //player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;

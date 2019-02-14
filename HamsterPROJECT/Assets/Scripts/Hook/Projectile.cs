@@ -213,6 +213,7 @@ public class Projectile : MonoBehaviour {
             {
                 GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                 PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                Instantiate(hitHook, transform.position, transform.rotation);
                 //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                 foeScript.HitFX(collision.GetContact(0).point, 0);
                 foeScript.TakeDamage(hookheadDamage, gameObject, true);
@@ -241,7 +242,6 @@ public class Projectile : MonoBehaviour {
             col.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
         }
     }
-
 
     public void End()
     {
