@@ -542,7 +542,7 @@ MonoBehaviour:
   speedThresholdDestruction: 25
   playerMaxHP: 100
   hookheadDamage: 5
-  recoveryTime: 1.5
+  recoveryTime: 1
   flashingRate: 0.1
   arrowDamage: 20
   laserDamage: 20
@@ -589,8 +589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8850a2b5296e6214db031d360636f904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowdownFactor: 0.5
-  slowdownLength: 0.5
+  slowdownFactor: 0.1
+  slowdownLength: 0.8
 --- !u!212 &212991258004361430
 SpriteRenderer:
   m_ObjectHideFlags: 1
