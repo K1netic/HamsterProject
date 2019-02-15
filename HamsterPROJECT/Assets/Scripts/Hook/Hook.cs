@@ -83,6 +83,8 @@ public class Hook : MonoBehaviour {
     Texture rope;
     float criticalSpeed;
     float freezeFrameDuration;
+    [HideInInspector]
+    public bool cantAttack;
 
     //COLOR
     Color colorRope;
@@ -550,36 +552,38 @@ public class Hook : MonoBehaviour {
         //Les collisions ne sont gérés que si le player est en mode offensif sauf si 2 shield entrent en collision
         if(currentState == HookState.Arrow)
         {
-            //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
-            if (collision.gameObject.CompareTag("Arrow"))
+            if (!cantAttack)
             {
-                GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                ArrowHit(collision);
-                HitFX(collision.GetContact(0).point, collision.gameObject);
-            }
-            //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
-            else if (collision.gameObject.CompareTag("Player"))
-            {
-                RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
-                if (collisionFail.collider != null)
+                //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
+                if (collision.gameObject.CompareTag("Arrow"))
                 {
-                    if(collisionFail.collider.gameObject.CompareTag("Arrow"))
+                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                    ArrowHit(collision);
+                    HitFX(collision.GetContact(0).point, collision.gameObject);
+                }
+                //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
+                else if (collision.gameObject.CompareTag("Player"))
+                {
+                    RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
+                    if (collisionFail.collider != null)
                     {
+                        if (collisionFail.collider.gameObject.CompareTag("Arrow"))
+                        {
+                            GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                            ArrowHit(collisionFail.collider);
+                            HitFX(collisionFail.point, collisionFail.collider.gameObject);
+                        }
+                    }
+                    else
+                    {
+                        PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                        //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                         GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                        ArrowHit(collisionFail.collider);
-                        HitFX(collisionFail.point, collisionFail.collider.gameObject);
+                        foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
+                        foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                     }
                 }
-                else
-                {
-                    PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
-                    //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                    foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
-                    foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
-					StartCoroutine (CancelVibration (Vibrations.PlayVibration ("CollisionArrowPlayer", playerMovement.playerInputDevice)));
-                }
- 
             }
         }
         else
@@ -594,6 +598,12 @@ public class Hook : MonoBehaviour {
             }
         }
         
+    }
+
+    public IEnumerator ResetBoolAttack()
+    {
+        yield return new WaitForSeconds(.5f);
+        cantAttack = false;
     }
 
     void HitFX(Vector3 position, GameObject hook)

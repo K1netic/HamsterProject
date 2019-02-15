@@ -191,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
             switch (currentState)
             {
                 case State.hooked:
-                    if(speed < 8)
+                    if(speed < 10)
                     {
                         if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
                             rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);

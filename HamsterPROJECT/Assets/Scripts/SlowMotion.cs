@@ -5,27 +5,43 @@ using UnityEngine;
 public class SlowMotion : MonoBehaviour {
 
 	[SerializeField]
-    float slowdownFactor = 0.5f;
-	[SerializeField]
-    float slowdownLength = 0.18f;
-	float TimeEx;
+    float slowdownFactor;
+    [SerializeField]
+    float slowdownLength;
+	float startFixedDeltaTime;
 
 	void Start ()
 	{
-		TimeEx = Time.fixedDeltaTime;
+        startFixedDeltaTime = Time.fixedDeltaTime;
 	}
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+            DoSlowmotion();
+        if(Time.timeScale != 1)
+        {
+            Time.timeScale += 1 / slowdownLength * Time.unscaledDeltaTime;
+            Time.fixedDeltaTime = Mathf.Lerp(slowdownFactor * .02f, startFixedDeltaTime, Time.timeScale);
+        }
+        if(Time.timeScale > 1)
+        {
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = startFixedDeltaTime;
+        }
+    }
 
     public void DoSlowmotion()
     {
         Time.timeScale = slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * .02f;
-		StartCoroutine (UndoSlowmotion());
+		//StartCoroutine (UndoSlowmotion());
     }
 
 	IEnumerator UndoSlowmotion()
 	{
 		yield return new WaitForSecondsRealtime (0.18f);
-		Time.fixedDeltaTime = TimeEx;
+		Time.fixedDeltaTime = startFixedDeltaTime;
 		Time.timeScale = 1;
 	}
 

@@ -49,6 +49,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float freezeFrameDuration;
     float dashDamage;
     float maxKnockBackPlayerHit;
+    
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -56,6 +57,8 @@ public class PlayerLifeManager : MonoBehaviour {
     bool wounded;
     Gradient startGradient;
     Gradient woundedGradient = new Gradient();
+    Material startMaterial;
+    Material woundedMaterial;
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -91,6 +94,8 @@ public class PlayerLifeManager : MonoBehaviour {
         alphaKeys[0].time = 0;
         alphaKeys[1] = startGradient.alphaKeys[1];
         woundedGradient.SetKeys(startGradient.colorKeys, alphaKeys);
+        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
+        startMaterial = sprite.material;
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
     }
@@ -117,7 +122,9 @@ public class PlayerLifeManager : MonoBehaviour {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
+            hookScript.cantAttack = true;
             inRecovery = true;
+            StartCoroutine(hookScript.ResetBoolAttack());
             if (knockBack)
             {
                 if (hookScript.hooked && !attacker.CompareTag("Hook"))
@@ -181,15 +188,18 @@ public class PlayerLifeManager : MonoBehaviour {
                 if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
                 {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
                     playerHP -= dashDamage;
+                    woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
                 }
                 else
                 {
                     playerHP -= damage;
+                    woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
                 }
             }
             else
             {
                 playerHP -= damage;
+                woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
             }
             
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -397,16 +407,20 @@ public class PlayerLifeManager : MonoBehaviour {
         //spriteArrow.enabled = !spriteArrow.enabled;
         if (wounded)
         {
-            sprite.color = startColor;
+            sprite.material = startMaterial;
+            spriteArrow.material = startMaterial;
+            /*sprite.color = startColor;
             spriteArrow.color = startColor;
-            trail.colorGradient = startGradient;
+            trail.colorGradient = startGradient;*/
             wounded = false;
         }
         else
         {
-            sprite.color = woundedColor;
-            spriteArrow.color = woundedColor;
-            trail.colorGradient = woundedGradient;
+            sprite.material = woundedMaterial;
+            spriteArrow.material = woundedMaterial;
+            /* sprite.color = woundedColor;
+             spriteArrow.color = woundedColor;
+             trail.colorGradient = woundedGradient;*/
             wounded = true;
         }
     }
@@ -416,13 +430,15 @@ public class PlayerLifeManager : MonoBehaviour {
         //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke("Flashing");
         inRecovery = false;
-        //sprite.enabled = true;
-        //trail.enabled = true;
-        //spriteArrow.enabled = true;
+        sprite.material = startMaterial;
+        spriteArrow.material = startMaterial;
+        /*sprite.enabled = true;
+        trail.enabled = true;
+        spriteArrow.enabled = true;
         trail.colorGradient = startGradient;
         sprite.color = startColor;
-        spriteArrow.color = startColor;
-        
+        spriteArrow.color = startColor;*/
+
     }
 
     void Dead()

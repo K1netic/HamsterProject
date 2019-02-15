@@ -304,7 +304,7 @@ Prefab:
     - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
       propertyPath: TimeHooked
-      value: 8
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
@@ -315,6 +315,16 @@ Prefab:
         type: 2}
       propertyPath: dashTime
       value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 114988396421509444, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+        type: 2}
+      propertyPath: slowdownLength
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114988396421509444, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+        type: 2}
+      propertyPath: slowdownFactor
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
