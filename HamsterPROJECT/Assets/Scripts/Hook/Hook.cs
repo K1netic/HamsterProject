@@ -433,7 +433,7 @@ public class Hook : MonoBehaviour {
     void UpdateRope(){
         //Aligne la position de la corde sur le player et la tete de grappin
         line.SetPosition(0, player.transform.position);
-        line.SetPosition(1, projectileScript.pivot);
+        //line.SetPosition(1, projectileScript.pivot);
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
 
