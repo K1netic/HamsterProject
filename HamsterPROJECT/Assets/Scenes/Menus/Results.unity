@@ -146,8 +146,8 @@ RectTransform:
   - {fileID: 702383704}
   - {fileID: 1367291630}
   - {fileID: 521834801}
-  - {fileID: 440356772}
   - {fileID: 840517750}
+  - {fileID: 440356772}
   m_Father: {fileID: 767137116}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,8 +172,8 @@ MonoBehaviour:
   characterSprite: {fileID: 702383705}
   scoreText: {fileID: 1367291631}
   killsText: {fileID: 521834802}
-  deathsText: {fileID: 440356773}
-  selfDestructsText: {fileID: 840517751}
+  deathsText: {fileID: 840517751}
+  selfDestructsText: {fileID: 440356773}
 --- !u!222 &44506506
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -292,9 +292,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panels:
   - {fileID: 528054210}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 44506504}
+  - {fileID: 2115372979}
+  - {fileID: 1210123339}
   sceneToLoad: EndGame
 --- !u!1 &212792208
 GameObject:
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 440356774}
   - component: {fileID: 440356773}
   m_Layer: 5
-  m_Name: DeathsText
+  m_Name: SelfText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -545,7 +545,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44506503}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.3}
   m_AnchorMax: {x: 0.75, y: 0.35}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 476472331}
   - component: {fileID: 476472330}
   m_Layer: 5
-  m_Name: SelfText
+  m_Name: DeathsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -753,7 +753,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2115372978}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.375}
   m_AnchorMax: {x: 0.75, y: 0.425}
@@ -908,8 +908,8 @@ RectTransform:
   - {fileID: 1946170125}
   - {fileID: 338920358}
   - {fileID: 1145448857}
-  - {fileID: 757599708}
   - {fileID: 1237868596}
+  - {fileID: 757599708}
   m_Father: {fileID: 767137116}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -934,8 +934,8 @@ MonoBehaviour:
   characterSprite: {fileID: 1946170126}
   scoreText: {fileID: 338920359}
   killsText: {fileID: 1145448858}
-  deathsText: {fileID: 757599709}
-  selfDestructsText: {fileID: 1237868597}
+  deathsText: {fileID: 1237868597}
+  selfDestructsText: {fileID: 757599709}
 --- !u!222 &528054212
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1050,8 +1050,8 @@ RectTransform:
   m_Father: {fileID: 44506503}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.275, y: 0.65}
-  m_AnchorMax: {x: 0.725, y: 0.95}
+  m_AnchorMin: {x: 0.25, y: 0.65}
+  m_AnchorMax: {x: 0.75, y: 0.95}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1100,7 +1100,7 @@ GameObject:
   - component: {fileID: 757599710}
   - component: {fileID: 757599709}
   m_Layer: 5
-  m_Name: DeathsText
+  m_Name: SelfText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1117,7 +1117,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 528054209}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.3}
   m_AnchorMax: {x: 0.75, y: 0.35}
@@ -1274,7 +1274,7 @@ GameObject:
   - component: {fileID: 840517752}
   - component: {fileID: 840517751}
   m_Layer: 5
-  m_Name: SelfText
+  m_Name: DeathsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1291,7 +1291,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 44506503}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.375}
   m_AnchorMax: {x: 0.75, y: 0.425}
@@ -1570,7 +1570,7 @@ GameObject:
   - component: {fileID: 986257440}
   - component: {fileID: 986257439}
   m_Layer: 5
-  m_Name: DeathsText
+  m_Name: SelfText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1587,7 +1587,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2115372978}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.3}
   m_AnchorMax: {x: 0.75, y: 0.35}
@@ -1789,7 +1789,7 @@ GameObject:
   - component: {fileID: 1195261457}
   - component: {fileID: 1195261456}
   m_Layer: 5
-  m_Name: SelfText
+  m_Name: DeathsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,7 +1806,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1210123338}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.375}
   m_AnchorMax: {x: 0.75, y: 0.425}
@@ -1886,8 +1886,8 @@ RectTransform:
   - {fileID: 1451101936}
   - {fileID: 1611043504}
   - {fileID: 1619808765}
-  - {fileID: 1296707850}
   - {fileID: 1195261455}
+  - {fileID: 1296707850}
   m_Father: {fileID: 767137116}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1912,8 +1912,8 @@ MonoBehaviour:
   characterSprite: {fileID: 1451101937}
   scoreText: {fileID: 1611043505}
   killsText: {fileID: 1619808766}
-  deathsText: {fileID: 1296707851}
-  selfDestructsText: {fileID: 1195261456}
+  deathsText: {fileID: 1195261456}
+  selfDestructsText: {fileID: 1296707851}
 --- !u!222 &1210123341
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1932,7 +1932,7 @@ GameObject:
   - component: {fileID: 1237868598}
   - component: {fileID: 1237868597}
   m_Layer: 5
-  m_Name: SelfText
+  m_Name: DeathsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1949,7 +1949,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 528054209}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.375}
   m_AnchorMax: {x: 0.75, y: 0.425}
@@ -2226,7 +2226,7 @@ GameObject:
   - component: {fileID: 1296707852}
   - component: {fileID: 1296707851}
   m_Layer: 5
-  m_Name: DeathsText
+  m_Name: SelfText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2243,7 +2243,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1210123338}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0.3}
   m_AnchorMax: {x: 0.75, y: 0.35}
@@ -3116,8 +3116,8 @@ RectTransform:
   - {fileID: 443965211}
   - {fileID: 891239318}
   - {fileID: 1977379372}
-  - {fileID: 986257438}
   - {fileID: 476472329}
+  - {fileID: 986257438}
   m_Father: {fileID: 767137116}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3142,8 +3142,8 @@ MonoBehaviour:
   characterSprite: {fileID: 443965212}
   scoreText: {fileID: 891239319}
   killsText: {fileID: 1977379373}
-  deathsText: {fileID: 986257439}
-  selfDestructsText: {fileID: 476472330}
+  deathsText: {fileID: 476472330}
+  selfDestructsText: {fileID: 986257439}
 --- !u!222 &2115372981
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -23,11 +23,14 @@ public class MatchEnd : MonoBehaviour {
 
 	// Audio
 	AudioManager mngr;
+	MusicManager music;
 
 	LevelSelection lvlSelect;
 
     private void Awake()
     {
+		music = GameObject.FindObjectOfType<MusicManager> ();
+
         scoreDisplay = GameObject.Find("ScoreDisplayer");
 		scoreDisplay.SetActive (false);
     }
@@ -90,6 +93,7 @@ public class MatchEnd : MonoBehaviour {
 		if (GameManager.gameModeType == GameManager.gameModes.Deathmatch && 
 			System.Array.IndexOf(GameManager.playersScores, GameManager.rounds) != -1)
 		{
+			music.StopMusic ("battle");
 			StartCoroutine(DisplayScore ());
 		}
 	}
@@ -164,6 +168,7 @@ public class MatchEnd : MonoBehaviour {
 	// Instruction for when the match is over
 	void EndOfMatch()
 	{
+		music.StopMusic ("battle");
 		GameManager.lastLevelPlayed = SceneManager.GetActiveScene ().name;
 //		//mngr.PlaySound ("UI_matchEndValidation", //mngr.UIsource);
 		SceneManager.LoadScene ("Results");

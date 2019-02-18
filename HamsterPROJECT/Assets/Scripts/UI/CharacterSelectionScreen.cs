@@ -50,7 +50,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().activatedCharacterSprites[panels[i].characterSelected];
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().characterSprites[panels[i].characterSelected];
 				panels[i].device = GameManager.playersInputDevices[i];
 			}
 		}

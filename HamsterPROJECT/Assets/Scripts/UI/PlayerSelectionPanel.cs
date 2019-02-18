@@ -12,8 +12,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	public SelectionPanelState state;
 
 	// Collections of images to load and apply on various changes
-	Sprite[] validatedCharacterSprites = new Sprite[GameManager.nbOfCharacters];
-	public Sprite[] activatedCharacterSprites = new Sprite[GameManager.nbOfCharacters];
+	[HideInInspector] public Sprite[] characterSprites = new Sprite[GameManager.nbOfCharacters];
 	Sprite[] validatedBorders = new Sprite[GameManager.nbOfCharacters];
 	Sprite deactivatedBorder;
 	Sprite activatedBorder;
@@ -44,8 +43,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		//mngr = FindObjectOfType<AudioManager> ();
 		state = SelectionPanelState.Deactivated;
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
-		activatedCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ActivatedCharacters");
-		validatedCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
+		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
 		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
 		deactivatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordgray");
 		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
@@ -126,7 +124,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			guid.SetActive(true);
 			leftArrow.SetActive(true);
 			rightArrow.SetActive(true);
-			characterSprite.sprite = activatedCharacterSprites[characterSelected];
+			characterSprite.sprite = characterSprites[characterSelected];
 			border.sprite = activatedBorder;
 			//Activate character selection
 			CharacterSelection();
@@ -135,7 +133,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		case SelectionPanelState.Validated:
 			PlayValidateSound();
 			guid.SetActive(false);
-			characterSprite.sprite = validatedCharacterSprites[characterSelected];
+//			characterSprite.sprite = characterSprites[characterSelected];
 			border.sprite = validatedBorders[characterSelected];
 			break;
 		}
@@ -160,7 +158,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				characterSelected = 0;
 			}
-			characterSprite.sprite = activatedCharacterSprites[characterSelected];
+			characterSprite.sprite = characterSprites[characterSelected];
 			blockStickMovement = true;
 		} 
 
@@ -174,7 +172,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				characterSelected = CharacterSelectionScreen.nbCharactersAvailable - 1;
 			}
-			characterSprite.sprite = activatedCharacterSprites[characterSelected];
+			characterSprite.sprite = characterSprites[characterSelected];
 			blockStickMovement = true;
 		} 
 
