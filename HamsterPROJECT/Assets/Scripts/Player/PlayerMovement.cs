@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float gravity;
     float inDashStatusTime;
+    GameObject dashRecovery;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -62,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
     public string playerNumber;
 	public InputDevice playerInputDevice;
+
+    float maxSpeed = 76f;
 
     void Start()
 	{
@@ -84,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer>().sprite;
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
+
+        dashRecovery = Resources.Load<GameObject>("Prefabs/Dash/DashRecovery");
 
         gravity = rigid.gravityScale;
 
@@ -133,6 +138,11 @@ public class PlayerMovement : MonoBehaviour
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
 		}*/
+    }
+
+    private void LateUpdate()
+    {
+        rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, maxSpeed);
     }
 
     void Dash()
@@ -234,6 +244,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetDashCD()
     {
+        if(dashInCD)
+            Instantiate(dashRecovery, transform.position, transform.rotation, transform);
         dashInCD = false;
     }
 
@@ -247,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
         currentState = State.inAir;
     }
 
-    //Rend le contrôle au joueur et modifie le drag pendant 0.1 secondes pour freiner le dash
+    //Modifie le drag pendant 0.1 secondes pour freiner le dash
     void StopDash()
     {
         if (!lockMovement)

@@ -450,14 +450,14 @@ public class PlayerLifeManager : MonoBehaviour {
 
         //Nuke
         Instantiate(deathParticle, transform.position, transform.rotation);
-        deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
+        /*deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
         foreach (Collider2D player in deathOverlap)
         {
             if (player.gameObject.CompareTag("Player"))
             {
                 player.gameObject.GetComponent<PlayerLifeManager>().NukeKnockBack(transform.position);
             }
-        }
+        }*/
 
 		FbOnDeath.SendFeedbacks (playerMovement.playerInputDevice, transform.parent.name.Substring(0, 1));
 

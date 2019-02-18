@@ -128,6 +128,7 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
+        hook.line.SetPosition(1, pivot);
     }
 
     void RaycastNoBounce()
