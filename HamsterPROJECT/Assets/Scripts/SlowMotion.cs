@@ -19,7 +19,7 @@ public class SlowMotion : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.F))
             DoSlowmotion();
-        if(Time.timeScale != 1)
+        if(Time.timeScale != 1 && Time.timeScale != 0)
         {
             Time.timeScale += 1 / slowdownLength * Time.unscaledDeltaTime;
             Time.fixedDeltaTime = Mathf.Lerp(slowdownFactor * .02f, startFixedDeltaTime, Time.timeScale);
