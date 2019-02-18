@@ -70,7 +70,7 @@ public class SpeedEffect : MonoBehaviour {
 
 
 		t = Mathf.Clamp((playerSpeed * 1 /120), 0f, 1f);
-		ColorEffectA = Color.Lerp(ColorEffect, Color.white,t);
+		ColorEffectA =ColorEffect;
 		MyRenderer.material.SetColor ("_TintColor", ColorEffectA );
 
 		Emmission = Mathf.Clamp((playerSpeed * 6 /65), 1f, 8f);
