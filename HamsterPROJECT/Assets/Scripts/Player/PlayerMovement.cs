@@ -64,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
     public string playerNumber;
 	public InputDevice playerInputDevice;
 
+    float maxSpeed = 76f;
+
     void Start()
 	{
         Application.targetFrameRate = 60;
@@ -136,6 +138,11 @@ public class PlayerMovement : MonoBehaviour
 			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
 			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
 		}*/
+    }
+
+    private void LateUpdate()
+    {
+        rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, maxSpeed);
     }
 
     void Dash()
@@ -252,7 +259,7 @@ public class PlayerMovement : MonoBehaviour
         currentState = State.inAir;
     }
 
-    //Rend le contrôle au joueur et modifie le drag pendant 0.1 secondes pour freiner le dash
+    //Modifie le drag pendant 0.1 secondes pour freiner le dash
     void StopDash()
     {
         if (!lockMovement)
