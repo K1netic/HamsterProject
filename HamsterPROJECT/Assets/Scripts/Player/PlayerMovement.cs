@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public float gravity;
     float inDashStatusTime;
+    GameObject dashRecovery;
 
     //Fast Fall
     /*float smoothTime = 0.3f;
@@ -84,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
         rigid = this.GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer>().sprite;
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
+
+        dashRecovery = Resources.Load<GameObject>("Prefabs/Dash/DashRecovery");
 
         gravity = rigid.gravityScale;
 
@@ -234,6 +237,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetDashCD()
     {
+        if(dashInCD)
+            Instantiate(dashRecovery, transform.position, transform.rotation, transform);
         dashInCD = false;
     }
 
