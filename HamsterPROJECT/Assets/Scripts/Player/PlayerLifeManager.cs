@@ -47,6 +47,9 @@ public class PlayerLifeManager : MonoBehaviour {
     float deathRadius;
     Collider2D[] deathOverlap = new Collider2D[3];
     float freezeFrameDuration;
+    float dashDamage;
+    float maxKnockBackPlayerHit;
+    
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -54,6 +57,8 @@ public class PlayerLifeManager : MonoBehaviour {
     bool wounded;
     Gradient startGradient;
     Gradient woundedGradient = new Gradient();
+    Material startMaterial;
+    Material woundedMaterial;
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -75,7 +80,8 @@ public class PlayerLifeManager : MonoBehaviour {
         criticalSpeed = balanceData.criticalSpeed;
         knockBackNuke = balanceData.knockBackNuke;
         deathRadius = balanceData.deathRadius;
-        freezeFrameDuration = balanceData.freezeFrameDuration;
+        dashDamage = balanceData.dashDamage;
+        maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -88,6 +94,8 @@ public class PlayerLifeManager : MonoBehaviour {
         alphaKeys[0].time = 0;
         alphaKeys[1] = startGradient.alphaKeys[1];
         woundedGradient.SetKeys(startGradient.colorKeys, alphaKeys);
+        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
+        startMaterial = sprite.material;
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
     }
@@ -109,15 +117,17 @@ public class PlayerLifeManager : MonoBehaviour {
     //1er arg : les dégats qui vont être appliqués
     //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
     //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
-    public void TakeDamage(float damage, GameObject attacker, bool knockBack)
+    public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3), bool inverseDir = default(bool))
     {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
+            hookScript.cantAttack = true;
             inRecovery = true;
+            StartCoroutine(hookScript.ResetBoolAttack());
             if (knockBack)
             {
-                if (hookScript.hooked)
+                if (hookScript.hooked && !attacker.CompareTag("Hook"))
                 {
                     hookScript.DisableRope(false);
                 }
@@ -134,13 +144,15 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
+                        float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
+                        knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
                         playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                        + attacker.GetComponent<Hook>().playerMovement.speed / 2), ForceMode2D.Impulse);
+                                                + knockbackPower), ForceMode2D.Impulse);
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
-                    case "Laser":
+                    case "LaserEdge":
                         LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
                         switch (laserScript.side)
                         {
@@ -160,12 +172,36 @@ public class PlayerLifeManager : MonoBehaviour {
                                 break;
                         }
                         break;
+                    case "Laser":
+                        if(inverseDir)
+                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                        else
+                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                        break;
                     default:
                         break;
                 }
                 //StartCoroutine(DoKnockBack(attacker));
             }
-            playerHP -= damage;
+            if (attacker.CompareTag("Arrow"))
+            {
+                if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
+                {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
+                    playerHP -= dashDamage;
+                    woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
+                }
+                else
+                {
+                    playerHP -= damage;
+                    woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
+                }
+            }
+            else
+            {
+                playerHP -= damage;
+                woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
+            }
+            
             //Rend le player invulnérable pendant recoveryTime secondes
             if(attacker.CompareTag("Hook"))
                 Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
@@ -187,7 +223,7 @@ public class PlayerLifeManager : MonoBehaviour {
 					}
 				}
 
-				else if (attacker.tag == "Laser")
+				else if (attacker.tag == "LaserEdge")
 				{
 					GameManager.playersSelfDestructs [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
 				}
@@ -197,56 +233,6 @@ public class PlayerLifeManager : MonoBehaviour {
 			// Apply a lighter/heavier vibration depending on the damage taken
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
-        }
-    }
-
-    IEnumerator DoKnockBack(GameObject attacker)
-    {
-        //Bloque le mouvement du joueur pour ne pas override le knockback
-        playerMovement.lockMovement = true;
-        //Calcul la direction du knockback
-        Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
-        //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        Invoke("UnlockMovement", knockBackTime);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
-        //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
-        switch (attacker.tag)
-        {
-            //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
-            case "Arrow":
-                playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                + attacker.GetComponent<Hook>().playerMovement.speed / 2), ForceMode2D.Impulse);
-                break;
-            case "Hook":
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                break;
-            case "Laser":
-                LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
-                switch (laserScript.side)
-                {
-                    case LaserColliderDetection.LaserSide.bot:
-                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.top:
-                        playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.right:
-                        playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.left:
-                        playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
         }
     }
 
@@ -274,56 +260,123 @@ public class PlayerLifeManager : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D col){
-        if (col.gameObject.CompareTag("Laser"))
+        switch (col.gameObject.tag)
         {
-            LaserHitFX(col.GetContact(0).point);
-            if (!inRecovery)
-                TakeDamage(laserDamage, col.gameObject, true);
-            else
-            {//Le joueur retouche le laser alors qu'il est encore en recovery
-                if (hookScript.hooked)
-                {
-                    hookScript.DisableRope(false);
+            case "LaserEdge":
+                LaserHitFX(col.GetContact(0).point);
+                if (!inRecovery)
+                    TakeDamage(laserDamage, col.gameObject, true);
+                else
+                {//Le joueur retouche le LaserEdge alors qu'il est encore en recovery
+                    if (hookScript.hooked)
+                    {
+                        hookScript.DisableRope(false);
+                    }
+                    //Bloque le mouvement du joueur pour ne pas override le knockback
+                    playerMovement.lockMovement = true;
+                    //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+                    playerMovement.rigid.velocity = Vector3.zero;
+                    Invoke("UnlockMovement", knockBackTime);
+                    LaserColliderDetection laserScript = col.gameObject.GetComponent<LaserColliderDetection>();
+                    switch (laserScript.side)
+                    {
+                        case LaserColliderDetection.LaserSide.bot:
+                            playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        case LaserColliderDetection.LaserSide.top:
+                            playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        case LaserColliderDetection.LaserSide.right:
+                            playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        case LaserColliderDetection.LaserSide.left:
+                            playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                //Bloque le mouvement du joueur pour ne pas override le knockback
-                playerMovement.lockMovement = true;
-                //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-                playerMovement.rigid.velocity = Vector3.zero;
-                Invoke("UnlockMovement", knockBackTime);
-                LaserColliderDetection laserScript = col.gameObject.GetComponent<LaserColliderDetection>();
-                switch (laserScript.side)
+                break;
+            case "Laser":
+                LaserHitFX(col.GetContact(0).point);
+                if (!inRecovery)
                 {
-                    case LaserColliderDetection.LaserSide.bot:
-                        playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.top:
-                        playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.right:
-                        playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    case LaserColliderDetection.LaserSide.left:
-                        playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
-                        break;
-                    default:
-                        break;
+                    switch (col.gameObject.name)
+                    {
+                        case "ColliderBot":
+                            TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
+                            break;
+                        case "ColliderTop":
+                            TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point, true);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+                else
+                {//Le joueur retouche le LaserEdge alors qu'il est encore en recovery
+                    if (hookScript.hooked)
+                    {
+                        hookScript.DisableRope(false);
+                    }
+                    //Bloque le mouvement du joueur pour ne pas override le knockback
+                    playerMovement.lockMovement = true;
+                    //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
+                    playerMovement.rigid.velocity = Vector3.zero;
+                    Invoke("UnlockMovement", knockBackTime);
+                    switch (col.gameObject.name)
+                    {
+                        case "ColliderBot":
+                            playerMovement.rigid.AddForce(Vector2.Perpendicular(col.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        case "ColliderTop":
+                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(col.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 
     private void OnCollisionStay2D(Collision2D col)
     {
         //Normalement ceci ne peux pas se produire, mais je le rajoute par sécurité
-        if (col.gameObject.CompareTag("Laser"))
+        switch (col.gameObject.tag)
         {
-            if (hookScript.hooked)
-            {
-                hookScript.DisableRope(false);
-            }
-            LaserHitFX(col.GetContact(0).point);
-            TakeDamage(laserDamage, col.gameObject, true);
-			StartCoroutine(CancelVibration (Vibrations.PlayVibration("Laser", playerMovement.playerInputDevice)));
+            case "LaserEdge":
+                if (hookScript.hooked)
+                {
+                    hookScript.DisableRope(false);
+                }
+                LaserHitFX(col.GetContact(0).point);
+                TakeDamage(laserDamage, col.gameObject, true);
+                StartCoroutine(CancelVibration(Vibrations.PlayVibration("LaserEdge", playerMovement.playerInputDevice)));
+                break;
+            case "Laser":
+                if (hookScript.hooked)
+                {
+                    hookScript.DisableRope(false);
+                }
+                LaserHitFX(col.GetContact(0).point);
+                switch (col.gameObject.name)
+                {
+                    case "ColliderBot":
+                        TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
+                        break;
+                    case "ColliderTop":
+                        TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point, true);
+                        break;
+                    default:
+                        break;
+                }
+                StartCoroutine(CancelVibration(Vibrations.PlayVibration("LaserEdge", playerMovement.playerInputDevice)));
+                break;
+            default:
+                break;
         }
     }
 
@@ -354,16 +407,20 @@ public class PlayerLifeManager : MonoBehaviour {
         //spriteArrow.enabled = !spriteArrow.enabled;
         if (wounded)
         {
-            sprite.color = startColor;
+            sprite.material = startMaterial;
+            spriteArrow.material = startMaterial;
+            /*sprite.color = startColor;
             spriteArrow.color = startColor;
-            trail.colorGradient = startGradient;
+            trail.colorGradient = startGradient;*/
             wounded = false;
         }
         else
         {
-            sprite.color = woundedColor;
-            spriteArrow.color = woundedColor;
-            trail.colorGradient = woundedGradient;
+            sprite.material = woundedMaterial;
+            spriteArrow.material = woundedMaterial;
+            /* sprite.color = woundedColor;
+             spriteArrow.color = woundedColor;
+             trail.colorGradient = woundedGradient;*/
             wounded = true;
         }
     }
@@ -373,13 +430,15 @@ public class PlayerLifeManager : MonoBehaviour {
         //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke("Flashing");
         inRecovery = false;
-        //sprite.enabled = true;
-        //trail.enabled = true;
-        //spriteArrow.enabled = true;
+        sprite.material = startMaterial;
+        spriteArrow.material = startMaterial;
+        /*sprite.enabled = true;
+        trail.enabled = true;
+        spriteArrow.enabled = true;
         trail.colorGradient = startGradient;
         sprite.color = startColor;
-        spriteArrow.color = startColor;
-        
+        spriteArrow.color = startColor;*/
+
     }
 
     void Dead()

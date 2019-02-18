@@ -38,14 +38,15 @@ public class Balancing : MonoBehaviour {
     public float laserDamage = 10;
     public float criticalSpeed = 35;
     public float deathRadius = 2.5f;
+    public float dashDamage = 50;
 
     [Header("Knockback")]
     public float knockBackTime = 0.5f;
     public float knockBackPlayerHit = 5;
+    public float maxKnockBackPlayerHit = 40f;
     public float knockBackShieldHit = 10;
     public float knockBackLaser = 10;
     public float knockBackNuke = 15;
-    public float freezeFrameDuration = 0.18f;
 
     [Header("Dash")]
     public float dashTime;
@@ -53,6 +54,7 @@ public class Balancing : MonoBehaviour {
     public float dashCDTime;
     public float dragEndOfDash = 20;
     public bool dashRecoveryWithHook;
+    public float inDashStatusTime = .5f;
 
     [Header("VIBRATIONS")]
 	public float lightRumble = 0.1f;
