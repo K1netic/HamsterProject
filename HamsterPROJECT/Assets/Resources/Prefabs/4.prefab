@@ -828,10 +828,11 @@ MonoBehaviour:
   currentState: 0
   speed: 0
   dashRecoveryWithHook: 0
+  lockMovementDash: 0
   shootPos: {fileID: 1095596337971022}
   playerDirection: {x: 0, y: 0}
   gravity: 0
-  playerNumber: _P1
+  playerNumber: _P2
 --- !u!114 &114391189800377530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -860,6 +861,7 @@ MonoBehaviour:
   projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  cantAttack: 0
   isFrozen: 0
 --- !u!114 &114421945405527434
 MonoBehaviour:

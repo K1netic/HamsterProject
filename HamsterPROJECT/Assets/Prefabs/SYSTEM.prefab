@@ -502,8 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5344a7df802362647a7094a8100a437d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyProgressBar: {fileID: 2800000, guid: 491d1d22608a2364e97fcbd9d2ee43b1, type: 3}
-  fullProgressBar: {fileID: 2800000, guid: b2bd281e02b993e4f8cbac94290c32e8, type: 3}
+  progressBar: {fileID: 0}
   Players: []
   spawnPoints: []
   TestWithoutUI: 0
@@ -590,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowdownFactor: 0.1
-  slowdownLength: 0.8
+  slowdownLength: 0.4
 --- !u!212 &212991258004361430
 SpriteRenderer:
   m_ObjectHideFlags: 1
