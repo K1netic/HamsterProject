@@ -27,6 +27,13 @@ public class TitleScreen : MonoBehaviour {
 	{
 		//mngr.PlaySound ("UI_titleScreenValidation", //mngr.UIsource);
 		yield return new WaitForSeconds (delay);
-		SceneManager.LoadScene (sceneToLoad);
+        if(PlayerPrefs.GetInt("FirstTime") == 1)
+		    SceneManager.LoadScene (sceneToLoad);
+        else
+        {
+            PlayerPrefs.SetInt("FirstTime", 1);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Tutorial");
+        }
 	}
 }
