@@ -15,7 +15,7 @@ public class UiButtonFunctions : MonoBehaviour {
 
 	void Start()
 	{
-		//mngr = FindObjectOfType<AudioManager> ();
+		mngr = FindObjectOfType<AudioManager> ();
 		lvlSelect = FindObjectOfType<LevelSelection>();
 	}
 
@@ -103,6 +103,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	// Utilisé au changement de valeur sur un élément à deux flèches de sélection (ex : game mode)
 	public void ChangeGameMode()
 	{
+		mngr.PlaySound ("UI_pick", mngr.UIsource);
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			GameManager.gameModeType = GameManager.gameModes.Deathmatch;
@@ -115,14 +116,15 @@ public class UiButtonFunctions : MonoBehaviour {
 		}
 	}
 
-	public void Click()
+	public void Validate()
 	{
-		//mngr.PlaySound ("UI_validate", //mngr.UIsource);
+		mngr.PlaySound ("UI_validate", mngr.UIsource);
 	}
 
 	// Load a series of rounds (pack)
 	public void LoadMatch()
 	{
+		mngr.PlaySound ("UI_gameLaunch", mngr.UIsource);
 		lvlSelect.LoadNextLevel ("");
 	}
 

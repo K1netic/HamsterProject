@@ -8,6 +8,7 @@ public class ScoreDisplayer : MonoBehaviour {
 	[SerializeField] int ScoreDisplayerID;
 	// Use this for initialization
 	void Start () {
+		
 		// Don't display score if the corresponding player is not in the game
 		for(int i = 0; i < GameManager.playersActive.Length; i++)
 		{

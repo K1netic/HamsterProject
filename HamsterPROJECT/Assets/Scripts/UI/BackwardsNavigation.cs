@@ -12,7 +12,7 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	void Start()
 	{
-		//mngr = FindObjectOfType<AudioManager> ();
+		mngr = FindObjectOfType<AudioManager> ();
 	}
 
 	// Update is called once per frame
@@ -25,7 +25,7 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		//mngr.PlaySound ("UI_cancel", //mngr.UIsource);
+		mngr.PlaySound ("UI_cancel", mngr.UIsource);
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}

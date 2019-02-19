@@ -51,24 +51,20 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float UI_cancelVolume;
 	[SerializeField] AudioClip UI_pick;
 	[Range(0f,1f)] [SerializeField] float UI_pickVolume;
-	[SerializeField] AudioClip UI_highlightPlus;
-	[Range(0f,1f)] [SerializeField] float UI_highlightPlusVolume;
-	[SerializeField] AudioClip UI_validatePlus;
-	[Range(0f,1f)] [SerializeField] float UI_validatePlusVolume;
-	[SerializeField] AudioClip UI_matchEnd;
-	[Range(0f,1f)] [SerializeField] float UI_matchEndVolume;
-	[SerializeField] AudioClip UI_matchEndValidation;
-	[Range(0f,1f)] [SerializeField] float UI_matchEndValidationVolume;
 	[SerializeField] AudioClip UI_gameLaunch;
 	[Range(0f,1f)] [SerializeField] float UI_gameLaunchVolume;
 	[SerializeField] AudioClip UI_pauseMenuEnabled;
 	[Range(0f,1f)] [SerializeField] float UI_pauseMenuEnabledVolume;
 	[SerializeField] AudioClip UI_pauseMenuDisabled;
 	[Range(0f,1f)] [SerializeField] float UI_pauseMenuDisabledVolume;
-	[SerializeField] AudioClip UI_panelActivation;
-	[Range(0f,1f)] [SerializeField] float UI_panelActivationVolume;
+	[SerializeField] AudioClip UI_characterPanelActivation;
+	[Range(0f,1f)] [SerializeField] float UI_characterPanelActivationVolume;
 	[SerializeField] AudioClip UI_titleScreenValidation;
 	[Range(0f,1f)] [SerializeField] float UI_titleScreenValidationVolume;
+	[SerializeField] AudioClip UI_resultsScreen;
+	[Range(0f,1f)] [SerializeField] float UI_resultsScreenVolume;
+	[SerializeField] AudioClip UI_scoreDisplay;
+	[Range(0f,1f)] [SerializeField] float UI_scoreDisplayVolume;
 	#endregion
 
 	public static AudioManager instance = null;
@@ -114,7 +110,6 @@ public class AudioManager : MonoBehaviour {
 			source.PlayOneShot (speed);
 			break;
 		case "cancel":
-			source.pitch = 0.5f;
 			source.volume = cancelVolume;
 			source.PlayOneShot (cancel);
 			break;
@@ -174,22 +169,6 @@ public class AudioManager : MonoBehaviour {
 			source.volume = UI_pickVolume;
 			source.PlayOneShot (UI_pick);
 			break;
-		case "UI_highlightPlus":
-			source.volume = UI_highlightPlusVolume;
-			source.PlayOneShot (UI_highlightPlus);
-			break;
-		case "UI_validatePlus":
-			source.volume = UI_validatePlusVolume;
-			source.PlayOneShot (UI_validatePlus);
-			break;
-		case "UI_matchEnd":
-			source.volume = UI_matchEndVolume;
-			source.PlayOneShot (UI_matchEnd);
-			break;
-		case "UI_matchEndValidation":
-			source.volume = UI_matchEndValidationVolume;
-			source.PlayOneShot (UI_matchEndValidation);
-			break;
 		case "UI_gameLaunch":
 			source.volume = UI_gameLaunchVolume;
 			source.PlayOneShot (UI_gameLaunch);
@@ -203,13 +182,20 @@ public class AudioManager : MonoBehaviour {
 			source.PlayOneShot (UI_pauseMenuDisabled);
 			break;
 		case "UI_panelActivation":
-			source.volume = UI_panelActivationVolume;
-			source.PlayOneShot (UI_panelActivation);
+			source.volume = UI_characterPanelActivationVolume;
+			source.PlayOneShot (UI_characterPanelActivation);
 			break;
 		case "UI_titleScreenValidation":
-			source.pitch = 1.0f;
 			source.volume = UI_titleScreenValidationVolume;
 			source.PlayOneShot (UI_titleScreenValidation);
+			break;
+		case "UI_resultsScreen":
+			source.volume = UI_resultsScreenVolume;
+			source.PlayOneShot (UI_resultsScreen);
+			break;
+		case "UI_scoreDisplay":
+			source.volume = UI_scoreDisplayVolume;
+			source.PlayOneShot (UI_scoreDisplay);
 			break;
 		default:
 			break;

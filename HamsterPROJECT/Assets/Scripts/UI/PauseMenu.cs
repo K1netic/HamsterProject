@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
-		//mngr.PlaySound ("UI_pauseMenuEnabled", //mngr.UIsource);
+		mngr.PlaySound ("UI_pauseMenuEnabled", mngr.UIsource);
 		FreezePlayers ();
 		CancelAllVibrations ();
 		pauseMenu.SetActive (true);
@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void ClosePauseMenu()
 	{
-		//mngr.PlaySound ("UI_pauseMenuDisabled", //mngr.UIsource);
+		mngr.PlaySound ("UI_pauseMenuDisabled", mngr.UIsource);
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1;
 		UnfreezePlayers ();
