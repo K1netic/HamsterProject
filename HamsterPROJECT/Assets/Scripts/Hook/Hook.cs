@@ -293,6 +293,7 @@ public class Hook : MonoBehaviour {
                 {
                     joint.distance -= retractationStep;
                     initialDistance = joint.distance;
+                    //AudioManager.instance.PlaySound("towing", playerNumber + "Hook");
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
@@ -305,6 +306,7 @@ public class Hook : MonoBehaviour {
                         initialDistance = joint.distance;
                         //permet de faire reculer le joueur avec le changement de distance max
                         joint.maxDistanceOnly = false;
+                        //AudioManager.instance.PlaySound("untowing", playerNumber + "Hook");
                     }
                 }
                 else
@@ -426,6 +428,7 @@ public class Hook : MonoBehaviour {
             default:
                 break;
             }
+        AudioManager.instance.PlaySound("switchWeapon", playerNumber+"Arrow");
         //Empeche l'input d'être répété trop vite
         Invoke("ResetCDSwitch",0.1f);
     }
@@ -496,6 +499,8 @@ public class Hook : MonoBehaviour {
         hookInCD = true;
 
         line.gameObject.GetComponent<LineCutter>().projectile = currentProjectile;
+
+        AudioManager.instance.PlaySound("throwHook", playerNumber + "Hook");
     }
 
     //Désactive tout ce qui est relatif au grappin
@@ -650,11 +655,13 @@ public class Hook : MonoBehaviour {
                 // Collision Arrow - Arrow 
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+                AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
                 break;
             case HookState.Shield:
                 // Collision Arrow - Shield 
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
+                AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
                 break;
             default:
                 break;
@@ -673,11 +680,13 @@ public class Hook : MonoBehaviour {
                 // Collision Arrow - Arrow 
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+                AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
                 break;
             case HookState.Shield:
                 // Collision Arrow - Shield 
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
+                AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
                 break;
             default:
                 break;

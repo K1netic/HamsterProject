@@ -198,9 +198,10 @@ public class Projectile : MonoBehaviour {
             hook.line.gameObject.SetActive(false);
         }
         StartCoroutine(hook.ResetHookCD());
-        //Rend le projectile jusqu'à ce qu'il soit détruit pour que la fonction ResetHookCD puisse s'effectuer entièrement
+        //Rend le projectile invisible jusqu'à ce qu'il soit détruit pour que la fonction ResetHookCD puisse s'effectuer entièrement
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
+        AudioManager.instance.PlaySound("destructionHook", hook.playerMovement.playerNumber + "Hook");
         Invoke("End",balanceData.timeBtwShots+1);
 	}
 
@@ -209,39 +210,52 @@ public class Projectile : MonoBehaviour {
         //Vérifie les collisions uniquement si le projectile n'est pas pas aggripé
         if (!hooked)
         {
-            //Inflige des dégâts et détruit le projectile s'il touche un player
-            if (collision.gameObject.CompareTag("Player"))
+            switch (collision.gameObject.tag)
             {
-                if (!hook.cantAttack)
-                {
-                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                    PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
-                    Instantiate(hitHook, transform.position, transform.rotation);
-                    //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                    foeScript.HitFX(collision.GetContact(0).point, 0);
-                    foeScript.TakeDamage(hookheadDamage, gameObject, true);
-                    hook.VibrationOnTouchingPlayerWithHookhead();
-                    Destruction();
-                }
-                else
-                {
+                case "Player":
+                    //Inflige des dégâts et détruit le projectile s'il touche un player
+                    if (!hook.cantAttack)
+                    {
+                        GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                        PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                        Instantiate(hitHook, transform.position, transform.rotation);
+                        //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
+                        foeScript.HitFX(collision.GetContact(0).point, 0);
+                        foeScript.TakeDamage(hookheadDamage, gameObject, true);
+                        hook.VibrationOnTouchingPlayerWithHookhead();
+                        Destruction();
+                    }
+                    else
+                    {
+                        Instantiate(hitHook, transform.position, transform.rotation);
+                        hook.VibrationOnProjectileDestroyed();
+                        Destruction();
+                    }
+                    break;
+                case "Hook":
                     Instantiate(hitHook, transform.position, transform.rotation);
                     hook.VibrationOnProjectileDestroyed();
+                    AudioManager.instance.PlaySound("doubleHookContact", hook.playerMovement.playerNumber + "Hook");
                     Destruction();
-                }
-                
-            }
-            
-            else if(!collision.gameObject.CompareTag("Hookable"))
-            {
-                Instantiate(hitHook, transform.position, transform.rotation);
-				hook.VibrationOnProjectileDestroyed ();
-                Destruction();
-            }
-            //S'accroche sur une plateforme si les raycast ne l'ont pas détecté
-            else if (collision.gameObject.CompareTag("Hookable"))
-            {
-                GetHooked(collision.GetContact(0).point, collision.gameObject);
+                    break;
+                case "Hookable":
+                    GetHooked(collision.GetContact(0).point, collision.gameObject);
+                    break;
+                default:
+                    if(collision.gameObject.layer == 25)//scraps
+                    {
+                        Instantiate(hitHook, transform.position, transform.rotation);
+                        hook.VibrationOnProjectileDestroyed();
+                        AudioManager.instance.PlaySound("hookContactScraps", hook.playerMovement.playerNumber + "Hook");
+                        Destruction();
+                    }
+                    else
+                    {
+                        Instantiate(hitHook, transform.position, transform.rotation);
+                        hook.VibrationOnProjectileDestroyed();
+                        Destruction();
+                    }
+                    break;
             }
         }
     }
