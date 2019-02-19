@@ -41,6 +41,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float laserDamage;
 	TrailRenderer trail;
     float criticalSpeed;
+    float arrowDamage;
     bool doubleFXprotection;
     bool doubleFXprotectionLaser;
     float knockBackNuke;
@@ -78,6 +79,7 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackLaser= balanceData.knockBackLaser;
         laserDamage= balanceData.laserDamage;
         criticalSpeed = balanceData.criticalSpeed;
+        arrowDamage = balanceData.arrowDamage;
         knockBackNuke = balanceData.knockBackNuke;
         deathRadius = balanceData.deathRadius;
         dashDamage = balanceData.dashDamage;
@@ -189,17 +191,29 @@ public class PlayerLifeManager : MonoBehaviour {
                 {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
                     playerHP -= dashDamage;
                     woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
+                    AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
                 }
                 else
                 {
                     playerHP -= damage;
                     woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
+                    if(damage - arrowDamage > criticalSpeed)
+                        AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
+                    else
+                        AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
                 }
+            }
+            else if(attacker.CompareTag("Hook"))
+            {
+                playerHP -= damage;
+                woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
+                AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
             }
             else
             {
                 playerHP -= damage;
                 woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
+                AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
             }
             
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -295,6 +309,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         default:
                             break;
                     }
+                    AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
             case "Laser":
@@ -335,6 +350,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         default:
                             break;
                     }
+                    AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
             default:
@@ -443,6 +459,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Dead()
     {
+        AudioManager.instance.PlaySound("death", playerMovement.playerNumber);
 		// Set player as dead in the game manager
         GameManager.playersAlive [int.Parse((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2,1))) - 1] = false;
 		// Add a death in metrics

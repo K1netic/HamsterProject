@@ -7,43 +7,45 @@ public class AudioManager : MonoBehaviour {
 	[SerializeField] float pitchMin;
 	[SerializeField] float pitchMax;
 
-	#region IG
+    [Header("In game sounds")]
+    #region IG
+    [SerializeField] AudioClip criticalDamage;
+	[Range(0f,1f)] [SerializeField] float criticalDamageVolume;
+	[SerializeField] AudioClip damage;
+	[Range(0f,1f)] [SerializeField] float damageVolume;
+	[SerializeField] AudioClip dash;
+	[Range(0f,1f)] [SerializeField] float dashVolume;
+	[SerializeField] AudioClip destructionHook;
+	[Range(0f,1f)] [SerializeField] float destructionHookVolume;
+	[SerializeField] AudioClip doubleHookContact;
+	[Range(0f,1f)] [SerializeField] float doubleHookContactVolume;
+	[SerializeField] AudioClip hookContactScraps;
+	[Range(0f,1f)] [SerializeField] float hookContactScrapsVolume;
+	[SerializeField] AudioClip playerHitLaser;
+	[Range(0f,1f)] [SerializeField] float playerHitLaserVolume;
+	[SerializeField] AudioClip playerHitPlatform;
+	[Range(0f,1f)] [SerializeField] float playerHitPlatformVolume;
+	[SerializeField] AudioClip throwHook;
+	[Range(0f,1f)] [SerializeField] float throwHookVolume;
+	[SerializeField] AudioClip arrowHitShield;
+	[Range(0f,1f)] [SerializeField] float arrowHitShieldVolume;
+	[SerializeField] AudioClip arrowHitArrow;
+	[Range(0f,1f)] [SerializeField] float arrowHitArrowVolume;
+	[SerializeField] AudioClip switchWeapon;
+	[Range(0f,1f)] [SerializeField] float switchWeaponVolume;
 	[SerializeField] AudioClip towing;
 	[Range(0f,1f)] [SerializeField] float towingVolume;
 	[SerializeField] AudioClip untowing;
 	[Range(0f,1f)] [SerializeField] float untowingVolume;
-	[SerializeField] AudioClip hit;
-	[Range(0f,1f)] [SerializeField] float hitVolume;
-	[SerializeField] AudioClip speed;
-	[Range(0f,1f)] [SerializeField] float speedVolume;
-	[SerializeField] AudioClip cancel;
-	[Range(0f,1f)] [SerializeField] float cancelVolume;
-	[SerializeField] AudioClip grip;
-	[Range(0f,1f)] [SerializeField] float gripVolume;
-	[SerializeField] AudioClip gripCancel;
-	[Range(0f,1f)] [SerializeField] float gripCancelVolume;
-	[SerializeField] AudioClip gripLoss;
-	[Range(0f,1f)] [SerializeField] float gripLossVolume;
-	[SerializeField] AudioClip doubleGripCancel;
-	[Range(0f,1f)] [SerializeField] float doubleGripCancelVolume;
-	[SerializeField] AudioClip pick;
-	[Range(0f,1f)] [SerializeField] float pickVolume;
-	[SerializeField] AudioClip lightPick;
-	[Range(0f,1f)] [SerializeField] float lightPickVolume;
-	[SerializeField] AudioClip thuddyPick;
-	[Range(0f,1f)] [SerializeField] float thuddyPickVolume;
-	[SerializeField] AudioClip lightThud;
-	[Range(0f,1f)] [SerializeField] float lightThudVolume;
-	[SerializeField] AudioClip playerDeath;
-	[Range(0f,1f)] [SerializeField] float playerDeathVolume;
-	[SerializeField] AudioClip crack;
-	[Range(0f,1f)] [SerializeField] float crackVolume;
-	[SerializeField] AudioClip breakPlatform;
-	[Range(0f,1f)] [SerializeField] float breakPlatformVolume;
-	#endregion
+    [SerializeField] AudioClip death;
+    [Range(0f, 1f)] [SerializeField] float deathVolume;
+    [SerializeField] AudioClip dashRecovery;
+    [Range(0f, 1f)] [SerializeField] float dashRecoveryVolume;
+    #endregion
 
-	#region UI
-	[SerializeField] AudioClip UI_highlight;
+    [Header("UI sounds")]
+    #region UI
+    [SerializeField] AudioClip UI_highlight;
 	[Range(0f,1f)] [SerializeField] float UI_highlightVolume;
 	[SerializeField] AudioClip UI_validate;
 	[Range(0f,1f)] [SerializeField] float UI_validateVolume;
@@ -69,13 +71,23 @@ public class AudioManager : MonoBehaviour {
 
 	public static AudioManager instance = null;
 
-	public AudioSource P1source;
-	public AudioSource P2source;
-	public AudioSource P3source;
-	public AudioSource P4source;
-	public AudioSource UIsource;
+	public AudioSource _P1Source;
+	public AudioSource _P2Source;
+	public AudioSource _P3Source;
+	public AudioSource _P4Source;
+    public AudioSource _P1HookSource;
+    public AudioSource _P2HookSource;
+    public AudioSource _P3HookSource;
+    public AudioSource _P4HookSource;
+    public AudioSource _P1ArrowSource;
+    public AudioSource _P2ArrowSource;
+    public AudioSource _P3ArrowSource;
+    public AudioSource _P4ArrowSource;
+    public AudioSource UIsource;
 
-	void Awake()
+    AudioSource source;
+
+    void Awake()
 	{
 		if (instance == null)
 		{
@@ -88,10 +100,51 @@ public class AudioManager : MonoBehaviour {
 		}
 	}
 
-	public void PlaySound(string audioName, AudioSource source)
+	public void PlaySound(string audioName, string sourceName)
 	{
-//		source.pitch = Random.Range (pitchMin, pitchMax);
-		switch(audioName)
+        switch (sourceName)
+        {
+            case "_P1":
+                source = _P1Source;
+                break;
+            case "_P2":
+                source = _P2Source;
+                break;
+            case "_P3":
+                source = _P3Source;
+                break;
+            case "_P4":
+                source = _P4Source;
+                break;
+            case "_P1Hook":
+                source = _P1HookSource;
+                break;
+            case "_P2Hook":
+                source = _P2HookSource;
+                break;
+            case "_P3Hook":
+                source = _P3HookSource;
+                break;
+            case "_P4Hook":
+                source = _P4HookSource;
+                break;
+            case "_P1Arrow":
+                source = _P1ArrowSource;
+                break;
+            case "_P2Arrow":
+                source = _P2ArrowSource;
+                break;
+            case "_P3Arrow":
+                source = _P3ArrowSource;
+                break;
+            case "_P4Arrow":
+                source = _P4ArrowSource;
+                break;
+            default:
+                break;
+        }
+         //		source.pitch = Random.Range (pitchMin, pitchMax);
+        switch(audioName)
 		{
 		case "towing":
 			source.volume = towingVolume;
@@ -101,59 +154,63 @@ public class AudioManager : MonoBehaviour {
 			source.volume = untowingVolume;
 			source.PlayOneShot (untowing);
 			break;
-		case "hit":
-			source.volume = hitVolume;
-			source.PlayOneShot (hit);
+		case "damage":
+			source.volume = damageVolume;
+			source.PlayOneShot (damage);
 			break;
-		case "speed":
-			source.volume = speedVolume;
-			source.PlayOneShot (speed);
+		case "criticalDamage":
+			source.volume = criticalDamageVolume;
+			source.PlayOneShot (criticalDamage);
 			break;
-		case "cancel":
-			source.volume = cancelVolume;
-			source.PlayOneShot (cancel);
+		case "dash":
+			source.volume = dashVolume;
+			source.PlayOneShot (dash);
 			break;
-		case "grip":
-			source.volume = gripVolume;
-			source.PlayOneShot (grip);
+		case "doubleHookContact":
+			source.volume = doubleHookContactVolume;
+			source.PlayOneShot (doubleHookContact);
 			break;
-		case "gripCancel":
-			source.volume = gripCancelVolume;
-			source.PlayOneShot (gripCancel);
+		case "destructionHook":
+			source.volume = destructionHookVolume;
+			source.PlayOneShot (destructionHook);
 			break;
-		case "gripLoss":
-			source.volume = gripLossVolume;
-			source.PlayOneShot (gripLoss);
+		case "hookContactScraps":
+			source.volume = hookContactScrapsVolume;
+			source.PlayOneShot (hookContactScraps);
 			break;
-		case "doubleGripCancel":
-			source.volume = doubleGripCancelVolume;
-			source.PlayOneShot (doubleGripCancel);
+		case "playerHitLaser":
+			source.volume = playerHitLaserVolume;
+			source.PlayOneShot (playerHitLaser);
 			break;
-		case "pick":
-			source.volume = pickVolume;
-			source.PlayOneShot (pick);
+		case "playerHitPlatform":
+			source.volume = playerHitPlatformVolume;
+			source.PlayOneShot (playerHitPlatform);
 			break;
-		case "lightPick":
-			source.volume = lightPickVolume;
-			source.PlayOneShot (lightPick);
+		case "throwHook":
+			source.volume = throwHookVolume;
+			source.PlayOneShot (throwHook);
 			break;
-		case "thuddyPick":
-			source.volume = thuddyPickVolume;
-			source.PlayOneShot (thuddyPick);
+		case "arrowHitShield":
+			source.volume = arrowHitShieldVolume;
+			source.PlayOneShot (arrowHitShield);
 			break;
-		case "playerDeath":
-			source.volume = playerDeathVolume;
-			source.PlayOneShot (playerDeath);
+		case "arrowHitArrow":
+			source.volume = arrowHitArrowVolume;
+			source.PlayOneShot (arrowHitArrow);
 			break;
-		case "crack":
-			source.volume = crackVolume;
-			source.PlayOneShot (crack);
+		case "switchWeapon":
+			source.volume = switchWeaponVolume;
+			source.PlayOneShot (switchWeapon);
 			break;
-		case "breakPlatform":
-			source.volume = breakPlatformVolume;
-			source.PlayOneShot (breakPlatform);
+		case "death":
+			source.volume = deathVolume;
+			source.PlayOneShot (death);
 			break;
-		case "UI_highlight":
+        case "dashRecovery":
+            source.volume = dashRecoveryVolume;
+            source.PlayOneShot(dashRecovery);
+            break;
+            case "UI_highlight":
 			source.volume = UI_highlightVolume;
 			source.PlayOneShot (UI_highlight);
 			break;

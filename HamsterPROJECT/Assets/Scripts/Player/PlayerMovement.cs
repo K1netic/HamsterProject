@@ -173,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
         Invoke("CancelDashEffect", dashTime * 3.5f);
         Invoke("ResetDashCD", dashCDTime);
         StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
+        AudioManager.instance.PlaySound("dash", playerNumber);
     }
 
     void UnlockMovementDash()
@@ -239,13 +240,18 @@ public class PlayerMovement : MonoBehaviour
 		if (collision.gameObject.layer == 16 || collision.gameObject.tag == "Player")
 		{
 			StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionPlayerPlayer", playerInputDevice)));
-		}
+            AudioManager.instance.PlaySound("playerHitPlatform",playerNumber);
+        }
 	}
 
     public void ResetDashCD()
     {
-        if(dashInCD)
+        if (dashInCD)
+        {
+            AudioManager.instance.PlaySound("dashRecovery", playerNumber);
             Instantiate(dashRecovery, transform.position, transform.rotation, transform);
+        }
+            
         dashInCD = false;
     }
 
