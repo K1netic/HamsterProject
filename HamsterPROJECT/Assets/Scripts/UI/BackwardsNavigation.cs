@@ -25,7 +25,7 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		mngr.PlaySound ("UI_cancel", mngr.UIsource);
+		mngr.PlaySound ("UI_cancel", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}

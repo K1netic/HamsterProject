@@ -168,9 +168,7 @@ public class MatchEnd : MonoBehaviour {
 	// Instruction for when the match is over
 	void EndOfMatch()
 	{
-		music.StopMusic ("battle");
 		GameManager.lastLevelPlayed = SceneManager.GetActiveScene ().name;
-//		//mngr.PlaySound ("UI_matchEndValidation", //mngr.UIsource);
 		SceneManager.LoadScene ("Results");
 	}
 }

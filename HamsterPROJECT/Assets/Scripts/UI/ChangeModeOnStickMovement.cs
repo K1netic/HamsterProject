@@ -9,6 +9,12 @@ public class ChangeModeOnStickMovement : Selectable {
 
 	bool blockStickMovement = false;
 	BaseEventData baseEvent;
+	AudioManager mngr;
+
+	void Start()
+	{
+		mngr = FindObjectOfType<AudioManager> ();
+	}
 
 	void Update()
 	{
@@ -26,6 +32,8 @@ public class ChangeModeOnStickMovement : Selectable {
 					GameManager.gameModeType = GameManager.gameModes.LastManStanding;
 					this.GetComponent<Text> ().text = "Last Man Standing";
 				}
+				mngr.PlaySound ("UI_pick", "UI");
+
 				blockStickMovement = true;
 			}
 

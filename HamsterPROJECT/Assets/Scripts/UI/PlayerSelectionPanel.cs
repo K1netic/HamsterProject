@@ -81,7 +81,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Activated)
 			{
 				state = SelectionPanelState.Deactivated;
-				mngr.PlaySound ("UI_cancel", mngr.UIsource);
+				mngr.PlaySound ("UI_cancel", "UI");
 				device = null;
 			}
 
@@ -90,7 +90,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Validated)
 			{
 				state = SelectionPanelState.Activated;
-				mngr.PlaySound ("UI_cancel", mngr.UIsource);
+				mngr.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 			}
@@ -160,7 +160,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected = 0;
 			}
 			characterSprite.sprite = characterSprites[characterSelected];
-			mngr.PlaySound ("UI_pick", mngr.UIsource);
+			mngr.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
 		} 
 
@@ -175,7 +175,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected = CharacterSelectionScreen.nbCharactersAvailable - 1;
 			}
 			characterSprite.sprite = characterSprites[characterSelected];
-			mngr.PlaySound ("UI_pick", mngr.UIsource);
+			mngr.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
 		} 
 
@@ -187,7 +187,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!activate)
 		{
-			mngr.PlaySound ("UI_panelActivation", mngr.UIsource);
+			mngr.PlaySound ("UI_panelActivation", "UI");
 			activate = true;
 		}
 	}
@@ -196,7 +196,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!validate)
 		{
-			mngr.PlaySound ("UI_validate", mngr.UIsource);
+			mngr.PlaySound ("UI_validate", "UI");
 			validate = true;
 		}
 	}

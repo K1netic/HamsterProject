@@ -12,6 +12,7 @@ public class TitleScreen : MonoBehaviour {
 
     void Start()
 	{
+//		PlayerPrefs.DeleteAll ();
         Cursor.visible = false;
 		mngr = FindObjectOfType<AudioManager> ();
 	}
@@ -25,7 +26,7 @@ public class TitleScreen : MonoBehaviour {
 
 	IEnumerator TitleScreenValidation()
 	{
-		mngr.PlaySound ("UI_titleScreenValidation", mngr.UIsource);
+		mngr.PlaySound ("UI_titleScreenValidation", "UI");
 		yield return new WaitForSeconds (delay);
         if(PlayerPrefs.GetInt("FirstTime") == 1)
 		    SceneManager.LoadScene (sceneToLoad);

@@ -17,16 +17,19 @@ public class ResultsScreen : MonoBehaviour {
 	// Audio
 	float delay = 0.1f;
 	AudioManager mngr;
+	MusicManager music;
 	RectTransform rect;
 
 	void Awake()
 	{
 		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
 		mngr = FindObjectOfType<AudioManager> ();
+		music = GameObject.FindObjectOfType<MusicManager> ();
 	}
 	void Start()
 	{
-		mngr.PlaySound ("resultsScreen", mngr.UIsource);
+		music.StopMusic ("battle");
+//		mngr.PlaySound ("resultsScreen", mngr.UIsource);
 		winnerScore = GameManager.playersScores.Max();
 		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
 		panels [winnerIndex].borders.sprite = sprt; 
@@ -46,7 +49,7 @@ public class ResultsScreen : MonoBehaviour {
 
 	IEnumerator LoadEndGame()
 	{
-		mngr.PlaySound ("UI_validate", mngr.UIsource);
+		mngr.PlaySound ("UI_validate", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
 	}

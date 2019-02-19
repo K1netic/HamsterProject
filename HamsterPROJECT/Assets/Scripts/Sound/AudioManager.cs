@@ -140,10 +140,14 @@ public class AudioManager : MonoBehaviour {
             case "_P4Arrow":
                 source = _P4ArrowSource;
                 break;
+			case "UI":
+				source = UIsource;
+				break;
             default:
                 break;
         }
-         //		source.pitch = Random.Range (pitchMin, pitchMax);
+
+        //source.pitch = Random.Range (pitchMin, pitchMax);
         switch(audioName)
 		{
 		case "towing":

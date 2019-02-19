@@ -30,6 +30,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		//reset timeScale in case a scene is loaded from the pause menu
 		if (Time.timeScale != 1) Time.timeScale = 1;
+		mngr.PlaySound ("UI_validate", "UI");
 		SceneManager.LoadScene (sceneToLoadOnClick);
 	}
 
@@ -74,14 +75,14 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		this.GetComponent<Text> ().color = new Color (216, 191, 0);
 		this.transform.GetChild (0).gameObject.SetActive (true);
-		//mngr.PlaySound ("UI_highlight", //mngr.UIsource);
+		mngr.PlaySound ("UI_highlight", "UI");
 	}
 
 	public void Deselect()
 	{
 		this.GetComponent<Text> ().color = new Color (255, 255, 255);
 		this.transform.GetChild (0).gameObject.SetActive (false);
-		//mngr.PlaySound ("UI_highlight", //mngr.UIsource);
+		mngr.PlaySound ("UI_highlight", "UI");
 	}
 
 	// Utilisé pour les éléments qui ont deux flèches de sélection
@@ -90,6 +91,7 @@ public class UiButtonFunctions : MonoBehaviour {
 		this.GetComponent<Text> ().color = new Color (216, 191, 0);
 		this.transform.GetChild (0).gameObject.SetActive (true);
 		this.transform.GetChild (1).gameObject.SetActive (true);
+		mngr.PlaySound ("UI_highlight", "UI");
 	}
 
 	// Utilisé pour les éléments qui ont deux flèches de sélection
@@ -98,38 +100,24 @@ public class UiButtonFunctions : MonoBehaviour {
 		this.GetComponent<Text> ().color = new Color (255, 255, 255);
 		this.transform.GetChild (0).gameObject.SetActive (false);
 		this.transform.GetChild (1).gameObject.SetActive (false);
-	}
-
-	// Utilisé au changement de valeur sur un élément à deux flèches de sélection (ex : game mode)
-	public void ChangeGameMode()
-	{
-		mngr.PlaySound ("UI_pick", mngr.UIsource);
-		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
-		{
-			GameManager.gameModeType = GameManager.gameModes.Deathmatch;
-			this.GetComponent<Text> ().text = GameManager.gameModeType.ToString ();
-		}
-		else
-		{
-			GameManager.gameModeType = GameManager.gameModes.LastManStanding;
-			this.GetComponent<Text> ().text = GameManager.gameModeType.ToString ();
-		}
+		mngr.PlaySound ("UI_highlight", "UI");
 	}
 
 	public void Validate()
 	{
-		mngr.PlaySound ("UI_validate", mngr.UIsource);
+		mngr.PlaySound ("UI_validate", "UI");
 	}
 
 	// Load a series of rounds (pack)
 	public void LoadMatch()
 	{
-		mngr.PlaySound ("UI_gameLaunch", mngr.UIsource);
+		mngr.PlaySound ("UI_gameLaunch", "UI");
 		lvlSelect.LoadNextLevel ("");
 	}
 
 	public void OpenControlsScheme()
 	{
+		mngr.PlaySound ("UI_validate", "UI");
 		controlsScheme.SetActive (true);
 		this.transform.parent.gameObject.SetActive (false);
 	}

@@ -763,6 +763,7 @@ GameObject:
   - component: {fileID: 453550063}
   - component: {fileID: 453550065}
   - component: {fileID: 453550064}
+  - component: {fileID: 453550066}
   m_Layer: 5
   m_Name: FightText
   m_TagString: Untagged
@@ -828,6 +829,24 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 453550062}
   m_CullTransparentMesh: 0
+--- !u!95 &453550066
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453550062}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4df0ef0e31d5154e8f71de85662ed4b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &457853938
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  activatedCharacterSprites:
+  characterSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -1152,7 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  activatedCharacterSprites:
+  characterSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -1357,7 +1376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  activatedCharacterSprites:
+  characterSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -2389,7 +2408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  activatedCharacterSprites:
+  characterSprites:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
