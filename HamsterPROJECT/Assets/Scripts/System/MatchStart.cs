@@ -11,8 +11,7 @@ public class MatchStart : MonoBehaviour {
 	bool coroutineLimiter = false;
 	bool activateBegin = false;
 	public static bool gameHasStarted = false;
-	[SerializeField] Texture2D emptyProgressBar;
-	[SerializeField] Texture2D fullProgressBar;
+    GameObject progressBar;
 	float timeAtBegin;
 
 	// Players 
@@ -39,7 +38,9 @@ public class MatchStart : MonoBehaviour {
 		}
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
-	}
+        progressBar = GameObject.Find("ProgressBar");
+
+    }
 
 	void Start()
 	{
@@ -100,6 +101,7 @@ public class MatchStart : MonoBehaviour {
 		if (Input.anyKeyDown)
 		{
 			activateBegin = true;
+            progressBar.GetComponent<Animator>().enabled = true;
 		}
 
 		if (activateBegin && !coroutineLimiter)
@@ -162,7 +164,7 @@ public class MatchStart : MonoBehaviour {
         newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
     }
 
-    void OnGUI()
+    /*void OnGUI()
 	{
 		// Draw progress bar
 		if (activateBegin && !gameHasStarted)
@@ -170,7 +172,7 @@ public class MatchStart : MonoBehaviour {
 			GUI.DrawTexture (new Rect (1920f/2f - 250, 700, 500, 50), emptyProgressBar);
 			GUI.DrawTexture (new Rect (1920f/2f - 250 , 700, 500 * (Time.time - timeAtBegin), 50), fullProgressBar);
 		}
-	}
+	}*/
 
 	IEnumerator BeginCount()
 	{

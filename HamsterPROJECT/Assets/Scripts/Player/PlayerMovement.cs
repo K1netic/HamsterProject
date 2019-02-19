@@ -237,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		// Collision avec plateformes ou joueur
-		if (collision.gameObject.layer == 16 || collision.gameObject.tag == "Player")
+		if (collision.gameObject.layer == 28 || collision.gameObject.layer == 16 || collision.gameObject.tag == "Player")
 		{
 			StartCoroutine (CancelVibration (Vibrations.PlayVibration("CollisionPlayerPlayer", playerInputDevice)));
             AudioManager.instance.PlaySound("playerHitPlatform",playerNumber);

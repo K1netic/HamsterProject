@@ -796,6 +796,7 @@ MonoBehaviour:
   currentState: 0
   speed: 0
   dashRecoveryWithHook: 0
+  lockMovementDash: 0
   shootPos: {fileID: 1430513982506894}
   playerDirection: {x: 0, y: 0}
   gravity: 0
@@ -902,6 +903,7 @@ MonoBehaviour:
   projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  cantAttack: 0
   isFrozen: 0
 --- !u!198 &198124257371720236
 ParticleSystem:
