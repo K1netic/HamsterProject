@@ -502,7 +502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5344a7df802362647a7094a8100a437d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressBar: {fileID: 0}
   Players: []
   spawnPoints: []
   TestWithoutUI: 0
@@ -560,23 +559,23 @@ MonoBehaviour:
   dragEndOfDash: 20
   dashRecoveryWithHook: 1
   inDashStatusTime: 0.5
-  lightRumble: 0.1
-  mediumlightRumble: 0.25
-  mediumRumble: 0.5
+  lightRumble: 0.15
+  mediumlightRumble: 0.3
+  mediumRumble: 0.6
   heavyRumble: 1
-  lightVibration: 0.2
-  mediumLightVibration: 0.25
-  mediumVibration: 0.5
+  lightVibration: 0.25
+  mediumLightVibration: 0.35
+  mediumVibration: 0.6
   heavyVibration: 1
   damageToVibrationDivisor: 20
   shortVibrationDuration: 0.1
   mediumVibrationDuration: 0.2
   longVibrationDuration: 0.5
-  lightMagnitude: 1
-  heavyMagnitude: 3
-  roughness: 40
+  lightMagnitude: 3
+  heavyMagnitude: 6
+  roughness: 50
   fadeIn: 0.1
-  fadeOut: 0.4
+  fadeOut: 0.5
 --- !u!114 &114988396421509444
 MonoBehaviour:
   m_ObjectHideFlags: 1
