@@ -13,6 +13,8 @@ public class PauseMenu : MonoBehaviour {
 
 	// Audio
 	AudioManager mngr;
+	MusicManager music;
+	AudioLowPassFilter filter;
 
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class PauseMenu : MonoBehaviour {
 	{
         pauseMenu.SetActive(false);
 		mngr = FindObjectOfType<AudioManager> ();
+		music = FindObjectOfType<MusicManager> ();
+		filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
 	}
 
 	void Update()
@@ -41,6 +45,8 @@ public class PauseMenu : MonoBehaviour {
 	void OpenPauseMenu()
 	{
 		mngr.PlaySound ("UI_pauseMenuEnabled", "UI");
+		music.GetComponent<AudioSource> ().volume *= 0.25f;
+		filter.enabled = true;
 		FreezePlayers ();
 		CancelAllVibrations ();
 		pauseMenu.SetActive (true);
@@ -50,6 +56,8 @@ public class PauseMenu : MonoBehaviour {
 	public void ClosePauseMenu()
 	{
 		mngr.PlaySound ("UI_pauseMenuDisabled", "UI");
+		music.GetComponent<AudioSource> ().volume *= 4.0f;
+		filter.enabled = false;
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1;
 		UnfreezePlayers ();

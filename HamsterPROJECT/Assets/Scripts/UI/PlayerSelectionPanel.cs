@@ -13,6 +13,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	// Collections of images to load and apply on various changes
 	[HideInInspector] public Sprite[] characterSprites = new Sprite[GameManager.nbOfCharacters];
+	[HideInInspector] public Sprite[] unavailableCharacterSprites = new Sprite[GameManager.nbOfCharacters];
 	Sprite[] validatedBorders = new Sprite[GameManager.nbOfCharacters];
 	Sprite deactivatedBorder;
 	Sprite activatedBorder;
@@ -44,6 +45,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		state = SelectionPanelState.Deactivated;
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
+		unavailableCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/UnavailableCharacters");
 		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
 		deactivatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordgray");
 		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
@@ -145,10 +147,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		// Display character as unavailable if that's the case
 		if (!CharacterSelectionScreen.selectableCharacters [characterSelected])
+		{
+			characterSprite.sprite = unavailableCharacterSprites [characterSelected];
 			notAvailable.gameObject.SetActive (true);
+		}
 		else
+		{
+			characterSprite.sprite = characterSprites [characterSelected];
 			notAvailable.gameObject.SetActive (false);
-
+		}
+			
 		if (device.LeftStickX.Value >= 0.8f && !blockStickMovement)
 		{
 			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable - 1)

@@ -281,6 +281,7 @@ public class Hook : MonoBehaviour {
                 if (timeRemaining <= 0) 
                 {
 					StartCoroutine (CancelVibration (Vibrations.PlayVibration("HookDestruction", playerMovement.playerInputDevice)));
+					AudioManager.instance.PlaySound("destructionHook", playerMovement.playerNumber + "Hook");
                     DisableRope(false);
                 }
 

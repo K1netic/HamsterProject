@@ -41,12 +41,12 @@ public class Tutorial : MonoBehaviour {
 		}
 		else if (InputManager.ActiveDevice.Action1.WasPressed && pageIndex == 2)
 		{
-			mngr.PlaySound ("UI_validate", "UI");
+			mngr.PlaySound ("UI_gameLaunch", "UI");
 			SceneManager.LoadScene (sceneToLoad);
 		}
 		else if (InputManager.ActiveDevice.Action2.WasPressed && pageIndex == 0)
 		{
-			Debug.Log ("backToTitle");
+			mngr.PlaySound ("UI_cancel", "UI");
 			SceneManager.LoadScene (previousScene);
 		}
 

@@ -146,75 +146,90 @@ public class AudioManager : MonoBehaviour {
             default:
                 break;
         }
-
-        //source.pitch = Random.Range (pitchMin, pitchMax);
+			
         switch(audioName)
 		{
 		case "towing":
+			source.pitch = 1.0f;
 			source.volume = towingVolume;
 			source.PlayOneShot (towing);
 			break;
 		case "untowing":
+			source.pitch = 1.0f;
 			source.volume = untowingVolume;
 			source.PlayOneShot (untowing);
 			break;
 		case "damage":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = damageVolume;
 			source.PlayOneShot (damage);
 			break;
 		case "criticalDamage":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = criticalDamageVolume;
 			source.PlayOneShot (criticalDamage);
 			break;
 		case "dash":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = dashVolume;
 			source.PlayOneShot (dash);
 			break;
 		case "doubleHookContact":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = doubleHookContactVolume;
 			source.PlayOneShot (doubleHookContact);
 			break;
 		case "destructionHook":
+			source.pitch = 1.0f;
 			source.volume = destructionHookVolume;
 			source.PlayOneShot (destructionHook);
 			break;
 		case "hookContactScraps":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = hookContactScrapsVolume;
 			source.PlayOneShot (hookContactScraps);
 			break;
 		case "playerHitLaser":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = playerHitLaserVolume;
 			source.PlayOneShot (playerHitLaser);
 			break;
 		case "playerHitPlatform":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = playerHitPlatformVolume;
 			source.PlayOneShot (playerHitPlatform);
 			break;
 		case "throwHook":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = throwHookVolume;
 			source.PlayOneShot (throwHook);
 			break;
 		case "arrowHitShield":
+			source.pitch = 0.5f;
 			source.volume = arrowHitShieldVolume;
 			source.PlayOneShot (arrowHitShield);
 			break;
 		case "arrowHitArrow":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = arrowHitArrowVolume;
 			source.PlayOneShot (arrowHitArrow);
 			break;
 		case "switchWeapon":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = switchWeaponVolume;
 			source.PlayOneShot (switchWeapon);
 			break;
 		case "death":
+			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = deathVolume;
 			source.PlayOneShot (death);
 			break;
-        case "dashRecovery":
+		case "dashRecovery":
+			source.pitch = Random.Range (0.95f, 1.05f);
             source.volume = dashRecoveryVolume;
             source.PlayOneShot(dashRecovery);
             break;
-            case "UI_highlight":
+        case "UI_highlight":
 			source.volume = UI_highlightVolume;
 			source.PlayOneShot (UI_highlight);
 			break;

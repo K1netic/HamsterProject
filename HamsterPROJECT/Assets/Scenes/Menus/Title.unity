@@ -222,7 +222,21 @@ Prefab:
     - target: {fileID: 82303809821247032, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8,
         type: 2}
       propertyPath: m_PlayOnAwake
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82303809821247032, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8,
+        type: 2}
+      propertyPath: Priority
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 82303809821247032, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1168764707586068, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8, type: 2}
@@ -389,7 +403,7 @@ Prefab:
         type: 2}
       propertyPath: UI_gameLaunch
       value: 
-      objectReference: {fileID: 8300000, guid: c756a4a44e2192d46b79715968e3db32, type: 3}
+      objectReference: {fileID: 8300000, guid: 13373b5a08e960147894e002bd671dc4, type: 3}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_validate
@@ -413,68 +427,173 @@ Prefab:
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_highlightVolume
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_validateVolume
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_cancelVolume
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_pickVolume
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
-        type: 2}
-      propertyPath: UI_gameLaunchVolume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
-        type: 2}
-      propertyPath: UI_pauseMenuEnabledVolume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
-        type: 2}
-      propertyPath: UI_pauseMenuDisabledVolume
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
-        type: 2}
-      propertyPath: UI_characterPanelActivationVolume
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
+      propertyPath: UI_gameLaunchVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_pauseMenuEnabledVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_pauseMenuDisabledVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_characterPanelActivationVolume
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
       propertyPath: UI_titleScreenValidationVolume
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_pauseMenuEnabled
       value: 
-      objectReference: {fileID: 8300000, guid: 22a3769f4bab0cb458f2cecd314acc12, type: 3}
+      objectReference: {fileID: 8300000, guid: 001919a3a1a7dcf48bb1611baa0b655b, type: 3}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_pauseMenuDisabled
       value: 
-      objectReference: {fileID: 8300000, guid: 549934c7cc30dcf45a501dbe5cab8052, type: 3}
+      objectReference: {fileID: 8300000, guid: 7d02c76c91d1a1a42a5f4cdfcc3f1ed7, type: 3}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_characterPanelActivation
       value: 
-      objectReference: {fileID: 8300000, guid: acbfa5afdff740e4e8602ca9337b7dd0, type: 3}
+      objectReference: {fileID: 8300000, guid: a0c035a23239c7b469264720d6ed5a90, type: 3}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_titleScreenValidation
       value: 
-      objectReference: {fileID: 8300000, guid: d38bc77c456cd7c4bb02a44779f12fd1, type: 3}
+      objectReference: {fileID: 8300000, guid: ba0fb9d789287d64bab80a01af85abb8, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_resultsScreen
+      value: 
+      objectReference: {fileID: 8300000, guid: 54e097aa28eaf0e4b9e6279682d50ddf, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_resultsScreenVolume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: criticalDamageVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: damageVolume
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: dashVolume
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: destructionHookVolume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: doubleHookContactVolume
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: hookContactScrapsVolume
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: playerHitLaserVolume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: playerHitPlatformVolume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: throwHookVolume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: arrowHitShieldVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: arrowHitArrowVolume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: switchWeaponVolume
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: towingVolume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: untowingVolume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: deathVolume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: dashRecoveryVolume
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: pitchMin
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: pitchMax
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82037198523475254, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e99cc891a0742e445a1edc9b96fd90b2, type: 2}
   m_IsPrefabAsset: 0
@@ -545,9 +664,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'A GAME BY MARTIN CHAUVEAU, BENJAMIN PELTIER, FLORENTIN PETERS
-
-    AND LUCAS FRICHE'
+  m_Text: A GAME BY MARTIN CHAUVEAU, BENJAMIN PELTIER, FLORENTIN PETERS
 --- !u!222 &759708841
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -555,6 +672,35 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 759708838}
   m_CullTransparentMesh: 0
+--- !u!1 &812382339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1168764707586068, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8,
+    type: 2}
+  m_PrefabInternal: {fileID: 334282268}
+--- !u!169 &812382344
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 812382339}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.045454547
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &868591217
 GameObject:
   m_ObjectHideFlags: 0

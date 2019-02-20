@@ -12,11 +12,13 @@ public class UiButtonFunctions : MonoBehaviour {
 	[SerializeField] GameObject controlsScheme;
 	AudioManager mngr;
 	LevelSelection lvlSelect;
+	MusicManager music;
 
 	void Start()
 	{
 		mngr = FindObjectOfType<AudioManager> ();
 		lvlSelect = FindObjectOfType<LevelSelection>();
+		music = GameObject.FindObjectOfType<MusicManager> ();
 	}
 
 	void FixedUpdate()
@@ -121,4 +123,13 @@ public class UiButtonFunctions : MonoBehaviour {
 		controlsScheme.SetActive (true);
 		this.transform.parent.gameObject.SetActive (false);
 	}
+
+	public void StopBattleMusic()
+	{
+		AudioLowPassFilter filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
+		music.StopMusic ("battle");
+		music.GetComponent<AudioSource> ().volume *= 4.0f;
+		filter.enabled = false;
+	}
+
 }

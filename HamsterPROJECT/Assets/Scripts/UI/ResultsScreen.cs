@@ -20,6 +20,8 @@ public class ResultsScreen : MonoBehaviour {
 	MusicManager music;
 	RectTransform rect;
 
+	bool activateInput = false;
+
 	void Awake()
 	{
 		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
@@ -29,18 +31,19 @@ public class ResultsScreen : MonoBehaviour {
 	void Start()
 	{
 		music.StopMusic ("battle");
-//		mngr.PlaySound ("resultsScreen", mngr.UIsource);
+		mngr.PlaySound ("UI_resultsScreen", "UI");
 		winnerScore = GameManager.playersScores.Max();
 		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
 		panels [winnerIndex].borders.sprite = sprt; 
 		rect = panels [winnerIndex].GetComponent<RectTransform> ();
 		rect.anchorMax = new Vector2(rect.anchorMax.x, rect.anchorMax.y + 0.15f);
 		rect.anchorMin = new Vector2(rect.anchorMin.x, rect.anchorMin.y + 0.15f);
+		StartCoroutine (InputActivating());
 	}
 		
 	void Update()
 	{
-		if (InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
+		if (activateInput && InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
 		{
 			GameManager.ResetScores ();
 			SceneManager.LoadScene (sceneToLoad);
@@ -52,5 +55,12 @@ public class ResultsScreen : MonoBehaviour {
 		mngr.PlaySound ("UI_validate", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
+	}
+
+	// Utilisé pour éviter de skip l'écran de résultats par erreur
+	IEnumerator InputActivating()
+	{
+		yield return new WaitForSeconds (3.0f);
+		activateInput = true;
 	}
 }

@@ -201,7 +201,6 @@ public class Projectile : MonoBehaviour {
         //Rend le projectile invisible jusqu'à ce qu'il soit détruit pour que la fonction ResetHookCD puisse s'effectuer entièrement
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
-        AudioManager.instance.PlaySound("destructionHook", hook.playerMovement.playerNumber + "Hook");
         Invoke("End",balanceData.timeBtwShots+1);
 	}
 
