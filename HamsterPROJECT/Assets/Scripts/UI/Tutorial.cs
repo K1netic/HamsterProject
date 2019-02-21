@@ -16,12 +16,10 @@ public class Tutorial : MonoBehaviour {
 	[SerializeField] Image img;
 
 	float delay = 0.1f;
-	AudioManager mngr;
 	int pageIndex = 0;
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
 		playHint.SetActive (false);
 	}
 
@@ -29,24 +27,24 @@ public class Tutorial : MonoBehaviour {
 	{
 		if (InputManager.ActiveDevice.Action1.WasPressed && pageIndex < 2)
 		{
-			mngr.PlaySound ("UI_validate", "UI");
+			AudioManager.instance.PlaySound ("UI_validate", "UI");
 			pageIndex += 1;
 			img.sprite = tutorialPages [pageIndex];
 		}
 		else if (InputManager.ActiveDevice.Action2.WasPressed && pageIndex > 0)
 		{
-			mngr.PlaySound ("UI_cancel", "UI");
+			AudioManager.instance.PlaySound ("UI_cancel", "UI");
 			pageIndex -= 1;
 			img.sprite = tutorialPages [pageIndex];
 		}
 		else if (InputManager.ActiveDevice.Action1.WasPressed && pageIndex == 2)
 		{
-			mngr.PlaySound ("UI_gameLaunch", "UI");
+			AudioManager.instance.PlaySound ("UI_gameLaunch", "UI");
 			SceneManager.LoadScene (sceneToLoad);
 		}
 		else if (InputManager.ActiveDevice.Action2.WasPressed && pageIndex == 0)
 		{
-			mngr.PlaySound ("UI_cancel", "UI");
+			AudioManager.instance.PlaySound ("UI_cancel", "UI");
 			SceneManager.LoadScene (previousScene);
 		}
 

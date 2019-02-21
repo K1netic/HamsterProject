@@ -232,7 +232,7 @@ public class AudioManager : MonoBehaviour {
 			source.PlayOneShot (death);
 			break;
 		case "dashRecovery":
-			source.pitch = Random.Range (0.95f, 1.05f);
+			source.pitch = Random.Range (0.55f, 0.65f);
             source.volume = dashRecoveryVolume;
             source.PlayOneShot(dashRecovery);
             break;

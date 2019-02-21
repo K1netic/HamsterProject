@@ -22,7 +22,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	//Audio
 	float delay = 0.1f;
-	AudioManager mngr;
 
 	void Awake()
 	{
@@ -41,8 +40,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
-
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
@@ -181,14 +178,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		mngr.PlaySound ("UI_cancel", "UI");
+		AudioManager.instance.PlaySound ("UI_cancel", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}
 
 	IEnumerator LoadGameModes()
 	{
-		mngr.PlaySound ("UI_validate", "UI");
+		AudioManager.instance.PlaySound ("UI_validate", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
 	}

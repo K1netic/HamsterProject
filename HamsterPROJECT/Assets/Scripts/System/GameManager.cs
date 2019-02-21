@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour {
 			playersKills [i] = 0;
 			playersScores [i] = 0;
 			playersDeaths [i] = 0;
+			playersSelfDestructs [i] = 0;
 		}
 	}
 }

@@ -8,12 +8,6 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	[SerializeField] string previousScene;
 	float delay = 0.1f;
-	AudioManager mngr;
-
-	void Start()
-	{
-		mngr = FindObjectOfType<AudioManager> ();
-	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -25,7 +19,7 @@ public class BackwardsNavigation : MonoBehaviour {
 
 	IEnumerator LoadPreviousScene()
 	{
-		mngr.PlaySound ("UI_cancel", "UI");
+		AudioManager.instance.PlaySound ("UI_cancel", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (previousScene);
 	}

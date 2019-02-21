@@ -22,7 +22,6 @@ public class MatchEnd : MonoBehaviour {
 	bool arrowSet = false;
 
 	// Audio
-	AudioManager mngr;
 	MusicManager music;
 
 	LevelSelection lvlSelect;
