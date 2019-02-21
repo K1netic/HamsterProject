@@ -40,6 +40,13 @@ public class ExplodeOnClick : MonoBehaviour {
                     explosionDone = true;
                 }
             }
+        }else if (collision.gameObject.CompareTag("Bombe"))
+        {
+            if (!explosionDone)
+            {
+                GameObject.Find("ExplosionForce_Env").GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
+                explosionDone = true;
+            }
         }
     }
 
