@@ -593,13 +593,14 @@ public class Hook : MonoBehaviour {
             }
         }
         else
-        {
+        {//Shield - Shield
             if (collision.gameObject.CompareTag("Arrow"))
             {
                 if(collision.gameObject.GetComponent<Hook>().currentState == HookState.Shield)
                 {
                     DoubleShieldCollide(collision);
                     HitFX(collision.GetContact(0).point, collision.gameObject);
+                    AudioManager.instance.PlaySound("doubleShieldContact", playerNumber + "Arrow");
                 }
             }
         }

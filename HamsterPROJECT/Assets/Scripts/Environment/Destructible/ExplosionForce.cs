@@ -29,7 +29,7 @@ public class ExplosionForce : MonoBehaviour {
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,radius);
      
 		foreach(Collider2D coll in colliders){
-			if(coll.GetComponent<Rigidbody2D>()&&coll.gameObject.tag !="Player"&& coll.gameObject.tag != "Arrow" && coll.gameObject.tag != "Hook")
+			if(coll.GetComponent<Rigidbody2D>()&& coll.GetComponent<ExplodeOnClick>() /*coll.gameObject.tag !="Player"&& coll.gameObject.tag != "Arrow" && coll.gameObject.tag != "Hook"*/)
             {
                 AddExplosionForce(coll.GetComponent<Rigidbody2D>(), force, transform.position, radius, upliftModifer);
 			}

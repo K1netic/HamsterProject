@@ -29,8 +29,19 @@ public class ExplodeOnClick : MonoBehaviour {
                     explosionDone = true;
 				}
 			}
-		}
-	}
+		}else if (collision.gameObject.CompareTag("Hookable") && collision.gameObject.GetComponent<Rigidbody2D>())
+        {
+            speed = collision.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
+            if (!explosionDone)
+            {
+                if (speed > 10)
+                {
+                    GameObject.Find("ExplosionForce_Env").GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
+                    explosionDone = true;
+                }
+            }
+        }
+    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {

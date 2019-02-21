@@ -176,9 +176,9 @@ public class PlayerLifeManager : MonoBehaviour {
                         break;
                     case "Laser":
                         if(inverseDir)
-                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
                         else
-                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
                         break;
                     default:
                         break;
@@ -316,7 +316,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
                 {
-                    switch (col.gameObject.name)
+                    switch (col.collider.name)
                     {
                         case "ColliderBot":
                             TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
