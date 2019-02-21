@@ -146,10 +146,18 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
-                        float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
-                        knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
-                        playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                                                + knockbackPower), ForceMode2D.Impulse);
+                        if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
+                        {//Le joueur qui attaque était en dash, on applique alors le knockback en conséquence
+                            playerMovement.rigid.AddForce(directionKnockBack * maxKnockBackPlayerHit, ForceMode2D.Impulse);
+                        }
+                        else
+                        {
+                            float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
+                            knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
+                            playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
+                                                    + knockbackPower), ForceMode2D.Impulse);
+                        }
+                        
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
