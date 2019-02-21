@@ -120,7 +120,6 @@ GameObject:
   - component: {fileID: 4560298442947980}
   - component: {fileID: 95220914606001528}
   - component: {fileID: 114061622716986684}
-  - component: {fileID: 61514625195241736}
   m_Layer: 16
   m_Name: Laser
   m_TagString: LaserEdge
@@ -356,31 +355,6 @@ PolygonCollider2D:
       - {x: -18.310902, y: -10.340499}
       - {x: -18.374998, y: -9.956249}
       - {x: -18.39375, y: -9.937499}
---- !u!61 &61514625195241736
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1834383769196968}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.8930214, y: -0.31810632}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0350343, y: 0.63314444}
-  m_EdgeRadius: 0
 --- !u!70 &70884004895228022
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -431,9 +405,11 @@ MonoBehaviour:
   sparks: {fileID: 198226720325922318}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
   capsCollider: {fileID: 1764068782975750}
+  capsColliderTop: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2
     m_Bits: 268435456
+  laserDirection: {x: 0, y: 0}
 --- !u!114 &114285199122212774
 MonoBehaviour:
   m_ObjectHideFlags: 1

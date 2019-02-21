@@ -19,5 +19,28 @@ public class ScoreDisplayer : MonoBehaviour {
 		// Update score text
 		this.GetComponent<Text>().text = 
 			"Score P" + (ScoreDisplayerID + 1).ToString() + " : " + GameManager.playersScores [ScoreDisplayerID].ToString ();
-	}
+        if (GameManager.playersCharacters[ScoreDisplayerID])
+        {
+            switch (GameManager.playersCharacters[ScoreDisplayerID].name)
+            {
+                case "0":
+                    GetComponent<Text>().color = new Color(1, 0.5568f, 0);
+                    break;
+                case "1":
+                    GetComponent<Text>().color = new Color(1, 0, 1);
+                    break;
+                case "2":
+                    GetComponent<Text>().color = new Color(0.2019f, 0.5660f, 0.1361f);
+                    break;
+                case "3":
+                    GetComponent<Text>().color = new Color(1, 1, 0);
+                    break;
+                case "4":
+                    GetComponent<Text>().color = new Color(0, 0.2901f, 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

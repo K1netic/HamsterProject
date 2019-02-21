@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour {
     [Range(0f, 1f)] [SerializeField] float deathVolume;
     [SerializeField] AudioClip dashRecovery;
     [Range(0f, 1f)] [SerializeField] float dashRecoveryVolume;
+    [SerializeField] AudioClip doubleShieldContact;
+    [Range(0f, 1f)] [SerializeField] float doubleShieldContactVolume;
     #endregion
 
     [Header("UI sounds")]
@@ -149,6 +151,11 @@ public class AudioManager : MonoBehaviour {
 			
         switch(audioName)
 		{
+        case "doubleShieldContact":
+            source.pitch = .75f;
+            source.volume = doubleShieldContactVolume;
+                source.PlayOneShot(doubleShieldContact);
+            break;
 		case "towing":
 			source.pitch = 1.0f;
 			source.volume = towingVolume;

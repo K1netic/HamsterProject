@@ -68,16 +68,17 @@ public class LaserSize : MonoBehaviour {
         
         if(raycast.collider != null)
         {
+            if (instEndLaser != null)
+            {
+                instEndLaser.transform.position = raycast.point;
+            }
             Debug.DrawLine(startPos, raycast.point, Color.red);
             if (!FXinstantiate)
             {
                 FXinstantiate = true;
                 instEndLaser = Instantiate(endLaser, raycast.point, transform.rotation);
             }
-            if(instEndLaser != null)
-            {
-                instEndLaser.transform.position = raycast.point;
-            }
+            
             center.SetPosition(1, transform.InverseTransformPoint(raycast.point));
             glow.SetPosition(1, transform.InverseTransformPoint(raycast.point));
 

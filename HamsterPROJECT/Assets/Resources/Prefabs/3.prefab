@@ -789,6 +789,7 @@ MonoBehaviour:
   projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
   currentProjectile: {fileID: 0}
   currentState: 0
+  cantAttack: 0
   isFrozen: 0
 --- !u!114 &114267106374059986
 MonoBehaviour:
@@ -856,6 +857,7 @@ MonoBehaviour:
   currentState: 0
   speed: 0
   dashRecoveryWithHook: 0
+  lockMovementDash: 0
   shootPos: {fileID: 1954613557324988}
   playerDirection: {x: 0, y: 0}
   gravity: 0
@@ -14932,7 +14934,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 7
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -146,10 +146,18 @@ public class PlayerLifeManager : MonoBehaviour {
                 {
                     //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
                     case "Arrow":
-                        float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
-                        knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
-                        playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                                                + knockbackPower), ForceMode2D.Impulse);
+                        if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
+                        {//Le joueur qui attaque était en dash, on applique alors le knockback en conséquence
+                            playerMovement.rigid.AddForce(directionKnockBack * maxKnockBackPlayerHit, ForceMode2D.Impulse);
+                        }
+                        else
+                        {
+                            float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
+                            knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
+                            playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
+                                                    + knockbackPower), ForceMode2D.Impulse);
+                        }
+                        
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
@@ -176,9 +184,9 @@ public class PlayerLifeManager : MonoBehaviour {
                         break;
                     case "Laser":
                         if(inverseDir)
-                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
                         else
-                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
                         break;
                     default:
                         break;
@@ -316,7 +324,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
                 {
-                    switch (col.gameObject.name)
+                    switch (col.collider.name)
                     {
                         case "ColliderBot":
                             TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
