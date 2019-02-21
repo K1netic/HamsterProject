@@ -16,7 +16,6 @@ public class ResultsScreen : MonoBehaviour {
 
 	// Audio
 	float delay = 0.1f;
-	AudioManager mngr;
 	MusicManager music;
 	RectTransform rect;
 
@@ -24,16 +23,15 @@ public class ResultsScreen : MonoBehaviour {
 
 	void Awake()
 	{
-		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
-		mngr = FindObjectOfType<AudioManager> ();
 		music = GameObject.FindObjectOfType<MusicManager> ();
+		winnerScore = GameManager.playersScores.Max();
+		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
+		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
 	}
 	void Start()
 	{
 		music.StopMusic ("battle");
-		mngr.PlaySound ("UI_resultsScreen", "UI");
-		winnerScore = GameManager.playersScores.Max();
-		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
+		AudioManager.instance.PlaySound ("UI_resultsScreen", "UI");
 		panels [winnerIndex].borders.sprite = sprt; 
 		rect = panels [winnerIndex].GetComponent<RectTransform> ();
 		rect.anchorMax = new Vector2(rect.anchorMax.x, rect.anchorMax.y + 0.15f);
@@ -52,7 +50,7 @@ public class ResultsScreen : MonoBehaviour {
 
 	IEnumerator LoadEndGame()
 	{
-		mngr.PlaySound ("UI_validate", "UI");
+		AudioManager.instance.PlaySound ("UI_validate", "UI");
 		yield return new WaitForSeconds (delay);
 		SceneManager.LoadScene (sceneToLoad);
 	}

@@ -33,7 +33,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	[HideInInspector] public GameObject validatedCharacter;
 
 	//Audio
-	AudioManager mngr;
 	bool validate = false;
 	bool activate = false;
 
@@ -41,7 +40,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	void Start()
 	{
-		mngr = FindObjectOfType<AudioManager> ();
 		state = SelectionPanelState.Deactivated;
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
@@ -83,7 +81,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Activated)
 			{
 				state = SelectionPanelState.Deactivated;
-				mngr.PlaySound ("UI_cancel", "UI");
+				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				device = null;
 			}
 
@@ -92,7 +90,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				&& state == SelectionPanelState.Validated)
 			{
 				state = SelectionPanelState.Activated;
-				mngr.PlaySound ("UI_cancel", "UI");
+				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 			}
@@ -168,7 +166,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected = 0;
 			}
 			characterSprite.sprite = characterSprites[characterSelected];
-			mngr.PlaySound ("UI_pick", "UI");
+			AudioManager.instance.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
 		} 
 
@@ -183,7 +181,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				characterSelected = CharacterSelectionScreen.nbCharactersAvailable - 1;
 			}
 			characterSprite.sprite = characterSprites[characterSelected];
-			mngr.PlaySound ("UI_pick", "UI");
+			AudioManager.instance.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
 		} 
 
@@ -195,7 +193,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!activate)
 		{
-			mngr.PlaySound ("UI_panelActivation", "UI");
+			AudioManager.instance.PlaySound ("UI_panelActivation", "UI");
 			activate = true;
 		}
 	}
@@ -204,7 +202,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	{
 		if (!validate)
 		{
-			mngr.PlaySound ("UI_validate", "UI");
+			AudioManager.instance.PlaySound ("UI_validate", "UI");
 			validate = true;
 		}
 	}
