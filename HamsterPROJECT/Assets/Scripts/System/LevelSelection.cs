@@ -21,8 +21,8 @@ public class LevelSelection : MonoBehaviour {
 	}
 
 	[SerializeField] List<string> pack = new List<string>();
-	List<string> currentPack = new List<string>();
-	List<string> levels = new List<string>();
+    List<string> currentPack = new List<string>();
+	public List<string> levels = new List<string>();
 	string packName;
 	string lastLevelPlayed;
 	string levelToLoad;
@@ -45,7 +45,52 @@ public class LevelSelection : MonoBehaviour {
 		//As of prototype Alpha version, only one pack is avaliable
 	}
 
-	public void LoadNextLevel(string currentLevel)
+    public void LoadNextLevel(string currentLevel)
+    {
+        if (currentLevel == "")
+        {
+            levels.Clear();
+            for (int i = 0; i < currentPack.Count; i++)
+            {
+                levels.Add(currentPack[i]);
+            }
+        }
+        else
+        {
+            levels.Remove(currentLevel);
+        }
+
+        //Remove last level played from last series of rounds to avoid starting a new series of rounds with the same level
+        if (GameManager.lastLevelPlayed != null)
+        {
+            levels.Remove(GameManager.lastLevelPlayed);
+        }
+
+        if (levels.Count == 0)
+        {
+            for (int i = 0; i < currentPack.Count; i++)
+            {
+                levels.Add(currentPack[i]);
+            }
+            levels.Remove(currentLevel);
+        }
+
+        //Choosing next level to load from the remaining levels
+        levelToLoad = levels[Random.Range(0, levels.Count)];
+
+        //Loading next scene
+        if (levelToLoad != null)
+        {
+            if (Time.timeScale != 1) Time.timeScale = 1;
+            SceneManager.LoadScene(levelToLoad);
+        }
+        else
+        {
+            print("Trying to load next level - no level found");
+        }
+    }
+
+	/*public void LoadNextLevelFlo(string currentLevel)
 	{
 		//Reset levels to all levels available in pack
 		levels.Clear ();
@@ -75,11 +120,9 @@ public class LevelSelection : MonoBehaviour {
 			if (Time.timeScale != 1) Time.timeScale = 1;
 			SceneManager.LoadScene (levelToLoad);
 		}
-
 		else 
 		{
 			print ("Trying to load next level - no level found");
 		}
-
-	}
+	}*/
 }

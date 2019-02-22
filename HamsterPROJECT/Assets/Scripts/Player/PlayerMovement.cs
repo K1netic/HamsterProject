@@ -52,15 +52,6 @@ public class PlayerMovement : MonoBehaviour
     float inDashStatusTime;
     GameObject dashRecovery;
 
-    //Fast Fall
-    /*float smoothTime = 0.3f;
-    float xVelocity = 0.0f;
-    float fastFallSpeed = 200;
-	// Value under which vertical joystick input will trigger fastFall
-	float fastFallVerticalThreshold = - 0.5f;
-	// Value over which horizontal joystick input will cancel fastFall 
-	float fastFallHorizontalThreshold = 0.1f;*/
-
     public string playerNumber;
 	public InputDevice playerInputDevice;
 
@@ -80,9 +71,6 @@ public class PlayerMovement : MonoBehaviour
         dragEndOfDash = balanceData.dragEndOfDash;
         dashRecoveryWithHook = balanceData.dashRecoveryWithHook;
         inDashStatusTime = balanceData.inDashStatusTime;
-        /*fastFallSpeed = balanceData.fastFallSpeed;
-        fastFallVerticalThreshold = balanceData.fastFallVerticalThreshold;
-        fastFallHorizontalThreshold = balanceData.fastFallHorizontalThreshold;  */
 
         rigid = this.GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer>().sprite;
@@ -119,25 +107,17 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        speed = rigid.velocity.magnitude;
-        speedEffectScript.playerSpeed = speed;
+        if (MatchStart.gameHasStarted)
+        {
+            speed = rigid.velocity.magnitude;
+            speedEffectScript.playerSpeed = speed;
 
-        if (currentState != State.hooked)
-			currentState = State.inAir;
+            if (currentState != State.hooked)
+                currentState = State.inAir;
 
-		Movement();
-		Dash();
-
-        //FastFall
-        /*if (Input.GetAxisRaw("Vertical" + playerNumber) < fastFallVerticalThreshold
-            && !isGrounded
-            && Mathf.Abs(Input.GetAxisRaw("Horizontal" + playerNumber)) < fastFallHorizontalThreshold
-            && currentState == State.inAir
-            )
-		{
-			float acceleration = Mathf.SmoothDamp(0, -1 * fastFallSpeed, ref xVelocity, smoothTime);
-			rigid.velocity = new Vector2(rigid.velocity.x, acceleration);
-		}*/
+            Movement();
+            Dash();
+        }
     }
 
     private void LateUpdate()

@@ -117,30 +117,64 @@ public class MatchStart : MonoBehaviour {
         inst.transform.position = spawnPoints[j].transform.position;
         if(playerIndex == 0)
         {
-            switch (j)
+            Transform currentSpawn = spawnPoints[j];
+            print("current " + currentSpawn.name);
+            foreach (var spawn in spawnPoints)
+                print("full" + spawn.name);
+            switch (currentSpawn.name)
             {
-                case 0:
-                    spawnPoints.Remove(spawnPoints[1]);
-                    spawnPoints.Remove(spawnPoints[0]);
+                case "SpawnPoint1":
+                    for (int i = 0; i < spawnPoints.Count; i++)
+                    {
+                        if (spawnPoints[i].name == "SpawnPoint2")
+                            spawnPoints.Remove(spawnPoints[i]);
+                    }
                     break;
-                case 1:
-                    spawnPoints.Remove(spawnPoints[2]);
-                    spawnPoints.Remove(spawnPoints[1]);
-                    spawnPoints.Remove(spawnPoints[0]);
-                    
+                case "SpawnPoint2":
+                    for (int i = 0; i < spawnPoints.Count; i++)
+                    {
+                        switch (spawnPoints[i].name)
+                        {
+                            case "SpawnPoint1":
+                                spawnPoints.Remove(spawnPoints[i]);
+                                break;
+                            case "SpawnPoint3":
+                                spawnPoints.Remove(spawnPoints[i]);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     break;
-                case 2:
-                    spawnPoints.Remove(spawnPoints[3]);
-                    spawnPoints.Remove(spawnPoints[2]);
-                    spawnPoints.Remove(spawnPoints[1]);
+                case "SpawnPoint3":
+                    for (int i = 0; i < spawnPoints.Count; i++)
+                    {
+                        switch (spawnPoints[i].name)
+                        {
+                            case "SpawnPoint2":
+                                spawnPoints.Remove(spawnPoints[i]);
+                                break;
+                            case "SpawnPoint4":
+                                spawnPoints.Remove(spawnPoints[i]);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     break;
-                case 3:
-                    spawnPoints.Remove(spawnPoints[3]);
-                    spawnPoints.Remove(spawnPoints[2]);
+                case "SpawnPoint4":
+                    for(int i = 0; i< spawnPoints.Count; i++)
+                    {
+                        if (spawnPoints[i].name == "SpawnPoint3")
+                            spawnPoints.Remove(spawnPoints[i]);
+                    }
                     break;
                 default:
                     break;
             }
+            spawnPoints.Remove(currentSpawn);
+            foreach (var spawn in spawnPoints)
+                print("clean " + spawn.name);
         }
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
         GameObject newPlayer = Instantiate(inst);

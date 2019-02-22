@@ -22,9 +22,6 @@ public class Balancing : MonoBehaviour {
     public float timeRopeCut = 1.5f;
 
     [Header("PLAYER MOVEMENT")]
-    /*public float fastFallSpeed = 200;
-    public float fastFallVerticalThreshold = -0.5f;
-    public float fastFallHorizontalThreshold = 0.1f;*/
     public float airControlForce = 10;
     public float hookMovementForce = 25;
     public float speedThresholdDestruction = 20f;
