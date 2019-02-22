@@ -30,7 +30,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		GameManager.Characters = new List<GameObject>(tab);
 		nbCharactersAvailable = GameManager.nbOfCharacters;
 		selectableCharacters = new bool[GameManager.nbOfCharacters];
-
 		selectableCharacters.SetValue (true, 0);
 		selectableCharacters.SetValue (true, 1);
 		selectableCharacters.SetValue (true, 2);
@@ -40,6 +39,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void Start()
 	{
+		GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
+		MusicManager.instance.PlayMusic ("menu");
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
@@ -97,6 +98,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			&& activatedPlayers == 0 
 			&& readyCount == 0)
 		{
+			MusicManager.instance.StopMusic ("menu");
 			StartCoroutine (LoadPreviousScene ());
 		}
 	}

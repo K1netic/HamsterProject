@@ -8,10 +8,12 @@ public class TitleScreen : MonoBehaviour {
 
 	[SerializeField] string sceneToLoad;
 	float delay = 0.1f;
+	MusicManager music;
 
     void Start()
 	{
 //		PlayerPrefs.DeleteAll ();
+		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
         Cursor.visible = false;
 	}
 

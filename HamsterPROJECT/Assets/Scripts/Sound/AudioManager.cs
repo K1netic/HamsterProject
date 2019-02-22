@@ -69,6 +69,8 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float UI_resultsScreenVolume;
 	[SerializeField] AudioClip UI_scoreDisplay;
 	[Range(0f,1f)] [SerializeField] float UI_scoreDisplayVolume;
+	[SerializeField] AudioClip UI_titleJingle;
+	[Range(0f,1f)] [SerializeField] float UI_titleJingleVolume;
 	#endregion
 
 	public static AudioManager instance = null;
@@ -279,6 +281,10 @@ public class AudioManager : MonoBehaviour {
 		case "UI_scoreDisplay":
 			source.volume = UI_scoreDisplayVolume;
 			source.PlayOneShot (UI_scoreDisplay);
+			break;
+		case "UI_titleJingle":
+			source.volume = UI_titleJingleVolume;
+			source.PlayOneShot (UI_titleJingle);
 			break;
 		default:
 			break;

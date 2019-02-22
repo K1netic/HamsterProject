@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour {
 
-	[SerializeField] AudioSource musicSource;
+	AudioSource musicSource;
 	[SerializeField] AudioClip menu;
 	[SerializeField] AudioClip battle;
 
+	public static MusicManager instance = null;
+
 	void Awake()
 	{
-		DontDestroyOnLoad (transform.gameObject);
+		if (instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad (gameObject);
+		}
+		else 
+		{
+			Destroy (gameObject);
+		}
 		musicSource = GetComponent<AudioSource> ();
 	}
 

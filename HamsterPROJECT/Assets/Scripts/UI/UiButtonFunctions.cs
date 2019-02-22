@@ -113,7 +113,9 @@ public class UiButtonFunctions : MonoBehaviour {
 	// Load a series of rounds (pack)
 	public void LoadMatch()
 	{
+		if (Time.timeScale != 1) Time.timeScale = 1;
 		mngr.PlaySound ("UI_gameLaunch", "UI");
+		MusicManager.instance.StopMusic ("menu");
 		lvlSelect.LoadNextLevel ("");
 	}
 
@@ -127,7 +129,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	public void StopBattleMusic()
 	{
 		AudioLowPassFilter filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
-		music.StopMusic ("battle");
+		MusicManager.instance.StopMusic ("battle");
 		music.GetComponent<AudioSource> ().volume *= 4.0f;
 		filter.enabled = false;
 	}

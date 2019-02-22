@@ -22,11 +22,9 @@ public class MatchStart : MonoBehaviour {
     public List<Transform> spawnPoints = new List<Transform>();
 
 	[SerializeField] bool TestWithoutUI;
-	MusicManager music;
 
 	void Awake ()
 	{
-		music = GameObject.FindObjectOfType<MusicManager> ();
 		// Set all active Players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
@@ -44,7 +42,7 @@ public class MatchStart : MonoBehaviour {
 
 	void Start()
 	{
-		music.PlayMusic ("battle");
+		MusicManager.instance.PlayMusic ("battle");
 
 		gameHasStarted = false;
 		coroutineLimiter = false;
