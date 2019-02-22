@@ -62,31 +62,34 @@ public class MovingPlatform : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (fullVerticalMovement)
+        if (MatchStart.gameHasStarted)
         {
-            if (transform.position.y <= node1pos.y)
+            if (fullVerticalMovement)
             {
-                target = node2pos - (Vector2)transform.position;
+                if (transform.position.y <= node1pos.y)
+                {
+                    target = node2pos - (Vector2)transform.position;
+                }
+                else if (transform.position.y >= node2pos.y)
+                {
+                    target = node1pos - (Vector2)transform.position;
+                }
             }
-            else if (transform.position.y >= node2pos.y)
+            else
             {
-                target = node1pos - (Vector2)transform.position;
+                if (transform.position.x <= node1pos.x)
+                {
+                    target = node2pos - (Vector2)transform.position;
+                }
+                else if (transform.position.x >= node2pos.x)
+                {
+                    target = node1pos - (Vector2)transform.position;
+                }
             }
-        }
-        else
-        {
-            if (transform.position.x <= node1pos.x)
-            {
-                target = node2pos - (Vector2)transform.position;
-            }
-            else if (transform.position.x >= node2pos.x)
-            {
-                target = node1pos - (Vector2)transform.position;
-            }
-        }
 
-        rigid.velocity = moveSpeed * target.normalized;
-        //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.FromToRotation(-Vector3.right, target),Time.deltaTime);
+            rigid.velocity = moveSpeed * target.normalized;
+        }
+        
     }
 }
 
