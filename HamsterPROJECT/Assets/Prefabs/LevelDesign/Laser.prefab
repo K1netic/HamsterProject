@@ -332,10 +332,12 @@ MonoBehaviour:
   glow: {fileID: 120981290693888066}
   sparks: {fileID: 198589306166643804}
   endLaser: {fileID: 198238569476879616, guid: 71323b44a9f228941ac6265d92a43875, type: 2}
-  boxCollider: {fileID: 1906648783073150}
+  capsCollider: {fileID: 0}
+  capsColliderTop: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2
     m_Bits: 65536
+  laserDirection: {x: 0, y: 0}
 --- !u!114 &114850721195267224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -383,7 +385,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 2
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -475,7 +477,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 2
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -5102,7 +5104,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
