@@ -12,7 +12,7 @@ public class TitleScreen : MonoBehaviour {
 
     void Start()
 	{
-		PlayerPrefs.DeleteAll ();
+//		PlayerPrefs.DeleteAll ();
 		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
         Cursor.visible = false;
 	}
