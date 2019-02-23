@@ -47,10 +47,7 @@ public class Tutorial : MonoBehaviour {
 			AudioManager.instance.PlaySound ("UI_cancel", "UI");
 			SceneManager.LoadScene (previousScene);
 		}
-
-		if (pageIndex == 0) previousHint.SetActive (false);
-		else previousHint.SetActive (true);
-
+			
 		if (pageIndex == 2)
 		{
 			nextHint.SetActive (false);

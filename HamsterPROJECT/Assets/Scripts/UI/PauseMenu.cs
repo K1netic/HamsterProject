@@ -7,9 +7,10 @@ using InControl;
 
 public class PauseMenu : MonoBehaviour {
 
-	GameObject pauseMenu;
 	[HideInInspector] public GameObject[] arrows;
 	bool arrowSet = false;
+	[SerializeField] bool deactivatePauseMenu = true;
+	GameObject pauseMenu;
 
 	// Audio
 	MusicManager music;
@@ -23,11 +24,13 @@ public class PauseMenu : MonoBehaviour {
 
     void Start()
 	{
-        pauseMenu.SetActive(false);
+		if (deactivatePauseMenu) 
+			pauseMenu.SetActive(false);
 		music = FindObjectOfType<MusicManager> ();
 		filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
 		source = music.GetComponent<AudioSource> ();
 	}
+
 
 	void Update()
 	{
@@ -44,6 +47,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
+		Debug.Log ("opening");
 		AudioManager.instance.PlaySound ("UI_pauseMenuEnabled", "UI");
 		source.volume *= 0.25f;
 		filter.enabled = true;
@@ -51,6 +55,7 @@ public class PauseMenu : MonoBehaviour {
 		CancelAllVibrations ();
 		Time.timeScale = 0;
 		pauseMenu.SetActive (true);
+		Debug.Log (pauseMenu.name);
 	}
 
 	public void ClosePauseMenu()

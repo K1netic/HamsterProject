@@ -17,10 +17,15 @@ public class TitleScreen : MonoBehaviour {
         Cursor.visible = false;
 	}
 
-	void FixedUpdate () {
+	void Update () {
 		if (InputManager.CommandWasPressed)
 		{
 			StartCoroutine(TitleScreenValidation());
+		}
+
+		else if (InputManager.ActiveDevice.Action2.WasPressed)
+		{
+			Application.Quit ();
 		}
 	}
 

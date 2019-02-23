@@ -13,6 +13,7 @@ public class ControlsScheme : MonoBehaviour {
 		{
 			PauseMenu.SetActive (true);
 			this.gameObject.SetActive (false);
+			AudioManager.instance.PlaySound ("UI_cancel", "UI");
 		}
 	}
 }

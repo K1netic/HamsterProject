@@ -176,7 +176,7 @@ Prefab:
         type: 2}
       propertyPath: pauseMenu
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 784871638}
     - target: {fileID: 4240326372955740, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
       propertyPath: m_RootOrder
       value: 5
@@ -1730,12 +1730,26 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1211995154559244, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114857546420932788, guid: 222b32e809c5eba49ae297ec517e33d5,
+        type: 2}
+      propertyPath: deactivatePauseMenu
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &784871637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1982723281526794, guid: 222b32e809c5eba49ae297ec517e33d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 784871636}
+--- !u!1 &784871638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1211995154559244, guid: 222b32e809c5eba49ae297ec517e33d5,
     type: 2}
   m_PrefabInternal: {fileID: 784871636}
 --- !u!1001 &1033426614
