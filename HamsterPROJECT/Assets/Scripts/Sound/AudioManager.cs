@@ -43,6 +43,8 @@ public class AudioManager : MonoBehaviour {
     [Range(0f, 1f)] [SerializeField] float dashRecoveryVolume;
     [SerializeField] AudioClip doubleShieldContact;
     [Range(0f, 1f)] [SerializeField] float doubleShieldContactVolume;
+	[SerializeField] AudioClip destructingPlatform;
+	[Range(0f, 1f)] [SerializeField] float destructingPlatformVolume;
     #endregion
 
     [Header("UI sounds")]
@@ -71,6 +73,8 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float UI_scoreDisplayVolume;
 	[SerializeField] AudioClip UI_titleJingle;
 	[Range(0f,1f)] [SerializeField] float UI_titleJingleVolume;
+	[SerializeField] AudioClip UI_readyFight;
+	[Range(0f,1f)] [SerializeField] float UI_readyFightVolume;
 	#endregion
 
 	public static AudioManager instance = null;
@@ -88,6 +92,7 @@ public class AudioManager : MonoBehaviour {
     public AudioSource _P3ArrowSource;
     public AudioSource _P4ArrowSource;
     public AudioSource UIsource;
+	public AudioSource enviroSource;
 
     AudioSource source;
 
@@ -146,6 +151,9 @@ public class AudioManager : MonoBehaviour {
                 break;
 			case "UI":
 				source = UIsource;
+				break;
+			case "enviro":
+				source = enviroSource;
 				break;
             default:
                 break;
@@ -238,6 +246,11 @@ public class AudioManager : MonoBehaviour {
             source.volume = dashRecoveryVolume;
             source.PlayOneShot(dashRecovery);
             break;
+		case "destructingPlatform":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = destructingPlatformVolume;
+			source.PlayOneShot (destructingPlatform);
+			break;
         case "UI_highlight":
 			source.volume = UI_highlightVolume;
 			source.PlayOneShot (UI_highlight);
@@ -285,6 +298,10 @@ public class AudioManager : MonoBehaviour {
 		case "UI_titleJingle":
 			source.volume = UI_titleJingleVolume;
 			source.PlayOneShot (UI_titleJingle);
+			break;
+		case "UI_readyFight":
+			source.volume = UI_readyFightVolume;
+			source.PlayOneShot (UI_readyFight);
 			break;
 		default:
 			break;

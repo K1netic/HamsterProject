@@ -37,12 +37,12 @@ public class MatchStart : MonoBehaviour {
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
         progressBar = GameObject.Find("ProgressBar");
+    }
 
     }
 
 	void Start()
 	{
-		MusicManager.instance.PlayMusic ("battle");
 
 		gameHasStarted = false;
 		coroutineLimiter = false;
@@ -96,9 +96,10 @@ public class MatchStart : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.anyKeyDown)
+		if (Input.anyKeyDown && !activateBegin)
 		{
 			activateBegin = true;
+			AudioManager.instance.PlaySound ("UI_readyFight", "UI");
             progressBar.GetComponent<Animator>().enabled = true;
 		}
 
@@ -213,6 +214,7 @@ public class MatchStart : MonoBehaviour {
 		beginText.text = "Fight !";
 		UnfreezePlayers ();
 		gameHasStarted = true;
+		MusicManager.instance.PlayMusic ("battle");
 		yield return new WaitForSeconds (0.5f);
 		beginText.text = "";
 	}

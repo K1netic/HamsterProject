@@ -27,6 +27,7 @@ public class ExplodeOnClick : MonoBehaviour {
                 if (speed > threshold) {
 					GameObject.Find("ExplosionForce"+collision.gameObject.GetComponent<PlayerMovement>().playerNumber).GetComponent<ExplosionForce>().doExplosion (transform.position, speed);
                     explosionDone = true;
+					AudioManager.instance.PlaySound ("destructingPlatform", "enviro");
 				}
 			}
 		}else if (collision.gameObject.CompareTag("Hookable") && collision.gameObject.GetComponent<Rigidbody2D>())
@@ -38,6 +39,7 @@ public class ExplodeOnClick : MonoBehaviour {
                 {
                     GameObject.Find("ExplosionForce_Env").GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
                     explosionDone = true;
+					AudioManager.instance.PlaySound ("destructingPlatform", "enviro");
                 }
             }
         }else if (collision.gameObject.CompareTag("Bombe"))
@@ -46,6 +48,7 @@ public class ExplodeOnClick : MonoBehaviour {
             {
                 GameObject.Find("ExplosionForce_Env").GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
                 explosionDone = true;
+				AudioManager.instance.PlaySound ("destructingPlatform", "enviro");
             }
         }
     }
@@ -61,6 +64,7 @@ public class ExplodeOnClick : MonoBehaviour {
                 {
                     GameObject.Find("ExplosionForce" + collision.gameObject.GetComponent<PlayerMovement>().playerNumber).GetComponent<ExplosionForce>().doExplosion(transform.position, speed);
                     explosionDone = true;
+					AudioManager.instance.PlaySound ("destructingPlatform", "enviro");
                 }
             }
         }
