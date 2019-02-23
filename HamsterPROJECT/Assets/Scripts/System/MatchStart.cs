@@ -39,8 +39,6 @@ public class MatchStart : MonoBehaviour {
         progressBar = GameObject.Find("ProgressBar");
     }
 
-    }
-
 	void Start()
 	{
 

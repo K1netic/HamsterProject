@@ -134,4 +134,9 @@ public class UiButtonFunctions : MonoBehaviour {
 		filter.enabled = false;
 	}
 
+	public void StopMenuMusic()
+	{
+		MusicManager.instance.StopMusic ("menu");
+	}
+
 }

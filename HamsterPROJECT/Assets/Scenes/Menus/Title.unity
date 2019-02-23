@@ -508,7 +508,7 @@ Prefab:
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_validateVolume
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
@@ -653,7 +653,7 @@ Prefab:
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: dashRecoveryVolume
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
@@ -678,6 +678,36 @@ Prefab:
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: UI_titleJingleVolume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: destructingPlatformVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: destructingPlatform
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c17df86e92682841950635c638f11b2, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_scoreDisplay
+      value: 
+      objectReference: {fileID: 8300000, guid: 0feffd393737ea540bbdc9d10d76f9a2, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_scoreDisplayVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_readyFight
+      value: 
+      objectReference: {fileID: 8300000, guid: b0ac5e9a8b2263c498aa0fdf6db38a80, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: UI_readyFightVolume
       value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
