@@ -35,7 +35,10 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		selectableCharacters.SetValue (true, 2);
 		selectableCharacters.SetValue (true, 3);
 		selectableCharacters.SetValue (true, 4);
-	}
+
+        if (PlayerPrefs.GetInt("NotFirstTime") == 0)
+            GameObject.Find("TutorialHint").SetActive(false);
+    }
 
 	void Start()
 	{
@@ -101,6 +104,11 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			MusicManager.instance.StopMusic ("menu");
 			StartCoroutine (LoadPreviousScene ());
 		}
+
+        if (InputManager.ActiveDevice.Action4.WasPressed)
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
 	}
 
 	void Update()
