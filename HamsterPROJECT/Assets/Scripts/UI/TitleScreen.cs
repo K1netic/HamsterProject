@@ -12,7 +12,7 @@ public class TitleScreen : MonoBehaviour {
 
     void Start()
 	{
-//		PlayerPrefs.DeleteAll ();
+		//PlayerPrefs.DeleteAll ();
 		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
         Cursor.visible = false;
 	}
@@ -33,12 +33,12 @@ public class TitleScreen : MonoBehaviour {
 	{
 		AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
 		yield return new WaitForSeconds (delay);
-        if(PlayerPrefs.GetInt("FirstTime") == 1)
+        if(PlayerPrefs.GetInt("NotFirstTime") == 1)
 		    SceneManager.LoadScene (sceneToLoad);
         else
         {
-            PlayerPrefs.SetInt("FirstTime", 1);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetInt("NotFirstTime", 1);
+            //PlayerPrefs.Save();
             SceneManager.LoadScene("Tutorial");
         }
 	}

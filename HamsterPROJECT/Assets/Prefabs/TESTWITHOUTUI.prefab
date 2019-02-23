@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 4261997430058318}
   - component: {fileID: 114671976543132886}
   - component: {fileID: 82966082627458410}
+  - component: {fileID: 169978728222960828}
   m_Layer: 0
   m_Name: MusicManager
   m_TagString: Untagged
@@ -1890,7 +1891,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f027e31e5f9ff47abc182b21fcd916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 82966082627458410}
   menu: {fileID: 0}
   battle: {fileID: 8300000, guid: 9906ebe006006194ba3f3b36dbc9bad1, type: 3}
 --- !u!114 &114740940554982958
@@ -1990,6 +1990,8 @@ MonoBehaviour:
   UI_resultsScreenVolume: 0
   UI_scoreDisplay: {fileID: 0}
   UI_scoreDisplayVolume: 0
+  UI_titleJingle: {fileID: 0}
+  UI_titleJingleVolume: 0
   _P1Source: {fileID: 82272024733170116}
   _P2Source: {fileID: 82392158565256600}
   _P3Source: {fileID: 82882314119522056}
@@ -2003,3 +2005,27 @@ MonoBehaviour:
   _P3ArrowSource: {fileID: 82041639183506506}
   _P4ArrowSource: {fileID: 82816843282602838}
   UIsource: {fileID: 82986230095067252}
+--- !u!169 &169978728222960828
+AudioLowPassFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494767943735964}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.22727273
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
