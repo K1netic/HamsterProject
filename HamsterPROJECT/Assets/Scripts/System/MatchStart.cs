@@ -94,7 +94,7 @@ public class MatchStart : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.anyKeyDown && !activateBegin)
+		if (InputManager.ActiveDevice.AnyButtonWasPressed && !activateBegin)
 		{
 			activateBegin = true;
 			AudioManager.instance.PlaySound ("UI_readyFight", "UI");
