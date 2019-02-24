@@ -13,6 +13,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	bool checkPanels = true;
 	[SerializeField] string sceneToLoad;
 	[SerializeField] GameObject readyText;
+	bool allowValidation = false;
 	public int activatedPlayers = 0;
 	[SerializeField] string previousScene;
 
@@ -88,27 +89,44 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		if (ready)
 		{
 			readyText.SetActive (true);
-			//Load Game Modes Screen when any players pressed a command (start, select...)
-			if (InputManager.CommandWasPressed && ready)
+			StartCoroutine (AvoidValidationWithSingleInput ());
+			if (allowValidation)
 			{
-				PlayerInfos ();
-				StartCoroutine(LoadGameModes ());
+				foreach (InputDevice dev in InputManager.ActiveDevices)
+				{
+					//Load Game Modes Screen when any players pressed a command (start, select...)
+					if (dev.Action1.WasPressed && ready)
+					{
+						PlayerInfos ();
+						StartCoroutine(LoadGameModes ());
+					}
+				}
 			}
 		}
 
-		if (InputManager.ActiveDevice.Action2.WasPressed
-			&& previousScene != null && previousScene != "" 
-			&& activatedPlayers == 0 
-			&& readyCount == 0)
+		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
-			MusicManager.instance.StopMusic ("menu");
-			StartCoroutine (LoadPreviousScene ());
+			if (dev.Action2.WasPressed
+				&& previousScene != null && previousScene != "" 
+				&& activatedPlayers == 0 
+				&& readyCount == 0)
+			{
+				MusicManager.instance.StopMusic ("menu");
+				StartCoroutine (LoadPreviousScene ());
+			}
+
+			if (dev.Action4.WasPressed)
+			{
+				SceneManager.LoadScene("Tutorial");
+			}
 		}
 
-        if (InputManager.ActiveDevice.Action4.WasPressed)
-        {
-            SceneManager.LoadScene("Tutorial");
-        }
+	}
+
+	IEnumerator AvoidValidationWithSingleInput()
+	{
+		yield return new WaitForSeconds (0.2f);
+		allowValidation = true;
 	}
 
 	void Update()

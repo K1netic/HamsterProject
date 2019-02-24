@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using XInputDotNetPure;
-
 
 public class PlayerLifeManager : MonoBehaviour {
 

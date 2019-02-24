@@ -41,10 +41,13 @@ public class ResultsScreen : MonoBehaviour {
 		
 	void Update()
 	{
-		if (activateInput && InputManager.ActiveDevice.AnyButtonWasPressed || InputManager.CommandWasPressed)
+		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
-			GameManager.ResetScores ();
-			SceneManager.LoadScene (sceneToLoad);
+			if (activateInput && (dev.AnyButtonWasPressed || dev.CommandWasPressed))
+			{
+				GameManager.ResetScores ();
+				SceneManager.LoadScene (sceneToLoad);
+			}
 		}
 	}
 

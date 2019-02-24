@@ -152,26 +152,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114872159372350432, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+        type: 2}
+      propertyPath: beforeReadyHint
+      value: 
+      objectReference: {fileID: 614840843}
     - target: {fileID: 114501599677339114, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
         type: 2}
       propertyPath: m_FirstSelected
       value: 
       objectReference: {fileID: 2078342594}
-    - target: {fileID: 114872159372350432, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: progressBar
-      value: 
-      objectReference: {fileID: 1940587963}
-    - target: {fileID: 114872159372350432, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: TestWithoutUI
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834280797739368, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: pauseMenu
-      value: 
-      objectReference: {fileID: 1940587964}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
   m_IsPrefabAsset: 0
@@ -264,6 +254,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1002f7eda7a7d8f42a1f281c037f8754, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &614840843 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1093216867631822, guid: 222b32e809c5eba49ae297ec517e33d5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1940587962}
 --- !u!1001 &689251670
 Prefab:
   m_ObjectHideFlags: 0
@@ -768,17 +763,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &1940587963 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114868137866298370, guid: 222b32e809c5eba49ae297ec517e33d5,
-    type: 2}
-  m_PrefabInternal: {fileID: 1940587962}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &1940587964 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1211995154559244, guid: 222b32e809c5eba49ae297ec517e33d5,
-    type: 2}
-  m_PrefabInternal: {fileID: 1940587962}
 --- !u!1 &2078342594 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1982723281526794, guid: 222b32e809c5eba49ae297ec517e33d5,

@@ -110,17 +110,21 @@ public class MatchEnd : MonoBehaviour {
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			// Keep playing if nobody reached the game goal
-			if (InputManager.ActiveDevice.AnyButtonWasPressed && GameManager.playersScores[winner] < GameManager.rounds )
+			foreach (InputDevice dev in InputManager.ActiveDevices)
 			{
-				GameManager.lastLevelPlayed = "";
-				lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
+				if (dev.Action1.WasPressed && GameManager.playersScores[winner] < GameManager.rounds )
+				{
+					GameManager.lastLevelPlayed = "";
+					lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
+				}
+
+				// Stop playing if one player reached the game goal
+				if (dev.Action1.WasPressed && GameManager.playersScores[winner] == GameManager.rounds )
+				{
+					EndOfMatch ();
+				}
 			}
 
-			// Stop playing if one player reached the game goal
-			if (InputManager.ActiveDevice.AnyButtonWasPressed && GameManager.playersScores[winner] == GameManager.rounds )
-			{
-				EndOfMatch ();
-			}
 		}
 			
 		if (GameManager.gameModeType == GameManager.gameModes.Deathmatch && InputManager.ActiveDevice.Action1)

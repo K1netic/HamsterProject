@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using XInputDotNetPure;
 using InControl;
 
 public class PlayerSelectionPanel : MonoBehaviour {

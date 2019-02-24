@@ -23,6 +23,8 @@ public class MatchStart : MonoBehaviour {
 
 	[SerializeField] bool TestWithoutUI;
 
+	GameObject beforeReadyHint;
+
 	void Awake ()
 	{
 		// Set all active Players to Alive (true) at beginning of match
@@ -37,6 +39,7 @@ public class MatchStart : MonoBehaviour {
 
 		beginText = GameObject.Find("BeginText").GetComponent<Text>();
         progressBar = GameObject.Find("ProgressBar");
+		beforeReadyHint = GameObject.Find ("BeforeReadyText");
     }
 
 	void Start()
@@ -94,12 +97,23 @@ public class MatchStart : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (InputManager.ActiveDevice.AnyButtonWasPressed && !activateBegin)
+		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
-			activateBegin = true;
-			AudioManager.instance.PlaySound ("UI_readyFight", "UI");
-            progressBar.GetComponent<Animator>().enabled = true;
+			if ((dev.AnyButtonWasPressed || dev.CommandWasPressed || dev.LeftTrigger.WasPressed || dev.RightTrigger.WasPressed) && !activateBegin)
+			{
+				activateBegin = true;
+				beforeReadyHint.SetActive (false);
+				AudioManager.instance.PlaySound ("UI_readyFight", "UI");
+				progressBar.GetComponent<Animator>().enabled = true;
+			}
 		}
+
+//		if (InputManager.ActiveDevice.AnyButtonWasPressed && !activateBegin)
+//		{
+//			activateBegin = true;
+//			AudioManager.instance.PlaySound ("UI_readyFight", "UI");
+//            progressBar.GetComponent<Animator>().enabled = true;
+//		}
 
 		if (activateBegin && !coroutineLimiter)
 		{

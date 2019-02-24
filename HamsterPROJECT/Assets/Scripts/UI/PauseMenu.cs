@@ -34,20 +34,22 @@ public class PauseMenu : MonoBehaviour {
 
 	void Update()
 	{
-		if (InputManager.CommandWasPressed && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
+		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
-			OpenPauseMenu ();
-		}
+			if (dev.CommandWasPressed && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
+			{
+				OpenPauseMenu ();
+			}
 
-		else if ((InputManager.CommandWasPressed || InputManager.ActiveDevice.Action2.WasPressed) && pauseMenu.activeSelf) 
-		{
-			ClosePauseMenu ();
+			else if ((dev.CommandWasPressed || dev.Action2.WasPressed) && pauseMenu.activeSelf) 
+			{
+				ClosePauseMenu ();
+			}
 		}
 	}
 
 	void OpenPauseMenu()
 	{
-		Debug.Log ("opening");
 		AudioManager.instance.PlaySound ("UI_pauseMenuEnabled", "UI");
 		source.volume *= 0.25f;
 		filter.enabled = true;
@@ -55,7 +57,6 @@ public class PauseMenu : MonoBehaviour {
 		CancelAllVibrations ();
 		Time.timeScale = 0;
 		pauseMenu.SetActive (true);
-		Debug.Log (pauseMenu.name);
 	}
 
 	public void ClosePauseMenu()

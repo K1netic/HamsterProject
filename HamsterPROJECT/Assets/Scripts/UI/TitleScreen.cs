@@ -18,14 +18,17 @@ public class TitleScreen : MonoBehaviour {
 	}
 
 	void Update () {
-		if (InputManager.CommandWasPressed)
+		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
-			StartCoroutine(TitleScreenValidation());
-		}
+			if (dev.Action1.WasPressed)
+			{
+				StartCoroutine(TitleScreenValidation());
+			}
 
-		else if (InputManager.ActiveDevice.Action2.WasPressed)
-		{
-			Application.Quit ();
+			else if (InputManager.ActiveDevice.Action2.WasPressed)
+			{
+				Application.Quit ();
+			}
 		}
 	}
 
