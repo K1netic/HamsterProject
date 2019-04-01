@@ -30,12 +30,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool blockStickMovement = false;
 	CharacterSelectionScreen select;
 	[HideInInspector] public GameObject validatedCharacter;
+	GameObject characterPrefab;
 
 	//Audio
 	bool validate = false;
 	bool activate = false;
 
 	public InputDevice device;
+
+	[SerializeField] int panelId;
+	GameObject newPlayer;
 
 	void Start()
 	{
@@ -73,6 +77,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				PlayValidateSound();
 				validatedCharacter = GameManager.Characters[characterSelected];
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
+				InstantiatePlayer(panelId);
 			}
 
 			// Deactivation
@@ -92,6 +97,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
+				if (newPlayer != null)
+					Destroy (newPlayer);
 			}
 
 			// Trying to validate on a character not avalaible
@@ -186,6 +193,15 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		else if (Mathf.Abs(device.LeftStickX.Value) < 0.2f)
 			blockStickMovement = false;
+	}
+
+	void InstantiatePlayer(int panelIndex)
+	{
+		GameObject inst = characterPrefab;
+		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterSprites[characterSelected];
+		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
+		GameManager.playersInputDevices [panelIndex] = this.device;
+		GameObject newPlayer = Instantiate(inst);
 	}
 
 	void PlayActivationSound()

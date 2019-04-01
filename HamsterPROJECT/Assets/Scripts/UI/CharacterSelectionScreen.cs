@@ -120,7 +120,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				SceneManager.LoadScene("Tutorial");
 			}
 		}
-
 	}
 
 	IEnumerator AvoidValidationWithSingleInput()
