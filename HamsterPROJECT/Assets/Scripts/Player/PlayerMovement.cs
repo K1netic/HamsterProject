@@ -73,12 +73,13 @@ public class PlayerMovement : MonoBehaviour
         inDashStatusTime = balanceData.inDashStatusTime;
 
         rigid = this.GetComponent<Rigidbody2D> ();
-        playerSprite = GetComponent<SpriteRenderer>().sprite;
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
 
         dashRecovery = Resources.Load<GameObject>("Prefabs/Dash/DashRecovery");
 
         gravity = rigid.gravityScale;
+
+        playerSprite = GetComponent<SpriteRenderer>().sprite;
 
         switch (playerNumber)
         {
@@ -131,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
             CancelInvoke("ResetDashCD");
         if (!lockMovement && !lockMovementDash)
         {
-			if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
+            if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
             {
                 dashInCD = true;
                 lockMovementDash = true;

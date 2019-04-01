@@ -54,10 +54,14 @@ public class PlayerLifeManager : MonoBehaviour {
     Color startColor = new Color(1, 1, 1, 1);
     Color woundedColor = new Color(1, 1, 1, 0.49f);
     bool wounded;
-    Gradient startGradient;
     Gradient woundedGradient = new Gradient();
     Material startMaterial;
     Material woundedMaterial;
+
+    //Trail gradient
+    Gradient trailGradient = new Gradient();
+    GradientColorKey[] colorTrail = new GradientColorKey[2];
+    GradientAlphaKey[] alphaTrail = new GradientAlphaKey[2];
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -83,21 +87,89 @@ public class PlayerLifeManager : MonoBehaviour {
         dashDamage = balanceData.dashDamage;
         maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
 
-        sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
 		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();
-        startGradient = GetComponent<TrailRenderer>().colorGradient;
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-        alphaKeys[0].alpha = .157f;
-        alphaKeys[0].time = 0;
-        alphaKeys[1] = startGradient.alphaKeys[1];
-        woundedGradient.SetKeys(startGradient.colorKeys, alphaKeys);
+        
+        sprite = GetComponent<SpriteRenderer>();
         woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
         startMaterial = sprite.material;
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
+
+        switch (sprite.sprite.name)
+        {
+            case "Perso1":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1, 0.5529412f, 0);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(1, 0,0);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+                break;
+            case "Perso2":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1,0,1);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0.3254902f,0,1);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+                break;
+            case "Perso3":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(0.201914f, 0.5660378f, 0.1361694f);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0.09819563f, 0.4245283f, 0.04205233f);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+                break;
+            case "Perso4":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1,1,0);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(1, 0.5568628f,0);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+                break;
+            case "Perso5":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(0, 1, 1);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0, 0.2901961f, 1);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+                break;
+            default:
+                print("Default case switch start PlayerLifeManager.cs");
+                break;
+        }
+
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0].alpha = .157f;
+        alphaKeys[0].time = 0;
+        alphaKeys[1] = trailGradient.alphaKeys[1];
+        woundedGradient.SetKeys(trailGradient.colorKeys, alphaKeys);
     }
 
     // Update is called once per frame
