@@ -541,7 +541,7 @@ public class Hook : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D collision){
-        //Les collisions ne sont gérés que si le player est en mode offensif sauf si 2 shield entrent en collision
+        //Arrow - Arrow
         if(currentState == HookState.Arrow)
         {
             if (!cantAttack)

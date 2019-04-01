@@ -84,19 +84,15 @@ public class PlayerMovement : MonoBehaviour
         {
             case "_P1":
                 gameObject.layer = 8;
-                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 9) | (1 << 10) | (1 << 11);
                 break;
             case "_P2":
                 gameObject.layer = 9;
-                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 10) | (1 << 11);
                 break;
             case "_P3":
                 gameObject.layer = 10;
-                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 9) | (1 << 11);
                 break;
             case "_P4":
                 gameObject.layer = 11;
-                gameObject.GetComponent<PlayerLifeManager>().layerMaskDeath = (1 << 8) | (1 << 9) | (1 << 10);
                 break;
             default:
                 break;

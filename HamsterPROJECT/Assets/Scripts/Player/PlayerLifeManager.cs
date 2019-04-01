@@ -13,8 +13,6 @@ public class PlayerLifeManager : MonoBehaviour {
     ParticleSystem hitHard;
     [SerializeField]
     ParticleSystem hitLaser;
-    [SerializeField]
-    public LayerMask layerMaskDeath;
 
 	[SerializeField]
 	GameObject lifeParticlesManager;
