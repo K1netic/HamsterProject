@@ -257,11 +257,6 @@ public class Hook : MonoBehaviour {
         {
             UpdateRope();
             hooked = projectileScript.hooked;
-            //Désactive le grappin s'il est trop loin du joueur
-            if(Vector3.Distance(currentProjectile.transform.position,player.transform.position) > distanceMax)
-            {
-                DisableRope(false);
-            }
 
             //Test si le grappin est aggripé
             if (projectileScript.hooked)
@@ -287,28 +282,20 @@ public class Hook : MonoBehaviour {
 
                 RaycastingDistanceJoint();
 
-                joint.distance = initialDistance;
-
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
                 if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
-                    initialDistance = joint.distance;
                     //AudioManager.instance.PlaySound("towing", playerNumber + "Hook");
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
 				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
-                    //Le - retractaionStep est la pour s'assurer qu'on ne peut pas détruire le joint en s'éloignant de lui
-                    if (joint.distance < distanceMax - retractationStep)
-                    {
-                        joint.distance += retractationStep;
-                        initialDistance = joint.distance;
-                        //permet de faire reculer le joueur avec le changement de distance max
-                        joint.maxDistanceOnly = false;
-                        //AudioManager.instance.PlaySound("untowing", playerNumber + "Hook");
-                    }
+                    joint.distance += retractationStep;
+                    //permet de faire reculer le joueur avec le changement de distance max
+                    joint.maxDistanceOnly = false;
+                    //AudioManager.instance.PlaySound("untowing", playerNumber + "Hook");
                 }
                 else
                 {
@@ -357,9 +344,9 @@ public class Hook : MonoBehaviour {
 
         playerMovement.jointDirection = jointDirection;
 
-        //Ces raycast permettent de bloquer le changement de distance max du joint s'il y a un obstacle
-        checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, .85f, layerMaskRaycast);
-        checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, .85f, layerMaskRaycast);
+        //Ces raycast permettent de bloquer le changement de distance du joint s'il y a un obstacle
+        checkToJoint = Physics2D.Raycast(player.transform.position, jointDirection, 1.1f, layerMaskRaycast);
+        checkOppositeToJoint = Physics2D.Raycast(player.transform.position, -jointDirection, 1.1f, layerMaskRaycast);
     }
 
     void UpdateArrow(){
@@ -459,7 +446,6 @@ public class Hook : MonoBehaviour {
         joint.enabled = true;
         joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
         joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
-        initialDistance = joint.distance;
         joint.maxDistanceOnly = true;
         jointNotCreated = false;
     }

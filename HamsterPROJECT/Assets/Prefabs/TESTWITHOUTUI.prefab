@@ -251,6 +251,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1877503432136270
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4210744445213068}
+  - component: {fileID: 82968472575834882}
+  m_Layer: 0
+  m_Name: EnviroSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1887588846734208
 GameObject:
   m_ObjectHideFlags: 1
@@ -351,6 +367,19 @@ Transform:
   m_Father: {fileID: 4462252886779632}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4210744445213068
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877503432136270}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.59198, y: 12.761536, z: -6.2890625}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4462252886779632}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4245216648100354
 Transform:
   m_ObjectHideFlags: 1
@@ -426,6 +455,7 @@ Transform:
   - {fileID: 4245216648100354}
   - {fileID: 4965332691015002}
   - {fileID: 4649455358530352}
+  - {fileID: 4210744445213068}
   m_Father: {fileID: 4713617651569490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1785,6 +1815,101 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &82968472575834882
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1877503432136270}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!82 &82986230095067252
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1968,6 +2093,8 @@ MonoBehaviour:
   dashRecoveryVolume: 1
   doubleShieldContact: {fileID: 0}
   doubleShieldContactVolume: 0
+  destructingPlatform: {fileID: 0}
+  destructingPlatformVolume: 0
   UI_highlight: {fileID: 0}
   UI_highlightVolume: 0
   UI_validate: {fileID: 8300000, guid: 8ddbb3cb406d045698e3f086efb20942, type: 3}
@@ -1992,6 +2119,8 @@ MonoBehaviour:
   UI_scoreDisplayVolume: 0
   UI_titleJingle: {fileID: 0}
   UI_titleJingleVolume: 0
+  UI_readyFight: {fileID: 0}
+  UI_readyFightVolume: 0
   _P1Source: {fileID: 82272024733170116}
   _P2Source: {fileID: 82392158565256600}
   _P3Source: {fileID: 82882314119522056}
@@ -2005,6 +2134,7 @@ MonoBehaviour:
   _P3ArrowSource: {fileID: 82041639183506506}
   _P4ArrowSource: {fileID: 82816843282602838}
   UIsource: {fileID: 82986230095067252}
+  enviroSource: {fileID: 82968472575834882}
 --- !u!169 &169978728222960828
 AudioLowPassFilter:
   m_ObjectHideFlags: 1
