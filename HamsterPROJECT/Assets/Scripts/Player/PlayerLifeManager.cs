@@ -6,14 +6,6 @@ using UnityEngine.UI;
 public class PlayerLifeManager : MonoBehaviour {
 
     [SerializeField]
-    ParticleSystem deathParticle;
-    [SerializeField]
-    ParticleSystem hitLittle;
-    [SerializeField]
-    ParticleSystem hitHard;
-    [SerializeField]
-    ParticleSystem hitLaser;
-    [SerializeField]
     public LayerMask layerMaskDeath;
 
 	[SerializeField]
@@ -48,7 +40,11 @@ public class PlayerLifeManager : MonoBehaviour {
     float freezeFrameDuration;
     float dashDamage;
     float maxKnockBackPlayerHit;
-    
+    ParticleSystem deathParticle;
+    ParticleSystem hitLittle;
+    ParticleSystem hitHard;
+    ParticleSystem hitLaser;
+
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -98,6 +94,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
 
+        //Switch gérant la couleur de la trail et les couleurs des particules
         switch (sprite.sprite.name)
         {
             case "Perso1":
@@ -111,6 +108,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 colorTrail[1].time = 1;
                 trailGradient.SetKeys(colorTrail, alphaTrail);
                 trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeOrange");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerOrange");
                 break;
             case "Perso2":
                 alphaTrail[0].alpha = 1;
@@ -123,6 +125,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 colorTrail[1].time = 1;
                 trailGradient.SetKeys(colorTrail, alphaTrail);
                 trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukePink");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerPink");
                 break;
             case "Perso3":
                 alphaTrail[0].alpha = 1;
@@ -135,6 +142,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 colorTrail[1].time = 1;
                 trailGradient.SetKeys(colorTrail, alphaTrail);
                 trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeGreen");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
                 break;
             case "Perso4":
                 alphaTrail[0].alpha = 1;
@@ -147,6 +159,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 colorTrail[1].time = 1;
                 trailGradient.SetKeys(colorTrail, alphaTrail);
                 trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeYellow");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerYellow");
                 break;
             case "Perso5":
                 alphaTrail[0].alpha = 1;
@@ -159,6 +176,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 colorTrail[1].time = 1;
                 trailGradient.SetKeys(colorTrail, alphaTrail);
                 trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeBlue");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
                 break;
             default:
                 print("Default case switch start PlayerLifeManager.cs");
