@@ -111,8 +111,7 @@ public class PlayerMovement : MonoBehaviour
             speed = rigid.velocity.magnitude;
             speedEffectScript.playerSpeed = speed;
 
-            if (currentState != State.hooked)
-                currentState = State.inAir;
+            
             CheckState();
             Movement();
             Dash();
@@ -132,14 +131,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 currentState = State.grounded;
             }
+        }else if (currentState != State.hooked)
+        {
+            currentState = State.inAir;
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = new Color(1, 1, 0, .5f);
-        Gizmos.DrawSphere(transform.position, 1.2f);
     }
 
     void Dash()
@@ -199,9 +194,11 @@ public class PlayerMovement : MonoBehaviour
             switch (currentState)
             {
                 case State.grounded:
+                    print("grounded");
                     rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * groundedControlForce);
                     break;
                 case State.hooked:
+                    print("hooked");
                     if (speed < 10)
                     {
                         if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
@@ -225,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case State.inAir:
+                    print("inAir");
                     rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * airControlForce);
                     break;
                 default:
