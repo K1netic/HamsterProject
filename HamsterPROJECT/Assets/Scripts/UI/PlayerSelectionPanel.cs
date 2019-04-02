@@ -76,9 +76,10 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Validated;
 				PlayValidateSound();
-				validatedCharacter = GameManager.Characters[characterSelected];
+//				validatedCharacter = GameManager.Characters[characterSelected];
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
 				InstantiatePlayer(panelId);
+				validatedCharacter = newPlayer;
 			}
 
 			// Deactivation
@@ -98,8 +99,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
-				if (newPlayer != null)
-					Destroy (newPlayer);
+				Destroy (newPlayer.gameObject);
 			}
 
 			// Trying to validate on a character not avalaible
@@ -203,7 +203,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
 		GameManager.playersInputDevices [panelIndex] = this.device;
 		inst.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = false;
-		GameObject newPlayer = Instantiate(inst);
+		newPlayer = Instantiate(inst);
+		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelIndex];
 	}
 
 	void PlayActivationSound()

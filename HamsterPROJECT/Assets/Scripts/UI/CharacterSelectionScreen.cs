@@ -27,8 +27,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	void Awake()
 	{
 		// Load Characters
-		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
-		GameManager.Characters = new List<GameObject>(tab);
+//		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
+//		GameManager.Characters = new List<GameObject>(tab);
 		nbCharactersAvailable = GameManager.nbOfCharacters;
 		selectableCharacters = new bool[GameManager.nbOfCharacters];
 		selectableCharacters.SetValue (true, 0);
