@@ -13,7 +13,6 @@ public class Balancing : MonoBehaviour {
 
     [Header("HOOK")]
     public float speedHookhead;
-    public float distanceMaxHook = 15f;
     public float retractationStep;
     public float offsetHook;
     public float timeBtwShots;
@@ -22,6 +21,7 @@ public class Balancing : MonoBehaviour {
     public float timeRopeCut = 1.5f;
 
     [Header("PLAYER MOVEMENT")]
+    public float groundedControlForce = 15;
     public float airControlForce = 10;
     public float hookMovementForce = 25;
     public float speedThresholdDestruction = 20f;

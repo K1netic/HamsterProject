@@ -16,7 +16,6 @@ public class Hook : MonoBehaviour {
 
     //JOINT
     DistanceJoint2D joint;
-    float distanceMax; // hook's distance
     bool jointNotCreated = true;
     [HideInInspector]
     public PlayerMovement playerMovement;
@@ -116,7 +115,6 @@ public class Hook : MonoBehaviour {
         shieldCollider = colliders[1];
 
 		timeHooked = balanceData.TimeHooked;
-        distanceMax = balanceData.distanceMaxHook;
         retractationStep = balanceData.retractationStep;
         //offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;

@@ -24,10 +24,12 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 childRedAxis;*/
     float airControlForce;
     float hookMovementForce;
-    [SerializeField]
-    State currentState;
+    public State currentState;
     [HideInInspector]
     public float speed;
+    [SerializeField]
+    public LayerMask layerMaskGround;
+    float groundedControlForce;
 
     //Dash
     [HideInInspector]
@@ -63,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
+        groundedControlForce = balanceData.groundedControlForce;
         hookMovementForce = balanceData.hookMovementForce;
         airControlForce = balanceData.airControlForce;
         dashTime = balanceData.dashTime;
@@ -110,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (currentState != State.hooked)
                 currentState = State.inAir;
-
+            CheckState();
             Movement();
             Dash();
         }
@@ -119,6 +122,24 @@ public class PlayerMovement : MonoBehaviour
     private void LateUpdate()
     {
         rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, maxSpeed);
+    }
+
+    void CheckState()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 1.2f, layerMaskGround))
+        {
+            if(currentState != State.hooked)
+            {
+                currentState = State.grounded;
+            }
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = new Color(1, 1, 0, .5f);
+        Gizmos.DrawSphere(transform.position, 1.2f);
     }
 
     void Dash()
@@ -177,8 +198,11 @@ public class PlayerMovement : MonoBehaviour
         {
             switch (currentState)
             {
+                case State.grounded:
+                    rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * groundedControlForce);
+                    break;
                 case State.hooked:
-                    if(speed < 10)
+                    if (speed < 10)
                     {
                         if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
                             rigid.AddForce((shootPos.transform.position - transform.position).normalized * hookMovementForce);
@@ -201,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case State.inAir:
-				rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * airControlForce);
+                    rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * airControlForce);
                     break;
                 default:
                     break;
@@ -257,9 +281,9 @@ public class PlayerMovement : MonoBehaviour
         rigid.drag = drag;
     }
 
-    enum State
+    public enum State
     {
-        inAir, hooked,
+        inAir, hooked, grounded,
     }
 
 	IEnumerator CancelVibration(float delay)
