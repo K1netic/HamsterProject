@@ -161,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rigid.velocity = Vector3.zero;
         rigid.gravityScale = 0;
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSeconds(.05f);
         rigid.gravityScale = gravity;
         rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
         InvokeRepeating("DashEffect", 0, 0.04f);

@@ -574,13 +574,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedHookhead: 15
-  distanceMaxHook: 17.5
   retractationStep: 0.25
   offsetHook: 0
   timeBtwShots: 0.05
   TimeHooked: 8
   lineWidth: 0.175
   timeRopeCut: 1.5
+  groundedControlForce: 15
   airControlForce: 7.5
   hookMovementForce: 55
   speedThresholdDestruction: 25
@@ -602,7 +602,7 @@ MonoBehaviour:
   dashTime: 0.05
   dashForce: 75
   dashCDTime: 6
-  dragEndOfDash: 20
+  dragEndOfDash: 15
   dashRecoveryWithHook: 1
   inDashStatusTime: 0.5
   lightRumble: 0.15
