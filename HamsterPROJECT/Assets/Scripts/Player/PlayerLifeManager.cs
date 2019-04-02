@@ -97,7 +97,7 @@ public class PlayerLifeManager : MonoBehaviour {
         //Switch gérant la couleur de la trail et les couleurs des particules
         switch (sprite.sprite.name)
         {
-            case "Perso1":
+            case "0":
                 alphaTrail[0].alpha = 1;
                 alphaTrail[0].time = 0;
                 alphaTrail[1].alpha = 0;
@@ -114,7 +114,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerOrange");
                 break;
-            case "Perso2":
+            case "1":
                 alphaTrail[0].alpha = 1;
                 alphaTrail[0].time = 0;
                 alphaTrail[1].alpha = 0;
@@ -131,7 +131,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerPink");
                 break;
-            case "Perso3":
+            case "2":
                 alphaTrail[0].alpha = 1;
                 alphaTrail[0].time = 0;
                 alphaTrail[1].alpha = 0;
@@ -148,7 +148,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
                 break;
-            case "Perso4":
+            case "3":
                 alphaTrail[0].alpha = 1;
                 alphaTrail[0].time = 0;
                 alphaTrail[1].alpha = 0;
@@ -165,7 +165,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerYellow");
                 break;
-            case "Perso5":
+            case "4":
                 alphaTrail[0].alpha = 1;
                 alphaTrail[0].time = 0;
                 alphaTrail[1].alpha = 0;

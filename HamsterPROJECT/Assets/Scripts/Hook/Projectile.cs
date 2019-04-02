@@ -49,7 +49,7 @@ public class Projectile : MonoBehaviour {
 
     private void Awake()
     {
-        pivot = pivot = child.transform.position;
+        pivot = child.transform.position;
     }
 
     void Start(){
@@ -83,19 +83,19 @@ public class Projectile : MonoBehaviour {
 
         switch (hook.player.GetComponent<SpriteRenderer>().sprite.name)
         {
-            case "Perso1":
+            case "0":
                 hitHook = hitHookOrange;
                 break;
-            case "Perso2":
+            case "1":
                 hitHook = hitHookPink;
                 break;
-            case "Perso3":
+            case "2":
                 hitHook = hitHookGreen;
                 break;
-            case "Perso4":
+            case "3":
                 hitHook = hitHookYellow;
                 break;
-            case "Perso5":
+            case "4":
                 hitHook = hitHookBlue;
                 break;
             default:

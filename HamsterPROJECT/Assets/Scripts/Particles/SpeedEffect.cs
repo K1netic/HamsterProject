@@ -41,19 +41,19 @@ public class SpeedEffect : MonoBehaviour {
 		MyRenderer.sortingOrder = 10;
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {
-            case "Perso1":
+            case "0":
 			ColorEffect = Color1;
                 break;
-            case "Perso2":
+            case "1":
 			ColorEffect = Color2;
                 break;
-            case "Perso3":
+            case "2":
 			ColorEffect = Color3;
                 break;
-            case "Perso4":
+            case "3":
 			ColorEffect = Color4;
                 break;
-            case "Perso5":
+            case "4":
 			ColorEffect = Color5;
                 break;
             default:
