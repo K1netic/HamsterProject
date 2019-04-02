@@ -194,11 +194,9 @@ public class PlayerMovement : MonoBehaviour
             switch (currentState)
             {
                 case State.grounded:
-                    print("grounded");
                     rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * groundedControlForce);
                     break;
                 case State.hooked:
-                    print("hooked");
                     if (speed < 10)
                     {
                         if(playerInputDevice.LeftStickX.Value != 0 || playerInputDevice.LeftStickY.Value != 0)
@@ -222,7 +220,6 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case State.inAir:
-                    print("inAir");
                     rigid.AddForce(Vector3.right * playerInputDevice.LeftStickX.Value * airControlForce);
                     break;
                 default:
