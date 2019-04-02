@@ -52,6 +52,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
 		leftArrow = guid.transform.GetChild (0).gameObject;
 		rightArrow = guid.transform.GetChild (1).gameObject;
+		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 	}
 
 	// Update is called once per frame
@@ -201,6 +202,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterSprites[characterSelected];
 		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
 		GameManager.playersInputDevices [panelIndex] = this.device;
+		inst.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = false;
 		GameObject newPlayer = Instantiate(inst);
 	}
 
