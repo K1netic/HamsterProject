@@ -165,12 +165,12 @@ public class Projectile : MonoBehaviour {
         {
             if (raycastRope.collider.gameObject.CompareTag("Rope"))
             {
-                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
+                raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
             }      
         }else if (raycastBackRope.collider)
             if (raycastBackRope.collider.gameObject.CompareTag("Rope"))
             {
-                raycastBackRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
+                raycastBackRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
             }
     }
 
@@ -263,7 +263,7 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject.CompareTag("Rope"))
         {
-            col.gameObject.GetComponent<LineCutter>().CutRope(transform.position);
+            col.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
         }
     }
 

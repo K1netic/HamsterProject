@@ -46,7 +46,9 @@ public class PlayerLifeManager : MonoBehaviour {
     float freezeFrameDuration;
     float dashDamage;
     float maxKnockBackPlayerHit;
-    
+    public string lastAttacker = null;
+    float lastAttackerDuration;
+
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -80,6 +82,7 @@ public class PlayerLifeManager : MonoBehaviour {
         deathRadius = balanceData.deathRadius;
         dashDamage = balanceData.dashDamage;
         maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
+        lastAttackerDuration = balanceData.lastAttackerDuration;
 
         sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -100,6 +103,8 @@ public class PlayerLifeManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        print(lastAttacker);
 
 		lifeParticlesManagerScript.playerHP = playerHP;
 
@@ -153,7 +158,6 @@ public class PlayerLifeManager : MonoBehaviour {
                             playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
                                                     + knockbackPower), ForceMode2D.Impulse);
                         }
-                        
                         break;
                     case "Hook":
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
@@ -189,8 +193,12 @@ public class PlayerLifeManager : MonoBehaviour {
                 }
                 //StartCoroutine(DoKnockBack(attacker));
             }
+
+            //Attribution des dégâts
+            CancelCleanLastAttacker();
             if (attacker.CompareTag("Arrow"))
             {
+                lastAttacker = attacker.GetComponent<Hook>().playerMovement.playerNumber;
                 if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
                 {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
                     playerHP -= dashDamage;
@@ -209,6 +217,7 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             else if(attacker.CompareTag("Hook"))
             {
+                lastAttacker = attacker.GetComponent<Projectile>().hook.GetComponent<Hook>().playerMovement.playerNumber;
                 playerHP -= damage;
                 woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
                 AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
@@ -219,9 +228,11 @@ public class PlayerLifeManager : MonoBehaviour {
                 woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
                 AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
             }
-            
+            CleanLastAttacker();
+
+
             //Rend le player invulnérable pendant recoveryTime secondes
-            if(attacker.CompareTag("Hook"))
+            if (attacker.CompareTag("Hook"))
                 Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
             else
                 Invoke("ResetRecovery", recoveryTime);
@@ -241,10 +252,17 @@ public class PlayerLifeManager : MonoBehaviour {
 					}
 				}
 
-				else if (attacker.tag == "LaserEdge")
+				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser")
 				{
-					GameManager.playersSelfDestructs [int.Parse ((this.GetComponent<PlayerMovement> ().playerNumber.Substring (2, 1))) - 1] += 1;
-				}
+                    if (lastAttacker == null)
+                        GameManager.playersSelfDestructs[int.Parse((this.GetComponent<PlayerMovement>().playerNumber.Substring(2, 1))) - 1] += 1;
+                    else
+                        GameManager.playersScores[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
+                }
+                else
+                {
+                    print("Who the fking hell kills you ?!");
+                }
 			}
 
 			// DAMAGE TAKEN VIBRATION
@@ -252,6 +270,21 @@ public class PlayerLifeManager : MonoBehaviour {
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
         }
+    }
+
+    public void CleanLastAttacker()
+    {
+        Invoke("CleanLastAttackerDone", lastAttackerDuration);
+    }
+
+    void CleanLastAttackerDone()
+    {
+        lastAttacker = null;
+    }
+
+    public void CancelCleanLastAttacker()
+    {
+        CancelInvoke("CleanLastAttackerDone");
     }
 
     public void HitFX(Vector3 position, float speed)

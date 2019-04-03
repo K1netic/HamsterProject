@@ -36,6 +36,7 @@ public class Balancing : MonoBehaviour {
     public float criticalSpeed = 35;
     public float deathRadius = 2.5f;
     public float dashDamage = 50;
+    public float lastAttackerDuration = 3f;
 
     [Header("Knockback")]
     public float knockBackTime = 0.5f;

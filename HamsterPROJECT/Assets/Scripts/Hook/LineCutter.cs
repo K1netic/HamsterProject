@@ -9,9 +9,15 @@ public class LineCutter : MonoBehaviour {
     [HideInInspector]
     public GameObject projectile;
 
-    public void CutRope(Vector3 cuttingPos){
+    PlayerLifeManager lifeManager;
+
+    public void CutRope(Vector3 cuttingPos, string cutter){
         if (hook.currentProjectile.GetComponent<Projectile>().hooked)
         {
+            lifeManager = hook.player.GetComponent<PlayerLifeManager>();
+            lifeManager.CancelCleanLastAttacker();
+            lifeManager.lastAttacker = cutter;
+            lifeManager.CleanLastAttacker();
 
             GameObject cutRope = new GameObject();
 
