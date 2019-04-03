@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using InControl;
+using UnityEditor;
 
 public class CharacterSelectionScreen : MonoBehaviour {
 
@@ -20,15 +21,15 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	// Dynamic selectable characters
 	public static int nbCharactersAvailable;
 	public static bool[] selectableCharacters;
+	GameObject characterPrefab;
+
+	[SerializeField] Material spriteDefault;
 
 	//Audio
 	float delay = 0.1f;
 
 	void Awake()
 	{
-		// Load Characters
-//		GameObject[] tab = Resources.LoadAll<GameObject> ("Prefabs");
-//		GameManager.Characters = new List<GameObject>(tab);
 		nbCharactersAvailable = GameManager.nbOfCharacters;
 		selectableCharacters = new bool[GameManager.nbOfCharacters];
 		selectableCharacters.SetValue (true, 0);
@@ -36,6 +37,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		selectableCharacters.SetValue (true, 2);
 		selectableCharacters.SetValue (true, 3);
 		selectableCharacters.SetValue (true, 4);
+		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
         if (PlayerPrefs.GetInt("NotFirstTime") == 0)
             GameObject.Find("TutorialHint").SetActive(false);
@@ -45,6 +47,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	{
 		GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
 		MusicManager.instance.PlayMusic ("menu");
+
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
@@ -196,9 +199,12 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				GameManager.playersActive [i] = true;
 				//Set selected characters
-				GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel>().validatedCharacter;
-				GameManager.playersCharacters [i].transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
 				GameManager.playersInputDevices [i] = panels [i].device;
+				GameObject newPlayerPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/TemporaryPrefabs/" +  i.ToString () + ".prefab", panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter);
+				newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
+				newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
+				newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
+				GameManager.playersCharacters [i] = newPlayerPrefab;
 			}
 		}
 	}

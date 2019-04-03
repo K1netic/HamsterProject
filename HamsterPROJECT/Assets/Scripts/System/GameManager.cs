@@ -37,8 +37,7 @@ public class GameManager : MonoBehaviour {
 		
 	public static bool[] playersActive = new bool[nbOfPlayers];
 	public static bool[] playersAlive = new bool[nbOfPlayers];
-	//Base characters
-//	public static List<GameObject> Characters = new List<GameObject>();
+
 	//Characters selected by players
 	public static GameObject[] playersCharacters = new GameObject[nbOfPlayers];
 
@@ -60,6 +59,10 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 1);
 		playersActive.SetValue (false, 2);
 		playersActive.SetValue (false, 3);
+
+		// TODO: Cleaning characters prefabs
+
+
 	}
 
 	public static void ResetScores()

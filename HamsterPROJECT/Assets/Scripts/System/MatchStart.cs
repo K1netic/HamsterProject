@@ -16,7 +16,7 @@ public class MatchStart : MonoBehaviour {
 
 	// Players 
 	[SerializeField] GameObject[] Players;
-	GameObject characterPrefab;
+//	GameObject characterPrefab;
 	string plyrNmbr;
     int howManyPlayers = 0;
 
@@ -48,7 +48,7 @@ public class MatchStart : MonoBehaviour {
 
 		gameHasStarted = false;
 		coroutineLimiter = false;
-		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
+//		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
         foreach (GameObject spawn in GameObject.FindGameObjectsWithTag("Spawn"))
         {
@@ -127,7 +127,7 @@ public class MatchStart : MonoBehaviour {
 
     void InstantiateTwoPlayers(int playerIndex)
     {
-		GameObject inst = characterPrefab;
+		GameObject inst = GameManager.playersCharacters[playerIndex];
 
 		// Spawn points management
         int j = Random.Range(0, spawnPoints.Count);
@@ -193,9 +193,7 @@ public class MatchStart : MonoBehaviour {
 //            foreach (var spawn in spawnPoints)
 //                print("clean " + spawn.name);
         }
-			
-		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersCharacters [playerIndex].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersCharacters [playerIndex].transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber;
+
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
         GameObject newPlayer = Instantiate(inst);
 
@@ -205,14 +203,11 @@ public class MatchStart : MonoBehaviour {
 
     void InstantiatePlayer(int playerIndex)
     {
-		GameObject inst = characterPrefab;
+		GameObject inst = GameManager.playersCharacters[playerIndex];
+
         int j = Random.Range(0, spawnPoints.Count);
         inst.transform.position = spawnPoints[j].transform.position;
         spawnPoints.Remove(spawnPoints[j]);
-
-		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersCharacters [playerIndex].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersCharacters [playerIndex].transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber;
-
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
         GameObject newPlayer = Instantiate(inst);
 

@@ -35,9 +35,13 @@ public class SpeedEffect : MonoBehaviour {
     [HideInInspector]
     public float playerSpeed;
 
+	[SerializeField] Material speedEffect;
 
 	// Use this for initialization
 	void Start () {
+
+		MyRenderer.material = speedEffect;
+
 		MyRenderer.sortingOrder = 10;
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {

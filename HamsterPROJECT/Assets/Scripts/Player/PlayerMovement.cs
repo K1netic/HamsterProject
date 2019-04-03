@@ -119,8 +119,6 @@ public class PlayerMovement : MonoBehaviour
             Movement();
             Dash();
         }
-
-		Debug.Log (playerInputDevice);
     }
 
     private void LateUpdate()

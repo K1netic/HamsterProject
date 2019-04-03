@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using InControl;
+using UnityEditor;
 
 public class PlayerSelectionPanel : MonoBehaviour {
 
@@ -76,7 +77,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Validated;
 				PlayValidateSound();
-//				validatedCharacter = GameManager.Characters[characterSelected];
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
 				InstantiatePlayer(panelId);
 				validatedCharacter = newPlayer;
