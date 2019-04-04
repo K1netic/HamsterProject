@@ -137,18 +137,21 @@ public class Hook : MonoBehaviour {
         player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
         player.GetComponent<PlayerLifeManager>().hookScript = this;
 
-        line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
-        line.positionCount = 2; //le nombre de point pour la ligne
-        line.startWidth = balanceData.lineWidth;// la largeur de la ligne
-        line.endWidth = balanceData.lineWidth;
-        line.gameObject.SetActive(false);// désactive la ligne
-		line.startColor = colorRope;
-		line.endColor = colorRope;
-		line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
-        line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
-        line.transform.parent = gameObject.transform.parent;
-        rope = Resources.Load<Texture>("ArrowSprites/Rope");
-        line.material.SetTexture("_MainTex", rope);
+        if (!line)
+        {
+            line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
+            line.positionCount = 2; //le nombre de point pour la ligne
+            line.startWidth = balanceData.lineWidth;// la largeur de la ligne
+            line.endWidth = balanceData.lineWidth;
+            line.gameObject.SetActive(false);// désactive la ligne
+            line.startColor = colorRope;
+            line.endColor = colorRope;
+            line.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
+            line.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
+            line.transform.parent = gameObject.transform.parent;
+            rope = Resources.Load<Texture>("ArrowSprites/Rope");
+            line.material.SetTexture("_MainTex", rope);
+        }
         
         //Ajoutet un collider à la corde ainsi que le script qui permet de la couper
         line.gameObject.AddComponent<BoxCollider2D>();
