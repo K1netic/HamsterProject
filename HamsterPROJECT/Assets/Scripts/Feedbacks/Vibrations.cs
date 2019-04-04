@@ -72,8 +72,5 @@ public class Vibrations : MonoBehaviour {
 		default:
 			return 0f;
 		}
-
-		return 0f;
-
 	}
 }

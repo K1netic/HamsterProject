@@ -39,7 +39,6 @@ public class MusicManager : MonoBehaviour {
 			break;
 		default :
 			return;
-			break;
 		}
 
 		musicSource.Play ();
@@ -57,7 +56,6 @@ public class MusicManager : MonoBehaviour {
 			break;
 		default :
 			return;
-			break;
 		}
 		musicSource.Stop ();
 	}

@@ -33,7 +33,7 @@ public class LifeParticlesManager : MonoBehaviour {
 	//Smoke
 	ParticleSystem.EmissionModule smokeEmission;
 	ParticleSystem.MainModule smokeMain;
-	ParticleSystem.ColorOverLifetimeModule smokeColorOLT;
+//	ParticleSystem.ColorOverLifetimeModule smokeColorOLT;
 	[SerializeField]
 	Gradient SmokeGrandient;
 	[SerializeField]
@@ -67,7 +67,7 @@ public class LifeParticlesManager : MonoBehaviour {
 		//Smoke
 		smokeEmission = smoke.GetComponent<ParticleSystem> ().emission;
 		smokeMain = smoke.GetComponent<ParticleSystem> ().main;
-		smokeColorOLT = smoke.GetComponent<ParticleSystem> ().colorOverLifetime;
+//		smokeColorOLT = smoke.GetComponent<ParticleSystem> ().colorOverLifetime;
 
 		//Ember
 		emberMain = ember.GetComponent<ParticleSystem> ().main;

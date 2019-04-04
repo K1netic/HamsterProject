@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using InControl;
+using UnityEditor;
 
 public class PlayerSelectionPanel : MonoBehaviour {
 
@@ -30,12 +31,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool blockStickMovement = false;
 	CharacterSelectionScreen select;
 	[HideInInspector] public GameObject validatedCharacter;
+	GameObject characterPrefab;
 
 	//Audio
 	bool validate = false;
 	bool activate = false;
 
 	public InputDevice device;
+
+	[SerializeField] int panelId;
+	GameObject newPlayer;
 
 	void Start()
 	{
@@ -48,6 +53,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
 		leftArrow = guid.transform.GetChild (0).gameObject;
 		rightArrow = guid.transform.GetChild (1).gameObject;
+		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 	}
 
 	// Update is called once per frame
@@ -71,8 +77,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Validated;
 				PlayValidateSound();
-				validatedCharacter = GameManager.Characters[characterSelected];
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
+				InstantiatePlayer(panelId);
+				validatedCharacter = newPlayer;
 			}
 
 			// Deactivation
@@ -92,6 +99,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
+				Destroy (newPlayer.gameObject);
 			}
 
 			// Trying to validate on a character not avalaible
@@ -186,6 +194,17 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		else if (Mathf.Abs(device.LeftStickX.Value) < 0.2f)
 			blockStickMovement = false;
+	}
+
+	void InstantiatePlayer(int panelIndex)
+	{
+		GameObject inst = characterPrefab;
+		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterSprites[characterSelected];
+		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
+		GameManager.playersInputDevices [panelIndex] = this.device;
+		inst.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = false;
+		newPlayer = Instantiate(inst);
+		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelIndex];
 	}
 
 	void PlayActivationSound()

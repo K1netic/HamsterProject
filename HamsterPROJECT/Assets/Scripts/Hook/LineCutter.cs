@@ -24,7 +24,6 @@ public class LineCutter : MonoBehaviour {
             GameObject cutRope = new GameObject();
 
             cutRope.AddComponent<LineRenderer>();
-            LineRenderer cutLine = cutRope.GetComponent<LineRenderer>();
 
             cutRope.AddComponent<RopeScript>();
             RopeScript script = cutRope.GetComponent<RopeScript>();

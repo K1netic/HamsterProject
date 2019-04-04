@@ -5,15 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerLifeManager : MonoBehaviour {
 
-    [SerializeField]
-    ParticleSystem deathParticle;
-    [SerializeField]
-    ParticleSystem hitLittle;
-    [SerializeField]
-    ParticleSystem hitHard;
-    [SerializeField]
-    ParticleSystem hitLaser;
-
 	[SerializeField]
 	GameObject lifeParticlesManager;
 	LifeParticlesManager lifeParticlesManagerScript;
@@ -48,16 +39,24 @@ public class PlayerLifeManager : MonoBehaviour {
     float maxKnockBackPlayerHit;
     public string lastAttacker = null;
     float lastAttackerDuration;
+    ParticleSystem deathParticle;
+    ParticleSystem hitLittle;
+    ParticleSystem hitHard;
+    ParticleSystem hitLaser;
 
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
     Color woundedColor = new Color(1, 1, 1, 0.49f);
     bool wounded;
-    Gradient startGradient;
     Gradient woundedGradient = new Gradient();
     Material startMaterial;
     Material woundedMaterial;
+
+    //Trail gradient
+    Gradient trailGradient = new Gradient();
+    GradientColorKey[] colorTrail = new GradientColorKey[2];
+    GradientAlphaKey[] alphaTrail = new GradientAlphaKey[2];
 
     // Makes sure Dead function is only called once at a time
     bool deadLimiter = false;
@@ -84,27 +83,119 @@ public class PlayerLifeManager : MonoBehaviour {
         maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
         lastAttackerDuration = balanceData.lastAttackerDuration;
 
-        sprite = GetComponent<SpriteRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
 
         trail = GetComponent<TrailRenderer>();
 		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();
-        startGradient = GetComponent<TrailRenderer>().colorGradient;
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
-        alphaKeys[0].alpha = .157f;
-        alphaKeys[0].time = 0;
-        alphaKeys[1] = startGradient.alphaKeys[1];
-        woundedGradient.SetKeys(startGradient.colorKeys, alphaKeys);
+        
+        sprite = GetComponent<SpriteRenderer>();
         woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
         startMaterial = sprite.material;
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
+
+        //Switch gérant la couleur de la trail et les couleurs des particules
+        switch (sprite.sprite.name)
+        {
+            case "0":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1, 0.5529412f, 0);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(1, 0,0);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeOrange");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerOrange");
+                break;
+            case "1":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1,0,1);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0.3254902f,0,1);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukePink");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerPink");
+                break;
+            case "2":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(0.201914f, 0.5660378f, 0.1361694f);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0.09819563f, 0.4245283f, 0.04205233f);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeGreen");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
+                break;
+            case "3":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(1,1,0);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(1, 0.5568628f,0);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeYellow");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerYellow");
+                break;
+            case "4":
+                alphaTrail[0].alpha = 1;
+                alphaTrail[0].time = 0;
+                alphaTrail[1].alpha = 0;
+                alphaTrail[1].time = 1;
+                colorTrail[0].color = new Color(0, 1, 1);
+                colorTrail[0].time = 0;
+                colorTrail[1].color = new Color(0, 0.2901961f, 1);
+                colorTrail[1].time = 1;
+                trailGradient.SetKeys(colorTrail, alphaTrail);
+                trail.colorGradient = trailGradient;
+
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeBlue");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
+                break;
+            default:
+                print("Default case switch start PlayerLifeManager.cs");
+                break;
+        }
+
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
+        alphaKeys[0].alpha = .157f;
+        alphaKeys[0].time = 0;
+        alphaKeys[1] = trailGradient.alphaKeys[1];
+        woundedGradient.SetKeys(trailGradient.colorKeys, alphaKeys);
     }
 
     // Update is called once per frame
     void Update () {
-
-        print(playerMovement.playerNumber + " " + lastAttacker);
 
 		lifeParticlesManagerScript.playerHP = playerHP;
 

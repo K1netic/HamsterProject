@@ -28,32 +28,36 @@ public class SpeedEffect : MonoBehaviour {
 	GameObject player;
 
 	float SpeedScale;
-	float t;
+//	float t;
 
     [HideInInspector]
     public Vector2 playerDirection;
     [HideInInspector]
     public float playerSpeed;
 
+	[SerializeField] Material speedEffect;
 
 	// Use this for initialization
 	void Start () {
+
+		MyRenderer.material = speedEffect;
+
 		MyRenderer.sortingOrder = 10;
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {
-            case "Perso1":
+            case "0":
 			ColorEffect = Color1;
                 break;
-            case "Perso2":
+            case "1":
 			ColorEffect = Color2;
                 break;
-            case "Perso3":
+            case "2":
 			ColorEffect = Color3;
                 break;
-            case "Perso4":
+            case "3":
 			ColorEffect = Color4;
                 break;
-            case "Perso5":
+            case "4":
 			ColorEffect = Color5;
                 break;
             default:
@@ -69,7 +73,7 @@ public class SpeedEffect : MonoBehaviour {
 		transform.rotation = Quaternion.FromToRotation(Vector3.up, playerDirection);
 
 
-		t = Mathf.Clamp((playerSpeed * 1 /120), 0f, 1f);
+//		t = Mathf.Clamp((playerSpeed * 1 /120), 0f, 1f);
 		ColorEffectA =ColorEffect;
 		MyRenderer.material.SetColor ("_TintColor", ColorEffectA );
 

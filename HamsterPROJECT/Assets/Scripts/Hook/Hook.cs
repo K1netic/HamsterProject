@@ -7,10 +7,8 @@ public class Hook : MonoBehaviour {
 
     [SerializeField]
     bool manualSwitchOn;
-    [SerializeField]
-    ParticleSystem hitLittle;
-    [SerializeField]
-    ParticleSystem hitHard;
+
+    
 
     Balancing balanceData;
 
@@ -84,6 +82,10 @@ public class Hook : MonoBehaviour {
     float freezeFrameDuration;
     [HideInInspector]
     public bool cantAttack;
+
+    //PARTICLE
+    ParticleSystem hitLittle;
+    ParticleSystem hitHard;
 
     //COLOR
     Color colorRope;
@@ -160,35 +162,45 @@ public class Hook : MonoBehaviour {
         //Charge les sprites en fonction du personnage sélectionné
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {
-            case "Perso1":
+            case "0":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
                 shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield1");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
                 colorRope = new Color(.784f, .451f, .173f);
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
                 break;
-            case "Perso2":
+            case "1":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak2");
                 shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield2");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
                 colorRope = new Color(.596f, .31f,.624f);
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
                 break;
-            case "Perso3":
+            case "2":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak3");
                 shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
                 colorRope = new Color(0.310f, 0.624f, 0.318f);
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
                 break;
-            case "Perso4":
+            case "3":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak4");
                 shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield4");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
                 colorRope = new Color(.847f, .761f, .271f);
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 break;
-            case "Perso5":
+            case "4":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak5");
                 shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield5");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
                 colorRope = new Color(.216f, .384f, .529f);
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 break;
             default:
                 print("Default case switch start Hook.cs");
