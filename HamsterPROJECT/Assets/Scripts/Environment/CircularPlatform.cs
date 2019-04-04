@@ -37,7 +37,6 @@ public class CircularPlatform : MonoBehaviour {
             vectorToTarget = transform.position - pivotPos;
             angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
             rigid.MoveRotation(angle);
-            print(angle);
         }
     }
 }

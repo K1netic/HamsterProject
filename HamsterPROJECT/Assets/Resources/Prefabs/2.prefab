@@ -194,7 +194,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849859366580038}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 5, z: 0}
+  m_LocalPosition: {x: 17.063452, y: -6.7060027, z: 0}
   m_LocalScale: {x: 1.75, y: 1.75, z: 1}
   m_Children:
   - {fileID: 4524919916462316}
@@ -753,14 +753,12 @@ MonoBehaviour:
     type: 2}
   hitHard: {fileID: 198267868073150084, guid: f8f0c0994c317154f88aaa3525436a9e, type: 2}
   hitLaser: {fileID: 198074226193424720, guid: 0a9dd9b1a158b8f479f3369441030a6c, type: 2}
-  layerMaskDeath:
-    serializedVersion: 2
-    m_Bits: 0
   lifeParticlesManager: {fileID: 1717892174893778}
   hookScript: {fileID: 0}
   playerHP: 0
   inRecovery: 0
   spriteArrow: {fileID: 0}
+  lastAttacker: 
 --- !u!114 &114495317079533500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -809,6 +807,9 @@ MonoBehaviour:
   lockMovement: 0
   currentState: 0
   speed: 0
+  layerMaskGround:
+    serializedVersion: 2
+    m_Bits: 268500992
   dashRecoveryWithHook: 0
   lockMovementDash: 0
   shootPos: {fileID: 1552216098729296}

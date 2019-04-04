@@ -104,7 +104,7 @@ public class PlayerLifeManager : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        print(lastAttacker);
+        print(playerMovement.playerNumber + " " + lastAttacker);
 
 		lifeParticlesManagerScript.playerHP = playerHP;
 

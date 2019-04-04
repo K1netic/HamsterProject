@@ -222,7 +222,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1067579327241222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30, y: 5, z: 0}
+  m_LocalPosition: {x: 16.042927, y: -3.0774753, z: 0}
   m_LocalScale: {x: 1.75, y: 1.75, z: 1}
   m_Children:
   - {fileID: 4057481002436402}
@@ -826,8 +826,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manualSwitchOn: 0
-  hitLittle: {fileID: 0}
-  hitHard: {fileID: 0}
+  hitLittle: {fileID: 198511835492389794, guid: 01a9457ece91bca4591e5390f6f20417,
+    type: 2}
+  hitHard: {fileID: 198706657204054438, guid: 1a5d91ddbac8fb04dbefc4b6e7847e97, type: 2}
   playerMovement: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2
@@ -854,10 +855,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathParticle: {fileID: 0}
-  hitLittle: {fileID: 0}
-  hitHard: {fileID: 0}
-  hitLaser: {fileID: 0}
+  deathParticle: {fileID: 198538507122382224, guid: 62fdfddf396a4d04da2877b83c339e1d,
+    type: 2}
+  hitLittle: {fileID: 198511835492389794, guid: 01a9457ece91bca4591e5390f6f20417,
+    type: 2}
+  hitHard: {fileID: 198706657204054438, guid: 1a5d91ddbac8fb04dbefc4b6e7847e97, type: 2}
+  hitLaser: {fileID: 198036310457498842, guid: 603f6a62756939540a8b948bf147d42c, type: 2}
   lifeParticlesManager: {fileID: 1932779227711590}
   hookScript: {fileID: 0}
   playerHP: 0
@@ -896,7 +899,7 @@ MonoBehaviour:
   speed: 0
   layerMaskGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 268500992
   dashRecoveryWithHook: 0
   lockMovementDash: 0
   shootPos: {fileID: 1076176912067958}
