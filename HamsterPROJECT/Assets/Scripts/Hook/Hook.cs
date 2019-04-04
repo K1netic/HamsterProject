@@ -93,6 +93,8 @@ public class Hook : MonoBehaviour {
 	public bool isFrozen = false;
     private bool doubleFXprotection;
 
+    PlayerLifeManager lifeManager;
+
     private void Awake()
     {
         //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
@@ -622,6 +624,8 @@ public class Hook : MonoBehaviour {
 
     void DoubleShieldCollide(Collision2D collision)
     {
+        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
@@ -639,12 +643,16 @@ public class Hook : MonoBehaviour {
         {
             case HookState.Arrow:
                 // Collision Arrow - Arrow 
+                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
                 AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
                 break;
             case HookState.Shield:
                 // Collision Arrow - Shield 
+                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
                 AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
@@ -664,12 +672,16 @@ public class Hook : MonoBehaviour {
         {
             case HookState.Arrow:
                 // Collision Arrow - Arrow 
+                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
                 AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
                 break;
             case HookState.Shield:
                 // Collision Arrow - Shield 
+                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+
                 playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
                 StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
                 AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
@@ -678,6 +690,14 @@ public class Hook : MonoBehaviour {
                 break;
         }
         Invoke("UnlockMovement", knockBackTime);
+    }
+
+    void AddLastAttacker(string attacker)
+    {
+        lifeManager = player.GetComponent<PlayerLifeManager>();
+        lifeManager.CancelCleanLastAttacker();
+        lifeManager.lastAttacker = attacker;
+        lifeManager.CleanLastAttacker();
     }
 
     void UnlockMovement()
