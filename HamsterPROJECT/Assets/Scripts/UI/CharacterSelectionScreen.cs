@@ -204,6 +204,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
 				newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
 				newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
+				newPlayerPrefab.transform.GetChild (0).position = new Vector3 (0, 0, 0);
 				GameManager.playersCharacters [i] = newPlayerPrefab;
 			}
 		}

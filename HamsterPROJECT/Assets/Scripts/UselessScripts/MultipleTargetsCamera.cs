@@ -15,7 +15,7 @@ public class MultipleTargetsCamera : MonoBehaviour {
     Vector2 minPos;
     Vector2 maxPos;
     Vector2 minCam;
-    Vector2 maxCam;
+//    Vector2 maxCam;
     float halfHeightCam;
     float halfWidthCam;
     Vector2 targetPos;
@@ -106,7 +106,7 @@ public class MultipleTargetsCamera : MonoBehaviour {
     void Move()
     {
         minCam = cam.ViewportToWorldPoint(new Vector3(0, 0, 0));
-        maxCam = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
+//        maxCam = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
         halfHeightCam = (cam.transform.position.y - minCam.y);
         halfWidthCam = (cam.transform.position.x - minCam.x);
 

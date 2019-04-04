@@ -5,17 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerLifeManager : MonoBehaviour {
 
-    [SerializeField]
-    ParticleSystem deathParticle;
-    [SerializeField]
-    ParticleSystem hitLittle;
-    [SerializeField]
-    ParticleSystem hitHard;
-    [SerializeField]
-    ParticleSystem hitLaser;
-    [SerializeField]
-    public LayerMask layerMaskDeath;
-
 	[SerializeField]
 	GameObject lifeParticlesManager;
 	LifeParticlesManager lifeParticlesManagerScript;
@@ -207,8 +196,6 @@ public class PlayerLifeManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        print(playerMovement.playerNumber + " " + lastAttacker);
 
 		lifeParticlesManagerScript.playerHP = playerHP;
 

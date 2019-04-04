@@ -28,7 +28,7 @@ public class SpeedEffect : MonoBehaviour {
 	GameObject player;
 
 	float SpeedScale;
-	float t;
+//	float t;
 
     [HideInInspector]
     public Vector2 playerDirection;
@@ -73,7 +73,7 @@ public class SpeedEffect : MonoBehaviour {
 		transform.rotation = Quaternion.FromToRotation(Vector3.up, playerDirection);
 
 
-		t = Mathf.Clamp((playerSpeed * 1 /120), 0f, 1f);
+//		t = Mathf.Clamp((playerSpeed * 1 /120), 0f, 1f);
 		ColorEffectA =ColorEffect;
 		MyRenderer.material.SetColor ("_TintColor", ColorEffectA );
 
