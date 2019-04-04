@@ -32,7 +32,7 @@ public class Vibrations : MonoBehaviour {
 			return duration;
 		// TO DEBUG
 		case "Death":
-			CameraShaker.Instance.ShakeOnce (balanceData.heavyMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut * 2f);
+			CameraShaker.Instance.ShakeOnce (balanceData.heavyMagnitude, balanceData.roughness, balanceData.fadeIn, balanceData.fadeOut * 3f);
 			device.Vibrate (balanceData.heavyVibration);
 			duration = balanceData.longVibrationDuration;
 			return duration;
