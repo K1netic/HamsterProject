@@ -44,6 +44,8 @@ public class Projectile : MonoBehaviour {
     PolygonCollider2D coll;
     [HideInInspector]
     public Vector2 pivot;
+    [HideInInspector]
+    public bool cutted = false;
 
     GameObject hookedObject;
 
@@ -128,7 +130,8 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        hook.line.SetPosition(1, pivot);
+        if(!cutted)
+            hook.line.SetPosition(1, pivot);
     }
 
     void RaycastNoBounce()
