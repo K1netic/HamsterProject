@@ -347,8 +347,13 @@ public class PlayerLifeManager : MonoBehaviour {
 				{
                     if (lastAttacker == null)
                         GameManager.playersSelfDestructs[int.Parse((this.GetComponent<PlayerMovement>().playerNumber.Substring(2, 1))) - 1] += 1;
-                    else
+                    else if (GameManager.gameModeType == GameManager.gameModes.Deathmatch)
+                    {
+                        GameManager.playersKills[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
                         GameManager.playersScores[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
+                    }
+                    else
+                        GameManager.playersKills[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
                 }
                 else
                 {

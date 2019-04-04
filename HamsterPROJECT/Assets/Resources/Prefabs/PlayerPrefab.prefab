@@ -857,6 +857,9 @@ MonoBehaviour:
   lockMovement: 0
   currentState: 0
   speed: 0
+  layerMaskGround:
+    serializedVersion: 2
+    m_Bits: 268500992
   dashRecoveryWithHook: 0
   lockMovementDash: 0
   shootPos: {fileID: 1260992845629056}
@@ -874,14 +877,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMaskDeath:
-    serializedVersion: 2
-    m_Bits: 0
   lifeParticlesManager: {fileID: 1315893996694848}
   hookScript: {fileID: 0}
   playerHP: 0
   inRecovery: 0
   spriteArrow: {fileID: 0}
+  lastAttacker: 
 --- !u!114 &114880357366906022
 MonoBehaviour:
   m_ObjectHideFlags: 1
