@@ -54,6 +54,8 @@ public class Hook : MonoBehaviour {
     Projectile projectileScript;
     Vector3 startPos;
     Vector3 endPos;
+    [HideInInspector]
+    public bool ropeCut;
 
     //ARROW 
     float knockBackTime;
@@ -329,7 +331,7 @@ public class Hook : MonoBehaviour {
 			|| playerMovement.playerInputDevice.Action2.WasPressed
 			|| playerMovement.playerInputDevice.Action3.WasPressed
 			|| playerMovement.playerInputDevice.Action4.WasPressed)
-			&& !hookInCD && !isFrozen && MatchStart.gameHasStarted)
+			&& !hookInCD && !isFrozen && MatchStart.gameHasStarted && !ropeCut)
         {
             ThrowHookhead();
         }

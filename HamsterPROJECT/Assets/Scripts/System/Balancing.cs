@@ -19,6 +19,7 @@ public class Balancing : MonoBehaviour {
 	public float TimeHooked = 8f;
     public float lineWidth = 0.05f;
     public float timeRopeCut = 1.5f;
+    public float cutRopeSpeed = .25f;
 
     [Header("PLAYER MOVEMENT")]
     public float groundedControlForce = 15;

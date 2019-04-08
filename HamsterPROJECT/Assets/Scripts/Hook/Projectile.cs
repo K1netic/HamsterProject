@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour {
     [HideInInspector]
     public Vector2 pivot;
     [HideInInspector]
-    public bool cutted = false;
+    public bool cut = false;
 
     GameObject hookedObject;
 
@@ -130,7 +130,7 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        if(!cutted)
+        if(!cut)
             hook.line.SetPosition(1, pivot);
     }
 
