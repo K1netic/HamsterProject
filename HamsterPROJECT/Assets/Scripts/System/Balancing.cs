@@ -76,4 +76,7 @@ public class Balancing : MonoBehaviour {
 	public float fadeIn = 0.1f;
 	public float fadeOut = 0.4f;
 
+    [Header("SUDDEN DEATH")]
+    public float suddenDeathSpeed = .02f;
+
 }

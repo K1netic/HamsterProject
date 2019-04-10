@@ -6,6 +6,8 @@ using UnityEngine;
 public class LaserSize : MonoBehaviour {
 
     [SerializeField]
+    bool FxNotNeeded;
+    [SerializeField]
     GameObject start;
     Vector2 startPos;
 
@@ -68,17 +70,23 @@ public class LaserSize : MonoBehaviour {
         
         if(raycast.collider != null)
         {
-            if (instEndLaser != null)
+            if (!FxNotNeeded)
             {
-                instEndLaser.transform.position = raycast.point;
+                if (instEndLaser != null)
+                {
+                    instEndLaser.transform.position = raycast.point;
+                }
             }
             Debug.DrawLine(startPos, raycast.point, Color.red);
-            if (!FXinstantiate)
+            if (!FxNotNeeded)
             {
-                FXinstantiate = true;
-                instEndLaser = Instantiate(endLaser, raycast.point, transform.rotation);
+                if (!FXinstantiate)
+                {
+                    FXinstantiate = true;
+                    instEndLaser = Instantiate(endLaser, raycast.point, transform.rotation);
+                }
             }
-            
+
             center.SetPosition(1, transform.InverseTransformPoint(raycast.point));
             glow.SetPosition(1, transform.InverseTransformPoint(raycast.point));
 
