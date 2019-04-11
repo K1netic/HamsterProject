@@ -53,6 +53,14 @@ public class PlayerMovement : MonoBehaviour
     public float gravity;
     float inDashStatusTime;
     GameObject dashRecovery;
+    GameObject dashReadyEffect;
+
+    //DashEffect gradient
+    Gradient dashEffectGradient = new Gradient();
+    GradientColorKey[] colorDashEffect = new GradientColorKey[2];
+    GradientAlphaKey[] alphaDashEffect = new GradientAlphaKey[4];
+    ParticleSystem.ColorOverLifetimeModule dashEffectColorLifeTime;
+    ParticleSystem.MainModule dashEffectColor;
 
     public string playerNumber;
 	public InputDevice playerInputDevice;
@@ -77,6 +85,9 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = this.GetComponent<Rigidbody2D> ();
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
+        dashReadyEffect = transform.GetChild(2).gameObject;
+        dashEffectColor = dashReadyEffect.GetComponent<ParticleSystem>().main;
+        dashEffectColorLifeTime = dashReadyEffect.GetComponent<ParticleSystem>().colorOverLifetime;
 
         dashRecovery = Resources.Load<GameObject>("Prefabs/Dash/DashRecovery");
 
@@ -103,6 +114,48 @@ public class PlayerMovement : MonoBehaviour
         }
 
         lastFramePosition = transform.position;
+
+        //Switch gérant la couleur du dash effect
+        switch (playerSprite.name)
+        {
+            case "0":
+                dashEffectColor.startColor = new Color(1, 0.5529412f, 0);
+                colorDashEffect[1].color = new Color(1, 0.5529412f, 0);
+                break;
+            case "1":
+                dashEffectColor.startColor = new Color(1, 0.3820755f, 0.8743438f);
+                colorDashEffect[1].color = new Color(1, 0.3820755f, 0.8743438f);
+                break;
+            case "2":
+                dashEffectColor.startColor = new Color(0.06499982f, 1, 0);
+                colorDashEffect[1].color = new Color(0.06499982f, 1, 0);
+                break;
+            case "3":
+                dashEffectColor.startColor = new Color(0.8980393f, 0.8392158f, .3607843f);
+                colorDashEffect[1].color = new Color(0.8980393f, 0.8392158f, .3607843f);
+                break;
+            case "4":
+                dashEffectColor.startColor = new Color(0, 0.6730871f, .9433962f);
+                colorDashEffect[1].color = new Color(0, 0.6730871f, .9433962f);
+                break;
+            default:
+                print("Default case switch start PlayerLifeManager.cs");
+                break;
+        }
+        alphaDashEffect[0].alpha = .9f;
+        alphaDashEffect[0].time = 0;
+        alphaDashEffect[1].alpha = 1;
+        alphaDashEffect[1].time = .13f;
+        alphaDashEffect[2].alpha = 1;
+        alphaDashEffect[2].time = .26f;
+        alphaDashEffect[3].alpha = .9f;
+        alphaDashEffect[3].time = 1;
+        colorDashEffect[0].color = new Color(1, 1, 1);
+        colorDashEffect[0].time = 0;
+        colorDashEffect[1].time = 1;
+        Gradient grad = new Gradient();
+        grad.SetKeys(colorDashEffect, alphaDashEffect);
+        dashEffectColorLifeTime.color = grad;
     }
 
     void FixedUpdate()
@@ -146,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
             {
+                dashReadyEffect.SetActive(false);
                 dashInCD = true;
                 lockMovementDash = true;
                 StartCoroutine("DoDash");
@@ -247,7 +301,7 @@ public class PlayerMovement : MonoBehaviour
             AudioManager.instance.PlaySound("dashRecovery", playerNumber);
             Instantiate(dashRecovery, transform.position, transform.rotation, transform);
         }
-            
+        dashReadyEffect.SetActive(true);
         dashInCD = false;
     }
 
