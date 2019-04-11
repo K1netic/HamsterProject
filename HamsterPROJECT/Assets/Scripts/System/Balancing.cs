@@ -78,5 +78,6 @@ public class Balancing : MonoBehaviour {
 
     [Header("SUDDEN DEATH")]
     public float suddenDeathSpeed = .02f;
+    public float suddenDeathTime = 90;
 
 }

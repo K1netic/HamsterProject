@@ -12,13 +12,16 @@ public class SuddenDeathMovement : MonoBehaviour {
 
     GameObject[] childs = new GameObject[4];
     float suddenDeathSpeed;
+    float suddenDeathTime;
     bool launchSuddenDeath;
     Camera cam;
+    float counter;
 
     void Start () {
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
         suddenDeathSpeed = balanceData.suddenDeathSpeed;
+        suddenDeathTime = balanceData.suddenDeathTime;
 
         cam = FindObjectOfType<Camera>();
 
@@ -26,9 +29,19 @@ public class SuddenDeathMovement : MonoBehaviour {
         {
             childs[i] = gameObject.transform.GetChild(i).gameObject;
         }
+        counter = 0;
     }
 	
 	void Update () {
+        if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime)
+        {
+            counter += Time.deltaTime;
+            if (counter > suddenDeathTime)
+            {
+                launchSuddenDeath = true;
+            }
+                
+        }
         if (launchSuddenDeath)
         {
             for (int i = 0; i < childs.Length; i++)
@@ -40,15 +53,10 @@ public class SuddenDeathMovement : MonoBehaviour {
                 launchSuddenDeath = false;
             }
 
-            if(childs[0].transform.position.x <= 38)
+            if(childs[0].transform.position.x <= 38.5)
                 cam.orthographicSize -= suddenDeathSpeed/2;
         }
         if (Input.GetKeyDown(KeyCode.I))
-            LaunchSuddenDeath();
-	}
-
-    public void LaunchSuddenDeath()
-    {
-        launchSuddenDeath = true;
+            launchSuddenDeath = true;
     }
 }
