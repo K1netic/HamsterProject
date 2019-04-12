@@ -135,9 +135,6 @@ public class MatchStart : MonoBehaviour {
         if(playerIndex == 0)
         {
             Transform currentSpawn = spawnPoints[j];
-//            print("current " + currentSpawn.name);
-//            foreach (var spawn in spawnPoints)
-//                print("full" + spawn.name);
             switch (currentSpawn.name)
             {
                 case "SpawnPoint1":
@@ -190,11 +187,10 @@ public class MatchStart : MonoBehaviour {
                     break;
             }
             spawnPoints.Remove(currentSpawn);
-//            foreach (var spawn in spawnPoints)
-//                print("clean " + spawn.name);
         }
 
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+        inst.transform.GetChild(0).localPosition = new Vector2(0f,0f);
         GameObject newPlayer = Instantiate(inst);
 
         // Setting InputDevice
@@ -209,6 +205,7 @@ public class MatchStart : MonoBehaviour {
         inst.transform.position = spawnPoints[j].transform.position;
         spawnPoints.Remove(spawnPoints[j]);
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+        inst.transform.GetChild(0).localPosition = new Vector2(0f,0f);
         GameObject newPlayer = Instantiate(inst);
 
         // Setting InputDevice
