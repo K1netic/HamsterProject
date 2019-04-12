@@ -375,7 +375,6 @@ public class Hook : MonoBehaviour {
 
     public void BladeChoice(float speed)
     {
-        print("bladeChoice");
         if(speed <= 20)
         {
             bladeRenderer.sprite = blade1Sprite;
@@ -580,7 +579,7 @@ public class Hook : MonoBehaviour {
                         //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                         GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                         foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
-                        foeScript.TakeDamage(arrowDamage + playerMovement.speed, gameObject, true);
+                        foeScript.TakeDamage(arrowDamage, gameObject, true);
                         StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                     }
                 }

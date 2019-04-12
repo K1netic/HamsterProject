@@ -272,7 +272,7 @@ public class Projectile : MonoBehaviour {
 
     public void End()
     {
-        if(gameObject)
+        if(gameObject != null)
             Destroy(gameObject);
     }
 }

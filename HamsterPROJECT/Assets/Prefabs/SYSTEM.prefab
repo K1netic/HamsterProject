@@ -580,6 +580,7 @@ MonoBehaviour:
   TimeHooked: 8
   lineWidth: 0.175
   timeRopeCut: 1.5
+  cutRopeSpeed: 0.25
   groundedControlForce: 15
   airControlForce: 7.5
   hookMovementForce: 55
@@ -588,11 +589,11 @@ MonoBehaviour:
   hookheadDamage: 5
   recoveryTime: 1
   flashingRate: 0.1
-  arrowDamage: 20
+  arrowDamage: 25
   laserDamage: 20
   criticalSpeed: 35
   deathRadius: 2.5
-  dashDamage: 50
+  dashDamage: 34
   lastAttackerDuration: 3
   knockBackTime: 0.5
   knockBackPlayerHit: 10
@@ -600,11 +601,12 @@ MonoBehaviour:
   knockBackShieldHit: 20
   knockBackLaser: 20
   knockBackNuke: 15
+  attackTime: 0.6
   dashTime: 0.05
   dashForce: 75
-  dashCDTime: 6
+  attackCDTime: 6
   dragEndOfDash: 15
-  dashRecoveryWithHook: 1
+  attackRecoveryWithHook: 1
   inDashStatusTime: 0.5
   lightRumble: 0.15
   mediumlightRumble: 0.3
@@ -623,6 +625,8 @@ MonoBehaviour:
   roughness: 50
   fadeIn: 0.1
   fadeOut: 0.5
+  suddenDeathSpeed: 0.02
+  suddenDeathTime: 90
 --- !u!114 &114988396421509444
 MonoBehaviour:
   m_ObjectHideFlags: 1
