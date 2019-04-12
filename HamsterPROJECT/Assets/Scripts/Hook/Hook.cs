@@ -70,20 +70,28 @@ public class Hook : MonoBehaviour {
     float knockBackForceTwoArrows;
     float knockBackPlayerHit;
     Sprite arrowSprite;
-    Sprite shieldSprite;
     Sprite hookSprite;
     SpriteRenderer spriteRenderer;
     bool switchingState;
     [SerializeField]
     public HookState currentState;
-    PolygonCollider2D[] colliders;
-    PolygonCollider2D arrowCollider;
-    PolygonCollider2D shieldCollider ;
+    
     Texture rope;
     float criticalSpeed;
     float freezeFrameDuration;
     [HideInInspector]
     public bool cantAttack;
+
+    //COMBAT SYSTEM
+    Sprite blade1Sprite;
+    Sprite blade2Sprite;
+    Sprite blade3Sprite;
+    PolygonCollider2D[] bladeColliders;
+    PolygonCollider2D blade1Collider;
+    PolygonCollider2D blade2Collider;
+    PolygonCollider2D blade3Collider;
+    SpriteRenderer bladeRenderer;
+    float attackTime;
 
     //PARTICLE
     ParticleSystem hitLittle;
@@ -116,11 +124,13 @@ public class Hook : MonoBehaviour {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
-        colliders = GetComponents<PolygonCollider2D>();
-        arrowCollider = colliders[0];
-        shieldCollider = colliders[1];
+        bladeColliders = GetComponents<PolygonCollider2D>();
+        blade1Collider = bladeColliders[2];
+        blade2Collider = bladeColliders[1];
+        blade3Collider = bladeColliders[0];
+        bladeRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-		timeHooked = balanceData.TimeHooked;
+        timeHooked = balanceData.TimeHooked;
         retractationStep = balanceData.retractationStep;
         //offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
@@ -130,11 +140,13 @@ public class Hook : MonoBehaviour {
         arrowDamage = balanceData.arrowDamage;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
+        attackTime = balanceData.attackTime;
 
         timeRemaining = timeHooked;
 
-        playerNumber = player.GetComponent<PlayerMovement>().playerNumber;
         playerMovement = player.GetComponent<PlayerMovement>();
+        playerNumber = playerMovement.playerNumber;
+        playerMovement.hookScript = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
         player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
         player.GetComponent<PlayerLifeManager>().hookScript = this;
@@ -166,7 +178,9 @@ public class Hook : MonoBehaviour {
         {
             case "0":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield1");
+                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
                 colorRope = new Color(.784f, .451f, .173f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
@@ -174,7 +188,9 @@ public class Hook : MonoBehaviour {
                 break;
             case "1":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak2");
-                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield2");
+                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
                 colorRope = new Color(.596f, .31f,.624f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
@@ -182,7 +198,9 @@ public class Hook : MonoBehaviour {
                 break;
             case "2":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak3");
-                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield3");
+                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
                 colorRope = new Color(0.310f, 0.624f, 0.318f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
@@ -190,7 +208,9 @@ public class Hook : MonoBehaviour {
                 break;
             case "3":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak4");
-                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield4");
+                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
                 colorRope = new Color(.847f, .761f, .271f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
@@ -198,7 +218,9 @@ public class Hook : MonoBehaviour {
                 break;
             case "4":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak5");
-                shieldSprite = Resources.Load<Sprite>("ArrowSprites/Shield5");
+                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
                 colorRope = new Color(.216f, .384f, .529f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
@@ -210,7 +232,6 @@ public class Hook : MonoBehaviour {
         }
         //Initialise le joueur avec la flèche
         spriteRenderer.sprite = arrowSprite;
-        arrowCollider.enabled = true;
         currentState = HookState.Arrow;
 
         //Fixe les différents layer en fonction du numéro du joueur
@@ -258,12 +279,12 @@ public class Hook : MonoBehaviour {
         //Test si le jeu est en pause
 		if (!isFrozen)
 		{
-            if (!playerMovement.lockMovement)
-                //Change entre la flèche et le bouclier
-		        if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
-			        ArrowState();
-		        }
-                UpdateArrow();
+            /*if (!playerMovement.lockMovement)
+            //Change entre la flèche et le bouclier
+            if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
+                ArrowState();
+            }*/
+            UpdateArrow();
 		}
 
         //Vérifie qu'il y a bien un projectile de créé avant d'y accéder
@@ -352,6 +373,35 @@ public class Hook : MonoBehaviour {
 		}
     }
 
+    public void BladeChoice(float speed)
+    {
+        print("bladeChoice");
+        if(speed <= 20)
+        {
+            bladeRenderer.sprite = blade1Sprite;
+            blade1Collider.enabled = true;
+        }else if(speed <= 40)
+        {
+            bladeRenderer.sprite = blade2Sprite;
+            blade2Collider.enabled = true;
+        }
+        else
+        {
+            bladeRenderer.sprite = blade3Sprite;
+            blade3Collider.enabled = true;
+        }
+        Invoke("Sheathe", attackTime);
+    }
+
+    void Sheathe()
+    {
+        bladeRenderer.sprite = null;
+        foreach (PolygonCollider2D collider in bladeColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
     void RaycastingDistanceJoint(){
         //Calcule la direction du joint pour les raycast
         jointDirection = (currentProjectile.transform.position - player.transform.position).normalized;
@@ -377,62 +427,6 @@ public class Hook : MonoBehaviour {
             transform.rotation = Quaternion.FromToRotation(Vector3.right,
 				new Vector3(playerMovement.playerInputDevice.LeftStickX.Value, playerMovement.playerInputDevice.LeftStickY.Value));
         }     
-    }
-
-    void ArrowState(){
-        manualSwitchOn = false;
-        switchingState = true;
-        switch (currentState){
-            case HookState.Arrow:
-                spriteRenderer.sprite = shieldSprite;
-                currentState = HookState.Shield;
-                arrowCollider.enabled = false;
-                shieldCollider.enabled = true;
-                switch  (playerNumber){
-                    case "_P1":
-                    gameObject.layer = 21;
-                    break;
-                    case "_P2":
-                    gameObject.layer = 22;
-                    break;
-                    case "_P3":
-                    gameObject.layer = 23;
-                    break;
-                    case "_P4":
-                    gameObject.layer = 24;
-                    break;
-                    default:
-                    break;
-                }
-                break;
-            case HookState.Shield:
-                spriteRenderer.sprite = arrowSprite;
-                currentState = HookState.Arrow;
-                arrowCollider.enabled = true;
-                shieldCollider.enabled = false;
-                switch  (playerNumber){
-                    case "_P1":
-                    gameObject.layer = 17;
-                    break;
-                    case "_P2":
-                    gameObject.layer = 18;
-                    break;
-                    case "_P3":
-                    gameObject.layer = 19;
-                    break;
-                    case "_P4":
-                    gameObject.layer = 20;
-                    break;
-                    default:
-                    break;
-                }
-                break;
-            default:
-                break;
-            }
-        AudioManager.instance.PlaySound("switchWeapon", playerNumber+"Arrow");
-        //Empeche l'input d'être répété trop vite
-        Invoke("ResetCDSwitch",0.1f);
     }
 
     void UpdateRope(){

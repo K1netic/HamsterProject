@@ -214,7 +214,7 @@ public class Projectile : MonoBehaviour {
         {
             switch (collision.gameObject.tag)
             {
-                case "Player":
+                /*case "Player":
                     //Inflige des dégâts et détruit le projectile s'il touche un player
                     if (!hook.cantAttack)
                     {
@@ -233,7 +233,7 @@ public class Projectile : MonoBehaviour {
                         hook.VibrationOnProjectileDestroyed();
                         Destruction();
                     }
-                    break;
+                    break;*/
                 case "Hook":
                     Instantiate(hitHook, transform.position, transform.rotation);
                     hook.VibrationOnProjectileDestroyed();

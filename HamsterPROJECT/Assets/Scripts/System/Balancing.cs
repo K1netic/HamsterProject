@@ -47,12 +47,13 @@ public class Balancing : MonoBehaviour {
     public float knockBackLaser = 10;
     public float knockBackNuke = 15;
 
-    [Header("Dash")]
-    public float dashTime;
+    [Header("ATTACK")]
+    public float attackTime;
+    public float dashTime = 0.05f;
     public float dashForce;
-    public float dashCDTime;
+    public float attackCDTime;
     public float dragEndOfDash = 20;
-    public bool dashRecoveryWithHook;
+    public bool attackRecoveryWithHook;
     public float inDashStatusTime = .5f;
 
     [Header("VIBRATIONS")]

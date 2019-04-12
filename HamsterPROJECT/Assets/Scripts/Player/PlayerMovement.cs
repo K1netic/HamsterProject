@@ -54,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     float inDashStatusTime;
     GameObject dashRecovery;
     GameObject dashReadyEffect;
+    [HideInInspector]
+    public Hook hookScript;
 
     //DashEffect gradient
     Gradient dashEffectGradient = new Gradient();
@@ -78,9 +80,9 @@ public class PlayerMovement : MonoBehaviour
         airControlForce = balanceData.airControlForce;
         dashTime = balanceData.dashTime;
         dashForce = balanceData.dashForce;
-        dashCDTime = balanceData.dashCDTime;
+        dashCDTime = balanceData.attackCDTime;
         dragEndOfDash = balanceData.dragEndOfDash;
-        dashRecoveryWithHook = balanceData.dashRecoveryWithHook;
+        dashRecoveryWithHook = balanceData.attackRecoveryWithHook;
         inDashStatusTime = balanceData.inDashStatusTime;
 
         rigid = this.GetComponent<Rigidbody2D> ();
@@ -198,6 +200,7 @@ public class PlayerMovement : MonoBehaviour
                 dashReadyEffect.SetActive(false);
                 dashInCD = true;
                 lockMovementDash = true;
+                hookScript.BladeChoice(speed);
                 StartCoroutine("DoDash");
             }
         }
