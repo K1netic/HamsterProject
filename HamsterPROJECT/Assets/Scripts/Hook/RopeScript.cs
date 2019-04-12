@@ -46,7 +46,6 @@ public class RopeScript : MonoBehaviour {
         lr.GetComponent<Renderer>().material.shader = Shader.Find("Particles/Alpha Blended");
         lr.GetComponent<Renderer>().material.color = Color.black;// couleur du matérial
         ropeText = Resources.Load<Texture>("ArrowSprites/Rope");
-
         lr.startWidth = lineWidth;
         lr.endWidth = lineWidth;
         lr.material.SetTexture("_MainTex", ropeText);

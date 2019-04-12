@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     //DashEffect gradient
     Gradient dashEffectGradient = new Gradient();
     GradientColorKey[] colorDashEffect = new GradientColorKey[2];
-    GradientAlphaKey[] alphaDashEffect = new GradientAlphaKey[4];
+    GradientAlphaKey[] alphaDashEffect = new GradientAlphaKey[2];
     ParticleSystem.ColorOverLifetimeModule dashEffectColorLifeTime;
     ParticleSystem.MainModule dashEffectColor;
 
@@ -142,14 +142,10 @@ public class PlayerMovement : MonoBehaviour
                 print("Default case switch start PlayerLifeManager.cs");
                 break;
         }
-        alphaDashEffect[0].alpha = .9f;
+        alphaDashEffect[0].alpha = 1;
         alphaDashEffect[0].time = 0;
         alphaDashEffect[1].alpha = 1;
-        alphaDashEffect[1].time = .13f;
-        alphaDashEffect[2].alpha = 1;
-        alphaDashEffect[2].time = .26f;
-        alphaDashEffect[3].alpha = .9f;
-        alphaDashEffect[3].time = 1;
+        alphaDashEffect[1].time = 1;
         colorDashEffect[0].color = new Color(1, 1, 1);
         colorDashEffect[0].time = 0;
         colorDashEffect[1].time = 1;
