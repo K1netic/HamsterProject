@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class Balancing : MonoBehaviour {
 
-    /*[Header("ITEM")]
-    public float timeCDItem = 1f;
-    public float bonusCroquettes;
-    public float timeBonusCroquettes;
-    public float gravityWithParachute;
-    public float timeWithParachute;*/
-
     [Header("HOOK")]
     public float speedHookhead;
     public float retractationStep;
-    public float offsetHook;
     public float timeBtwShots;
 	public float TimeHooked = 8f;
     public float lineWidth = 0.05f;
@@ -29,31 +21,27 @@ public class Balancing : MonoBehaviour {
 
     [Header("DAMAGE & LIFE")]
     public float playerMaxHP = 100;
-    public float hookheadDamage = 5;
     public float recoveryTime = 1.5f;
     public float flashingRate = .1f;
     public float arrowDamage = 10;
     public float laserDamage = 10;
     public float criticalSpeed = 35;
-    public float deathRadius = 2.5f;
-    public float dashDamage = 50;
     public float lastAttackerDuration = 3f;
 
-    [Header("Knockback")]
+    [Header("KNOCKBACK")]
     public float knockBackTime = 0.5f;
-    public float knockBackPlayerHit = 5;
-    public float maxKnockBackPlayerHit = 40f;
-    public float knockBackShieldHit = 10;
-    public float knockBackLaser = 10;
-    public float knockBackNuke = 15;
+    public float knockBackBlade1 = 10;
+    public float knockBackBlade2 = 15;
+    public float knockBackBlade3 = 20;
+    public float knockBackLaser = 20;
 
     [Header("ATTACK")]
+    public bool attackRecoveryWithHook;
     public float attackTime;
     public float dashTime = 0.05f;
     public float dashForce;
     public float attackCDTime;
     public float dragEndOfDash = 20;
-    public bool attackRecoveryWithHook;
     public float inDashStatusTime = .5f;
 
     [Header("VIBRATIONS")]

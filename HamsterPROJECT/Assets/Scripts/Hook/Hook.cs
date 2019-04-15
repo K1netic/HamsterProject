@@ -5,84 +5,74 @@ using UnityEditor;
 
 public class Hook : MonoBehaviour {
 
-    [SerializeField]
-    bool manualSwitchOn;
-
-    
+    public enum CurrentBlade
+    {
+        none, blade1, blade2, blade3,
+    }
 
     Balancing balanceData;
 
-    //JOINT
-    DistanceJoint2D joint;
-    bool jointNotCreated = true;
+    //PLAYER
     [HideInInspector]
     public PlayerMovement playerMovement;
-    float retractationStep;
+    PlayerLifeManager lifeManager;
+    string playerNumber;    
+
+    //JOINT
     [SerializeField]
     public LayerMask layerMaskRaycast;//Layer qui bloque le changement de la distance max du joint
-    //[SerializeField]
-    //public LayerMask layerMaskArrow;//Layer qui gère les collisions de la flèche dans DontGoThroughThings (anciennement utilisé pour le raycast de la flèche)
+    [HideInInspector]
+    public bool hooked;
+    DistanceJoint2D joint;
+    bool jointNotCreated = true;
+    float retractationStep;
 	float timeHooked;
 	float timeRemaining;
+    float timeBeforeDestroy;
     Vector3 jointDirection;
     RaycastHit2D checkOppositeToJoint;
     RaycastHit2D checkToJoint ;
-    public LayerMask layerMaskLineCast;
-    float initialDistance;
-    [HideInInspector]
-    public bool hooked;
-    Projectile stockedProjectileScript;
-    float timeBeforeDestroy;
 
-    //AIM
-    //float offset;
-    public GameObject player;
-	private Vector2 screenPoint;
+    //ROPE
     [HideInInspector]
     public LineRenderer line;
+    [HideInInspector]
+    public bool ropeCut;
     BoxCollider2D lineCollider;
+    Vector3 startPos;
+    Vector3 endPos;
+    Texture rope;
+    //COLOR
+    Color colorRope;
+    float t;
+
+    //AIM
+    public GameObject player;
+	Vector2 screenPoint;
     Vector3 shootPos;
 
 	//SHOT
     [SerializeField]
 	GameObject projectile;
-    float timeBtwShots;
-    private bool hookInCD;
     [HideInInspector]
     public GameObject currentProjectile;
-    string playerNumber;
+    float timeBtwShots;
+    bool hookInCD;
+    Sprite hookheadSprite;
     Projectile projectileScript;
-    Vector3 startPos;
-    Vector3 endPos;
-    [HideInInspector]
-    public bool ropeCut;
+    Projectile stockedProjectileScript;
 
-    //ARROW 
-    float knockBackTime;
-    float knockBackShieldHit;
-    float arrowDamage;
-    Vector2 start1;
-    Vector2 start2;
-    Vector2 end;
-    RaycastHit2D arrowEdge1;
-    RaycastHit2D arrowEdge2;
-    bool damageAlreadyApplied;
-    float knockBackForceTwoArrows;
-    float knockBackPlayerHit;
+    //ARROW
     Sprite arrowSprite;
-    Sprite hookSprite;
     SpriteRenderer spriteRenderer;
-    bool switchingState;
-    [SerializeField]
-    public HookState currentState;
-    
-    Texture rope;
-    float criticalSpeed;
-    float freezeFrameDuration;
-    [HideInInspector]
-    public bool cantAttack;
 
     //COMBAT SYSTEM
+    [HideInInspector]
+    public LayerMask layerMaskLineCast;//Layer qui gère la détection des autres flèches
+    [HideInInspector]
+    public bool cantAttack;
+    [HideInInspector]
+    public CurrentBlade currentBlade;
     Sprite blade1Sprite;
     Sprite blade2Sprite;
     Sprite blade3Sprite;
@@ -92,51 +82,39 @@ public class Hook : MonoBehaviour {
     PolygonCollider2D blade3Collider;
     SpriteRenderer bladeRenderer;
     float attackTime;
+    float criticalSpeed;
+    float knockBackTime;
+    float arrowDamage;
+    float knockBackBlade1;
+    float knockBackBlade2;
+    float knockBackBlade3;
+    bool doubleFXprotection;
 
     //PARTICLE
     ParticleSystem hitLittle;
     ParticleSystem hitHard;
 
-    //COLOR
-    Color colorRope;
-	float t;
-
-	// Pause menu
+	//PAUSE MENU
 	public bool isFrozen = false;
-    private bool doubleFXprotection;
-
-    PlayerLifeManager lifeManager;
 
     private void Awake()
     {
         //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
         joint = player.AddComponent<DistanceJoint2D>();
         joint.enabled = false;
-    }
-
-    public enum HookState
-    {
-        Arrow, Shield
-    }   
+    } 
 
     // Use this for initialization
     void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
-
-        bladeColliders = GetComponents<PolygonCollider2D>();
-        blade1Collider = bladeColliders[2];
-        blade2Collider = bladeColliders[1];
-        blade3Collider = bladeColliders[0];
-        bladeRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
-
         timeHooked = balanceData.TimeHooked;
         retractationStep = balanceData.retractationStep;
-        //offset = balanceData.offsetHook;
         timeBtwShots = balanceData.timeBtwShots;
         knockBackTime = balanceData.knockBackTime;
-        knockBackShieldHit = balanceData.knockBackShieldHit;
-        knockBackPlayerHit = balanceData.knockBackPlayerHit;
+        knockBackBlade1 = balanceData.knockBackBlade1;
+        knockBackBlade2 = balanceData.knockBackBlade2;
+        knockBackBlade3 = balanceData.knockBackBlade3;
         arrowDamage = balanceData.arrowDamage;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
@@ -144,6 +122,12 @@ public class Hook : MonoBehaviour {
 
         timeRemaining = timeHooked;
 
+        //Récupère tout les éléments du gameObject
+        bladeColliders = GetComponents<PolygonCollider2D>();
+        blade1Collider = bladeColliders[2];
+        blade2Collider = bladeColliders[1];
+        blade3Collider = bladeColliders[0];
+        bladeRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
         playerMovement = player.GetComponent<PlayerMovement>();
         playerNumber = playerMovement.playerNumber;
         playerMovement.hookScript = this;
@@ -151,6 +135,7 @@ public class Hook : MonoBehaviour {
         player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
         player.GetComponent<PlayerLifeManager>().hookScript = this;
 
+        //Crée le line renderer et le configure
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
         line.startWidth = balanceData.lineWidth;// la largeur de la ligne
@@ -164,7 +149,7 @@ public class Hook : MonoBehaviour {
         rope = Resources.Load<Texture>("ArrowSprites/Rope");
         line.material.SetTexture("_MainTex", rope);
         
-        //Ajoutet un collider à la corde ainsi que le script qui permet de la couper
+        //Ajoute un collider à la corde ainsi que le script qui permet de la couper
         line.gameObject.AddComponent<BoxCollider2D>();
         line.gameObject.AddComponent<LineCutter>();
         line.gameObject.GetComponent<LineCutter>().hook = this;
@@ -181,7 +166,7 @@ public class Hook : MonoBehaviour {
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
-                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
+                hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
                 colorRope = new Color(.784f, .451f, .173f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
@@ -191,7 +176,7 @@ public class Hook : MonoBehaviour {
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
-                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
+                hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
                 colorRope = new Color(.596f, .31f,.624f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
@@ -201,7 +186,7 @@ public class Hook : MonoBehaviour {
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
-                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
+                hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
                 colorRope = new Color(0.310f, 0.624f, 0.318f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
@@ -211,7 +196,7 @@ public class Hook : MonoBehaviour {
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
-                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
+                hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
                 colorRope = new Color(.847f, .761f, .271f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
@@ -221,7 +206,7 @@ public class Hook : MonoBehaviour {
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
-                hookSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
+                hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
                 colorRope = new Color(.216f, .384f, .529f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
@@ -230,42 +215,36 @@ public class Hook : MonoBehaviour {
                 print("Default case switch start Hook.cs");
             break;
         }
-        //Initialise le joueur avec la flèche
+        //Initialise le joueur avec la flèche et sans lame
         spriteRenderer.sprite = arrowSprite;
-        currentState = HookState.Arrow;
+        Sheathe();
 
         //Fixe les différents layer en fonction du numéro du joueur
         switch  (playerNumber){
             case "_P1":
                 line.gameObject.layer = 17;
                 gameObject.layer = 17;
-                //layerMaskArrow = (1 << 9) | (1<< 10) | (1<<11) | (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
                 layerMaskLineCast = (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
                 break;
             case "_P2":
                 line.gameObject.layer = 18;
                 gameObject.layer = 18;
-                //layerMaskArrow = (1 << 8) | (1 << 10) | (1 << 11) | (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
                 layerMaskLineCast = (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
                 break;
             case "_P3":
                 line.gameObject.layer = 19;
                 gameObject.layer = 19;
-                //layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 11) | (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
                 layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
                 break;
             case "_P4":
                 line.gameObject.layer = 20;
                 gameObject.layer = 20;
-                //layerMaskArrow = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
                 layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
                 break;
             default:
                 print("Default case switch start Hook.cs");
             break;
         }
-        /*GetComponent<ShieldCollider>().layerMaskRaycast = layerMaskArrow;
-        GetComponent<DontGoThroughThings>().layerMask = layerMaskArrow;*/
     }
 	
 	// Update is called once per frame
@@ -279,11 +258,6 @@ public class Hook : MonoBehaviour {
         //Test si le jeu est en pause
 		if (!isFrozen)
 		{
-            /*if (!playerMovement.lockMovement)
-            //Change entre la flèche et le bouclier
-            if ((playerMovement.playerInputDevice.LeftBumper.WasPressed && !switchingState) || manualSwitchOn){
-                ArrowState();
-            }*/
             UpdateArrow();
 		}
 
@@ -291,7 +265,7 @@ public class Hook : MonoBehaviour {
         if (currentProjectile != null)
         {
             UpdateRope();
-            hooked = projectileScript.hooked;
+            //hooked = projectileScript.hooked; VERIF SI PAS CASSE
 
             //Test si le grappin est aggripé
             if (projectileScript.hooked)
@@ -344,7 +318,6 @@ public class Hook : MonoBehaviour {
         }
 
         //Test si le joueur appuye sur le bouton du grappin et que le grappin n'est pas en CD
-
 		if ((playerMovement.playerInputDevice.Action1.WasPressed 
 			|| playerMovement.playerInputDevice.Action2.WasPressed
 			|| playerMovement.playerInputDevice.Action3.WasPressed
@@ -373,27 +346,33 @@ public class Hook : MonoBehaviour {
 		}
     }
 
+    //Déploie la lame qui correspond à la vitesse au début de l'attaque
     public void BladeChoice(float speed)
     {
         if(speed <= 20)
         {
             bladeRenderer.sprite = blade1Sprite;
             blade1Collider.enabled = true;
-        }else if(speed <= 40)
+            currentBlade = CurrentBlade.blade1;
+        }
+        else if(speed <= 40)
         {
             bladeRenderer.sprite = blade2Sprite;
             blade2Collider.enabled = true;
+            currentBlade = CurrentBlade.blade2;
         }
         else
         {
             bladeRenderer.sprite = blade3Sprite;
             blade3Collider.enabled = true;
+            currentBlade = CurrentBlade.blade1;
         }
         Invoke("Sheathe", attackTime);
     }
 
     void Sheathe()
     {
+        currentBlade = CurrentBlade.none;
         bladeRenderer.sprite = null;
         foreach (PolygonCollider2D collider in bladeColliders)
         {
@@ -416,11 +395,6 @@ public class Hook : MonoBehaviour {
         //S'assure que la position de la fléche et toujours aligné sur celle du player
         transform.position = player.transform.position;
 
-        /*screenPoint.x = (Input.GetAxis("Horizontal" + playerNumber));
-        screenPoint.y = (Input.GetAxis("Vertical" + playerNumber));
-        float rotZ = Mathf.Atan2(screenPoint.y, screenPoint.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);*/
-
         //Gère l'orientation de la flèche en fonction de l'input du player
 		if(playerMovement.playerInputDevice.LeftStickX.Value != 0 || playerMovement.playerInputDevice.LeftStickY.Value != 0){
             transform.rotation = Quaternion.FromToRotation(Vector3.right,
@@ -431,7 +405,6 @@ public class Hook : MonoBehaviour {
     void UpdateRope(){
         //Aligne la position de la corde sur le player et la tete de grappin
         line.SetPosition(0, player.transform.position);
-        //line.SetPosition(1, projectileScript.pivot);
         startPos = line.GetPosition(0);
         endPos = line.GetPosition(1);
 
@@ -445,11 +418,11 @@ public class Hook : MonoBehaviour {
         line.GetComponent<LineRenderer>().material.mainTextureScale = new Vector2(scaleX, 1f);
     }
 
+    //Active le grappin
     void CreateJoint(){
         if (playerMovement.dashRecoveryWithHook)
             playerMovement.ResetDashCD();
         t = 0;
-        //player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = true;
         joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
         joint.distance = Vector3.Distance(currentProjectile.transform.position, player.transform.position);
@@ -457,8 +430,8 @@ public class Hook : MonoBehaviour {
         jointNotCreated = false;
     }
 
+    //Gère le timer du grappin et le changement de couleur de la corde
     void TimerRope(){
-        //Gère le timer du grappin et le changement de couleur de la corde
         timeRemaining -= Time.deltaTime;
         if(timeRemaining <= timeHooked/2)
             t += (Time.deltaTime / timeRemaining)/2;
@@ -466,14 +439,15 @@ public class Hook : MonoBehaviour {
         line.endColor = Color.Lerp(colorRope, Color.black,t);
     }
 
+    //Active la corde (line renderer) et instancie une tête de grappin
     private void ThrowHookhead(){
-        //Active la corde (line renderer) et instancie une tête de grappin
         line.startColor = colorRope;
         line.endColor = colorRope;
         line.gameObject.SetActive(true);
         line.SetPosition(0, player.transform.position);
+
         currentProjectile = Instantiate(projectile, transform.position, transform.rotation);
-        currentProjectile.GetComponent<SpriteRenderer>().sprite = hookSprite;
+        currentProjectile.GetComponent<SpriteRenderer>().sprite = hookheadSprite;
         projectileScript = currentProjectile.GetComponent<Projectile>();
         shootPos = transform.GetChild(0).GetComponent<Transform>().position;
         projectileScript.direction = (shootPos - transform.position).normalized;
@@ -501,7 +475,6 @@ public class Hook : MonoBehaviour {
     public void DisableRope(bool cut){
         StartCoroutine("ResetHookCD");
         playerMovement.StateNotHooked();
-        //player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezeRotation;
         joint.enabled = false;
         if (!cut)
         {
@@ -548,56 +521,40 @@ public class Hook : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D collision){
-        //Arrow - Arrow
-        if(currentState == HookState.Arrow)
+        if (!cantAttack)
         {
-            if (!cantAttack)
-            {
-                //Si c'est une fleche qui est touché on applique un knockback dépendant de la nature de la flèche (arrow ou shield)
-                if (collision.gameObject.CompareTag("Arrow"))
-                {
-                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                    ArrowHit(collision);
-                    HitFX(collision.GetContact(0).point, collision.gameObject);
-                }
-                //Si le joueur est touché des dégâts lui sont appliqués en les modifiant selon la vitesse de l'attaquant
-                else if (collision.gameObject.CompareTag("Player"))
-                {
-                    RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
-                    if (collisionFail.collider != null)
-                    {
-                        if (collisionFail.collider.gameObject.CompareTag("Arrow"))
-                        {
-                            GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                            ArrowHit(collisionFail.collider);
-                            HitFX(collisionFail.point, collisionFail.collider.gameObject);
-                        }
-                    }
-                    else
-                    {
-                        PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
-                        //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                        GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                        foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
-                        foeScript.TakeDamage(arrowDamage, gameObject, true);
-                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
-                    }
-                }
-            }
-        }
-        else
-        {//Shield - Shield
+            //Si c'est une fleche qui est touché on applique un knockback
             if (collision.gameObject.CompareTag("Arrow"))
             {
-                if(collision.gameObject.GetComponent<Hook>().currentState == HookState.Shield)
+                GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                ArrowHit(collision);
+                HitFX(collision.GetContact(0).point, collision.gameObject);
+            }
+            //Si le joueur est touché des dégâts lui sont appliqués
+            //Mais avant on vérifie si la collision n'a pas eu de problème en envoyant un raycast entre les deux joueurs pour voir s'il n'y a pas la flèche du défenseur qui était censé bloquer
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
+                if (collisionFail.collider != null)
                 {
-                    DoubleShieldCollide(collision);
-                    HitFX(collision.GetContact(0).point, collision.gameObject);
-                    AudioManager.instance.PlaySound("doubleShieldContact", playerNumber + "Arrow");
+                    if (collisionFail.collider.gameObject.CompareTag("Arrow"))
+                    {
+                        GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                        ArrowHit(collisionFail.collider);
+                        HitFX(collisionFail.point, collisionFail.collider.gameObject);
+                    }
+                }
+                else
+                {
+                    PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                    //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
+                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                    foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
+                    foeScript.TakeDamage(arrowDamage, gameObject, true);
+                    StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                 }
             }
         }
-        
     }
 
     public IEnumerator ResetBoolAttack()
@@ -620,8 +577,7 @@ public class Hook : MonoBehaviour {
                 Instantiate(hitLittle, position, transform.rotation);
             }
             Invoke("CancelFXProtection", .1f);
-        }
-           
+        }  
     }
 
     void CancelFXProtection()
@@ -629,73 +585,61 @@ public class Hook : MonoBehaviour {
         doubleFXprotection = false;
     }
 
-    void DoubleShieldCollide(Collision2D collision)
-    {
-        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-
-        playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
-        Invoke("UnlockMovement", knockBackTime);
-    }
-
+    //Deux flèches se touche, on applique un knockback en fonction de la flèche de l'autre joueur
     void ArrowHit(Collision2D collision)
     {
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
-        switch (collision.gameObject.GetComponent<Hook>().currentState)
+        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+        switch (collision.gameObject.GetComponent<Hook>().currentBlade)
         {
-            case HookState.Arrow:
-                // Collision Arrow - Arrow 
-                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-                AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
+            case CurrentBlade.none:
+                print("You are not suppossed to be there ! How do you came ?!");
                 break;
-            case HookState.Shield:
-                // Collision Arrow - Shield 
-                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
-                AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
+            case CurrentBlade.blade1:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                break;
+            case CurrentBlade.blade2:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                break;
+            case CurrentBlade.blade3:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                 break;
             default:
+                print("Impossible, you just CAN'T be there !");
                 break;
         }
+        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+        AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
         Invoke("UnlockMovement", knockBackTime);
     }
-
     void ArrowHit(Collider2D collision)
     {
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
-        switch (collision.gameObject.GetComponent<Hook>().currentState)
+        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+        switch (collision.gameObject.GetComponent<Hook>().currentBlade)
         {
-            case HookState.Arrow:
-                // Collision Arrow - Arrow 
-                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-                AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
+            case CurrentBlade.none:
+                print("You are not suppossed to be there ! How do you came ?!");
                 break;
-            case HookState.Shield:
-                // Collision Arrow - Shield 
-                AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackShieldHit, ForceMode2D.Impulse);
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowShield", playerMovement.playerInputDevice)));
-                AudioManager.instance.PlaySound("arrowHitShield", playerNumber + "Arrow");
+            case CurrentBlade.blade1:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                break;
+            case CurrentBlade.blade2:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                break;
+            case CurrentBlade.blade3:
+                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                 break;
             default:
+                print("Impossible, you just CAN'T be there !");
                 break;
         }
+        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+        AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
         Invoke("UnlockMovement", knockBackTime);
     }
 
@@ -710,10 +654,6 @@ public class Hook : MonoBehaviour {
     void UnlockMovement()
     {
         playerMovement.lockMovement = false;
-    }
-
-    void ResetCDSwitch(){
-        switchingState = false;
     }
 
 	public void VibrationOnProjectileDestroyed()

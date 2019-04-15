@@ -5,45 +5,46 @@ using UnityEngine.UI;
 
 public class PlayerLifeManager : MonoBehaviour {
 
-	[SerializeField]
-	GameObject lifeParticlesManager;
-	LifeParticlesManager lifeParticlesManagerScript;
-
     Balancing balanceData;
+
+    //Player's informations
+    [HideInInspector]
+    public SpriteRenderer spriteArrow;
     [HideInInspector]
     public Hook hookScript;
     PlayerMovement playerMovement;
-	[HideInInspector]
+    SpriteRenderer sprite;
+
+    //Combat system
+    [HideInInspector]
     public float playerHP;
     [HideInInspector]
     public bool inRecovery;
     float recoveryTime;
     float flashingRate;
-    SpriteRenderer sprite;
-    [HideInInspector]
-    public SpriteRenderer spriteArrow;
     float knockBackTime;
-    float knockBackPlayerHit;
     float knockBackLaser;
+    float knockBackBlade1;
+    float knockBackBlade2;
+    float knockBackBlade3;
     float laserDamage;
-	TrailRenderer trail;
     float criticalSpeed;
     float arrowDamage;
-    bool doubleFXprotection;
-    bool doubleFXprotectionLaser;
-    float knockBackNuke;
-    float deathRadius;
-    Collider2D[] deathOverlap = new Collider2D[3];
-    float freezeFrameDuration;
-    float dashDamage;
-    float maxKnockBackPlayerHit;
+
+    //Last attacker
     public string lastAttacker = null;
     float lastAttackerDuration;
+
+    //FX
+    [SerializeField]
+    GameObject lifeParticlesManager;
+    LifeParticlesManager lifeParticlesManagerScript;
     ParticleSystem deathParticle;
     ParticleSystem hitLittle;
     ParticleSystem hitHard;
     ParticleSystem hitLaser;
-
+    bool doubleFXprotection;
+    bool doubleFXprotectionLaser;
 
     //Wounded animation
     Color startColor = new Color(1, 1, 1, 1);
@@ -53,15 +54,15 @@ public class PlayerLifeManager : MonoBehaviour {
     Material startMaterial;
     Material woundedMaterial;
 
-    //Trail gradient
+    //Trail
+    TrailRenderer trail;
     Gradient trailGradient = new Gradient();
     GradientColorKey[] colorTrail = new GradientColorKey[2];
     GradientAlphaKey[] alphaTrail = new GradientAlphaKey[2];
 
-    // Makes sure Dead function is only called once at a time
-    bool deadLimiter = false;
-
-	FeedbacksOnDeath FbOnDeath;
+    //Death
+    bool deadLimiter = false;// Makes sure Dead function is only called once at a time
+    FeedbacksOnDeath FbOnDeath;
 
     // Use this for initialization
     void Start () {
@@ -72,29 +73,26 @@ public class PlayerLifeManager : MonoBehaviour {
         recoveryTime = balanceData.recoveryTime;
         flashingRate = balanceData.flashingRate;
         knockBackTime = balanceData.knockBackTime;
-        knockBackPlayerHit = balanceData.knockBackPlayerHit;
         knockBackLaser= balanceData.knockBackLaser;
-        laserDamage= balanceData.laserDamage;
+        knockBackBlade1 = balanceData.knockBackBlade1;
+        knockBackBlade2 = balanceData.knockBackBlade2;
+        knockBackBlade3 = balanceData.knockBackBlade3;
+        laserDamage = balanceData.laserDamage;
         criticalSpeed = balanceData.criticalSpeed;
         arrowDamage = balanceData.arrowDamage;
-        knockBackNuke = balanceData.knockBackNuke;
-        deathRadius = balanceData.deathRadius;
-        dashDamage = balanceData.dashDamage;
-        maxKnockBackPlayerHit = balanceData.maxKnockBackPlayerHit;
         lastAttackerDuration = balanceData.lastAttackerDuration;
 
         playerMovement = GetComponent<PlayerMovement>();
-
         trail = GetComponent<TrailRenderer>();
-		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();
-        
-        sprite = GetComponent<SpriteRenderer>();
-        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
+		lifeParticlesManagerScript = lifeParticlesManager.GetComponent<LifeParticlesManager>();        
+        sprite = GetComponent<SpriteRenderer>();        
         startMaterial = sprite.material;
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
 
-        //Switch gérant la couleur de la trail et les couleurs des particules
+        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
+
+        //Switch gérant la couleur de la trail et la couleur des particules
         switch (sprite.sprite.name)
         {
             case "0":
@@ -174,17 +172,19 @@ public class PlayerLifeManager : MonoBehaviour {
     //1er arg : les dégats qui vont être appliqués
     //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
     //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
+    //4 et 5 servent pour le knockback avec les lasers
     public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3), bool inverseDir = default(bool))
     {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
+            //Empêche au joueur d'infliger des dégâts pendant 0.5 secondes après s'en être prit
             hookScript.cantAttack = true;
             inRecovery = true;
             StartCoroutine(hookScript.ResetBoolAttack());
             if (knockBack)
             {
-                if (hookScript.hooked && !attacker.CompareTag("Hook"))
+                if (hookScript.hooked)
                 {
                     hookScript.DisableRope(false);
                 }
@@ -199,22 +199,26 @@ public class PlayerLifeManager : MonoBehaviour {
                 //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
                 switch (attacker.tag)
                 {
-                    //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts il faut prendre en compte la vitesse de l'attaquant pour moduler la force du knockback
+                    //Si c'est la flèche d'un autre joueur qui est à l'origine des dégâts on applique un knockback dépendant de sa lame
                     case "Arrow":
-                        if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
-                        {//Le joueur qui attaque était en dash, on applique alors le knockback en conséquence
-                            playerMovement.rigid.AddForce(directionKnockBack * maxKnockBackPlayerHit, ForceMode2D.Impulse);
-                        }
-                        else
+                        switch (attacker.GetComponent<Hook>().currentBlade)
                         {
-                            float knockbackPower = attacker.GetComponent<Hook>().playerMovement.speed / 2;
-                            knockbackPower = Mathf.Clamp(knockbackPower, 10f, maxKnockBackPlayerHit);
-                            playerMovement.rigid.AddForce(directionKnockBack * (knockBackPlayerHit
-                                                    + knockbackPower), ForceMode2D.Impulse);
+                            case Hook.CurrentBlade.none:
+                                print("You are not suppossed to be there ! How do you came ?!");
+                                break;
+                            case Hook.CurrentBlade.blade1:
+                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                                break;
+                            case Hook.CurrentBlade.blade2:
+                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                                break;
+                            case Hook.CurrentBlade.blade3:
+                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+                                break;
+                            default:
+                                print("Impossible, you just CAN'T be there !");
+                                break;
                         }
-                        break;
-                    case "Hook":
-                        playerMovement.rigid.AddForce(directionKnockBack * knockBackPlayerHit, ForceMode2D.Impulse);
                         break;
                     case "LaserEdge":
                         LaserColliderDetection laserScript = attacker.GetComponent<LaserColliderDetection>();
@@ -245,7 +249,6 @@ public class PlayerLifeManager : MonoBehaviour {
                     default:
                         break;
                 }
-                //StartCoroutine(DoKnockBack(attacker));
             }
 
             //Attribution des dégâts
@@ -253,28 +256,12 @@ public class PlayerLifeManager : MonoBehaviour {
             if (attacker.CompareTag("Arrow"))
             {
                 lastAttacker = attacker.GetComponent<Hook>().playerMovement.playerNumber;
-                if (attacker.GetComponent<Hook>().playerMovement.lockMovementDash)
-                {//Le joueur qui attaque était en dash, on applique alors les dégats en conséquence
-                    playerHP -= dashDamage;
-                    woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
-                    AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
-                }
-                else
-                {
-                    playerHP -= damage;
-                    woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
-                    if(damage - arrowDamage > criticalSpeed)
-                        AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
-                    else
-                        AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
-                }
-            }
-            else if(attacker.CompareTag("Hook"))
-            {
-                lastAttacker = attacker.GetComponent<Projectile>().hook.GetComponent<Hook>().playerMovement.playerNumber;
                 playerHP -= damage;
-                woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
-                AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
+                if(attacker.GetComponent<Hook>().currentBlade == Hook.CurrentBlade.blade3)
+                    AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
+                else
+                    AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
             }
             else
             {
@@ -286,10 +273,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
 
             //Rend le player invulnérable pendant recoveryTime secondes
-            if (attacker.CompareTag("Hook"))
-                Invoke("ResetRecovery",recoveryTime/2);//Divise par deux si c'est la tête de grappin qui blesse le player
-            else
-                Invoke("ResetRecovery", recoveryTime);
+            Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
             InvokeRepeating("Flashing", 0, flashingRate);
 
@@ -361,7 +345,6 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             Invoke("CancelFXProtection", .1f);
         }
-
     }
 
     void CancelFXProtection()
@@ -514,25 +497,16 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void Flashing()
 	{ 
-		//trail.enabled = !trail.enabled;
-        //sprite.enabled = !sprite.enabled;
-        //spriteArrow.enabled = !spriteArrow.enabled;
         if (wounded)
         {
             sprite.material = startMaterial;
             spriteArrow.material = startMaterial;
-            /*sprite.color = startColor;
-            spriteArrow.color = startColor;
-            trail.colorGradient = startGradient;*/
             wounded = false;
         }
         else
         {
             sprite.material = woundedMaterial;
             spriteArrow.material = woundedMaterial;
-            /* sprite.color = woundedColor;
-             spriteArrow.color = woundedColor;
-             trail.colorGradient = woundedGradient;*/
             wounded = true;
         }
     }
@@ -544,13 +518,6 @@ public class PlayerLifeManager : MonoBehaviour {
         inRecovery = false;
         sprite.material = startMaterial;
         spriteArrow.material = startMaterial;
-        /*sprite.enabled = true;
-        trail.enabled = true;
-        spriteArrow.enabled = true;
-        trail.colorGradient = startGradient;
-        sprite.color = startColor;
-        spriteArrow.color = startColor;*/
-
     }
 
     void Dead()
@@ -563,30 +530,10 @@ public class PlayerLifeManager : MonoBehaviour {
 
         //Nuke
         Instantiate(deathParticle, transform.position, transform.rotation);
-        /*deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
-        foreach (Collider2D player in deathOverlap)
-        {
-            if (player.gameObject.CompareTag("Player"))
-            {
-                player.gameObject.GetComponent<PlayerLifeManager>().NukeKnockBack(transform.position);
-            }
-        }*/
 
 		FbOnDeath.SendFeedbacks (playerMovement.playerInputDevice, transform.parent.name.Substring(0, 1));
 
         Destroy(transform.parent.gameObject);
-    }
-
-    public void NukeKnockBack(Vector3 position)
-    {
-        //Bloque le mouvement du joueur pour ne pas override le knockback
-        playerMovement.lockMovement = true;
-        //Calcul la direction du knockback
-        Vector2 directionKnockBack = -(position - transform.position).normalized;
-        //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-        playerMovement.rigid.velocity = Vector3.zero;
-        Invoke("UnlockMovement", knockBackTime);
-        playerMovement.rigid.AddForce(directionKnockBack * knockBackNuke, ForceMode2D.Impulse);
     }
 
 	IEnumerator CancelVibration(float delay)
