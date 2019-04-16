@@ -34,7 +34,7 @@ public class ShieldCollider : MonoBehaviour {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
-        knockBackShieldHit = balanceData.knockBackShieldHit;
+        //knockBackShieldHit = balanceData.knockBackShieldHit;
         knockBackTime = balanceData.knockBackTime;
 
         //Récupère le collider du shield
@@ -50,12 +50,12 @@ public class ShieldCollider : MonoBehaviour {
 
     private void Update()
     {
-        if(arrow.currentState == Hook.HookState.Shield)
+        /*if(arrow.currentState == Hook.HookState.Shield)
         {
             UpdateOrigins();
             Raycasting();
             CheckRaycast();
-        }    
+        }    */
     }
 
     //Rempli les tableaux avec les coordonnées du collider transcrite dans le world space
@@ -86,7 +86,7 @@ public class ShieldCollider : MonoBehaviour {
     }
 
     //Parcourt les tableaux de raycast pour vérifier si l'un d'eux ne touche pas une flèche adverse
-    void CheckRaycast()
+    /*void CheckRaycast()
     {
         int i = 0;
         while(i < coll.points.Length)
@@ -116,7 +116,7 @@ public class ShieldCollider : MonoBehaviour {
             }
             i++;
         }
-    }
+    }*/
 
     //Applique un knockback sur l'adversaire
     void KnockBack(Hook opponentArrow, GameObject opponent)

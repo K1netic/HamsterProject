@@ -27,7 +27,6 @@ public class Projectile : MonoBehaviour {
     float speed;
     [HideInInspector]
 	public Vector3 direction;
-    float hookheadDamage;
     Rigidbody2D rigid;
     bool inDestruction;
     [HideInInspector]
@@ -59,7 +58,6 @@ public class Projectile : MonoBehaviour {
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 
         speed = balanceData.speedHookhead;
-        hookheadDamage = balanceData.hookheadDamage;
 
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<PolygonCollider2D>();
@@ -130,7 +128,7 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        if(!cut)
+        if(!cut && hook.line.enabled)
             hook.line.SetPosition(1, pivot);
     }
 
@@ -181,6 +179,7 @@ public class Projectile : MonoBehaviour {
     {
         rigid.bodyType = RigidbodyType2D.Static;
         hooked = true;
+        hook.hooked = true;
         transform.position = position;
         hookedObject = platform;
         Instantiate(hitHook, transform.position, transform.rotation);
@@ -214,26 +213,6 @@ public class Projectile : MonoBehaviour {
         {
             switch (collision.gameObject.tag)
             {
-                case "Player":
-                    //Inflige des dégâts et détruit le projectile s'il touche un player
-                    if (!hook.cantAttack)
-                    {
-                        GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                        PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
-                        Instantiate(hitHook, transform.position, transform.rotation);
-                        //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                        foeScript.HitFX(collision.GetContact(0).point, 0);
-                        foeScript.TakeDamage(hookheadDamage, gameObject, true);
-                        hook.VibrationOnTouchingPlayerWithHookhead();
-                        Destruction();
-                    }
-                    else
-                    {
-                        Instantiate(hitHook, transform.position, transform.rotation);
-                        hook.VibrationOnProjectileDestroyed();
-                        Destruction();
-                    }
-                    break;
                 case "Hook":
                     Instantiate(hitHook, transform.position, transform.rotation);
                     hook.VibrationOnProjectileDestroyed();
@@ -272,7 +251,7 @@ public class Projectile : MonoBehaviour {
 
     public void End()
     {
-        if(gameObject)
+        if(gameObject != null)
             Destroy(gameObject);
     }
 }
