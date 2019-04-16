@@ -7,6 +7,8 @@ public class SuddenDeathMovement : MonoBehaviour {
     Balancing balanceData;
 
     [SerializeField]
+    GameObject warning;
+    [SerializeField]
     [Range(24f, 34f)]
     float remainingSpace;
 
@@ -14,6 +16,7 @@ public class SuddenDeathMovement : MonoBehaviour {
     float suddenDeathSpeed;
     float suddenDeathTime;
     bool launchSuddenDeath;
+    bool warningDone;
     Camera cam;
     float counter;
 
@@ -39,11 +42,23 @@ public class SuddenDeathMovement : MonoBehaviour {
             if (counter > suddenDeathTime)
             {
                 launchSuddenDeath = true;
+            }else if(counter > suddenDeathTime - 1)
+            {
+                if (!warningDone)
+                {
+                    warningDone = true;
+                    Instantiate(warning);
+                }
             }
                 
         }
         if (launchSuddenDeath)
         {
+            if (!warningDone)
+            {
+                warningDone = true;
+                Instantiate(warning);
+            }
             for (int i = 0; i < childs.Length; i++)
             {
                 childs[i].transform.position = Vector3.MoveTowards(childs[i].transform.position, Vector3.zero, suddenDeathSpeed);

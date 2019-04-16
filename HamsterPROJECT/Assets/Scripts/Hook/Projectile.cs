@@ -128,7 +128,7 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        if(!cut)
+        if(!cut && hook.line.enabled)
             hook.line.SetPosition(1, pivot);
     }
 

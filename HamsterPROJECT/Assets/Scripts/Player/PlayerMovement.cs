@@ -7,67 +7,64 @@ public class PlayerMovement : MonoBehaviour
 {
     Balancing balanceData;
 
-    [HideInInspector]
-	public Rigidbody2D rigid;
-    [HideInInspector]
-    public Vector2 jointDirection;
+    //SERIALIZED OBJECT
     [SerializeField]
     GameObject dashEcho;
     [SerializeField]
     GameObject speedEffect;
+    [SerializeField]
+    GameObject shootPos;
 
-	//Movement
-	
+    //PLAYER'S INFORMATIONS
     [HideInInspector]
-    public bool lockMovement;
-    /*[HideInInspector]
-    public Vector3 childRedAxis;*/
-    float airControlForce;
-    float hookMovementForce;
-    public State currentState;
+    public Rigidbody2D rigid;
     [HideInInspector]
-    public float speed;
+    public Vector2 jointDirection;
+    Sprite playerSprite;
+    [HideInInspector]
+    public Hook hookScript;
+    public string playerNumber;
+    public InputDevice playerInputDevice;
+
+    //MOVEMENT
     [SerializeField]
     public LayerMask layerMaskGround;
+    [HideInInspector]
+    public bool lockMovement;
+    [HideInInspector]
+    public float speed;
+    public State currentState;
+    float airControlForce;
+    float hookMovementForce;
     float groundedControlForce;
+    SpeedEffect speedEffectScript;
 
-    //Dash
+    //DASH
+    [HideInInspector]
+    public Vector2 playerDirection;
     [HideInInspector]
     public bool dashRecoveryWithHook;
+    [HideInInspector]
+    public bool lockMovementDash;
+    [HideInInspector]
+    public float gravity;
     float dashTime;
     float dashForce;
     float dashCDTime;
-    bool dashInCD;
-    [HideInInspector]
-    public bool lockMovementDash;
-    [SerializeField]
-    GameObject shootPos;
-    Sprite playerSprite;
-    SpeedEffect speedEffectScript;
     float drag;
-    Vector2 lastFramePosition;
-    [HideInInspector]
-    public Vector2 playerDirection;
     float dragEndOfDash;
-    [HideInInspector]
-    public float gravity;
     float inDashStatusTime;
+    bool dashInCD;
+    Vector2 lastFramePosition;
     GameObject dashRecovery;
-    GameObject dashReadyEffect;
-    [HideInInspector]
-    public Hook hookScript;
 
-    //DashEffect gradient
+    //DASHEFFECT 
     Gradient dashEffectGradient = new Gradient();
     GradientColorKey[] colorDashEffect = new GradientColorKey[2];
     GradientAlphaKey[] alphaDashEffect = new GradientAlphaKey[2];
     ParticleSystem.ColorOverLifetimeModule dashEffectColorLifeTime;
     ParticleSystem.MainModule dashEffectColor;
-
-    public string playerNumber;
-	public InputDevice playerInputDevice;
-
-    float maxSpeed = 76f;
+    GameObject dashReadyEffect;
 
     void Start()
 	{
@@ -141,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
                 colorDashEffect[1].color = new Color(0, 0.6730871f, .9433962f);
                 break;
             default:
-                print("Default case switch start PlayerLifeManager.cs");
+                print("Default case switch start PlayerMovement.cs");
                 break;
         }
         alphaDashEffect[0].alpha = 1;
@@ -163,16 +160,10 @@ public class PlayerMovement : MonoBehaviour
             speed = rigid.velocity.magnitude;
             speedEffectScript.playerSpeed = speed;
 
-            
             CheckState();
             Movement();
             Dash();
         }
-    }
-
-    private void LateUpdate()
-    {
-        rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, maxSpeed);
     }
 
     void CheckState()
@@ -208,16 +199,20 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoDash()
     {
+        if (lockMovement)
+            yield break;
         rigid.velocity = Vector3.zero;
         rigid.gravityScale = 0;
         yield return new WaitForSeconds(.05f);
         rigid.gravityScale = gravity;
+        Invoke("ResetDashCD", dashCDTime);
+        if (lockMovement)
+            yield break;
         rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
         InvokeRepeating("DashEffect", 0, 0.04f);
         Invoke("StopDash", dashTime);
         Invoke("UnlockMovementDash", inDashStatusTime);
         Invoke("CancelDashEffect", dashTime * 3.5f);
-        Invoke("ResetDashCD", dashCDTime);
         StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
         AudioManager.instance.PlaySound("dash", playerNumber);
     }

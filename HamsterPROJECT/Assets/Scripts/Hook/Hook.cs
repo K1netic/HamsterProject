@@ -172,7 +172,7 @@ public class Hook : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardOrange");
                 break;
             case "1":
-                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak2");
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
@@ -182,7 +182,7 @@ public class Hook : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardPink");
                 break;
             case "2":
-                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak3");
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
@@ -192,7 +192,7 @@ public class Hook : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
                 break;
             case "3":
-                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak4");
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
@@ -202,7 +202,7 @@ public class Hook : MonoBehaviour {
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 break;
             case "4":
-                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak5");
+                arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
                 blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
                 blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
                 blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");

@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4649429866182706}
   m_Layer: 0
-  m_Name: 2
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -967,12 +967,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeParticlesManager: {fileID: 1812919084255494}
+  spriteArrow: {fileID: 212302136079570198}
   hookScript: {fileID: 114651699637190700}
   playerHP: 100
   inRecovery: 0
-  spriteArrow: {fileID: 212302136079570198}
   lastAttacker: 
+  lifeParticlesManager: {fileID: 1812919084255494}
 --- !u!114 &114651699637190700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -984,22 +984,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f463dd355eaa9b48bfb418c249c1f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualSwitchOn: 0
   playerMovement: {fileID: 114781235949786624}
   layerMaskRaycast:
     serializedVersion: 2
     m_Bits: 65536
+  hooked: 0
+  line: {fileID: 120588238021673220}
+  ropeCut: 0
+  player: {fileID: 1465939284561750}
+  projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
+  currentProjectile: {fileID: 0}
   layerMaskLineCast:
     serializedVersion: 2
     m_Bits: 28966912
-  hooked: 0
-  player: {fileID: 1465939284561750}
-  line: {fileID: 120588238021673220}
-  projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
-  currentProjectile: {fileID: 0}
-  ropeCut: 0
-  currentState: 0
   cantAttack: 0
+  currentBlade: 0
   isFrozen: 0
 --- !u!114 &114781235949786624
 MonoBehaviour:
@@ -1012,23 +1011,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid: {fileID: 50432697101991758}
-  jointDirection: {x: 0, y: 0}
   dashEcho: {fileID: 1005786816833230, guid: 4a9d6389045976c4abddad6e66452dc0, type: 2}
   speedEffect: {fileID: 1824626040688012}
-  lockMovement: 0
-  currentState: 0
-  speed: 0
+  shootPos: {fileID: 1767092310390042}
+  rigid: {fileID: 50432697101991758}
+  jointDirection: {x: 0, y: 0}
+  hookScript: {fileID: 114651699637190700}
+  playerNumber: _P2
   layerMaskGround:
     serializedVersion: 2
     m_Bits: 268500992
+  lockMovement: 0
+  speed: 0
+  currentState: 0
+  playerDirection: {x: 0, y: 0}
   dashRecoveryWithHook: 0
   lockMovementDash: 0
-  shootPos: {fileID: 1767092310390042}
-  playerDirection: {x: 0, y: 0}
   gravity: 1
-  hookScript: {fileID: 114651699637190700}
-  playerNumber: _P2
 --- !u!114 &114881777185136240
 MonoBehaviour:
   m_ObjectHideFlags: 1

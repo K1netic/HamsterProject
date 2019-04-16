@@ -940,22 +940,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f463dd355eaa9b48bfb418c249c1f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualSwitchOn: 0
   playerMovement: {fileID: 0}
   layerMaskRaycast:
     serializedVersion: 2
     m_Bits: 65536
+  hooked: 0
+  line: {fileID: 0}
+  ropeCut: 0
+  player: {fileID: 1348281473371304}
+  projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
+  currentProjectile: {fileID: 0}
   layerMaskLineCast:
     serializedVersion: 2
     m_Bits: 0
-  hooked: 0
-  player: {fileID: 1348281473371304}
-  line: {fileID: 0}
-  projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
-  currentProjectile: {fileID: 0}
-  ropeCut: 0
-  currentState: 0
   cantAttack: 0
+  currentBlade: 0
   isFrozen: 0
 --- !u!114 &114843026783149948
 MonoBehaviour:
@@ -968,23 +967,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25930905ea4158438bcad70f8c7fd2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigid: {fileID: 0}
-  jointDirection: {x: 0, y: 0}
   dashEcho: {fileID: 1005786816833230, guid: 4a9d6389045976c4abddad6e66452dc0, type: 2}
   speedEffect: {fileID: 1104559449238514}
-  lockMovement: 0
-  currentState: 0
-  speed: 0
+  shootPos: {fileID: 1260992845629056}
+  rigid: {fileID: 0}
+  jointDirection: {x: 0, y: 0}
+  hookScript: {fileID: 0}
+  playerNumber: _P2
   layerMaskGround:
     serializedVersion: 2
     m_Bits: 268500992
+  lockMovement: 0
+  speed: 0
+  currentState: 0
+  playerDirection: {x: 0, y: 0}
   dashRecoveryWithHook: 0
   lockMovementDash: 0
-  shootPos: {fileID: 1260992845629056}
-  playerDirection: {x: 0, y: 0}
   gravity: 0
-  hookScript: {fileID: 0}
-  playerNumber: _P2
 --- !u!114 &114866905054088592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -996,12 +995,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3260d1631201b41b0435daf5831982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeParticlesManager: {fileID: 1315893996694848}
+  spriteArrow: {fileID: 0}
   hookScript: {fileID: 0}
   playerHP: 0
   inRecovery: 0
-  spriteArrow: {fileID: 0}
   lastAttacker: 
+  lifeParticlesManager: {fileID: 1315893996694848}
 --- !u!114 &114880357366906022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19592,7 +19591,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 4ec625ecdc82d2549a03c133b9fdfa92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ffe1ae7ad514e6145b594f817e3805f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
