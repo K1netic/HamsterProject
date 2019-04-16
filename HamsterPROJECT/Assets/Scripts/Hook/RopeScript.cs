@@ -69,7 +69,11 @@ public class RopeScript : MonoBehaviour {
 			ropeSegments.Add(section);
 			lr.SetPosition (i, section.transform.position);
             if (connectedToPlayer)
+            {
                 section.GetComponent<Rigidbody2D>().mass = 0;
+                section.GetComponent<Rigidbody2D>().gravityScale = 0;
+            }
+                
 		}
         if(!connectedToPlayer)
             Invoke("Destroy", timeBeforeDestroy);

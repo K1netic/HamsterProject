@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3892d00b41e3c594f84b4bdeb8c580f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raycastRange: 0.75
+  raycastRange: 1.25
   child: {fileID: 1542705048188056}
   hitHookOrange: {fileID: 198546040475013250, guid: 0686c26aebeb69945be06fc2efc62840,
     type: 2}
@@ -182,6 +182,7 @@ MonoBehaviour:
   hooked: 0
   hook: {fileID: 0}
   pivot: {x: 0, y: 0}
+  cut: 0
 --- !u!212 &212304444067344646
 SpriteRenderer:
   m_ObjectHideFlags: 1

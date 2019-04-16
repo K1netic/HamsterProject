@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour {
 
     Balancing balanceData;
 
-    [Range(0f, 1f)]
+    [Range(0f, 2f)]
     [SerializeField]
     float raycastRange = 1;
 
@@ -45,6 +45,7 @@ public class Projectile : MonoBehaviour {
     public Vector2 pivot;
     [HideInInspector]
     public bool cut = false;
+    float raycastBackRange;
 
     GameObject hookedObject;
 
@@ -102,12 +103,7 @@ public class Projectile : MonoBehaviour {
                 break;
         }
 
-        /*direction = new Vector3(Input.GetAxis("Horizontal" + playerNumber), Input.GetAxis("Vertical" + playerNumber), 0);
-		direction = direction.normalized;
-        if(direction == Vector3.zero)
-        {
-            direction = Vector3.right;
-        }*/
+        raycastBackRange = raycastRange * 3.5f;
     }
 
 	void Update () {
@@ -161,18 +157,28 @@ public class Projectile : MonoBehaviour {
     void RaycastRope()
     {
         raycastRope = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskLineCast);
-        raycastBackRope = Physics2D.Raycast(transform.position, -direction, raycastRange * 2.25f, hook.layerMaskLineCast);
+        Debug.DrawRay(transform.position, direction * raycastRange, Color.red, 5);
+
+        if(Vector3.Distance(transform.position, hook.player.transform.position) > raycastBackRange)
+        {
+            raycastBackRope = Physics2D.Raycast(transform.position, -direction, raycastBackRange, hook.layerMaskLineCast);
+            Debug.DrawRay(transform.position, -direction * raycastBackRange, Color.green, 5);
+        }
+
         if (raycastRope.collider)
         {
             if (raycastRope.collider.gameObject.CompareTag("Rope"))
             {
                 raycastRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
             }      
-        }else if (raycastBackRope.collider)
-            if (raycastBackRope.collider.gameObject.CompareTag("Rope"))
-            {
-                raycastBackRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
-            }
+        }else if (Vector3.Distance(transform.position, hook.player.transform.position) > raycastBackRange)
+        {
+            if (raycastBackRope.collider)
+                if (raycastBackRope.collider.gameObject.CompareTag("Rope"))
+                {
+                    raycastBackRope.collider.gameObject.GetComponent<LineCutter>().CutRope(transform.position, playerNumber);
+                }
+        }
     }
 
     void GetHooked(Vector2 position, GameObject platform)
