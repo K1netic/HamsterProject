@@ -671,4 +671,12 @@ public class Hook : MonoBehaviour {
 		yield return new WaitForSeconds (delay);
 		playerMovement.playerInputDevice.StopVibration ();
 	}
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Rope"))
+        {
+            col.gameObject.GetComponent<LineCutter>().CutRope(transform.GetChild(0).transform.position, playerNumber);
+        }
+    }
 }

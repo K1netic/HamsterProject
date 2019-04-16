@@ -12,7 +12,7 @@ public class LineCutter : MonoBehaviour {
     PlayerLifeManager lifeManager;
 
     public void CutRope(Vector3 cuttingPos, string cutter){
-        if (hook.currentProjectile.GetComponent<Projectile>().hooked)
+        if (hook.currentProjectile.GetComponent<Projectile>().hooked && hook.playerMovement.playerNumber != cutter)
         {
             projectile.GetComponent<Projectile>().cut = true;
 
