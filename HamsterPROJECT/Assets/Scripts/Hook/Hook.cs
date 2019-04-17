@@ -63,14 +63,14 @@ public class Hook : MonoBehaviour {
     Projectile stockedProjectileScript;
 
     //ARROW
+    [HideInInspector]
+    public LayerMask arrowLayer;
     Sprite arrowSprite;
     SpriteRenderer spriteRenderer;
 
     //COMBAT SYSTEM
     [HideInInspector]
     public LayerMask layerMaskLineCast;//Layer qui gère la détection des autres flèches
-    [HideInInspector]
-    public bool cantAttack;
     [HideInInspector]
     public CurrentBlade currentBlade;
     Sprite blade1Sprite;
@@ -132,8 +132,9 @@ public class Hook : MonoBehaviour {
         playerNumber = playerMovement.playerNumber;
         playerMovement.hookScript = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        player.GetComponent<PlayerLifeManager>().spriteArrow = spriteRenderer;
-        player.GetComponent<PlayerLifeManager>().hookScript = this;
+        lifeManager = player.GetComponent<PlayerLifeManager>();
+        lifeManager.spriteArrow = spriteRenderer;
+        lifeManager.hookScript = this;
 
         //Crée le line renderer et le configure
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
@@ -245,6 +246,7 @@ public class Hook : MonoBehaviour {
                 print("Default case switch start Hook.cs");
             break;
         }
+        arrowLayer = gameObject.layer;
     }
 	
 	// Update is called once per frame
@@ -521,7 +523,7 @@ public class Hook : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D collision){
-        if (!cantAttack)
+        if (!lifeManager.inRecovery)
         {
             //Si c'est une fleche qui est touché on applique un knockback
             if (collision.gameObject.CompareTag("Arrow"))
@@ -557,12 +559,6 @@ public class Hook : MonoBehaviour {
         }
     }
 
-    public IEnumerator ResetBoolAttack()
-    {
-        yield return new WaitForSeconds(.5f);
-        cantAttack = false;
-    }
-
     void HitFX(Vector3 position, GameObject hook)
     {
         if (!doubleFXprotection && !hook.GetComponent<Hook>().player.GetComponent<PlayerLifeManager>().inRecovery)
@@ -589,7 +585,7 @@ public class Hook : MonoBehaviour {
     void ArrowHit(Collision2D collision)
     {
         playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+        Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
         AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
         switch (collision.gameObject.GetComponent<Hook>().currentBlade)
@@ -598,13 +594,13 @@ public class Hook : MonoBehaviour {
                 print("You are not suppossed to be there ! How do you came ?!");
                 break;
             case CurrentBlade.blade1:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                 break;
             case CurrentBlade.blade2:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
                 break;
             case CurrentBlade.blade3:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                 break;
             default:
                 print("Impossible, you just CAN'T be there !");
@@ -645,7 +641,6 @@ public class Hook : MonoBehaviour {
 
     void AddLastAttacker(string attacker)
     {
-        lifeManager = player.GetComponent<PlayerLifeManager>();
         lifeManager.CancelCleanLastAttacker();
         lifeManager.lastAttacker = attacker;
         lifeManager.CleanLastAttacker();

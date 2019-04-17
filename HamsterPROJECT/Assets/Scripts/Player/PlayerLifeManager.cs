@@ -12,6 +12,8 @@ public class PlayerLifeManager : MonoBehaviour {
     public SpriteRenderer spriteArrow;
     [HideInInspector]
     public Hook hookScript;
+    [HideInInspector]
+    public LayerMask playerLayer;
     PlayerMovement playerMovement;
     SpriteRenderer sprite;
 
@@ -178,10 +180,7 @@ public class PlayerLifeManager : MonoBehaviour {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
-            //Empêche au joueur d'infliger des dégâts pendant 0.5 secondes après s'en être prit
-            hookScript.cantAttack = true;
             inRecovery = true;
-            StartCoroutine(hookScript.ResetBoolAttack());
             if (knockBack)
             {
                 if (hookScript.hooked)
@@ -207,13 +206,16 @@ public class PlayerLifeManager : MonoBehaviour {
                                 print("You are not suppossed to be there ! How do you came ?!");
                                 break;
                             case Hook.CurrentBlade.blade1:
-                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                                print("1");
+                                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                                 break;
                             case Hook.CurrentBlade.blade2:
-                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                                print("2");
+                                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
                                 break;
                             case Hook.CurrentBlade.blade3:
-                                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+                                print("3");
+                                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                                 break;
                             default:
                                 print("Impossible, you just CAN'T be there !");
@@ -271,7 +273,8 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             CleanLastAttacker();
 
-
+            //Invoke le changement de layer après 0.1 secondes pour que la collision repousse un peu l'attaquant
+            Invoke("RecoveryLayer", .1f);
             //Rend le player invulnérable pendant recoveryTime secondes
             Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
@@ -313,6 +316,13 @@ public class PlayerLifeManager : MonoBehaviour {
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
         }
+    }
+
+    void RecoveryLayer()
+    {
+        //Passe le player et la flèche en layer "Recovery" pour qu'ils traversent les autres joueurs
+        gameObject.layer = LayerMask.NameToLayer("Recovery");
+        hookScript.gameObject.layer = LayerMask.NameToLayer("Recovery");
     }
 
     public void CleanLastAttacker()
@@ -513,9 +523,11 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void ResetRecovery()
     {
-        //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
+        //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité et remet un layer physique correspondant au player
         CancelInvoke("Flashing");
         inRecovery = false;
+        gameObject.layer = playerLayer;
+        hookScript.gameObject.layer = hookScript.arrowLayer;
         sprite.material = startMaterial;
         spriteArrow.material = startMaterial;
     }

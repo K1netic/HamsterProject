@@ -192,7 +192,6 @@ public class Projectile : MonoBehaviour {
         gameObject.transform.parent = hookedObject.transform;
         if (hookedObject.GetComponent<Rigidbody2D>())
         {
-            gameObject.layer = 27;
             rigid.bodyType = RigidbodyType2D.Kinematic;
             rigid.interpolation = RigidbodyInterpolation2D.None;
         }
