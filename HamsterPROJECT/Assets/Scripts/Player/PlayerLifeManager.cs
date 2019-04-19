@@ -180,13 +180,13 @@ public class PlayerLifeManager : MonoBehaviour {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
         {
+            if (hookScript.hooked)
+            {
+                hookScript.DisableRope(false);
+            }
             inRecovery = true;
             if (knockBack)
             {
-                if (hookScript.hooked)
-                {
-                    hookScript.DisableRope(false);
-                }
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
                 //Calcul la direction du knockback
@@ -293,10 +293,12 @@ public class PlayerLifeManager : MonoBehaviour {
 					}
 				}
 
-				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser")
+				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser" || attacker.tag == "Bombe")
 				{
                     if (lastAttacker == null)
+                    {
                         GameManager.playersSelfDestructs[int.Parse((this.GetComponent<PlayerMovement>().playerNumber.Substring(2, 1))) - 1] += 1;
+                    }
                     else if (GameManager.gameModeType == GameManager.gameModes.Deathmatch)
                     {
                         GameManager.playersKills[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
@@ -304,6 +306,8 @@ public class PlayerLifeManager : MonoBehaviour {
                     }
                     else
                         GameManager.playersKills[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
+
+
                 }
                 else
                 {

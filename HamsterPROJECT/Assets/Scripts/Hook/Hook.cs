@@ -164,9 +164,6 @@ public class Hook : MonoBehaviour {
         {
             case "0":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook1");
                 colorRope = new Color(.784f, .451f, .173f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleOrange");
@@ -174,9 +171,6 @@ public class Hook : MonoBehaviour {
                 break;
             case "1":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook2");
                 colorRope = new Color(.596f, .31f,.624f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
@@ -184,9 +178,6 @@ public class Hook : MonoBehaviour {
                 break;
             case "2":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook3");
                 colorRope = new Color(0.310f, 0.624f, 0.318f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
@@ -194,9 +185,6 @@ public class Hook : MonoBehaviour {
                 break;
             case "3":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook4");
                 colorRope = new Color(.847f, .761f, .271f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
@@ -204,9 +192,6 @@ public class Hook : MonoBehaviour {
                 break;
             case "4":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Peak1");
-                blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-                blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-                blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/hook5");
                 colorRope = new Color(.216f, .384f, .529f);
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
@@ -216,6 +201,9 @@ public class Hook : MonoBehaviour {
                 print("Default case switch start Hook.cs");
             break;
         }
+        blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
+        blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
+        blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
         //Initialise le joueur avec la flèche et sans lame
         spriteRenderer.sprite = arrowSprite;
         Sheathe();

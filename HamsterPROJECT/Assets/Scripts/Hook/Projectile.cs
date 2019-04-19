@@ -124,7 +124,7 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        if(!cut && hook.line.enabled)
+        if(!cut && hook.line.gameObject.activeSelf)
             hook.line.SetPosition(1, pivot);
     }
 
@@ -192,6 +192,7 @@ public class Projectile : MonoBehaviour {
         gameObject.transform.parent = hookedObject.transform;
         if (hookedObject.GetComponent<Rigidbody2D>())
         {
+            gameObject.layer = LayerMask.NameToLayer("HookOnMovingPlatform");
             rigid.bodyType = RigidbodyType2D.Kinematic;
             rigid.interpolation = RigidbodyInterpolation2D.None;
         }

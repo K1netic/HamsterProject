@@ -6,6 +6,7 @@ public class BombScript : MonoBehaviour {
 
 	bool startExplode = false;
 	bool oneAnim = true;
+    [SerializeField]
 	float timer = 20;
 	[SerializeField]
 	Color startColor;
@@ -22,13 +23,21 @@ public class BombScript : MonoBehaviour {
 	public float speedAnim = 1;
 	[SerializeField]
 	ParticleSystem particles;
-	Collider2D[] deathOverlap = new Collider2D[4];
+    Collider2D[] deathOverlap;
 	[SerializeField]
 	float deathRadius;
 	public LayerMask layerMaskDeath;
+    Rigidbody2D rigid;
+    float speed;
 
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
+
+    // Update is called once per frame
+    void Update () {
+        speed = rigid.velocity.magnitude;
 		if (startExplode) {
 			Explode ();
 		}
@@ -47,10 +56,13 @@ public class BombScript : MonoBehaviour {
 		if (timer < 0) {
 			Instantiate (particles, transform.position, transform.rotation);
 			deathOverlap = Physics2D.OverlapCircleAll (transform.position, deathRadius, layerMaskDeath);
-			foreach (Collider2D player in deathOverlap) {
-				if (player.gameObject.CompareTag ("Player")) {
-					player.gameObject.GetComponent<PlayerLifeManager> ().TakeDamage (15000f,bomb,false);
-				}
+			foreach (Collider2D collider in deathOverlap) {
+				if (collider.gameObject.CompareTag ("Player")) {
+                    collider.gameObject.GetComponent<PlayerLifeManager> ().TakeDamage (15000f,bomb,false);
+				}else if (collider.gameObject.GetComponent<ExplodeOnClick>())
+                {
+                    collider.gameObject.GetComponent<ExplodeOnClick>().Explosion(collider.gameObject.transform.position, speed);
+                }
 			}
 			Destroy (bomb);
 		}

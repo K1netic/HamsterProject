@@ -53,6 +53,16 @@ public class ExplodeOnClick : MonoBehaviour {
         }
     }
 
+    public void Explosion(Vector3 position, float magnitude)
+    {
+        if (!explosionDone)
+        {
+            GameObject.Find("ExplosionForce_Env").GetComponent<ExplosionForce>().doExplosion(position, magnitude);
+            explosionDone = true;
+            AudioManager.instance.PlaySound("destructingPlatform", "enviro");
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
