@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4225241305565874}
   - component: {fileID: 212098408192814336}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: CanonBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4826417847084450}
   - component: {fileID: 198226720325922318}
   - component: {fileID: 199511392231219318}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: Spark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,10 +69,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4448987001884060}
-  m_Layer: 26
+  m_Layer: 28
   m_Name: Start
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4709217575264426}
   - component: {fileID: 120592833634351502}
-  m_Layer: 26
+  m_Layer: 28
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 114285199122212774}
   - component: {fileID: 50447660270966766}
   - component: {fileID: 70884004895228022}
-  m_Layer: 16
+  m_Layer: 26
   m_Name: Collider
   m_TagString: LaserEdge
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4560298442947980}
   - component: {fileID: 95220914606001528}
   - component: {fileID: 114061622716986684}
-  m_Layer: 16
+  m_Layer: 28
   m_Name: Laser
   m_TagString: LaserEdge
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4623927097641164}
   - component: {fileID: 120618247230130592}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4164609229002444}
   - component: {fileID: 212915808643458698}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: CanonFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da331b7f1093094ba0e86ed9ae53688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FxNotNeeded: 0
   start: {fileID: 1243524990514584}
   center: {fileID: 120592833634351502}
   glow: {fileID: 120618247230130592}

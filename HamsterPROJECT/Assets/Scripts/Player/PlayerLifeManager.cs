@@ -29,6 +29,7 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackBlade1;
     float knockBackBlade2;
     float knockBackBlade3;
+    float knockBackMeteor;
     float laserDamage;
     float criticalSpeed;
     float arrowDamage;
@@ -79,6 +80,7 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackBlade1 = balanceData.knockBackBlade1;
         knockBackBlade2 = balanceData.knockBackBlade2;
         knockBackBlade3 = balanceData.knockBackBlade3;
+        knockBackMeteor = balanceData.knockBackMeteor;
         laserDamage = balanceData.laserDamage;
         criticalSpeed = balanceData.criticalSpeed;
         arrowDamage = balanceData.arrowDamage;
@@ -206,15 +208,12 @@ public class PlayerLifeManager : MonoBehaviour {
                                 print("You are not suppossed to be there ! How do you came ?!");
                                 break;
                             case Hook.CurrentBlade.blade1:
-                                print("1");
                                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                                 break;
                             case Hook.CurrentBlade.blade2:
-                                print("2");
                                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
                                 break;
                             case Hook.CurrentBlade.blade3:
-                                print("3");
                                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                                 break;
                             default:
@@ -241,6 +240,9 @@ public class PlayerLifeManager : MonoBehaviour {
                             default:
                                 break;
                         }
+                        break;
+                    case "Meteor":
+                        playerMovement.rigid.AddForce(directionKnockBack * knockBackMeteor, ForceMode2D.Impulse);
                         break;
                     case "Laser":
                         if(inverseDir)
@@ -293,7 +295,7 @@ public class PlayerLifeManager : MonoBehaviour {
 					}
 				}
 
-				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser" || attacker.tag == "Bombe")
+				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser" || attacker.tag == "Bombe" ||attacker.tag == "Meteor")
 				{
                     if (lastAttacker == null)
                     {
@@ -306,8 +308,6 @@ public class PlayerLifeManager : MonoBehaviour {
                     }
                     else
                         GameManager.playersKills[int.Parse(lastAttacker.Substring(2, 1)) - 1] += 1;
-
-
                 }
                 else
                 {

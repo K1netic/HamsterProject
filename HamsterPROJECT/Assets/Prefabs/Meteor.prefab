@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212698804711269120}
   - component: {fileID: 114942652909087484}
   - component: {fileID: 58203021266486328}
+  - component: {fileID: 50526366672250190}
   m_Layer: 24
   m_Name: Meteor
   m_TagString: Meteor
@@ -42,6 +43,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50526366672250190
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1906291996255020}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58203021266486328
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -68,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1935d33f2edc60e41b5f811832193a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  warning: {fileID: 1306985298669718, guid: aac017fb313f21e4d980ca445c4a5736, type: 2}
   speed: 0.25
   triggerDistance: 0.5
   explosionFX: {fileID: 198341624431874994, guid: dba20a9dcde91244ea11b82d486cddbc,
@@ -75,7 +97,7 @@ MonoBehaviour:
   deathRadius: 4.5
   layerMaskDeath:
     serializedVersion: 2
-    m_Bits: 69376
+    m_Bits: 130816
   leftBound: 0
   rightBound: 0
   targetY: 0
