@@ -157,12 +157,12 @@ public class Projectile : MonoBehaviour {
     void RaycastRope()
     {
         raycastRope = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskLineCast);
-        Debug.DrawRay(transform.position, direction * raycastRange, Color.red, 5);
+        // Debug.DrawRay(transform.position, direction * raycastRange, Color.red, 5);
 
         if(Vector3.Distance(transform.position, hook.player.transform.position) > raycastBackRange)
         {
             raycastBackRope = Physics2D.Raycast(transform.position, -direction, raycastBackRange, hook.layerMaskLineCast);
-            Debug.DrawRay(transform.position, -direction * raycastBackRange, Color.green, 5);
+            // Debug.DrawRay(transform.position, -direction * raycastBackRange, Color.green, 5);
         }
 
         if (raycastRope.collider)

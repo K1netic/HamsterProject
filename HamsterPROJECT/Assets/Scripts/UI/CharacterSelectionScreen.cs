@@ -48,7 +48,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void OnEnable()
 	{
-		Debug.Log("enabling character screen");
 		selectableCharacters = new bool[GameManager.nbOfCharacters];
 		selectableCharacters.SetValue (true, 0);
 		selectableCharacters.SetValue (true, 1);
@@ -61,7 +60,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		{
 			if (GameManager.playersActive[i] == true)
 			{
-				Debug.Log("player n° : " + i.ToString());
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().characterSprites[panels[i].characterSelected];

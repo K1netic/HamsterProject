@@ -9474,98 +9474,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 539882787}
   m_CullTransparentMesh: 0
---- !u!1 &541126342
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1251097867154662, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 541126343}
-  - component: {fileID: 541126344}
-  m_Layer: 0
-  m_Name: Balancing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &541126343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 4548102866249404, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 541126342}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1157266126}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &541126344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 541126342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f23b3c803d3e4564aa526e0286e2bad8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedHookhead: 15
-  retractationStep: 0.25
-  timeBtwShots: 0.3
-  TimeHooked: 8
-  lineWidth: 0.175
-  timeRopeCut: 1.5
-  cutRopeSpeed: 0.25
-  groundedControlForce: 15
-  airControlForce: 7.5
-  hookMovementForce: 55
-  speedThresholdDestruction: 25
-  playerMaxHP: Infinity
-  recoveryTime: 1
-  flashingRate: 0.1
-  arrowDamage: 20
-  laserDamage: 20
-  criticalSpeed: 35
-  lastAttackerDuration: 3
-  knockBackTime: 0.5
-  knockBackBlade1: 10
-  knockBackBlade2: 15
-  knockBackBlade3: 20
-  knockBackLaser: 20
-  attackRecoveryWithHook: 0
-  attackTime: 0
-  dashTime: 0.05
-  dashForce: 75
-  attackCDTime: 0
-  dragEndOfDash: 20
-  inDashStatusTime: 0.5
-  lightRumble: 0.15
-  mediumlightRumble: 0.3
-  mediumRumble: 0.6
-  heavyRumble: 1
-  lightVibration: 0.25
-  mediumLightVibration: 0.35
-  mediumVibration: 0.6
-  heavyVibration: 1
-  damageToVibrationDivisor: 20
-  shortVibrationDuration: 0.1
-  mediumVibrationDuration: 0.2
-  longVibrationDuration: 0.5
-  lightMagnitude: 3
-  heavyMagnitude: 6
-  roughness: 50
-  fadeIn: 0.1
-  fadeOut: 0.5
-  suddenDeathSpeed: 0.02
-  suddenDeathTime: 90
 --- !u!1 &553583534
 GameObject:
   m_ObjectHideFlags: 0
@@ -16027,7 +15935,7 @@ Transform:
   m_Children:
   - {fileID: 2113570243}
   - {fileID: 1178096757}
-  - {fileID: 541126343}
+  - {fileID: 2106465088}
   - {fileID: 2140168533}
   - {fileID: 916856274}
   - {fileID: 723599684}
@@ -29572,6 +29480,99 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2104611005}
   m_CullTransparentMesh: 0
+--- !u!1 &2106465087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 1251097867154662, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2106465088}
+  - component: {fileID: 2106465089}
+  m_Layer: 0
+  m_Name: Balancing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2106465088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4548102866249404, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2106465087}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1157266126}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2106465089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2106465087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23b3c803d3e4564aa526e0286e2bad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedHookhead: 15
+  retractationStep: 0.25
+  timeBtwShots: 0.05
+  TimeHooked: 8
+  lineWidth: 0.175
+  timeRopeCut: 1.5
+  cutRopeSpeed: 0.5
+  groundedControlForce: 15
+  airControlForce: 7.5
+  hookMovementForce: 55
+  speedThresholdDestruction: 25
+  playerMaxHP: 100
+  recoveryTime: 1
+  flashingRate: 0.1
+  arrowDamage: 25
+  laserDamage: 20
+  criticalSpeed: 40
+  lastAttackerDuration: 2
+  knockBackTime: 0.5
+  knockBackBlade1: 15
+  knockBackBlade2: 17.5
+  knockBackBlade3: 20
+  knockBackLaser: 20
+  knockBackMeteor: 20
+  attackRecoveryWithHook: 1
+  attackTime: 0.6
+  dashTime: 0.05
+  dashForce: 75
+  attackCDTime: 6
+  dragEndOfDash: 15
+  inDashStatusTime: 0.5
+  lightRumble: 0.15
+  mediumlightRumble: 0.3
+  mediumRumble: 0.6
+  heavyRumble: 1
+  lightVibration: 0.25
+  mediumLightVibration: 0.35
+  mediumVibration: 0.6
+  heavyVibration: 1
+  damageToVibrationDivisor: 20
+  shortVibrationDuration: 0.1
+  mediumVibrationDuration: 0.2
+  longVibrationDuration: 0.6
+  lightMagnitude: 3
+  heavyMagnitude: 8
+  roughness: 50
+  fadeIn: 0.1
+  fadeOut: 0.5
+  suddenDeathSpeed: 0.02
+  suddenDeathTime: 45
 --- !u!1 &2108776315
 GameObject:
   m_ObjectHideFlags: 0

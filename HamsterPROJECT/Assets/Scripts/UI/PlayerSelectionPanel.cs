@@ -43,12 +43,20 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	// Input device
 	public InputDevice device;
 
-	void Start()
+	void Awake()
+	{
+		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
+	}
+
+	void OnEnable()
 	{
 		state = SelectionPanelState.Deactivated;
+	}
+
+	void Start()
+	{
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
-		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
 		unavailableCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/UnavailableCharacters");
 		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
 		deactivatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordgray");
