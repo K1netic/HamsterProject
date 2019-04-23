@@ -11,12 +11,12 @@ public class MatchStart : MonoBehaviour {
 	bool coroutineLimiter = false;
 	bool activateBegin = false;
 	public static bool gameHasStarted = false;
+
     GameObject progressBar;
 	float timeAtBegin;
 
 	// Players 
 	[SerializeField] GameObject[] Players;
-//	GameObject characterPrefab;
 	string plyrNmbr;
     int howManyPlayers = 0;
 
@@ -48,7 +48,6 @@ public class MatchStart : MonoBehaviour {
 
 		gameHasStarted = false;
 		coroutineLimiter = false;
-//		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
         foreach (GameObject spawn in GameObject.FindGameObjectsWithTag("Spawn"))
         {
@@ -109,13 +108,6 @@ public class MatchStart : MonoBehaviour {
 				progressBar.GetComponent<Animator>().enabled = true;
 			}
 		}
-
-//		if (InputManager.ActiveDevice.AnyButtonWasPressed && !activateBegin)
-//		{
-//			activateBegin = true;
-//			AudioManager.instance.PlaySound ("UI_readyFight", "UI");
-//            progressBar.GetComponent<Animator>().enabled = true;
-//		}
 
 		if (activateBegin && !coroutineLimiter)
 		{
@@ -189,8 +181,8 @@ public class MatchStart : MonoBehaviour {
             spawnPoints.Remove(currentSpawn);
         }
         inst.transform.GetChild(0).localPosition = new Vector2(0f, 0f);
+        inst.transform.GetChild(0).localRotation = new Quaternion(0f,0f,0f,0f);
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
-        inst.transform.GetChild(0).localPosition = new Vector2(0f,0f);
         GameObject newPlayer = Instantiate(inst);
 
         // Setting InputDevice
@@ -204,23 +196,14 @@ public class MatchStart : MonoBehaviour {
         int j = Random.Range(0, spawnPoints.Count);
         inst.transform.position = spawnPoints[j].transform.position;
         spawnPoints.Remove(spawnPoints[j]);
+        inst.transform.GetChild(0).localPosition = new Vector2(0f, 0f);
+        inst.transform.GetChild(0).localRotation = new Quaternion(0f,0f,0f,0f);
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
-        inst.transform.GetChild(0).localPosition = new Vector2(0f,0f);
         GameObject newPlayer = Instantiate(inst);
 
         // Setting InputDevice
         newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
     }
-
-    /*void OnGUI()
-	{
-		// Draw progress bar
-		if (activateBegin && !gameHasStarted)
-		{
-			GUI.DrawTexture (new Rect (1920f/2f - 250, 700, 500, 50), emptyProgressBar);
-			GUI.DrawTexture (new Rect (1920f/2f - 250 , 700, 500 * (Time.time - timeAtBegin), 50), fullProgressBar);
-		}
-	}*/
 
 	IEnumerator BeginCount()
 	{

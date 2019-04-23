@@ -11,8 +11,10 @@ public class ResultsScreen : MonoBehaviour {
 	int winnerScore;
 	int winnerIndex;
 	[SerializeField] PlayerResultPanel[] panels;
-	[SerializeField] string sceneToLoad;
+	[SerializeField] Animator endGameScreen;
+//	[SerializeField] string sceneToLoad;
 	Sprite sprt;
+	ScreenManager screenManager;
 
 	// Audio
 	float delay = 0.1f;
@@ -27,6 +29,7 @@ public class ResultsScreen : MonoBehaviour {
 		winnerScore = GameManager.playersScores.Max();
 		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
 		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
+		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 	void Start()
 	{
@@ -46,17 +49,20 @@ public class ResultsScreen : MonoBehaviour {
 			if (activateInput && (dev.AnyButtonWasPressed || dev.CommandWasPressed))
 			{
 				GameManager.ResetScores ();
-				SceneManager.LoadScene (sceneToLoad);
+//				SceneManager.LoadScene (sceneToLoad);
+				screenManager.CloseCurrent ();
+				screenManager.OpenPanel (endGameScreen);
+				AudioManager.instance.PlaySound ("UI_validate", "UI");
 			}
 		}
 	}
 
-	IEnumerator LoadEndGame()
-	{
-		AudioManager.instance.PlaySound ("UI_validate", "UI");
-		yield return new WaitForSeconds (delay);
-		SceneManager.LoadScene (sceneToLoad);
-	}
+//	IEnumerator LoadEndGame()
+//	{
+//		AudioManager.instance.PlaySound ("UI_validate", "UI");
+//		yield return new WaitForSeconds (delay);
+//		SceneManager.LoadScene (sceneToLoad);
+//	}
 
 	// Utilisé pour éviter de skip l'écran de résultats par erreur
 	IEnumerator InputActivating()

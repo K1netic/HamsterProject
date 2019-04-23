@@ -8,12 +8,13 @@ using UnityEngine.SceneManagement;
 public class Tutorial : MonoBehaviour {
 
 	[SerializeField] Sprite[] tutorialPages;
-	[SerializeField] string sceneToLoad;
-	[SerializeField] string previousScene;
+	[SerializeField] Animator characterSelectionScreenAnimator;
+	[SerializeField] Animator titleScreenAnimator;
 	[SerializeField] GameObject nextHint;
 	[SerializeField] GameObject playHint;
 	[SerializeField] GameObject previousHint;
 	[SerializeField] Image img;
+	ScreenManager screenManager;
 
 	float delay = 0.1f;
 	int pageIndex = 0;
@@ -21,6 +22,7 @@ public class Tutorial : MonoBehaviour {
 	void Start()
 	{
 		playHint.SetActive (false);
+		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 
 	void Update () 
@@ -40,12 +42,16 @@ public class Tutorial : MonoBehaviour {
 		else if (InputManager.ActiveDevice.Action1.WasPressed && pageIndex == 2)
 		{
 			AudioManager.instance.PlaySound ("UI_gameLaunch", "UI");
-			SceneManager.LoadScene (sceneToLoad);
+			screenManager.OpenPanel (characterSelectionScreenAnimator);
 		}
 		else if (InputManager.ActiveDevice.Action2.WasPressed && pageIndex == 0)
 		{
 			AudioManager.instance.PlaySound ("UI_cancel", "UI");
-			SceneManager.LoadScene (previousScene);
+			screenManager.CloseCurrent ();
+			if(PlayerPrefs.GetInt("NotFirstTime") == 1)
+				screenManager.OpenPanel (characterSelectionScreenAnimator);
+			else 
+				screenManager.OpenPanel (titleScreenAnimator);
 		}
 			
 		if (pageIndex == 2)

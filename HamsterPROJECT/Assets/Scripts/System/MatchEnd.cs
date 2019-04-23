@@ -172,6 +172,7 @@ public class MatchEnd : MonoBehaviour {
 	void EndOfMatch()
 	{
 		GameManager.lastLevelPlayed = SceneManager.GetActiveScene ().name;
-		SceneManager.LoadScene ("Results");
+		ScreenManager.screenToInitiallyOpen = "ResultsPanel";
+		SceneManager.LoadScene ("Menu");
 	}
 }

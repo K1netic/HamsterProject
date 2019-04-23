@@ -205,7 +205,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         switch (attacker.GetComponent<Hook>().currentBlade)
                         {
                             case Hook.CurrentBlade.none:
-                                print("You are not suppossed to be there ! How do you came ?!");
+                                print("You are not suppossed to be there ! How did you come ?!");
                                 break;
                             case Hook.CurrentBlade.blade1:
                                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);

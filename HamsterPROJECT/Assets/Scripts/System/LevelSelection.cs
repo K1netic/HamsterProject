@@ -20,29 +20,51 @@ public class LevelSelection : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] List<string> pack = new List<string>();
+	[SerializeField] List<string> pack1 = new List<string>();
+	[SerializeField] List<string> pack2 = new List<string>();
+	[SerializeField] List<string> pack3 = new List<string>();
+	[SerializeField] List<string> pack4 = new List<string>();
+	[SerializeField] List<string> pack5 = new List<string>();
+
     List<string> currentPack = new List<string>();
 	public List<string> levels = new List<string>();
-	string packName;
 	string lastLevelPlayed;
 	string levelToLoad;
 
-	void Start()
-	{
-		// Set current pack to base pack
-		currentPack = pack;
-		packName = "P1";
-//		// Add pack levels to levels pool
-//		foreach (string level in currentPack)
-//		{
-//			levels.Add (level);
-//		}
-	}
+// 	void Start()
+// 	{
+// 		// Set current pack to base pack
+// 		// currentPack = pack1;
+// //		// Add pack levels to levels pool
+// //		foreach (string level in currentPack)
+// //		{
+// //			levels.Add (level);
+// //		}
+// 	}
 
-	void SelectPack()
+	public void SelectPack(int packID)
 	{
-		//TODO : For future versions that will propose different set of levels
-		//As of prototype Alpha version, only one pack is avaliable
+		switch (packID)
+		{
+			case 1:
+			currentPack = pack1;
+			break;
+			case 2:
+			currentPack = pack2;
+			break;
+			case 3:
+			currentPack = pack3;
+			break;
+			case 4:
+			currentPack = pack4;
+			break;
+			case 5:
+			currentPack = pack5;
+			break;
+			default:
+			currentPack = pack1;
+			break;
+		}
 	}
 
     public void LoadNextLevel(string currentLevel)

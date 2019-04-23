@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using InControl;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
 
@@ -16,6 +17,8 @@ public class PauseMenu : MonoBehaviour {
 	MusicManager music;
 	AudioSource source;
 	AudioLowPassFilter filter;
+
+	GameObject itemSelected;
 
     private void Awake()
     {
@@ -30,7 +33,6 @@ public class PauseMenu : MonoBehaviour {
 		filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
 		source = music.GetComponent<AudioSource> ();
 	}
-
 
 	void Update()
 	{
