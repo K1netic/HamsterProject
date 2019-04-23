@@ -12,31 +12,26 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	int readyCount = 0;
 	//Used to make sure all panels are checked before the players are considered all ready
 	bool checkPanels = true;
-	[SerializeField] string sceneToLoad;
 	[SerializeField] GameObject readyText;
 	bool allowValidation = false;
 	public int activatedPlayers = 0;
-	[SerializeField] string previousScene;
 
 	// Dynamic selectable characters
-	public static int nbCharactersAvailable;
 	public static bool[] selectableCharacters;
 	GameObject characterPrefab;
 
 	[SerializeField] Material spriteDefault;
 
-	//Audio
-	float delay = 0.1f;
+	ScreenManager screenManager;
+	[SerializeField] Animator previousScreenAnimator;
+	[SerializeField] Animator nextScreenAnimator;
+	[SerializeField] Animator gamesModesScreenAnimator;
+	Animator characterScreenAnimator;
+
 
 	void Awake()
 	{
-		nbCharactersAvailable = GameManager.nbOfCharacters;
-		selectableCharacters = new bool[GameManager.nbOfCharacters];
-		selectableCharacters.SetValue (true, 0);
-		selectableCharacters.SetValue (true, 1);
-		selectableCharacters.SetValue (true, 2);
-		selectableCharacters.SetValue (true, 3);
-		selectableCharacters.SetValue (true, 4);
+
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
         if (PlayerPrefs.GetInt("NotFirstTime") == 0)
@@ -45,14 +40,28 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	void Start()
 	{
-		GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
-		MusicManager.instance.PlayMusic ("menu");
+		// GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
+		// MusicManager.instance.PlayMusic ("menu");
+		screenManager = FindObjectOfType<ScreenManager> ();
+		characterScreenAnimator = GameObject.Find ("CharacterSelectionPanel").gameObject.GetComponent<Animator> ();
+	}
+
+	void OnEnable()
+	{
+		Debug.Log("enabling character screen");
+		selectableCharacters = new bool[GameManager.nbOfCharacters];
+		selectableCharacters.SetValue (true, 0);
+		selectableCharacters.SetValue (true, 1);
+		selectableCharacters.SetValue (true, 2);
+		selectableCharacters.SetValue (true, 3);
+		selectableCharacters.SetValue (true, 4);
 
 		#region DataRecovering
 		for (int i = 0; i < GameManager.playersActive.Length; i++)
 		{
 			if (GameManager.playersActive[i] == true)
 			{
+				Debug.Log("player n° : " + i.ToString());
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().characterSprites[panels[i].characterSelected];
@@ -97,11 +106,12 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				foreach (InputDevice dev in InputManager.ActiveDevices)
 				{
-					//Load Game Modes Screen when any players pressed a command (start, select...)
-					if (dev.Action1.WasPressed && ready)
+					//Open Next Screen when LB and RB are pressed simulatenously
+					if (dev.LeftBumper.IsPressed && dev.RightBumper.IsPressed && ready)
 					{
 						PlayerInfos ();
-						StartCoroutine(LoadGameModes ());
+						AudioManager.instance.PlaySound ("UI_validate", "UI");
+						screenManager.OpenPanel (nextScreenAnimator);
 					}
 				}
 			}
@@ -110,17 +120,26 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		foreach (InputDevice dev in InputManager.ActiveDevices)
 		{
 			if (dev.Action2.WasPressed
-				&& previousScene != null && previousScene != "" 
 				&& activatedPlayers == 0 
 				&& readyCount == 0)
 			{
-				MusicManager.instance.StopMusic ("menu");
-				StartCoroutine (LoadPreviousScene ());
+				// MusicManager.instance.StopMusic ("menu");
+				AudioManager.instance.PlaySound ("UI_Cancel", "UI");
+				screenManager.CloseCurrent ();
+				screenManager.OpenPanel (previousScreenAnimator);
+				
+				DeleteClones ();
 			}
 
+			// Equivalent of Y Button 
 			if (dev.Action4.WasPressed)
 			{
-				SceneManager.LoadScene("Tutorial");
+				PlayerInfos();
+				AudioManager.instance.PlaySound ("UI_validate", "UI");
+				// CancelAllVibrations();
+				screenManager.CloseCurrent ();
+				screenManager.OpenPanel (gamesModesScreenAnimator);
+				// DeleteClones ();
 			}
 		}
 	}
@@ -175,7 +194,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		}
 	}
 
-	#region Deactivating Panel when a device is detached
+	// Deactivating Panel when a device is detached
 	void OnDeviceDetached( InputDevice inputDevice )
 	{
 		for (var i = 0; i < panels.Count; i++)
@@ -188,7 +207,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 	}
-	#endregion
 
 	// Writing playerInfos in the GameManager
 	void PlayerInfos()
@@ -204,23 +222,30 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
 				newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
 				newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
-				newPlayerPrefab.transform.GetChild (0).position = new Vector3 (0, 0, 0);
 				GameManager.playersCharacters [i] = newPlayerPrefab;
 			}
 		}
+		DeleteClones ();
+		CancelAllVibrations();
+		MatchStart.gameHasStarted = false;
+		
 	}
 
-	IEnumerator LoadPreviousScene()
+	void DeleteClones()
 	{
-		AudioManager.instance.PlaySound ("UI_cancel", "UI");
-		yield return new WaitForSeconds (delay);
-		SceneManager.LoadScene (previousScene);
+		GameObject[] playerClones = GameObject.FindGameObjectsWithTag ("Player");
+		foreach(GameObject clone in playerClones)
+		{
+			Destroy (clone.transform.parent.gameObject);
+		}
 	}
 
-	IEnumerator LoadGameModes()
+	void CancelAllVibrations()
 	{
-		AudioManager.instance.PlaySound ("UI_validate", "UI");
-		yield return new WaitForSeconds (delay);
-		SceneManager.LoadScene (sceneToLoad);
+		foreach(InputDevice device in InputManager.Devices)
+		{
+			device.StopVibration ();
+		}
 	}
+
 }

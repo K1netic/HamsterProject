@@ -67,7 +67,11 @@ public class PlayerNumberDisplay : MonoBehaviour {
     {
         if (MatchStart.gameHasStarted && render.enabled)
         {
-            Destroy(gameObject);
+            render.enabled = false;
+        }
+        else if (!MatchStart.gameHasStarted)
+        {
+            render.enabled = true;
         }
     }
 }

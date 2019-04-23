@@ -6,15 +6,16 @@ using InControl;
 
 public class TitleScreen : MonoBehaviour {
 
-	[SerializeField] string sceneToLoad;
-	float delay = 0.1f;
-	MusicManager music;
+	ScreenManager screenManager;
+	[SerializeField] Animator nextScreenAnimator;
+	[SerializeField] Animator tutorialScreenAnimator;
 
     void Start()
 	{
 		//PlayerPrefs.DeleteAll ();
 		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
         Cursor.visible = false;
+		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 
 	void Update () {
@@ -22,7 +23,7 @@ public class TitleScreen : MonoBehaviour {
 		{
 			if (dev.Action1.WasPressed)
 			{
-				StartCoroutine(TitleScreenValidation());
+				OpenNextScreen ();
 			}
 
 			else if (InputManager.ActiveDevice.Action2.WasPressed)
@@ -32,17 +33,12 @@ public class TitleScreen : MonoBehaviour {
 		}
 	}
 
-	IEnumerator TitleScreenValidation()
+	void OpenNextScreen()
 	{
 		AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
-		yield return new WaitForSeconds (delay);
-        if(PlayerPrefs.GetInt("NotFirstTime") == 1)
-		    SceneManager.LoadScene (sceneToLoad);
-        else
-        {
-            //PlayerPrefs.SetInt("NotFirstTime", 1);
-            //PlayerPrefs.Save();
-            SceneManager.LoadScene("Tutorial");
-        }
+		if(PlayerPrefs.GetInt("NotFirstTime") == 1)
+			screenManager.OpenPanel (nextScreenAnimator);
+		else 
+			screenManager.OpenPanel (tutorialScreenAnimator);
 	}
 }

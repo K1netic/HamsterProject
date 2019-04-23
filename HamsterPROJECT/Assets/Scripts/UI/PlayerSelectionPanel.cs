@@ -31,21 +31,23 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool blockStickMovement = false;
 	CharacterSelectionScreen select;
 	[HideInInspector] public GameObject validatedCharacter;
+
+	// Character instanciation
 	GameObject characterPrefab;
-
-	//Audio
-	bool validate = false;
-	bool activate = false;
-
-	public InputDevice device;
-
-	[SerializeField] int panelId;
 	GameObject newPlayer;
+	[SerializeField] int panelId;
+	bool blockCharacterSelection = false;
+	[SerializeField] GameObject UIElements;
+	[SerializeField] GameObject RoomElements;
+
+	// Input device
+	public InputDevice device;
 
 	void Start()
 	{
 		state = SelectionPanelState.Deactivated;
 		select = GameObject.Find ("CharacterSelectionScripts").GetComponent<CharacterSelectionScreen> ();
+		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
 		unavailableCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/UnavailableCharacters");
 		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
@@ -53,7 +55,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
 		leftArrow = guid.transform.GetChild (0).gameObject;
 		rightArrow = guid.transform.GetChild (1).gameObject;
-		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 	}
 
 	// Update is called once per frame
@@ -62,27 +63,28 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		if (device != null)
 		{
 			#region StateManagement
-			// Activation
+			// Activation (Decativated -> Activated)
 			if (device.Action1.WasPressed
 				&& state == SelectionPanelState.Deactivated)
 			{
-				PlayActivationSound();
 				state = SelectionPanelState.Activated;
+				AudioManager.instance.PlaySound ("UI_panelActivation", "UI");
+
 			}
 
-			// Validation
+			// Validation (Activated -> Validated)
 			else if (device.Action1.WasPressed
 				&& state == SelectionPanelState.Activated 
 				&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true)
 			{
 				state = SelectionPanelState.Validated;
-				PlayValidateSound();
-				CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
+				AudioManager.instance.PlaySound ("UI_validate", "UI");
 				InstantiatePlayer(panelId);
 				validatedCharacter = newPlayer;
+
 			}
 
-			// Deactivation
+			// Deactivation (Activated -> Deactivated)
 			if (device.Action2.WasPressed
 				&& state == SelectionPanelState.Activated)
 			{
@@ -91,15 +93,17 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				device = null;
 			}
 
-			// Unvalidation
+			// Unvalidation (Validated -> Activated)
 			else if (device.Action2.WasPressed
 				&& state == SelectionPanelState.Validated)
 			{
 				state = SelectionPanelState.Activated;
+				UIElements.SetActive(true);
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 				Destroy (newPlayer.gameObject);
+				blockCharacterSelection = false;
 			}
 
 			// Trying to validate on a character not avalaible
@@ -117,7 +121,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		switch (state)
 		{
 		case SelectionPanelState.Deactivated:
-			activate = false;
 			characterSprite.gameObject.SetActive(false);
 			guid.SetActive(true);
 			leftArrow.SetActive(false);
@@ -127,22 +130,27 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			break;
 
 		case SelectionPanelState.Activated:
-			validate = false;
-			PlayActivationSound();
+			UIElements.SetActive(true);
+			RoomElements.SetActive(false);
 			characterSprite.gameObject.SetActive(true);
 			guid.SetActive(true);
 			leftArrow.SetActive(true);
 			rightArrow.SetActive(true);
-			characterSprite.sprite = characterSprites[characterSelected];
 			border.sprite = activatedBorder;
+			characterSprite.sprite = characterSprites[characterSelected];
 			//Activate character selection
 			CharacterSelection();
 			break;
 
 		case SelectionPanelState.Validated:
-			PlayValidateSound();
 			guid.SetActive(false);
 			border.sprite = validatedBorders[characterSelected];
+			CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
+			blockCharacterSelection = true;
+			UIElements.SetActive(false);
+			RoomElements.SetActive(true);
+			if (!MatchStart.gameHasStarted) 
+				MatchStart.gameHasStarted = true;
 			break;
 		}
 		#endregion
@@ -164,7 +172,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			
 		if (device.LeftStickX.Value >= 0.8f && !blockStickMovement)
 		{
-			if (characterSelected < CharacterSelectionScreen.nbCharactersAvailable - 1)
+			if (characterSelected < GameManager.nbOfCharacters - 1)
 			{
 				characterSelected += 1;
 			}
@@ -185,7 +193,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			}
 			else
 			{
-				characterSelected = CharacterSelectionScreen.nbCharactersAvailable - 1;
+				characterSelected = GameManager.nbOfCharacters - 1;
 			}
 			characterSprite.sprite = characterSprites[characterSelected];
 			AudioManager.instance.PlaySound ("UI_pick", "UI");
@@ -194,6 +202,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		else if (Mathf.Abs(device.LeftStickX.Value) < 0.2f)
 			blockStickMovement = false;
+
 	}
 
 	void InstantiatePlayer(int panelIndex)
@@ -203,25 +212,23 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
 		GameManager.playersInputDevices [panelIndex] = this.device;
 		inst.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = false;
+		switch(panelIndex)
+		{
+		case 0:
+			inst.transform.position = new Vector2 (-20f,11.5f);
+			break;
+		case 1:
+			inst.transform.position = new Vector2 (20f,11.5f);
+			break;
+		case 2:
+			inst.transform.position = new Vector2 (-20f,-11.5f);
+			break;
+		case 3:
+			inst.transform.position = new Vector2 (20f,-11.5f);
+			break;
+		}
 		newPlayer = Instantiate(inst);
 		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelIndex];
 	}
 
-	void PlayActivationSound()
-	{
-		if (!activate)
-		{
-			AudioManager.instance.PlaySound ("UI_panelActivation", "UI");
-			activate = true;
-		}
-	}
-
-	void PlayValidateSound()
-	{
-		if (!validate)
-		{
-			AudioManager.instance.PlaySound ("UI_validate", "UI");
-			validate = true;
-		}
-	}
 }
