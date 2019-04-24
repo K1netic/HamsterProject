@@ -157,7 +157,7 @@ public class Hook : MonoBehaviour {
         lineCollider = line.GetComponent<BoxCollider2D>();
         lineCollider.isTrigger = true;   
         line.gameObject.tag = "Rope";
-        line.sortingOrder = 2;
+        line.sortingLayerName = "Rope";
 
         //Charge les sprites en fonction du personnage sélectionné
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
