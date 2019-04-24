@@ -12,9 +12,8 @@ public class Explodable : MonoBehaviour
     public int extraPoints = 0;
     public int subshatterSteps = 0;
 
-    public string fragmentLayer = "Default";
-    [HideInInspector]
-    public string sortingLayerName = "Default";
+    public string fragmentLayer = "Ground";
+    public string sortingLayerName = "Destructible Platform";
 	public string sortingTag = "Untagged";
     public int orderInLayer = 0;
 
@@ -30,8 +29,6 @@ public class Explodable : MonoBehaviour
     private List<List<Vector2>> polygons = new List<List<Vector2>>();
    
 	void Start() {
-        sortingLayerName = fragmentLayer;
-
         deleteFragments();
         explode ();
 	}
@@ -118,7 +115,7 @@ public class Explodable : MonoBehaviour
             if (p != null)
             {
                 p.layer = LayerMask.NameToLayer(fragmentLayer);
-                p.GetComponent<Renderer>().sortingLayerName = sortingLayerName;
+                p.GetComponent<Renderer>().sortingLayerName = "Destructible Platform";
                 p.GetComponent<Renderer>().sortingOrder = orderInLayer;
 				p.transform.gameObject.tag = sortingTag;
 				p.GetComponent<Rigidbody2D> ().bodyType = RigidbodyType2D.Kinematic;
