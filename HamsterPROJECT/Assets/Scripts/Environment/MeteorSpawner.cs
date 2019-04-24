@@ -9,7 +9,7 @@ public class MeteorSpawner : MonoBehaviour {
     [SerializeField]
     float timeBeforeFirstSpawn;
     [SerializeField]
-    bool spawnTillTheEnd;
+    int howManySpawn;
     [SerializeField]
     float timeBetweenEachSpawn;
     [Range(-35f, 35f)]
@@ -35,7 +35,8 @@ public class MeteorSpawner : MonoBehaviour {
             meteor.GetComponent<MeteorBehavior>().leftBound = leftBound;
             meteor.GetComponent<MeteorBehavior>().rightBound = rightBound;
             meteor.GetComponent<MeteorBehavior>().targetY = targetY;
-            if (spawnTillTheEnd)
+            howManySpawn--;
+            if (howManySpawn > 0)
             {
                 timer -= timeBetweenEachSpawn;
             }
