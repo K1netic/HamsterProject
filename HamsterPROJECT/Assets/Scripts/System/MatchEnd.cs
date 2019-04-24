@@ -25,13 +25,17 @@ public class MatchEnd : MonoBehaviour {
 	MusicManager music;
 
 	LevelSelection lvlSelect;
+	MatchStart mtchstrt;
 
     private void Awake()
     {
 		music = GameObject.FindObjectOfType<MusicManager> ();
-
-        scoreDisplay = GameObject.Find("ScoreDisplayer");
-		scoreDisplay.SetActive (false);
+		mtchstrt = GameObject.FindObjectOfType<MatchStart>();
+		if (!mtchstrt.TestWithoutUI)
+		{
+			scoreDisplay = GameObject.Find("ScoreDisplayer");
+			scoreDisplay.SetActive (false);
+		}
     }
 
     // Use this for initialization

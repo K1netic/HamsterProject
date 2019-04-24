@@ -22,7 +22,7 @@ public class MatchStart : MonoBehaviour {
 
     public List<Transform> spawnPoints = new List<Transform>();
 
-	[SerializeField] bool TestWithoutUI;
+	[SerializeField] public bool TestWithoutUI;
 
 	GameObject beforeReadyHint;
 
@@ -38,9 +38,12 @@ public class MatchStart : MonoBehaviour {
 			}
 		}
 
-		beginText = GameObject.Find("BeginText").GetComponent<Text>();
-        progressBar = GameObject.Find("ProgressBar");
-		beforeReadyHint = GameObject.Find ("BeforeReadyText");
+        if (!TestWithoutUI)
+        {
+            beginText = GameObject.Find("BeginText").GetComponent<Text>();
+            progressBar = GameObject.Find("ProgressBar");
+            beforeReadyHint = GameObject.Find ("BeforeReadyText");
+        }
     }
 
 	void Start()
@@ -98,23 +101,28 @@ public class MatchStart : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		foreach (InputDevice dev in InputManager.ActiveDevices)
-		{
-			if ((dev.AnyButtonWasPressed || dev.CommandWasPressed || dev.LeftTrigger.WasPressed || dev.RightTrigger.WasPressed) && !activateBegin)
-			{
-				activateBegin = true;
-				beforeReadyHint.SetActive (false);
-				AudioManager.instance.PlaySound ("UI_readyFight", "UI");
-				progressBar.GetComponent<Animator>().enabled = true;
-			}
-		}
+        if (!TestWithoutUI)
+        {
+            foreach (InputDevice dev in InputManager.ActiveDevices)
+            {
+                if ((dev.AnyButtonWasPressed || dev.CommandWasPressed || dev.LeftTrigger.WasPressed || dev.RightTrigger.WasPressed) && !activateBegin)
+                {
+                    activateBegin = true;
+                    beforeReadyHint.SetActive (false);
+                    progressBar.GetComponent<Animator>().enabled = true;
+                    AudioManager.instance.PlaySound ("UI_readyFight", "UI");
+                }
+            }
 
-		if (activateBegin && !coroutineLimiter)
-		{
-			timeAtBegin = Time.time;
-			StartCoroutine (BeginCount ());
-			coroutineLimiter = true;
-		}
+            if (activateBegin && !coroutineLimiter)
+            {
+                timeAtBegin = Time.time;
+                StartCoroutine (BeginCount ());
+                coroutineLimiter = true;
+            }
+        }
+        else
+            gameHasStarted = true;
 	}
 
     void InstantiateTwoPlayers(int playerIndex)
