@@ -20,14 +20,17 @@ public class PauseMenu : MonoBehaviour {
 
 	GameObject itemSelected;
 
+	MatchStart mtchstrt;
+
     private void Awake()
     {
         pauseMenu = GameObject.Find("PauseMenu");
+		mtchstrt = GameObject.FindObjectOfType<MatchStart>();
     }
 
     void Start()
 	{
-		if (deactivatePauseMenu) 
+		if (deactivatePauseMenu && !mtchstrt.TestWithoutUI) 
 			pauseMenu.SetActive(false);
 		music = FindObjectOfType<MusicManager> ();
 		filter = music.gameObject.GetComponent<AudioLowPassFilter> ();
