@@ -17,6 +17,8 @@ public class CircularPlatform : MonoBehaviour {
     float angle;
     float t;
 
+    [SerializeField] bool peanut;
+
     void Awake () {
         t = (12.565f * startPositionInDegree) / 180; //(NB pour Ben : 25.13 pour un tour complet. 0 en haut, 12.565 en bas, 6.2825 à droite et 18.8475 à gauche)
         pivotPos = transform.parent.transform.position;
@@ -26,6 +28,7 @@ public class CircularPlatform : MonoBehaviour {
         transform.position = pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0);
         vectorToTarget = transform.position - pivotPos;
         angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+        if (peanut) angle -= 135f;
         rigid.MoveRotation(angle);
     }
 
@@ -36,6 +39,7 @@ public class CircularPlatform : MonoBehaviour {
             rigid.MovePosition(pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0));
             vectorToTarget = transform.position - pivotPos;
             angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+            if (peanut) angle -= 135f;
             rigid.MoveRotation(angle);
         }
     }
