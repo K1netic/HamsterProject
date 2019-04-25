@@ -71,48 +71,35 @@ public class MovingPlatform : MonoBehaviour {
         {
             if (fullVerticalMovement)
             {
-                if (transform.position.y <= node1pos.y && !startMoving)
-                {
-                    StartCoroutine(Wait());
-                    target = node2pos - (Vector2)transform.position;
-                }
-                else if (transform.position.y >= node2pos.y && !startMoving)
-                {
-                    StartCoroutine(Wait());
-                    target = node1pos - (Vector2)transform.position;
-                }
+                if (transform.position.y > node1pos.y && transform.position.y < node2pos.y && startMoving)
+                    startMoving = false;
+                if (transform.position.y <= node1pos.y && !startMoving && !waiting)
+                    StartCoroutine(NewTarget(node2pos));
+                else if (transform.position.y >= node2pos.y && !startMoving && !waiting)
+                    StartCoroutine(NewTarget(node1pos));
             }
             else
             {
-                if (transform.position.x <= node1pos.x && !startMoving)
-                {
-                    StartCoroutine(Wait());
-                    target = node2pos - (Vector2)transform.position;
-                }
-                else if (transform.position.x >= node2pos.x && !startMoving)
-                {
-                    StartCoroutine(Wait());
-                    target = node1pos - (Vector2)transform.position;
-                }
+                if (transform.position.x > node1pos.x && transform.position.x < node2pos.x && startMoving)
+                    startMoving = false;
+                if (transform.position.x <= node1pos.x && !startMoving && !waiting)
+                    StartCoroutine(NewTarget(node2pos));
+                else if (transform.position.x >= node2pos.x && !startMoving && !waiting)
+                    StartCoroutine(NewTarget(node1pos));
             }
-
-            if (!waiting)
-            {
+            if (!waiting && rigid.velocity == Vector2.zero)
                 rigid.velocity = moveSpeed * target.normalized;
-            }
         }
-        
     }
 
-    IEnumerator Wait()
+    IEnumerator NewTarget(Vector2 targetPos)
     {
         waiting = true;
-        rigid.velocity = Vector3.zero;
+        rigid.velocity = Vector2.zero;
+        target = targetPos - (Vector2)transform.position;
         yield return new WaitForSeconds(waitingTime);
         startMoving = true;
         waiting = false;
-        yield return new WaitForSeconds(.5f); //Attend 0.5 secondes avant de changer le booléan pour etre sur que la plateforme ait franchir la limite
-        startMoving = false;
     }
 }
 
