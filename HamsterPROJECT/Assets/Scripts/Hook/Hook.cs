@@ -201,9 +201,9 @@ public class Hook : MonoBehaviour {
                 print("Default case switch start Hook.cs");
             break;
         }
-        blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_1");
-        blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_2");
-        blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1_3");
+        blade1Sprite = Resources.Load<Sprite>("ArrowSprites/Blade1");
+        blade2Sprite = Resources.Load<Sprite>("ArrowSprites/Blade2");
+        blade3Sprite = Resources.Load<Sprite>("ArrowSprites/Blade3");
         //Initialise le joueur avec la flèche et sans lame
         spriteRenderer.sprite = arrowSprite;
         Sheathe();
