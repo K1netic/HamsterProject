@@ -17,6 +17,7 @@ public class MeteorBehavior : MonoBehaviour {
     [SerializeField]
     LayerMask layerMaskDeath;
     Collider2D[] deathOverlap;
+    bool explosionDone;
 
     public float leftBound;
     public float rightBound;
@@ -50,8 +51,9 @@ public class MeteorBehavior : MonoBehaviour {
             {
                 collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(50, gameObject, true);
             }
-            else if (collider.gameObject.GetComponent<ExplodeOnClick>())
+            else if (collider.gameObject.GetComponent<ExplodeOnClick>() && !explosionDone)
             {
+                explosionDone = true;
                 collider.gameObject.GetComponent<ExplodeOnClick>().Explosion(collider.gameObject.transform.position, speed);
             }else if (collider.gameObject.CompareTag("Hook"))
             {
