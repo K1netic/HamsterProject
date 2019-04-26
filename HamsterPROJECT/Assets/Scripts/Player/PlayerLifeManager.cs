@@ -94,7 +94,7 @@ public class PlayerLifeManager : MonoBehaviour {
 
         FbOnDeath = GameObject.Find ("LevelScripts").GetComponent<FeedbacksOnDeath> ();
 
-        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink");
+        woundedMaterial = Resources.Load<Material>("Material/SpriteBlink"+playerMovement.playerNumber);
 
         //Switch gérant la couleur de la trail et la couleur des particules
         switch (sprite.sprite.name)
