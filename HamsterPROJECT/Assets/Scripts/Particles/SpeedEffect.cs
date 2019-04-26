@@ -14,15 +14,15 @@ public class SpeedEffect : MonoBehaviour {
 
 	Color ColorEffectA;
 	//Orange
-	Color Color1= new Color(1, 0.5568f, 0);
+	Color Color1= new Color(.9215686f, 0.7294118f, 0.345098f);
 	//Pink
-	Color Color2= new Color(1,0,1);
-	//Green
-	Color Color3 = new Color(0.2019f, 0.5660f,0.1361f);
-	//Yellow
-	Color Color4= new Color(1,1,0);
+	Color Color2= new Color(0.9960784f, 0.5686275f, 0.7568628f);
 	//Blue
-	Color Color5= new Color(0,0.2901f,1);
+	Color Color3 = new Color(0.2313726f, 0.572549f, 0.9882353f);
+	//Green
+	Color Color4= new Color(0.4627451f, 0.7372549f, 0.2862745f);
+	//Red
+	Color Color5= new Color(0.9098039f, 0.1176471f, 0.3176471f);
 
 	[SerializeField]
 	GameObject player;

@@ -119,24 +119,24 @@ public class PlayerMovement : MonoBehaviour
         switch (playerSprite.name)
         {
             case "0":
-                dashEffectColor.startColor = new Color(1, 0.5529412f, 0);
-                colorDashEffect[1].color = new Color(1, 0.5529412f, 0);
+                dashEffectColor.startColor = new Color(.9215686f, 0.7294118f, 0.345098f);
+                colorDashEffect[1].color = new Color(.9215686f, 0.7294118f, 0.345098f);
                 break;
             case "1":
-                dashEffectColor.startColor = new Color(1, 0.3820755f, 0.8743438f);
-                colorDashEffect[1].color = new Color(1, 0.3820755f, 0.8743438f);
+                dashEffectColor.startColor = new Color(0.9960784f, 0.5686275f, 0.7568628f);
+                colorDashEffect[1].color = new Color(0.9960784f, 0.5686275f, 0.7568628f);
                 break;
             case "2":
-                dashEffectColor.startColor = new Color(0.06499982f, 1, 0);
-                colorDashEffect[1].color = new Color(0.06499982f, 1, 0);
+                dashEffectColor.startColor = new Color(0.2313726f, 0.572549f, 0.9882353f);
+                colorDashEffect[1].color = new Color(0.2313726f, 0.572549f, 0.9882353f);
                 break;
             case "3":
-                dashEffectColor.startColor = new Color(0.8980393f, 0.8392158f, .3607843f);
-                colorDashEffect[1].color = new Color(0.8980393f, 0.8392158f, .3607843f);
+                dashEffectColor.startColor = new Color(0.4627451f, 0.7372549f, 0.2862745f);
+                colorDashEffect[1].color = new Color(0.4627451f, 0.7372549f, 0.2862745f);
                 break;
             case "4":
-                dashEffectColor.startColor = new Color(0, 0.6730871f, .9433962f);
-                colorDashEffect[1].color = new Color(0, 0.6730871f, .9433962f);
+                dashEffectColor.startColor = new Color(0.9098039f, 0.1176471f, 0.3176471f);
+                colorDashEffect[1].color = new Color(0.9098039f, 0.1176471f, 0.3176471f);
                 break;
             default:
                 print("Default case switch start PlayerMovement.cs");
