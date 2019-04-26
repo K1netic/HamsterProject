@@ -6,6 +6,10 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour {
 
     [SerializeField]
+    bool waitBeforeStart;
+    [SerializeField]
+    float timeBeforeStart;
+    [SerializeField]
     GameObject node1;
     [SerializeField]
     GameObject node2;
@@ -19,7 +23,6 @@ public class MovingPlatform : MonoBehaviour {
     bool fullVerticalMovement;
 
     Vector2 target;
-
     Vector2 node1pos;
     Vector2 node2pos;
 
@@ -27,6 +30,8 @@ public class MovingPlatform : MonoBehaviour {
 
     bool waiting;
     bool startMoving;
+
+    float timer;
 
     private void Start()
     {
@@ -69,26 +74,35 @@ public class MovingPlatform : MonoBehaviour {
     {
         if (MatchStart.gameHasStarted)
         {
-            if (fullVerticalMovement)
+            if (waitBeforeStart)
             {
-                if (transform.position.y > node1pos.y && transform.position.y < node2pos.y && startMoving)
-                    startMoving = false;
-                if (transform.position.y <= node1pos.y && !startMoving && !waiting)
-                    StartCoroutine(NewTarget(node2pos));
-                else if (transform.position.y >= node2pos.y && !startMoving && !waiting)
-                    StartCoroutine(NewTarget(node1pos));
+                timer += Time.deltaTime;
+                if(timer > timeBeforeStart)
+                    waitBeforeStart = false;
             }
             else
             {
-                if (transform.position.x > node1pos.x && transform.position.x < node2pos.x && startMoving)
-                    startMoving = false;
-                if (transform.position.x <= node1pos.x && !startMoving && !waiting)
-                    StartCoroutine(NewTarget(node2pos));
-                else if (transform.position.x >= node2pos.x && !startMoving && !waiting)
-                    StartCoroutine(NewTarget(node1pos));
+                if (fullVerticalMovement)
+                {
+                    if (transform.position.y > node1pos.y && transform.position.y < node2pos.y && startMoving)
+                        startMoving = false;
+                    if (transform.position.y <= node1pos.y && !startMoving && !waiting)
+                        StartCoroutine(NewTarget(node2pos));
+                    else if (transform.position.y >= node2pos.y && !startMoving && !waiting)
+                        StartCoroutine(NewTarget(node1pos));
+                }
+                else
+                {
+                    if (transform.position.x > node1pos.x && transform.position.x < node2pos.x && startMoving)
+                        startMoving = false;
+                    if (transform.position.x <= node1pos.x && !startMoving && !waiting)
+                        StartCoroutine(NewTarget(node2pos));
+                    else if (transform.position.x >= node2pos.x && !startMoving && !waiting)
+                        StartCoroutine(NewTarget(node1pos));
+                }
+                if (!waiting && rigid.velocity == Vector2.zero)
+                    rigid.velocity = moveSpeed * target.normalized;
             }
-            if (!waiting && rigid.velocity == Vector2.zero)
-                rigid.velocity = moveSpeed * target.normalized;
         }
     }
 
