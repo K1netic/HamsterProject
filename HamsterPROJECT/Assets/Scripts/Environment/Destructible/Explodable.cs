@@ -48,7 +48,8 @@ public class Explodable : MonoBehaviour
         {
             foreach (GameObject frag in fragments)
             {
-                frag.transform.parent = null;
+                
+                frag.transform.parent = transform.parent;
                 frag.SetActive(true);
             }
         }
@@ -71,7 +72,7 @@ public class Explodable : MonoBehaviour
         setPolygonsForDrawing();
         foreach (GameObject frag in fragments)
         {
-            frag.transform.parent = transform;
+            frag.transform.parent = transform.parent;
             frag.SetActive(false);
         }
     }
@@ -114,6 +115,7 @@ public class Explodable : MonoBehaviour
         {
             if (p != null)
             {
+                p.transform.parent = transform.parent;
                 p.layer = LayerMask.NameToLayer(fragmentLayer);
                 p.GetComponent<Renderer>().sortingLayerName = "Destructible Platform";
                 p.GetComponent<Renderer>().sortingOrder = orderInLayer;

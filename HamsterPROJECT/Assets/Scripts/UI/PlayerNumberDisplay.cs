@@ -44,19 +44,19 @@ public class PlayerNumberDisplay : MonoBehaviour {
         switch (player.GetComponent<SpriteRenderer>().sprite.name)
         {
             case "0":
-                render.color = new Color(.784f, .451f, .173f);
+                render.color = new Color(.9215686f, 0.7294118f, 0.345098f);
                 break;
             case "1":
-                render.color = new Color(.596f, .31f, .624f);
+                render.color = new Color(0.8705882f, 0.282353f, 0.5137255f);
                 break;
             case "2":
-                render.color = new Color(0.310f, 0.624f, 0.318f);
+                render.color = new Color(0.2313726f, 0.572549f, 0.9882353f);
                 break;
             case "3":
-                render.color = new Color(.847f, .761f, .271f);
+                render.color = new Color(0.4627451f, 0.7372549f, 0.2862745f);
                 break;
             case "4":
-                render.color = new Color(.216f, .384f, .529f);
+                render.color = new Color(0.9098039f, 0.1176471f, 0.3176471f);
                 break;
             default:
                 break;
