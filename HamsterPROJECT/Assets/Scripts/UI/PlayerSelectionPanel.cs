@@ -223,16 +223,16 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		switch(panelIndex)
 		{
 		case 0:
-			inst.transform.position = new Vector2 (-20f,11.5f);
+			inst.transform.position = new Vector2 (-20f,9.5f);
 			break;
 		case 1:
-			inst.transform.position = new Vector2 (20f,11.5f);
+			inst.transform.position = new Vector2 (20f,9.5f);
 			break;
 		case 2:
-			inst.transform.position = new Vector2 (-20f,-11.5f);
+			inst.transform.position = new Vector2 (-20f,-13.5f);
 			break;
 		case 3:
-			inst.transform.position = new Vector2 (20f,-11.5f);
+			inst.transform.position = new Vector2 (20f,-13.5f);
 			break;
 		}
 		newPlayer = Instantiate(inst);
