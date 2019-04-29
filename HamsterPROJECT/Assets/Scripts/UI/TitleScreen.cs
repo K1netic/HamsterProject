@@ -36,9 +36,10 @@ public class TitleScreen : MonoBehaviour {
 	void OpenNextScreen()
 	{
 		AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
-		if(PlayerPrefs.GetInt("NotFirstTime") == 1)
-			screenManager.OpenPanel (nextScreenAnimator);
-		else 
-			screenManager.OpenPanel (tutorialScreenAnimator);
+		screenManager.OpenPanel (nextScreenAnimator);
+		// if(PlayerPrefs.GetInt("NotFirstTime") == 1)
+		// 	screenManager.OpenPanel (nextScreenAnimator);
+		// else 
+		// 	screenManager.OpenPanel (tutorialScreenAnimator);
 	}
 }
