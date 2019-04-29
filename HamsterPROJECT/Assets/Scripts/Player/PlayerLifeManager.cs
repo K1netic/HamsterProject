@@ -121,26 +121,26 @@ public class PlayerLifeManager : MonoBehaviour {
             case "2":
                 colorTrail[0].color = new Color(0.2313726f, 0.572549f, 0.9882353f);
                 colorTrail[1].color = new Color(0.04313726f, 0.4117647f, 0.5882353f);
+                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeBlue");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleBlue");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardBlue");
+                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerBlue");
+                break;
+            case "3":
+                colorTrail[0].color = new Color(0.4627451f, 0.7372549f, 0.2862745f);
+                colorTrail[1].color = new Color(0.3294118f, 0.6470588f, 0.1960784f);
                 deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeGreen");
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
                 break;
-            case "3":
-                colorTrail[0].color = new Color(0.4627451f, 0.7372549f, 0.2862745f);
-                colorTrail[1].color = new Color(0.3294118f, 0.6470588f, 0.1960784f);
+            case "4":
+                colorTrail[0].color = new Color(0.9098039f, 0.1176471f, 0.3176471f);
+                colorTrail[1].color = new Color(0.509804f, 0.02352941f, 0.2784314f);
                 deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeYellow");
                 hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerYellow");
-                break;
-            case "4":
-                colorTrail[0].color = new Color(0.9098039f, 0.1176471f, 0.3176471f);
-                colorTrail[1].color = new Color(0.509804f, 0.02352941f, 0.2784314f);
-                deathParticle = Resources.Load<ParticleSystem>("Particles/Nuke/NukeBlue");
-                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
-                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
-                hitLaser = Resources.Load<ParticleSystem>("Particles/LaserHitPlayer/LaserHitPlayerGreen");
                 break;
             default:
                 print("Default case switch start PlayerLifeManager.cs");

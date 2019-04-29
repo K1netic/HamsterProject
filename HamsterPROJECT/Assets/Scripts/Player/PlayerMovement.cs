@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         switch (playerSprite.name)
         {
             case "0":
-                dashEffectColor.startColor = new Color(.9215686f, 0.7294118f, 0.345098f);
+                dashEffectColor.startColor = new Color(1,1,0);
                 colorDashEffect[1].color = new Color(.9215686f, 0.7294118f, 0.345098f);
                 break;
             case "1":
@@ -127,15 +127,15 @@ public class PlayerMovement : MonoBehaviour
                 colorDashEffect[1].color = new Color(0.9960784f, 0.5686275f, 0.7568628f);
                 break;
             case "2":
-                dashEffectColor.startColor = new Color(0.2313726f, 0.572549f, 0.9882353f);
+                dashEffectColor.startColor = new Color(0, 1, 1);
                 colorDashEffect[1].color = new Color(0.2313726f, 0.572549f, 0.9882353f);
                 break;
             case "3":
-                dashEffectColor.startColor = new Color(0.4627451f, 0.7372549f, 0.2862745f);
+                dashEffectColor.startColor = new Color(.3f,1,0);
                 colorDashEffect[1].color = new Color(0.4627451f, 0.7372549f, 0.2862745f);
                 break;
             case "4":
-                dashEffectColor.startColor = new Color(0.9098039f, 0.1176471f, 0.3176471f);
+                dashEffectColor.startColor = new Color(1, 0, 0);
                 colorDashEffect[1].color = new Color(0.9098039f, 0.1176471f, 0.3176471f);
                 break;
             default:
