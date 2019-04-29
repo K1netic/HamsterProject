@@ -140,6 +140,9 @@ public class Hook : MonoBehaviour {
         lifeManager.spriteArrow = spriteRenderer;
         lifeManager.hookScript = this;
 
+        //Détruit le line renderer s'il existait déjà pour éviter le duplicata
+        if (this.transform.parent.transform.childCount == 5)
+            Destroy(this.transform.parent.transform.GetChild(4).gameObject);
         //Crée le line renderer et le configure
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
