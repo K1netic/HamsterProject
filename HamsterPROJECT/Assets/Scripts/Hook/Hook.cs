@@ -180,21 +180,21 @@ public class Hook : MonoBehaviour {
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Arrow2");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/Hook2");
                 colorRope = new Color(0.2313726f, 0.572549f, 0.9882353f);
-                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
-                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleBlue");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardBlue");
                 break;
             case "3":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Arrow3");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/Hook3");
                 colorRope = new Color(0.4627451f, 0.7372549f, 0.2862745f);
-                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
-                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleGreen");
+                hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardGreen");
                 break;
             case "4":
                 arrowSprite = Resources.Load<Sprite>("ArrowSprites/Arrow4");
                 hookheadSprite = Resources.Load<Sprite>("ArrowSprites/Hook4");
                 colorRope = new Color(0.9098039f, 0.1176471f, 0.3176471f);
-                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittlePink");
+                hitLittle = Resources.Load<ParticleSystem>("Particles/HitLittle/HitLittleYellow");
                 hitHard = Resources.Load<ParticleSystem>("Particles/HitHard/HitHardYellow");
                 break;
             default:

@@ -91,13 +91,13 @@ public class Projectile : MonoBehaviour {
                 hitHook = hitHookPink;
                 break;
             case "2":
-                hitHook = hitHookGreen;
+                hitHook = hitHookBlue;
                 break;
             case "3":
-                hitHook = hitHookYellow;
+                hitHook = hitHookGreen;
                 break;
             case "4":
-                hitHook = hitHookBlue;
+                hitHook = hitHookYellow;
                 break;
             default:
                 break;
