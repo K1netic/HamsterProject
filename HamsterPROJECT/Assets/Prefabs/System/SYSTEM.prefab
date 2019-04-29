@@ -179,10 +179,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4224491861688202}
-  - component: {fileID: 114872159372350432}
   - component: {fileID: 114785833461155082}
   - component: {fileID: 114834280797739368}
   - component: {fileID: 114464750304548780}
+  - component: {fileID: 114646993109344732}
   m_Layer: 0
   m_Name: LevelScripts
   m_TagString: Untagged
@@ -497,6 +497,20 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &114646993109344732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696029432352786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5344a7df802362647a7094a8100a437d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Players: []
+  spawnPoints: []
+  TestWithoutUI: 0
 --- !u!114 &114784534166829126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -537,20 +551,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrows: []
   deactivatePauseMenu: 1
---- !u!114 &114872159372350432
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1696029432352786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5344a7df802362647a7094a8100a437d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Players: []
-  spawnPoints: []
-  TestWithoutUI: 0
 --- !u!114 &114945794642737078
 MonoBehaviour:
   m_ObjectHideFlags: 1

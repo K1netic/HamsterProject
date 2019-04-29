@@ -97,6 +97,10 @@ public class Hook : MonoBehaviour {
 	//PAUSE MENU
 	public bool isFrozen = false;
 
+    // FOE
+    PlayerLifeManager foeScript;
+    bool vibrate = false;
+
     private void Awake()
     {
         //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
@@ -536,12 +540,24 @@ public class Hook : MonoBehaviour {
                 }
                 else
                 {
-                    PlayerLifeManager foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
+                    foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                     GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     foeScript.TakeDamage(arrowDamage, gameObject, true);
-                    StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
+
+                    //Différentes vibrations selon si le joueur touché est mort ou pas
+                    if (foeScript.isDead)
+                    {   
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
+
+                    }
+                    else
+                    {
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
+                    }
                 }
             }
         }

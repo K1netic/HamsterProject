@@ -46,6 +46,10 @@ public class Vibrations : MonoBehaviour {
 			device.Vibrate (0f, balanceData.mediumLightVibration);
 			duration = balanceData.mediumVibrationDuration;
 			return duration;
+		case "KillingPlayer":
+			device.Vibrate (balanceData.lightRumble, balanceData.heavyVibration);
+			duration = balanceData.mediumVibration;
+			return duration;
 		case "CollisionArrowShield":
 			device.Vibrate (balanceData.mediumlightRumble, 0f);
 			duration = balanceData.mediumVibrationDuration;
