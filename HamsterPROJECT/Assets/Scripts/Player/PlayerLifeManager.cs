@@ -67,6 +67,9 @@ public class PlayerLifeManager : MonoBehaviour {
     bool deadLimiter = false;// Makes sure Dead function is only called once at a time
     FeedbacksOnDeath FbOnDeath;
 
+    // Used to apply stronger vibration on attacker when they kill a player
+    public bool isDead = false;
+
     // Use this for initialization
     void Start () {
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
@@ -285,6 +288,7 @@ public class PlayerLifeManager : MonoBehaviour {
 			// Player metrics setting
 			if (playerHP <= 0)
 			{
+                isDead = true;
 				if (attacker.tag == "Arrow" || attacker.tag == "Hook")
 				{
 					GameManager.playersKills[int.Parse(attacker.transform.parent.GetChild(0).GetComponent<PlayerMovement>().playerNumber.Substring (2, 1)) - 1] += 1; 
