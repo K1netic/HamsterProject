@@ -14,6 +14,7 @@ public class LineCutter : MonoBehaviour {
     public void CutRope(Vector3 cuttingPos, string cutter){
         if (hook.currentProjectile.GetComponent<Projectile>().hooked && hook.playerMovement.playerNumber != cutter)
         {
+            print("zizi");
             projectile.GetComponent<Projectile>().cut = true;
 
             lifeManager = hook.player.GetComponent<PlayerLifeManager>();

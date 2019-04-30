@@ -110,7 +110,7 @@ public class Hook : MonoBehaviour {
         }
         else
         {
-            joint = GetComponent<DistanceJoint2D>();
+            joint = transform.parent.GetComponentInChildren<DistanceJoint2D>(true));
         }
         joint.enabled = false;
     } 
