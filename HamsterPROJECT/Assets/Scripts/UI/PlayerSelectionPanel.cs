@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using InControl;
 using UnityEditor;
+using System.IO;
 
 public class PlayerSelectionPanel : MonoBehaviour {
 
@@ -39,6 +40,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	bool blockCharacterSelection = false;
 	[SerializeField] GameObject UIElements;
 	[SerializeField] GameObject RoomElements;
+	[SerializeField] Material spriteDefault;
+	// Path of temporary prefab to delete
+	string path = "";
 
 	// Input device
 	public InputDevice device;
@@ -87,9 +91,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Validated;
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
-				InstantiatePlayer(panelId);
+				InstantiatePlayer();
 				validatedCharacter = newPlayer;
-
 			}
 
 			// Deactivation (Activated -> Deactivated)
@@ -110,7 +113,10 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				select.ready = false;
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
+				//Suppression du personnage instancié
 				Destroy (newPlayer.gameObject);
+				//Suppression du prefab temporaire créé
+				Directory.Delete(path, true);
 				blockCharacterSelection = false;
 			}
 
@@ -213,14 +219,14 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	}
 
-	void InstantiatePlayer(int panelIndex)
+	void InstantiatePlayer()
 	{
 		GameObject inst = characterPrefab;
 		inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = characterSprites[characterSelected];
-		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelIndex + 1).ToString();
-		GameManager.playersInputDevices [panelIndex] = this.device;
+		inst.transform.GetChild (0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelId + 1).ToString();
+		GameManager.playersInputDevices [panelId] = this.device;
 		inst.transform.GetChild(0).GetComponent<Rigidbody2D> ().isKinematic = false;
-		switch(panelIndex)
+		switch(panelId)
 		{
 		case 0:
 			inst.transform.position = new Vector2 (-20f,9.5f);
@@ -236,7 +242,13 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			break;
 		}
 		newPlayer = Instantiate(inst);
-		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelIndex];
+		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelId];
+		GameObject newPlayerPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/TemporaryPrefabs/" + panelId + ".prefab", validatedCharacter);
+		newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
+		newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (panelId + 1).ToString();
+		newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
+		GameManager.playersCharacters [panelId] = newPlayerPrefab;
+		path = "Assets/Resources/Prefabs/TemporaryPrefabs/" + newPlayerPrefab.name + ".prefab";
 	}
 
 }
