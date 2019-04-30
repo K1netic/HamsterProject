@@ -117,6 +117,10 @@ public class Hook : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        /*
+        hookInCD = false;
+        hooked = false;*/
+
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
         timeHooked = balanceData.TimeHooked;
@@ -487,6 +491,7 @@ public class Hook : MonoBehaviour {
         } 
         else
         {
+            StartCoroutine(CancelVibration(Vibrations.PlayVibration("RopeCut", playerMovement.playerInputDevice)));
             stockedProjectileScript = projectileScript;
             projectileScript = null;
             currentProjectile = null;
