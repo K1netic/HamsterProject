@@ -124,8 +124,11 @@ public class Projectile : MonoBehaviour {
             default:
                 break;
         }
-        if(!cut && hook.line.gameObject.activeSelf)
-            hook.line.SetPosition(1, pivot);
+        if(hook.line != null)
+        {
+            if (!cut && hook.line.gameObject.activeSelf)
+                hook.line.SetPosition(1, pivot);
+        }
     }
 
     void RaycastNoBounce()

@@ -68,6 +68,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
 	{
+        /*
+        lockMovement = false;
+        speed = 0;
+        lockMovementDash = false;
+        dashReadyEffect.SetActive(true);
+        dashInCD = false;*/
+
         Application.targetFrameRate = 60;
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
@@ -82,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         dashRecoveryWithHook = balanceData.attackRecoveryWithHook;
         inDashStatusTime = balanceData.inDashStatusTime;
 
-        rigid = this.GetComponent<Rigidbody2D> ();
+        rigid = this.GetComponent<Rigidbody2D>();
         speedEffectScript = speedEffect.GetComponent<SpeedEffect>();
         dashReadyEffect = transform.GetChild(2).gameObject;
         dashEffectColor = dashReadyEffect.GetComponent<ParticleSystem>().main;
