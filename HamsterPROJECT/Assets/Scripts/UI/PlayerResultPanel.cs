@@ -28,7 +28,7 @@ public class PlayerResultPanel : MonoBehaviour {
 	{
 		if (this.gameObject.activeSelf)
 		{
-			characterSprite.sprite = GameManager.playersCharacters [playerResultPanelID].transform.GetChild (0).GetComponent<SpriteRenderer> ().sprite;
+			characterSprite.sprite = GameManager.playersSprites[playerResultPanelID];
 		}
 
 		// Text infos

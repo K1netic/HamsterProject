@@ -28,7 +28,7 @@ public class ResultsScreen : MonoBehaviour {
 		music = GameObject.FindObjectOfType<MusicManager> ();
 		winnerScore = GameManager.playersScores.Max();
 		winnerIndex = System.Array.IndexOf(GameManager.playersScores, winnerScore);
-		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersCharacters [winnerIndex].name);
+		sprt = Resources.Load<Sprite>("Results/" + GameManager.playersSprites [winnerIndex].name);
 		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 	void Start()
@@ -49,20 +49,12 @@ public class ResultsScreen : MonoBehaviour {
 			if (activateInput && (dev.AnyButtonWasPressed || dev.CommandWasPressed))
 			{
 				GameManager.ResetScores ();
-//				SceneManager.LoadScene (sceneToLoad);
 				screenManager.CloseCurrent ();
 				screenManager.OpenPanel (endGameScreen);
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
 			}
 		}
 	}
-
-//	IEnumerator LoadEndGame()
-//	{
-//		AudioManager.instance.PlaySound ("UI_validate", "UI");
-//		yield return new WaitForSeconds (delay);
-//		SceneManager.LoadScene (sceneToLoad);
-//	}
 
 	// Utilisé pour éviter de skip l'écran de résultats par erreur
 	IEnumerator InputActivating()
