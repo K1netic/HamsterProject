@@ -104,7 +104,14 @@ public class Hook : MonoBehaviour {
     private void Awake()
     {
         //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
-        joint = player.AddComponent<DistanceJoint2D>();
+        if (!transform.parent.GetComponentInChildren<DistanceJoint2D>(true))
+        {
+            joint = player.AddComponent<DistanceJoint2D>();
+        }
+        else
+        {
+            joint = GetComponent<DistanceJoint2D>();
+        }
         joint.enabled = false;
     } 
 
