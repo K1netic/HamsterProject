@@ -14,7 +14,6 @@ public class LineCutter : MonoBehaviour {
     public void CutRope(Vector3 cuttingPos, string cutter){
         if (hook.currentProjectile.GetComponent<Projectile>().hooked && hook.playerMovement.playerNumber != cutter)
         {
-            print("zizi");
             projectile.GetComponent<Projectile>().cut = true;
 
             lifeManager = hook.player.GetComponent<PlayerLifeManager>();
@@ -25,6 +24,7 @@ public class LineCutter : MonoBehaviour {
             //Rope to projectile
             GameObject cutRope = new GameObject();
             cutRope.AddComponent<LineRenderer>();
+            cutRope.GetComponent<LineRenderer>().sortingLayerName = "Rope";
             cutRope.AddComponent<RopeScript>();
             RopeScript script = cutRope.GetComponent<RopeScript>();
             script.color = hook.line.startColor;
@@ -38,6 +38,7 @@ public class LineCutter : MonoBehaviour {
             hook.ropeCut = true;
             GameObject cutRope2 = new GameObject();
             cutRope2.AddComponent<LineRenderer>();
+            cutRope2.GetComponent<LineRenderer>().sortingLayerName = "Rope";
             cutRope2.AddComponent<RopeScript>();
             RopeScript script2 = cutRope2.GetComponent<RopeScript>();
             script2.connectedToPlayer = true;
