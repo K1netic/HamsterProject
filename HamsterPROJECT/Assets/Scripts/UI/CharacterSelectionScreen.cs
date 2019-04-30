@@ -20,7 +20,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	public static bool[] selectableCharacters;
 	GameObject characterPrefab;
 
-	// [SerializeField] Material spriteDefault;
+	[SerializeField] Material spriteDefault;
 
 	ScreenManager screenManager;
 	[SerializeField] Animator previousScreenAnimator;
@@ -216,16 +216,17 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				GameManager.playersActive [i] = true;
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
-				// GameObject newPlayerPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/TemporaryPrefabs/" +  i.ToString () + ".prefab", panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter);
-				// newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
-				// newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
-				// newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
-				// GameManager.playersCharacters [i] = newPlayerPrefab;
+				GameObject newPlayerPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/TemporaryPrefabs/" +  i.ToString () + ".prefab", panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter);
+				newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
+				newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
+				newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
+				GameManager.playersCharacters [i] = newPlayerPrefab;
 			}
 		}
 		DeleteClones ();
 		CancelAllVibrations();
 		MatchStart.gameHasStarted = false;
+		
 	}
 
 	void DeleteClones()
