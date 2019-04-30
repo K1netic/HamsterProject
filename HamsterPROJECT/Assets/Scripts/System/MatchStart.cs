@@ -26,8 +26,12 @@ public class MatchStart : MonoBehaviour {
 
 	GameObject beforeReadyHint;
 
+    GameObject PlayerPrefab;
+
 	void Awake ()
 	{
+        PlayerPrefab = Resources.Load<GameObject>("Prefabs/PlayerPrefab");
+
 		// Set all active Players to Alive (true) at beginning of match
 		for (int i = 0; i < GameManager.playersActive.Length; i ++)
 		{
@@ -127,7 +131,8 @@ public class MatchStart : MonoBehaviour {
 
     void InstantiateTwoPlayers(int playerIndex)
     {
-		GameObject inst = GameManager.playersCharacters[playerIndex];
+		// GameObject inst = GameManager.playersCharacters[playerIndex];
+        GameObject inst = Instantiate(PlayerPrefab);
 
 		// Spawn points management
         int j = Random.Range(0, spawnPoints.Count);
@@ -188,29 +193,30 @@ public class MatchStart : MonoBehaviour {
             }
             spawnPoints.Remove(currentSpawn);
         }
-        inst.transform.GetChild(0).localPosition = new Vector2(0f, 0f);
-        inst.transform.GetChild(0).localRotation = new Quaternion(0f,0f,0f,0f);
-        inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
-        GameObject newPlayer = Instantiate(inst);
 
-        // Setting InputDevice
-        newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+        //Set sprite, name and player number
+        inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
+        inst.name = GameManager.playersSprites[playerIndex].name;
+        inst.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersNumbers[playerIndex];
+        inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+    
+        inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
     }
 
     void InstantiatePlayer(int playerIndex)
     {
-		GameObject inst = GameManager.playersCharacters[playerIndex];
+		// GameObject inst = GameManager.playersCharacters[playerIndex];
+        GameObject inst = Instantiate(PlayerPrefab);
 
+        //Set sprite, name and player number
+        inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
+        inst.name = GameManager.playersSprites[playerIndex].name;
+        inst.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersNumbers[playerIndex];
         int j = Random.Range(0, spawnPoints.Count);
         inst.transform.position = spawnPoints[j].transform.position;
         spawnPoints.Remove(spawnPoints[j]);
-        inst.transform.GetChild(0).localPosition = new Vector2(0f, 0f);
-        inst.transform.GetChild(0).localRotation = new Quaternion(0f,0f,0f,0f);
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
-        GameObject newPlayer = Instantiate(inst);
-
-        // Setting InputDevice
-        newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+        inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
     }
 
 	IEnumerator BeginCount()

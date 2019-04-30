@@ -33,13 +33,15 @@ public class GameManager : MonoBehaviour {
 	public static gameModes gameModeType;
 		
 	// Numbers of matches won to win a full game
-	public static int rounds = 13;
+	public static int rounds = 5;
 		
 	public static bool[] playersActive = new bool[nbOfPlayers];
 	public static bool[] playersAlive = new bool[nbOfPlayers];
 
-	//Characters selected by players
+	//Characters selected by players -> technically not used anymore
 	public static GameObject[] playersCharacters = new GameObject[nbOfPlayers];
+	public static Sprite[] playersSprites = new Sprite[nbOfPlayers];
+	public static string[] playersNumbers = new string[nbOfPlayers];
 
 	//Players metrics
 	public static int[] playersScores = new int[nbOfPlayers];
@@ -59,10 +61,6 @@ public class GameManager : MonoBehaviour {
 		playersActive.SetValue (false, 1);
 		playersActive.SetValue (false, 2);
 		playersActive.SetValue (false, 3);
-
-		// TODO: Cleaning characters prefabs
-
-
 	}
 
 	public static void ResetScores()

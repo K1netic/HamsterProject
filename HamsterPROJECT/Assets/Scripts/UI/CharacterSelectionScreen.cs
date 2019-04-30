@@ -61,7 +61,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			if (GameManager.playersActive[i] == true)
 			{
 				panels[i].state = PlayerSelectionPanel.SelectionPanelState.Activated;
-				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersCharacters[i].name);
+				panels[i].GetComponent<PlayerSelectionPanel>().characterSelected = int.Parse(GameManager.playersSprites[i].name);
 				panels[i].GetComponent<PlayerSelectionPanel>().characterSprite.sprite = panels [i].GetComponent<PlayerSelectionPanel>().characterSprites[panels[i].characterSelected];
 				panels[i].device = GameManager.playersInputDevices[i];
 			}
@@ -216,17 +216,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				GameManager.playersActive [i] = true;
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
-				GameObject newPlayerPrefab = PrefabUtility.CreatePrefab ("Assets/Resources/Prefabs/TemporaryPrefabs/" +  i.ToString () + ".prefab", panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter);
-				newPlayerPrefab.name = newPlayerPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
-				newPlayerPrefab.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = "_P" + (i + 1).ToString();
-				newPlayerPrefab.transform.GetChild (0).GetComponent<SpriteRenderer> ().material = spriteDefault;
-				GameManager.playersCharacters [i] = newPlayerPrefab;
+				// GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter;
+				GameManager.playersSprites[i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+				GameManager.playersNumbers[i] = "_P" + (i + 1).ToString();
 			}
 		}
 		DeleteClones ();
 		CancelAllVibrations();
 		MatchStart.gameHasStarted = false;
-		
 	}
 
 	void DeleteClones()

@@ -18,8 +18,9 @@ public class ScoreDisplayer : MonoBehaviour {
 
 		// Update score text
 		transform.GetChild(1).GetComponent<Text>().text = " : " + GameManager.playersScores [ScoreDisplayerID].ToString ();
-        if(GameManager.playersCharacters[ScoreDisplayerID])
-            transform.GetChild(0).GetComponent<Image>().sprite = GameManager.playersCharacters[ScoreDisplayerID].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        // if(GameManager.playersActive[ScoreDisplayerID])
+        transform.GetChild(0).GetComponent<Image>().sprite = GameManager.playersSprites[ScoreDisplayerID];
+        
         /*if (GameManager.playersCharacters[ScoreDisplayerID])
         {
             switch (GameManager.playersCharacters[ScoreDisplayerID].name)
