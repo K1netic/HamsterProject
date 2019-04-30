@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     //MOVEMENT
     [SerializeField]
     public LayerMask layerMaskGround;
-    [HideInInspector]
+    //[HideInInspector]
     public bool lockMovement;
     [HideInInspector]
     public float speed;
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 playerDirection;
     [HideInInspector]
     public bool dashRecoveryWithHook;
-    [HideInInspector]
+    //[HideInInspector]
     public bool lockMovementDash;
     [HideInInspector]
     public float gravity;
