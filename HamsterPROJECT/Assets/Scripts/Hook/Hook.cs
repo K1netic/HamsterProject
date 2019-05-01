@@ -309,14 +309,14 @@ public class Hook : MonoBehaviour {
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
                 if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
                 {
-                    joint.distance -= retractationStep * playerMovement.playerInputDevice.RightTrigger.Value;
+                    joint.distance -= retractationStep;
                     //AudioManager.instance.PlaySound("towing", playerNumber + "Hook");
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
 				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
-                    joint.distance += retractationStep * playerMovement.playerInputDevice.LeftTrigger.Value;
+                    joint.distance += retractationStep;
                     //permet de faire reculer le joueur avec le changement de distance max
                     joint.maxDistanceOnly = false;
                     //AudioManager.instance.PlaySound("untowing", playerNumber + "Hook");

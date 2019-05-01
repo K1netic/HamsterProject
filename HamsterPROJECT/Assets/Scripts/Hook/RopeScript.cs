@@ -84,8 +84,16 @@ public class RopeScript : MonoBehaviour {
         float scaleX = Vector3.Distance(lr.GetPosition(0), lr.GetPosition(ropeSegments.Count-1));
         lr.material.mainTextureScale = new Vector2(scaleX, 1f);
 
+        if (firstConnectedBody == null)
+            Destroy();
+
         if (connectedToPlayer && firstConnectedBody != null)
         {
+            if(connectedToPlayer && ropeSegments == null)
+            {
+                hookScript.ropeCut = false;
+                Destroy(gameObject);
+            }
             ropeSegments[0].transform.position = Vector3.MoveTowards(ropeSegments[0].transform.position, firstConnectedBody.transform.position, cutRopeSpeed);
             for (int j = 1; j < ropeSegments.Count; j++)
             {

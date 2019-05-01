@@ -77,5 +77,21 @@ public class SuddenDeathMovement : MonoBehaviour {
     {
         warningDone = true;
         Instantiate(warning);
+        if (GameObject.FindGameObjectWithTag("Background"))
+        {
+            switch (GameObject.FindGameObjectWithTag("Background").name)
+            {
+                case "Factory":
+                    break;
+                case "Desert":
+                    break;
+                case "Forest":
+                    break;
+                case "Submarine":
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

@@ -207,13 +207,14 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoDash()
     {
+        hookScript.DisableRope(false);
         Invoke("StopDash", dashTime);
         Invoke("UnlockMovementDash", inDashStatusTime);
         if (lockMovement)
             yield break;
         rigid.velocity = Vector3.zero;
         rigid.gravityScale = 0;
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForEndOfFrame();
         rigid.gravityScale = gravity;
         Invoke("ResetDashCD", dashCDTime);
         if (lockMovement)
