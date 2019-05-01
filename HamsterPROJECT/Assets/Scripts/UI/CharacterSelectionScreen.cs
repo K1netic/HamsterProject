@@ -13,7 +13,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	//Used to make sure all panels are checked before the players are considered all ready
 	bool checkPanels = true;
 	[SerializeField] GameObject readyText;
-	bool allowValidation = false;
 	public int activatedPlayers = 0;
 
 	// Dynamic selectable characters
@@ -99,18 +98,14 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		if (ready)
 		{
 			readyText.SetActive (true);
-			StartCoroutine (AvoidValidationWithSingleInput ());
-			if (allowValidation)
+			foreach (InputDevice dev in InputManager.ActiveDevices)
 			{
-				foreach (InputDevice dev in InputManager.ActiveDevices)
+				//Open Next Screen when LB and RB are pressed simulatenously
+				if (dev.LeftBumper.IsPressed && dev.RightBumper.IsPressed && ready)
 				{
-					//Open Next Screen when LB and RB are pressed simulatenously
-					if (dev.LeftBumper.IsPressed && dev.RightBumper.IsPressed && ready)
-					{
-						PlayerInfos ();
-						AudioManager.instance.PlaySound ("UI_validate", "UI");
-						screenManager.OpenPanel (nextScreenAnimator);
-					}
+					PlayerInfos ();
+					AudioManager.instance.PlaySound ("UI_validate", "UI");
+					screenManager.OpenPanel (nextScreenAnimator);
 				}
 			}
 		}
@@ -142,21 +137,17 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		}
 	}
 
-	IEnumerator AvoidValidationWithSingleInput()
-	{
-		yield return new WaitForSeconds (0.2f);
-		allowValidation = true;
-	}
-
 	void Update()
 	{
-		InputDevice inputDevice = InputManager.ActiveDevice;
-
-		if (inputDevice.Action1.WasPressed)
+		// InputDevice inputDevice = InputManager.ActiveDevice;
+		foreach(InputDevice inputDevice in InputManager.ActiveDevices)
 		{
-			if (ThereIsNoPanelUsingDevice( inputDevice))
+			if (inputDevice.Action1.WasPressed)
 			{
-				ActivatePlayerSelectionPanel(inputDevice);
+				if (ThereIsNoPanelUsingDevice(inputDevice))
+				{
+					ActivatePlayerSelectionPanel(inputDevice);
+				}
 			}
 		}
 	}
