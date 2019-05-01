@@ -46,8 +46,7 @@ public class SuddenDeathMovement : MonoBehaviour {
             {
                 if (!warningDone)
                 {
-                    warningDone = true;
-                    Instantiate(warning);
+                    LaunchWarning();
                 }
             }
                 
@@ -56,8 +55,7 @@ public class SuddenDeathMovement : MonoBehaviour {
         {
             if (!warningDone)
             {
-                warningDone = true;
-                Instantiate(warning);
+                LaunchWarning();
             }
             for (int i = 0; i < childs.Length; i++)
             {
@@ -73,5 +71,11 @@ public class SuddenDeathMovement : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.I))
             launchSuddenDeath = true;
+    }
+
+    void LaunchWarning()
+    {
+        warningDone = true;
+        Instantiate(warning);
     }
 }

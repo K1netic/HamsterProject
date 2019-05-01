@@ -38,12 +38,28 @@ public class SpriteShapeSwitcher : MonoBehaviour {
     SpriteShape submarineFiller;
 
     GameObject[] hookableObjects;
+    List<GameObject> spriteShapeObjects;
+    List<GameObject> dpObjects;
 
-    private void Start()
+    private void Awake()
     {
         if (GameObject.FindGameObjectWithTag("Background"))
         {
             hookableObjects = GameObject.FindGameObjectsWithTag("Hookable");
+            foreach (GameObject item in hookableObjects)
+            {
+                if (item.GetComponent<SpriteShapeController>())
+                {
+                    spriteShapeObjects.Add(item);
+                }else if (item.GetComponent<Explodable>())
+                {
+                    dpObjects.Add(item);
+                }
+                else
+                {
+                    print(item.name+ " t'es qui toi");
+                }
+            }
             switch (GameObject.FindGameObjectWithTag("Background").name)
             {
                 case "Factory":
@@ -64,7 +80,8 @@ public class SpriteShapeSwitcher : MonoBehaviour {
         }
         else
         {
-            print("Mets un background gros sac (tu vas dans prefab puis background)");
+            print("Mets un background gros sac");
         }
+        //Envoyer un signal aux scripts explodable ?
     }
 }
