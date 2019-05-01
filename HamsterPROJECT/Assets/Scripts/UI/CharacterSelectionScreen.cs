@@ -217,7 +217,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
 				// GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter;
-				GameManager.playersSprites[i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+				// GameManager.playersSprites[i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 				GameManager.playersNumbers[i] = "_P" + (i + 1).ToString();
 			}
 		}
