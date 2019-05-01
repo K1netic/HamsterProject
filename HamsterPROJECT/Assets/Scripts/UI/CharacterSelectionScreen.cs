@@ -116,7 +116,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				&& activatedPlayers == 0 
 				&& readyCount == 0)
 			{
-				// MusicManager.instance.StopMusic ("menu");
 				AudioManager.instance.PlaySound ("UI_Cancel", "UI");
 				screenManager.CloseCurrent ();
 				screenManager.OpenPanel (previousScreenAnimator);
@@ -129,7 +128,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			{
 				PlayerInfos();
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
-				// CancelAllVibrations();
+				CancelAllVibrations();
 				screenManager.CloseCurrent ();
 				screenManager.OpenPanel (gamesModesScreenAnimator);
 				// DeleteClones ();
@@ -207,8 +206,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				GameManager.playersActive [i] = true;
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
-				// GameManager.playersCharacters [i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter;
-				// GameManager.playersSprites[i] = panels [i].GetComponent<PlayerSelectionPanel> ().validatedCharacter.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 				GameManager.playersNumbers[i] = "_P" + (i + 1).ToString();
 			}
 		}

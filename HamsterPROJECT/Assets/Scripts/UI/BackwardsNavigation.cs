@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using InControl;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class BackwardsNavigation : MonoBehaviour {
 
@@ -22,6 +24,7 @@ public class BackwardsNavigation : MonoBehaviour {
 			AudioManager.instance.PlaySound ("UI_cancel", "UI");
 			screenManager.CloseCurrent ();
 			screenManager.OpenPanel (previousScreen);
+			EventSystem.current.SetSelectedGameObject(null);
 		}
 	}
 

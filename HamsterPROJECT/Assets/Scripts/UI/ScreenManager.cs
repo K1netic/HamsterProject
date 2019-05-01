@@ -30,6 +30,8 @@ public class ScreenManager : MonoBehaviour {
 	public string k_OpenTransitionName = "Open";
 	const string k_ClosedStateName = "Closed";
 
+	public bool closedStateReached = false;
+
 	public void OnEnable()
 	{
 		//Cache the Hash to the "Open" Parameter to feed to Animator.SetBool
@@ -58,13 +60,11 @@ public class ScreenManager : MonoBehaviour {
 		//If set, opens the initial Screen
 		if (initiallyOpen == null)
 			return;
-
 		
 		OpenPanel (initiallyOpen);
 	}
 
 	//Closes the currently open panel and opens the provided one
-	//Sets the new Selected element
 	public void OpenPanel(Animator anim)
 	{
 		if (m_Open == anim)
@@ -72,43 +72,18 @@ public class ScreenManager : MonoBehaviour {
 
 		//Activates Screen hierarchy to animate it
 		anim.gameObject.SetActive (true);
-		//Saves the currently Selected button that was used to open this Screen
-		var newPreviouslySelected = EventSystem.current.currentSelectedGameObject;
 		//Move the Screen to front
 		anim.transform.SetAsLastSibling();
 
 		CloseCurrent ();
 
-		m_PreviouslySelected = newPreviouslySelected;
-
 		//Sets the new Screen and opens one
 		m_Open = anim;
 		//Starts the open animation
 		m_Open.SetBool(m_OpenParameterId, true);
-
-		// //Sets an element in the new screen as the new Selected one
-		// GameObject go = FindFirstEnabledSelectable(anim.gameObject);
-		// SetSelected (go);
 	}
 
-	//Finds the first Selectable element in the provided hierarchy
-	// static GameObject FindFirstEnabledSelectable(GameObject gameObject)
-	// {
-	// 	GameObject go = null;
-	// 	var selectables = gameObject.GetComponentsInChildren<Selectable> (true);
-	// 	foreach(var selectable in selectables)
-	// 	{
-	// 		if (selectable.IsActive() && selectable.IsInteractable())
-	// 		{
-	// 			go = selectable.gameObject;
-	// 			break;
-	// 		}
-	// 	}
-	// 	return go;
-	// }
-
 	//Closes the currently open Screen
-	//Reverts selection to the Selectable used before opening the current screen
 	public void CloseCurrent()
 	{
 		if (m_Open == null)
@@ -116,8 +91,6 @@ public class ScreenManager : MonoBehaviour {
 		//Starts the close animation
 		m_Open.SetBool(m_OpenParameterId, false);
 
-		//Reverts selection to the Selectable used before opening the current screen
-		// SetSelected(m_PreviouslySelected);
 		//Starts Coroutine to disable the hierarchy when closing animation finishes
 		StartCoroutine(DisablePanelDelayed(m_Open));
 		// No screen open
@@ -128,7 +101,7 @@ public class ScreenManager : MonoBehaviour {
 	//deactivate the hierarchy
 	IEnumerator DisablePanelDelayed(Animator anim)
 	{
-		bool closedStateReached = false;
+		closedStateReached = false;
 		bool wantToClose = true;
 		while( !closedStateReached && wantToClose)
 		{
@@ -145,22 +118,6 @@ public class ScreenManager : MonoBehaviour {
 		if (wantToClose)
 		{
 			anim.gameObject.SetActive (false);
-
 		}
 	}
-
-	//Makes the provided GameObject Selected
-	//When using the mouse/touch we actually want to set it as the previously selected and
-	//set nothing as selected for now
-	// private void SetSelected(GameObject go)
-	// {
-	// 	//Select the GameObject
-	// 	EventSystem.current.SetSelectedGameObject(go);
-
-	// 	var standaloneInputModule = EventSystem.current.currentInputModule as StandaloneInputModule;
-	// 	if (standaloneInputModule != null)
-	// 		return;
-
-	// 	EventSystem.current.SetSelectedGameObject (null);
-	// }
 }

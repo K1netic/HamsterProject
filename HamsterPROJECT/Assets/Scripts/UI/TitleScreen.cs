@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using InControl;
+using UnityEngine.EventSystems;
 
 public class TitleScreen : MonoBehaviour {
 
 	ScreenManager screenManager;
 	[SerializeField] Animator nextScreenAnimator;
-	[SerializeField] Animator tutorialScreenAnimator;
 
     void Start()
 	{
@@ -31,6 +31,11 @@ public class TitleScreen : MonoBehaviour {
 				Application.Quit ();
 			}
 		}
+	}
+
+	void OnEnable()
+	{
+		EventSystem.current.firstSelectedGameObject = null;
 	}
 
 	void OpenNextScreen()
