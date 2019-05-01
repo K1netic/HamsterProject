@@ -207,6 +207,8 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoDash()
     {
+        Invoke("StopDash", dashTime);
+        Invoke("UnlockMovementDash", inDashStatusTime);
         if (lockMovement)
             yield break;
         rigid.velocity = Vector3.zero;
@@ -218,8 +220,6 @@ public class PlayerMovement : MonoBehaviour
             yield break;
         rigid.AddForce((shootPos.transform.position - transform.position).normalized * dashForce, ForceMode2D.Impulse);
         InvokeRepeating("DashEffect", 0, 0.04f);
-        Invoke("StopDash", dashTime);
-        Invoke("UnlockMovementDash", inDashStatusTime);
         Invoke("CancelDashEffect", dashTime * 3.5f);
         StartCoroutine(CancelVibration(Vibrations.PlayVibration("Dash", playerInputDevice)));
         AudioManager.instance.PlaySound("dash", playerNumber);
