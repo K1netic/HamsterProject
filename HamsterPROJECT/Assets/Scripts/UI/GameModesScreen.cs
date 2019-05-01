@@ -17,7 +17,7 @@ public class GameModesScreen : MonoBehaviour {
 
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (0.1f);
+		yield return new WaitForSeconds (0.5f);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<ChangeGameMode> ().Select ();
 	}

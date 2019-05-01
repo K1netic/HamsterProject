@@ -101,6 +101,10 @@ public class Hook : MonoBehaviour {
     PlayerLifeManager foeScript;
     bool vibrate = false;
 
+    // HOOK UNAVAILABLE
+    [SerializeField] GameObject hookUnvailable;
+    Animator hookUnvailableAnimator;
+
     private void Awake()
     {
         //Ajoute le joint au player dans l'awake pour être sur de pouvoir y accéder dans le start des autres scripts
@@ -150,10 +154,13 @@ public class Hook : MonoBehaviour {
         lifeManager = player.GetComponent<PlayerLifeManager>();
         lifeManager.spriteArrow = spriteRenderer;
         lifeManager.hookScript = this;
+        hookUnvailableAnimator = hookUnvailable.GetComponent<Animator>();
+        hookUnvailable.gameObject.SetActive(false);
 
         //Détruit le line renderer s'il existait déjà pour éviter le duplicata
-        if (this.transform.parent.transform.childCount == 5)
-            Destroy(this.transform.parent.transform.GetChild(4).gameObject);
+        // if (this.transform.parent.transform.childCount == 5)
+        //     Destroy(this.transform.parent.transform.GetChild(4).gameObject);
+
         //Crée le line renderer et le configure
         line = new GameObject("Line").AddComponent<LineRenderer>();//instantie un line renderer
         line.positionCount = 2; //le nombre de point pour la ligne
@@ -334,6 +341,18 @@ public class Hook : MonoBehaviour {
         {
             ThrowHookhead();
         }
+        //Test si le joueur appuie sur le bouton du grappin mais que celui-ci est cut et donc que le grappin ne peut pas être utilisé
+        else if ((playerMovement.playerInputDevice.Action1.WasPressed 
+			|| playerMovement.playerInputDevice.Action2.WasPressed
+			|| playerMovement.playerInputDevice.Action3.WasPressed
+			|| playerMovement.playerInputDevice.Action4.WasPressed)
+			&& ropeCut)
+        {
+            //TODO : complete this
+            hookUnvailable.SetActive(true);
+            StartCoroutine(HookUnavailable());
+        }
+
         //Si le joueur relache le bouton on désactive le grappin
 		else if ((playerMovement.playerInputDevice.Action1.WasReleased 
 			|| playerMovement.playerInputDevice.Action2.WasReleased
@@ -344,6 +363,7 @@ public class Hook : MonoBehaviour {
             DisableRope(false);
         }
 
+        // Gère le freeze/unfreeze du grappin en fonction de la pause du jeu
 		else if ((playerMovement.playerInputDevice.Action1.WasReleased 
 			|| playerMovement.playerInputDevice.Action2.WasReleased
 			|| playerMovement.playerInputDevice.Action3.WasReleased
@@ -523,10 +543,19 @@ public class Hook : MonoBehaviour {
 		if (!(playerMovement.playerInputDevice.Action1.IsPressed
 			|| playerMovement.playerInputDevice.Action2.IsPressed
 			|| playerMovement.playerInputDevice.Action3.IsPressed
-			|| playerMovement.playerInputDevice.Action4.IsPressed))
+			|| playerMovement.playerInputDevice.Action4.IsPressed)
+            && !ropeCut)
 		{
 			DisableRope (false);
 		}
+	}
+
+	IEnumerator HookUnavailable()
+	{
+        hookUnvailableAnimator.SetBool("unavailable", true);
+		yield return new WaitForSeconds(0.4f);
+        hookUnvailableAnimator.SetBool("unavailable", true);
+        hookUnvailable.SetActive(false);
 	}
 
     void OnCollisionEnter2D(Collision2D collision){

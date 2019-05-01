@@ -236,6 +236,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		}
 		newPlayer = Instantiate(inst);
 		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelId];
+		GameManager.playersSprites[panelId] = newPlayer.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 	}
 
 }

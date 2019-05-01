@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerNumberDisplay : MonoBehaviour {
 
@@ -20,7 +21,6 @@ public class PlayerNumberDisplay : MonoBehaviour {
     {
         transform.localPosition = new Vector2(0, 1.75f);
 
-        render = GetComponent<SpriteRenderer>();
         player = transform.parent.gameObject;
 
         switch (player.GetComponent<PlayerMovement>().playerNumber)
@@ -61,6 +61,14 @@ public class PlayerNumberDisplay : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    void OnEnable()
+    {
+        render = GetComponent<SpriteRenderer>();
+
+        if (SceneManager.GetActiveScene().name == "Menu")
+            render.enabled = false;
     }
 
     private void Update()
