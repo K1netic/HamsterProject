@@ -22,6 +22,7 @@ public class PlayerLifeManager : MonoBehaviour {
     public float playerHP;
     [HideInInspector]
     public bool inRecovery;
+    Vector3 directionKnockBack;
     float recoveryTime;
     float flashingRate;
     float knockBackTime;
@@ -180,7 +181,7 @@ public class PlayerLifeManager : MonoBehaviour {
     //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
     //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
     //4 et 5 servent pour le knockback avec les lasers
-    public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3), bool inverseDir = default(bool))
+    public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3))
     {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
@@ -194,8 +195,16 @@ public class PlayerLifeManager : MonoBehaviour {
             {
                 //Bloque le mouvement du joueur pour ne pas override le knockback
                 playerMovement.lockMovement = true;
-                //Calcul la direction du knockback
-                Vector2 directionKnockBack = -(attacker.transform.position - transform.position).normalized;
+                //Calcule la direction du knockback
+                if (attacker.CompareTag("Laser"))
+                {
+                    directionKnockBack = -(contactPoint - transform.position).normalized;
+                }
+                else
+                {
+                    directionKnockBack = -(attacker.transform.position - transform.position).normalized;
+                }
+                
                 //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                 playerMovement.rigid.velocity = Vector3.zero;
                 Invoke("UnlockMovement", knockBackTime);
@@ -248,10 +257,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackMeteor, ForceMode2D.Impulse);
                         break;
                     case "Laser":
-                        if(inverseDir)
-                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
-                        else
-                            playerMovement.rigid.AddForce(Vector2.Perpendicular(attacker.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
+                        playerMovement.rigid.AddForce(directionKnockBack * knockBackLaser, ForceMode2D.Impulse);
                         break;
                     default:
                         break;
@@ -413,20 +419,10 @@ public class PlayerLifeManager : MonoBehaviour {
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
                 {
-                    switch (col.collider.name)
-                    {
-                        case "ColliderBot":
-                            TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
-                            break;
-                        case "ColliderTop":
-                            TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point, true);
-                            break;
-                        default:
-                            break;
-                    }
+                    TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
                 }
                 else
-                {//Le joueur retouche le LaserEdge alors qu'il est encore en recovery
+                {//Le joueur retouche le Laser alors qu'il est encore en recovery
                     if (hookScript.hooked)
                     {
                         hookScript.DisableRope(false);
@@ -436,57 +432,9 @@ public class PlayerLifeManager : MonoBehaviour {
                     //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
                     playerMovement.rigid.velocity = Vector3.zero;
                     Invoke("UnlockMovement", knockBackTime);
-                    switch (col.gameObject.name)
-                    {
-                        case "ColliderBot":
-                            playerMovement.rigid.AddForce(Vector2.Perpendicular(col.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        case "ColliderTop":
-                            playerMovement.rigid.AddForce(-Vector2.Perpendicular(col.transform.parent.gameObject.GetComponent<LaserSize>().laserDirection).normalized * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        default:
-                            break;
-                    }
+                    playerMovement.rigid.AddForce(-(col.GetContact(0).point - (Vector2)transform.position).normalized * knockBackLaser, ForceMode2D.Impulse);
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D col)
-    {
-        //Normalement ceci ne peux pas se produire, mais je le rajoute par sécurité
-        switch (col.gameObject.tag)
-        {
-            case "LaserEdge":
-                if (hookScript.hooked)
-                {
-                    hookScript.DisableRope(false);
-                }
-                LaserHitFX(col.GetContact(0).point);
-                TakeDamage(laserDamage, col.gameObject, true);
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("LaserEdge", playerMovement.playerInputDevice)));
-                break;
-            case "Laser":
-                if (hookScript.hooked)
-                {
-                    hookScript.DisableRope(false);
-                }
-                LaserHitFX(col.GetContact(0).point);
-                switch (col.gameObject.name)
-                {
-                    case "ColliderBot":
-                        TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
-                        break;
-                    case "ColliderTop":
-                        TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point, true);
-                        break;
-                    default:
-                        break;
-                }
-                StartCoroutine(CancelVibration(Vibrations.PlayVibration("LaserEdge", playerMovement.playerInputDevice)));
                 break;
             default:
                 break;
