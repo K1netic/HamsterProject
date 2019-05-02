@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using InControl;
 using UnityEditor;
+using UnityEngine.EventSystems;
 
 public class CharacterSelectionScreen : MonoBehaviour {
 
@@ -66,6 +67,9 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 		#endregion
+
+		EventSystem.current.SetSelectedGameObject(null);
+		MusicManager.instance.PlayMusic("menu");
 	}
 
 	void FixedUpdate()
@@ -116,10 +120,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				&& activatedPlayers == 0 
 				&& readyCount == 0)
 			{
-				AudioManager.instance.PlaySound ("UI_Cancel", "UI");
-				screenManager.CloseCurrent ();
+				AudioManager.instance.PlaySound ("UI_cancel", "UI");
 				screenManager.OpenPanel (previousScreenAnimator);
-				
 				DeleteClones ();
 			}
 
@@ -129,9 +131,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				PlayerInfos();
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
 				CancelAllVibrations();
-				screenManager.CloseCurrent ();
 				screenManager.OpenPanel (gamesModesScreenAnimator);
-				// DeleteClones ();
 			}
 		}
 	}

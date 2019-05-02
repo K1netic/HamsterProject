@@ -17,34 +17,36 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float dashVolume;
 	[SerializeField] AudioClip destructionHook;
 	[Range(0f,1f)] [SerializeField] float destructionHookVolume;
-	[SerializeField] AudioClip doubleHookContact;
-	[Range(0f,1f)] [SerializeField] float doubleHookContactVolume;
-	[SerializeField] AudioClip hookContactScraps;
-	[Range(0f,1f)] [SerializeField] float hookContactScrapsVolume;
+	// [SerializeField] AudioClip doubleHookContact;
+	// [Range(0f,1f)] [SerializeField] float doubleHookContactVolume;
+	// [SerializeField] AudioClip hookContactScraps;
+	// [Range(0f,1f)] [SerializeField] float hookContactScrapsVolume;
 	[SerializeField] AudioClip playerHitLaser;
 	[Range(0f,1f)] [SerializeField] float playerHitLaserVolume;
-	[SerializeField] AudioClip playerHitPlatform;
-	[Range(0f,1f)] [SerializeField] float playerHitPlatformVolume;
-	[SerializeField] AudioClip throwHook;
-	[Range(0f,1f)] [SerializeField] float throwHookVolume;
-	[SerializeField] AudioClip arrowHitShield;
-	[Range(0f,1f)] [SerializeField] float arrowHitShieldVolume;
+	[SerializeField] AudioClip playerHitPlayer;
+	[Range(0f,1f)] [SerializeField] float playerHitPlayerVolume;
+	// [SerializeField] AudioClip throwHook;
+	// [Range(0f,1f)] [SerializeField] float throwHookVolume;
+	// [SerializeField] AudioClip arrowHitShield;
+	// [Range(0f,1f)] [SerializeField] float arrowHitShieldVolume;
 	[SerializeField] AudioClip arrowHitArrow;
 	[Range(0f,1f)] [SerializeField] float arrowHitArrowVolume;
-	[SerializeField] AudioClip switchWeapon;
-	[Range(0f,1f)] [SerializeField] float switchWeaponVolume;
-	[SerializeField] AudioClip towing;
-	[Range(0f,1f)] [SerializeField] float towingVolume;
-	[SerializeField] AudioClip untowing;
-	[Range(0f,1f)] [SerializeField] float untowingVolume;
+	// [SerializeField] AudioClip switchWeapon;
+	// [Range(0f,1f)] [SerializeField] float switchWeaponVolume;
+	// [SerializeField] AudioClip towing;
+	// [Range(0f,1f)] [SerializeField] float towingVolume;
+	// [SerializeField] AudioClip untowing;
+	// [Range(0f,1f)] [SerializeField] float untowingVolume;
     [SerializeField] AudioClip death;
     [Range(0f, 1f)] [SerializeField] float deathVolume;
     [SerializeField] AudioClip dashRecovery;
     [Range(0f, 1f)] [SerializeField] float dashRecoveryVolume;
-    [SerializeField] AudioClip doubleShieldContact;
-    [Range(0f, 1f)] [SerializeField] float doubleShieldContactVolume;
+    // [SerializeField] AudioClip doubleShieldContact;
+    // [Range(0f, 1f)] [SerializeField] float doubleShieldContactVolume;
 	[SerializeField] AudioClip destructingPlatform;
 	[Range(0f, 1f)] [SerializeField] float destructingPlatformVolume;
+	[SerializeField] AudioClip ropeCut;
+	[Range(0f, 1f)] [SerializeField] float ropeCutVolume;
     #endregion
 
     [Header("UI sounds")]
@@ -161,21 +163,21 @@ public class AudioManager : MonoBehaviour {
 			
         switch(audioName)
 		{
-        case "doubleShieldContact":
-            source.pitch = .75f;
-            source.volume = doubleShieldContactVolume;
-                source.PlayOneShot(doubleShieldContact);
-            break;
-		case "towing":
-			source.pitch = 1.0f;
-			source.volume = towingVolume;
-			source.PlayOneShot (towing);
-			break;
-		case "untowing":
-			source.pitch = 1.0f;
-			source.volume = untowingVolume;
-			source.PlayOneShot (untowing);
-			break;
+        // case "doubleShieldContact":
+        //     source.pitch = .75f;
+        //     source.volume = doubleShieldContactVolume;
+        //         source.PlayOneShot(doubleShieldContact);
+        //     break;
+		// case "towing":
+		// 	source.pitch = 1.0f;
+		// 	source.volume = towingVolume;
+		// 	source.PlayOneShot (towing);
+		// 	break;
+		// case "untowing":
+		// 	source.pitch = 1.0f;
+		// 	source.volume = untowingVolume;
+		// 	source.PlayOneShot (untowing);
+		// 	break;
 		case "damage":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = damageVolume;
@@ -191,58 +193,58 @@ public class AudioManager : MonoBehaviour {
 			source.volume = dashVolume;
 			source.PlayOneShot (dash);
 			break;
-		case "doubleHookContact":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = doubleHookContactVolume;
-			source.PlayOneShot (doubleHookContact);
-			break;
+		// case "doubleHookContact":
+		// 	source.pitch = Random.Range (pitchMin, pitchMax);
+		// 	source.volume = doubleHookContactVolume;
+		// 	source.PlayOneShot (doubleHookContact);
+		// 	break;
 		case "destructionHook":
 			source.pitch = 1.0f;
 			source.volume = destructionHookVolume;
 			source.PlayOneShot (destructionHook);
 			break;
-		case "hookContactScraps":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = hookContactScrapsVolume;
-			source.PlayOneShot (hookContactScraps);
-			break;
+		// case "hookContactScraps":
+		// 	source.pitch = Random.Range (pitchMin, pitchMax);
+		// 	source.volume = hookContactScrapsVolume;
+		// 	source.PlayOneShot (hookContactScraps);
+		// 	break;
 		case "playerHitLaser":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = playerHitLaserVolume;
 			source.PlayOneShot (playerHitLaser);
 			break;
-		case "playerHitPlatform":
+		case "playerHitPlayer":
 			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = playerHitPlatformVolume;
-			source.PlayOneShot (playerHitPlatform);
+			source.volume = playerHitPlayerVolume;
+			source.PlayOneShot (playerHitPlayer);
 			break;
-		case "throwHook":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = throwHookVolume;
-			source.PlayOneShot (throwHook);
-			break;
-		case "arrowHitShield":
-			source.pitch = 0.5f;
-			source.volume = arrowHitShieldVolume;
-			source.PlayOneShot (arrowHitShield);
-			break;
+		// case "throwHook":
+		// 	source.pitch = Random.Range (pitchMin, pitchMax);
+		// 	source.volume = throwHookVolume;
+		// 	source.PlayOneShot (throwHook);
+		// 	break;
+		// case "arrowHitShield":
+		// 	source.pitch = 0.5f;
+		// 	source.volume = arrowHitShieldVolume;
+		// 	source.PlayOneShot (arrowHitShield);
+		// 	break;
 		case "arrowHitArrow":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = arrowHitArrowVolume;
 			source.PlayOneShot (arrowHitArrow);
 			break;
-		case "switchWeapon":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = switchWeaponVolume;
-			source.PlayOneShot (switchWeapon);
-			break;
+		// case "switchWeapon":
+		// 	source.pitch = Random.Range (pitchMin, pitchMax);
+		// 	source.volume = switchWeaponVolume;
+		// 	source.PlayOneShot (switchWeapon);
+		// 	break;
 		case "death":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = deathVolume;
 			source.PlayOneShot (death);
 			break;
 		case "dashRecovery":
-			source.pitch = Random.Range (0.55f, 0.65f);
+			source.pitch = 1.0f;
             source.volume = dashRecoveryVolume;
             source.PlayOneShot(dashRecovery);
             break;
@@ -250,6 +252,11 @@ public class AudioManager : MonoBehaviour {
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = destructingPlatformVolume;
 			source.PlayOneShot (destructingPlatform);
+			break;
+		case "ropeCut":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = ropeCutVolume;
+			source.PlayOneShot (ropeCut);
 			break;
         case "UI_highlight":
 			source.volume = UI_highlightVolume;

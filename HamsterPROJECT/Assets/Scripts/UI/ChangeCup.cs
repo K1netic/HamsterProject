@@ -21,7 +21,7 @@ public class ChangeCup : Selectable {
 
 	void Update()
 	{
-		if (IsHighlighted(baseEvent))
+		if (EventSystem.current.currentSelectedGameObject == this.gameObject)
 		{
 			// Augment value of rounds
 			if (InputManager.ActiveDevice.LeftStickX.Value >= 0.8f && !blockStickMovement)

@@ -496,7 +496,7 @@ public class Hook : MonoBehaviour {
 
         line.gameObject.GetComponent<LineCutter>().projectile = currentProjectile;
 
-        AudioManager.instance.PlaySound("throwHook", playerNumber + "Hook");
+        // AudioManager.instance.PlaySound("throwHook", playerNumber + "Hook");
     }
 
     //Désactive tout ce qui est relatif au grappin
@@ -591,16 +591,13 @@ public class Hook : MonoBehaviour {
                     foeScript.TakeDamage(arrowDamage, gameObject, true);
 
                     //Différentes vibrations selon si le joueur touché est mort ou pas
-                    if (foeScript.isDead)
+                    if (!foeScript.isDead)
                     {   
-                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
-                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
-                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
-
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
                     }
                     else
                     {
-                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowPlayer", playerMovement.playerInputDevice)));
+                        StartCoroutine(CancelVibration(Vibrations.PlayVibration("KillingPlayer", playerMovement.playerInputDevice)));
                     }
                 }
             }

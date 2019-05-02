@@ -13,11 +13,26 @@ public class MapSelector : MonoBehaviour {
 	GameObject currentSelectedObject;
 	GameObject previousSelectedObject;
 	public string selectedObjectName;
+
+	GameObject lastSelectedOject;
 	Text mapTitle;
+
+	GameObject itemSelected;
 
 	void OnEnable()
 	{
+		if (lastSelectedOject != null)
+			itemSelected = lastSelectedOject;
+		else 
+			itemSelected = GameObject.Find ("Maps").transform.GetChild(0).gameObject;
 		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
+		MusicManager.instance.PlayMusic("menu");
+
+	}
+
+	void OnDisable()
+	{
+		lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 	}
 
 	void Start()
@@ -35,6 +50,7 @@ public class MapSelector : MonoBehaviour {
 			// Move selector to the newly selected element when a player changes the selection
 			if (currentSelectedObject != previousSelectedObject && currentSelectedObject != null)
 			{
+				AudioManager.instance.PlaySound("UI_pick", "UI");
 				selectedObjectPosition = new Vector2(currentSelectedObject.transform.position.x, currentSelectedObject.transform.position.y);
 				selectedObjectName = currentSelectedObject.name;
 				// Updating the title of the screen with the selected pack's name
@@ -55,7 +71,9 @@ public class MapSelector : MonoBehaviour {
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
 		yield return new WaitForSeconds (0.5f);
-		allowInteraction = true;
+		EventSystem.current.firstSelectedGameObject = itemSelected;
+		itemSelected.GetComponent<Button> ().Select ();
 		currentSelectedObject = EventSystem.current.currentSelectedGameObject;
+		allowInteraction = true;
 	}
 }

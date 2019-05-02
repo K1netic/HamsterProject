@@ -73,6 +73,7 @@ public class PauseMenu : MonoBehaviour {
 		filter.enabled = false;
 		UnfreezePlayers ();
 		arrowSet = false;
+		// EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	void FreezePlayers()

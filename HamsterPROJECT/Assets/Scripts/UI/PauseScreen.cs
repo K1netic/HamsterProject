@@ -11,12 +11,15 @@ public class PauseScreen : MonoBehaviour {
 	void OnEnable()
 	{
 		itemSelected = GameObject.Find ("ResumeButton");
-		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
-	}
-		IEnumerator WaitBeforeAllowingActivationOfButton()
-	{
-		yield return new WaitForSeconds (0.35f);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
+		// StartCoroutine (WaitBeforeAllowingActivationOfButton ());
 	}
+
+	// IEnumerator WaitBeforeAllowingActivationOfButton()
+	// {
+	// 	yield return new WaitForSeconds (0.35f);
+	// 	EventSystem.current.firstSelectedGameObject = itemSelected;
+	// 	itemSelected.GetComponent<Button> ().Select ();
+	// }
 }

@@ -38,6 +38,7 @@ public class UiButtonFunctions : MonoBehaviour {
 		if (Time.timeScale != 1) Time.timeScale = 1;
 		AudioManager.instance.PlaySound ("UI_validate", "UI");
 		ScreenManager.screenToInitiallyOpen = screenNameToInitiallyOpen;
+		MusicManager.instance.StopMusic ("menu");
 		GameManager.ResetScores ();
 		SceneManager.LoadScene (sceneToLoadOnClick);
 	}

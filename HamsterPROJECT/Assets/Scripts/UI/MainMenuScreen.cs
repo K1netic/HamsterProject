@@ -11,7 +11,6 @@ public class MainMenuScreen : MonoBehaviour {
 
 	void OnEnable()
 	{
-		GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
 		MusicManager.instance.PlayMusic("menu");
 		itemSelected = GameObject.Find ("PlayButton");
 		manager = GameObject.Find("ScreenManager").GetComponent<ScreenManager>();

@@ -23,7 +23,8 @@ public class TitleScreen : MonoBehaviour {
 		{
 			if (dev.Action1.WasPressed)
 			{
-				OpenNextScreen ();
+				AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
+				StartCoroutine(OpenNextScreen ());
 			}
 
 			else if (InputManager.ActiveDevice.Action2.WasPressed)
@@ -38,9 +39,9 @@ public class TitleScreen : MonoBehaviour {
 		EventSystem.current.firstSelectedGameObject = null;
 	}
 
-	void OpenNextScreen()
+	IEnumerator OpenNextScreen()
 	{
-		AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
+		yield return new WaitForSeconds(0.5f);
 		screenManager.OpenPanel (nextScreenAnimator);
 		// if(PlayerPrefs.GetInt("NotFirstTime") == 1)
 		// 	screenManager.OpenPanel (nextScreenAnimator);

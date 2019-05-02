@@ -12,7 +12,7 @@ public class ChangeGameMode : Selectable {
 
 	void Update()
 	{
-		if (IsHighlighted(baseEvent))
+		if (EventSystem.current.currentSelectedGameObject == this.gameObject)
 		{
 			if (Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) >= 0.8f && !blockStickMovement)
 			{

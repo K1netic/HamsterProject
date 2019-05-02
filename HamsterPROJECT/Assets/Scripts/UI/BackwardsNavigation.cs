@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 
 public class BackwardsNavigation : MonoBehaviour {
 
-	float delay = 0.1f;
 	ScreenManager screenManager;
 	[SerializeField] Animator previousScreen;
 

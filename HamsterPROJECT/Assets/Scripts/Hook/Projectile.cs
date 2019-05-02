@@ -225,12 +225,12 @@ public class Projectile : MonoBehaviour {
                 case "Hook":
                     Instantiate(hitHook, transform.position, transform.rotation);
                     hook.VibrationOnProjectileDestroyed();
-                    AudioManager.instance.PlaySound("doubleHookContact", hook.playerMovement.playerNumber + "Hook");
+                    // AudioManager.instance.PlaySound("doubleHookContact", hook.playerMovement.playerNumber + "Hook");
                     Destruction();
                     break;
                 case "Hookable":
                     GetHooked(collision.GetContact(0).point, collision.gameObject);
-                    AudioManager.instance.PlaySound("hookContactScraps", hook.playerMovement.playerNumber + "Hook");
+                    // AudioManager.instance.PlaySound("hookContactScraps", hook.playerMovement.playerNumber + "Hook");
                     break;
                 default:
                     if(collision.gameObject.layer != 25)//scraps

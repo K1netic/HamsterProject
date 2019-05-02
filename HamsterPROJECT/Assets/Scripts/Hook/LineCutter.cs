@@ -35,6 +35,8 @@ public class LineCutter : MonoBehaviour {
                 script.firstConnectedBody = projectile;
 
                 Instantiate(Resources.Load<ParticleSystem>("Prefabs/CutHook/Cut"), cuttingPos, transform.rotation);
+                StartCoroutine(CancelVibration(Vibrations.PlayVibration("RopeCut", hook.playerMovement.playerInputDevice)));
+                AudioManager.instance.PlaySound("ropeCut", hook.playerMovement.playerNumber + "Arrow");
 
                 //Rope to player
                 hook.ropeCut = true;
