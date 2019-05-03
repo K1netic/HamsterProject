@@ -357,6 +357,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736ec3cdc7ae78745bf00870595a3d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitBeforeStart: 0
+  timeBeforeStart: 0
   node1: {fileID: 1769080111083330}
   node2: {fileID: 1859658453935610}
   moveSpeed: 4
@@ -390,13 +392,13 @@ SpriteShapeRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1266519283
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0

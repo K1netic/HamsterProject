@@ -585,12 +585,13 @@ MonoBehaviour:
   hookMovementForce: 55
   speedThresholdDestruction: 25
   playerMaxHP: 100
-  recoveryTime: 1
+  recoveryTime: 0.5
   flashingRate: 0.1
   blade1Damage: 20
   blade2Damage: 35
   blade3Damage: 50
   laserDamage: 20
+  hookRecuperationSpeed: 20
   criticalSpeed: 40
   lastAttackerDuration: 2
   knockBackTime: 0.5
@@ -599,7 +600,6 @@ MonoBehaviour:
   knockBackBlade3: 30
   knockBackLaser: 20
   knockBackMeteor: 25
-  attackRecoveryWithHook: 1
   attackTime: 0.4
   dashTime: 0.05
   dashForce: 75

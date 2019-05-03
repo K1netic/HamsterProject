@@ -83,7 +83,7 @@ public class SpeedEffect : MonoBehaviour {
 		SpeedAnim =new Vector4(0,0,0, Mathf.Clamp((playerSpeed * 6 /65), 1f, 1f));
 		MyRenderer.material.SetVector ("_SpeedMainTexUVNoiseZW", SpeedAnim );
 
-		SpeedScale = Mathf.Clamp((playerSpeed * 3 /65), 1.2f, 1.35f);
+		SpeedScale = Mathf.Clamp((playerSpeed * 3 /65), 2.5f,3.5f);
 		transform.localScale = new Vector2(SpeedScale,SpeedScale); ;
 
 		MainTexOffSet =new Vector2 (0, (playerSpeed * 0.4f /65)-0.73f );

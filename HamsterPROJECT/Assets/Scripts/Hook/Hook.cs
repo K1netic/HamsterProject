@@ -312,14 +312,14 @@ public class Hook : MonoBehaviour {
                 RaycastingDistanceJoint();
 
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
-                if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkToJoint.collider == null)
+                if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
                     //AudioManager.instance.PlaySound("towing", playerNumber + "Hook");
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
-				if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkOppositeToJoint.collider == null)
+				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
                     joint.distance += retractationStep;
                     //permet de faire reculer le joueur avec le changement de distance max
@@ -398,7 +398,7 @@ public class Hook : MonoBehaviour {
         {
             bladeRenderer.sprite = blade3Sprite;
             blade3Collider.enabled = true;
-            currentBlade = CurrentBlade.blade1;
+            currentBlade = CurrentBlade.blade3;
         }
         Invoke("Sheathe", attackTime);
     }
@@ -598,12 +598,15 @@ public class Hook : MonoBehaviour {
                             break;
                         case CurrentBlade.blade1:
                             foeScript.TakeDamage(blade1damage, gameObject, true);
+                            print("blade1damage");
                             break;
                         case CurrentBlade.blade2:
                             foeScript.TakeDamage(blade2damage, gameObject, true);
+                            print("blade2damage");
                             break;
                         case CurrentBlade.blade3:
                             foeScript.TakeDamage(blade3damage, gameObject, true);
+                            print("blade3damage");
                             break;
                         default:
                             print("Impossible. IM-PO-SSI-BLE !");
