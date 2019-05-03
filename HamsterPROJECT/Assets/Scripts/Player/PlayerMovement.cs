@@ -44,8 +44,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public Vector2 playerDirection;
     [HideInInspector]
-    public bool dashRecoveryWithHook;
-    [HideInInspector]
     public bool lockMovementDash;
     [HideInInspector]
     public float gravity;
@@ -87,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
         dashForce = balanceData.dashForce;
         dashCDTime = balanceData.attackCDTime;
         dragEndOfDash = balanceData.dragEndOfDash;
-        dashRecoveryWithHook = balanceData.attackRecoveryWithHook;
         inDashStatusTime = balanceData.inDashStatusTime;
 
         rigid = this.GetComponent<Rigidbody2D>();

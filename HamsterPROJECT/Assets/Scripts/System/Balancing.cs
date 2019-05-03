@@ -27,7 +27,8 @@ public class Balancing : MonoBehaviour {
     public float blade2Damage = 35;
     public float blade3Damage = 50;
     public float laserDamage = 10;
-    public float criticalSpeed = 35;
+    public float hookRecuperationSpeed = 20;
+    public float criticalSpeed = 40;
     public float lastAttackerDuration = 3f;
 
     [Header("KNOCKBACK")]
@@ -39,7 +40,6 @@ public class Balancing : MonoBehaviour {
     public float knockBackMeteor = 20;
 
     [Header("ATTACK")]
-    public bool attackRecoveryWithHook;
     public float attackTime;
     public float dashTime = 0.05f;
     public float dashForce;

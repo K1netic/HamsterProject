@@ -1086,9 +1086,6 @@ MonoBehaviour:
   player: {fileID: 1952740627420260}
   projectile: {fileID: 1490353491995044, guid: b880ea1a8e6f14a49a5ea5de95d88c36, type: 2}
   currentProjectile: {fileID: 0}
-  arrowLayer:
-    serializedVersion: 2
-    m_Bits: 0
   layerMaskLineCast:
     serializedVersion: 2
     m_Bits: 0
@@ -1136,7 +1133,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   jointDirection: {x: 0, y: 0}
   hookScript: {fileID: 0}
-  playerNumber: _P3
+  playerNumber: _P1
   layerMaskGround:
     serializedVersion: 2
     m_Bits: 268500992
@@ -1144,7 +1141,6 @@ MonoBehaviour:
   speed: 0
   currentState: 0
   playerDirection: {x: 0, y: 0}
-  dashRecoveryWithHook: 0
   lockMovementDash: 0
   gravity: 0
 --- !u!114 &114940921641640332
@@ -1160,9 +1156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteArrow: {fileID: 0}
   hookScript: {fileID: 0}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
   playerHP: 0
   inRecovery: 0
   lastAttacker: 

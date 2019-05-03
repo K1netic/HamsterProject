@@ -80,6 +80,7 @@ public class Hook : MonoBehaviour {
     PolygonCollider2D blade3Collider;
     SpriteRenderer bladeRenderer;
     float attackTime;
+    float hookRecuperationSpeed;
     float criticalSpeed;
     float knockBackTime;
     float blade1damage;
@@ -137,6 +138,7 @@ public class Hook : MonoBehaviour {
         blade1damage = balanceData.blade1Damage;
         blade2damage = balanceData.blade2Damage;
         blade3damage = balanceData.blade3Damage;
+        hookRecuperationSpeed = balanceData.hookRecuperationSpeed;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
         attackTime = balanceData.attackTime;
@@ -285,6 +287,9 @@ public class Hook : MonoBehaviour {
             //Test si le grappin est aggripé
             if (projectileScript.hooked)
             {
+                if (playerMovement.speed >= hookRecuperationSpeed)
+                    playerMovement.ResetDashCD();
+
                 //Change l'état du joueur
                 playerMovement.StateHooked();
 
@@ -377,13 +382,13 @@ public class Hook : MonoBehaviour {
     //Déploie la lame qui correspond à la vitesse au début de l'attaque
     public void BladeChoice(float speed)
     {
-        if(speed <= 20)
+        if(speed <= hookRecuperationSpeed)
         {
             bladeRenderer.sprite = blade1Sprite;
             blade1Collider.enabled = true;
             currentBlade = CurrentBlade.blade1;
         }
-        else if(speed <= 40)
+        else if(speed <= criticalSpeed)
         {
             bladeRenderer.sprite = blade2Sprite;
             blade2Collider.enabled = true;
@@ -448,8 +453,6 @@ public class Hook : MonoBehaviour {
 
     //Active le grappin
     void CreateJoint(){
-        if (playerMovement.dashRecoveryWithHook)
-            playerMovement.ResetDashCD();
         t = 0;
         joint.enabled = true;
         joint.connectedBody = currentProjectile.GetComponent<Rigidbody2D>();
@@ -603,6 +606,7 @@ public class Hook : MonoBehaviour {
                             foeScript.TakeDamage(blade3damage, gameObject, true);
                             break;
                         default:
+                            print("Impossible. IM-PO-SSI-BLE !");
                             break;
                     }
                     //Différentes vibrations selon si le joueur touché est mort ou pas
