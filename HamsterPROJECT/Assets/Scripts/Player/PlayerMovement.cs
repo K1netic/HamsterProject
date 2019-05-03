@@ -197,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
                 CancelInvoke("ResetDashCD");
             if (!lockMovement && !lockMovementDash)
             {
-                if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
+                if ((playerInputDevice.RightBumper.WasPressed || playerInputDevice.LeftBumper.WasPressed) && !dashInCD)
                 {
                     dashReadyEffect.SetActive(false);
                     dashInCD = true;
@@ -209,7 +209,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
+            if ((playerInputDevice.RightBumper.WasPressed || playerInputDevice.LeftBumper.WasPressed) && !dashInCD)
             {
                 //Feedback dash indisponible
             }

@@ -23,7 +23,9 @@ public class Balancing : MonoBehaviour {
     public float playerMaxHP = 100;
     public float recoveryTime = 1.5f;
     public float flashingRate = .1f;
-    public float arrowDamage = 10;
+    public float blade1Damage = 20;
+    public float blade2Damage = 35;
+    public float blade3Damage = 50;
     public float laserDamage = 10;
     public float criticalSpeed = 35;
     public float lastAttackerDuration = 3f;

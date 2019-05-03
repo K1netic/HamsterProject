@@ -82,7 +82,9 @@ public class Hook : MonoBehaviour {
     float attackTime;
     float criticalSpeed;
     float knockBackTime;
-    float arrowDamage;
+    float blade1damage;
+    float blade2damage;
+    float blade3damage;
     float knockBackBlade1;
     float knockBackBlade2;
     float knockBackBlade3;
@@ -132,7 +134,9 @@ public class Hook : MonoBehaviour {
         knockBackBlade1 = balanceData.knockBackBlade1;
         knockBackBlade2 = balanceData.knockBackBlade2;
         knockBackBlade3 = balanceData.knockBackBlade3;
-        arrowDamage = balanceData.arrowDamage;
+        blade1damage = balanceData.blade1Damage;
+        blade2damage = balanceData.blade2Damage;
+        blade3damage = balanceData.blade3Damage;
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
         attackTime = balanceData.attackTime;
@@ -584,8 +588,23 @@ public class Hook : MonoBehaviour {
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                     GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
-                    foeScript.TakeDamage(arrowDamage, gameObject, true);
-
+                    switch (currentBlade)
+                    {
+                        case CurrentBlade.none:
+                            print("Nikoumouk le code, t'es trop lent");
+                            break;
+                        case CurrentBlade.blade1:
+                            foeScript.TakeDamage(blade1damage, gameObject, true);
+                            break;
+                        case CurrentBlade.blade2:
+                            foeScript.TakeDamage(blade2damage, gameObject, true);
+                            break;
+                        case CurrentBlade.blade3:
+                            foeScript.TakeDamage(blade3damage, gameObject, true);
+                            break;
+                        default:
+                            break;
+                    }
                     //Différentes vibrations selon si le joueur touché est mort ou pas
                     if (!foeScript.isDead)
                     {   

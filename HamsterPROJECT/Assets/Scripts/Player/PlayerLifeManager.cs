@@ -31,7 +31,6 @@ public class PlayerLifeManager : MonoBehaviour {
     float knockBackMeteor;
     float laserDamage;
     float criticalSpeed;
-    float arrowDamage;
 
     //Last attacker
     public string lastAttacker = null;
@@ -85,7 +84,6 @@ public class PlayerLifeManager : MonoBehaviour {
         knockBackMeteor = balanceData.knockBackMeteor;
         laserDamage = balanceData.laserDamage;
         criticalSpeed = balanceData.criticalSpeed;
-        arrowDamage = balanceData.arrowDamage;
         lastAttackerDuration = balanceData.lastAttackerDuration;
 
         playerMovement = GetComponent<PlayerMovement>();
