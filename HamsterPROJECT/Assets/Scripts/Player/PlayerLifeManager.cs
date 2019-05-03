@@ -12,8 +12,6 @@ public class PlayerLifeManager : MonoBehaviour {
     public SpriteRenderer spriteArrow;
     [HideInInspector]
     public Hook hookScript;
-    [HideInInspector]
-    public LayerMask playerLayer;
     PlayerMovement playerMovement;
     SpriteRenderer sprite;
 
@@ -284,8 +282,6 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             CleanLastAttacker();
 
-            //Invoke le changement de layer après 0.1 secondes pour que la collision repousse un peu l'attaquant
-            Invoke("RecoveryLayer", .1f);
             //Rend le player invulnérable pendant recoveryTime secondes
             Invoke("ResetRecovery", recoveryTime);
             //Fait clignoter le joueur tant qu'il est invulnérable
@@ -330,13 +326,6 @@ public class PlayerLifeManager : MonoBehaviour {
 			playerMovement.playerInputDevice.Vibrate(0f, balanceData.lightVibration * (damage / balanceData.damageToVibrationDivisor));
 			StartCoroutine(CancelVibration (balanceData.mediumVibrationDuration));
         }
-    }
-
-    void RecoveryLayer()
-    {
-        //Passe le player et la flèche en layer "Recovery" pour qu'ils traversent les autres joueurs
-        gameObject.layer = LayerMask.NameToLayer("Recovery");
-        hookScript.gameObject.layer = LayerMask.NameToLayer("Recovery");
     }
 
     public void CleanLastAttacker()
@@ -479,11 +468,9 @@ public class PlayerLifeManager : MonoBehaviour {
 
     void ResetRecovery()
     {
-        //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité et remet un layer physique correspondant au player
+        //Annule le InvokeRepeating pour le clignotement de l'invulnérabilité
         CancelInvoke("Flashing");
         inRecovery = false;
-        gameObject.layer = playerLayer;
-        hookScript.gameObject.layer = hookScript.arrowLayer;
         sprite.material = startMaterial;
         spriteArrow.material = startMaterial;
     }

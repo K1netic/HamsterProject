@@ -63,8 +63,6 @@ public class Hook : MonoBehaviour {
     Projectile stockedProjectileScript;
 
     //ARROW
-    [HideInInspector]
-    public LayerMask arrowLayer;
     Sprite arrowSprite;
     SpriteRenderer spriteRenderer;
 
@@ -259,7 +257,6 @@ public class Hook : MonoBehaviour {
                 print("Default case switch start Hook.cs");
             break;
         }
-        arrowLayer = gameObject.layer;
     }
 	
 	// Update is called once per frame

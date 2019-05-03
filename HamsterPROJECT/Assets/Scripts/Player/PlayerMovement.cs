@@ -118,7 +118,6 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-        GetComponent<PlayerLifeManager>().playerLayer = gameObject.layer;
 
         lastFramePosition = transform.position;
 
