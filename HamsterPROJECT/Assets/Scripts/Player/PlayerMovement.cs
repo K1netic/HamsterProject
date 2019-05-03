@@ -25,11 +25,12 @@ public class PlayerMovement : MonoBehaviour
     public Hook hookScript;
     public string playerNumber;
     public InputDevice playerInputDevice;
+    PlayerLifeManager lifeManager;
 
     //MOVEMENT
     [SerializeField]
     public LayerMask layerMaskGround;
-    //[HideInInspector]
+    [HideInInspector]
     public bool lockMovement;
     [HideInInspector]
     public float speed;
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 playerDirection;
     [HideInInspector]
     public bool dashRecoveryWithHook;
-    //[HideInInspector]
+    [HideInInspector]
     public bool lockMovementDash;
     [HideInInspector]
     public float gravity;
@@ -94,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         dashReadyEffect = transform.GetChild(2).gameObject;
         dashEffectColor = dashReadyEffect.GetComponent<ParticleSystem>().main;
         dashEffectColorLifeTime = dashReadyEffect.GetComponent<ParticleSystem>().colorOverLifetime;
+        lifeManager = GetComponent<PlayerLifeManager>();
 
         dashRecovery = Resources.Load<GameObject>("Prefabs/Dash/DashRecovery");
 
@@ -189,19 +191,30 @@ public class PlayerMovement : MonoBehaviour
 
     void Dash()
     {
-        if (!dashInCD)
-            CancelInvoke("ResetDashCD");
-        if (!lockMovement && !lockMovementDash)
+        if (!lifeManager.inRecovery)
+        {
+            if (!dashInCD)
+                CancelInvoke("ResetDashCD");
+            if (!lockMovement && !lockMovementDash)
+            {
+                if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
+                {
+                    dashReadyEffect.SetActive(false);
+                    dashInCD = true;
+                    lockMovementDash = true;
+                    hookScript.BladeChoice(speed);
+                    StartCoroutine("DoDash");
+                }
+            }
+        }
+        else
         {
             if (playerInputDevice.RightBumper.WasPressed && !dashInCD)
             {
-                dashReadyEffect.SetActive(false);
-                dashInCD = true;
-                lockMovementDash = true;
-                hookScript.BladeChoice(speed);
-                StartCoroutine("DoDash");
+                //Feedback dash indisponible
             }
         }
+        
     }
 
     IEnumerator DoDash()

@@ -259,7 +259,6 @@ public class Hook : MonoBehaviour {
         }
     }
 	
-	// Update is called once per frame
 	void Update () {
         //S'assure que le joint ne peut pas être actif sans rigidbody connecté
         if (joint.connectedBody == null && joint.enabled){
@@ -304,14 +303,14 @@ public class Hook : MonoBehaviour {
                 RaycastingDistanceJoint();
 
                 //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
-                if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
+                if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkToJoint.collider == null)
                 {
                     joint.distance -= retractationStep;
                     //AudioManager.instance.PlaySound("towing", playerNumber + "Hook");
                 }
 
                 //Permet de s'éloigner du joint uniquement s'il n'y a pas de plateforme juste derrière le joueur et que la distance max n'est pas atteinte
-				if (playerMovement.playerInputDevice.LeftTrigger.Value > 0 && checkOppositeToJoint.collider == null)
+				if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkOppositeToJoint.collider == null)
                 {
                     joint.distance += retractationStep;
                     //permet de faire reculer le joueur avec le changement de distance max

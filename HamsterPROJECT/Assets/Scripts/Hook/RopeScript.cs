@@ -77,6 +77,11 @@ public class RopeScript : MonoBehaviour {
 		}
         if(!connectedToPlayer)
             Invoke("Destroy", timeBeforeDestroy);
+        else if(ropeSegments.Count < 8)//Détruit la corde si elle est trop petite pour éviter un bug bloquant
+        {
+            hookScript.ropeCut = false;
+            Destroy(gameObject);
+        }
     }
 
 	void Update(){
