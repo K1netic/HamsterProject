@@ -7,7 +7,13 @@ public class SuddenDeathMovement : MonoBehaviour {
     Balancing balanceData;
 
     [SerializeField]
-    GameObject warning;
+    GameObject factoryWarning;
+    [SerializeField]
+    GameObject desertWarning;
+    [SerializeField]
+    GameObject forestWarning;
+    [SerializeField]
+    GameObject submarineWarning;
     [SerializeField]
     [Range(24f, 34f)]
     float remainingSpace;
@@ -76,22 +82,23 @@ public class SuddenDeathMovement : MonoBehaviour {
     void LaunchWarning()
     {
         warningDone = true;
-        Instantiate(warning);
-        if (GameObject.FindGameObjectWithTag("Background"))
+        switch (GameObject.FindGameObjectWithTag("Background").name)
         {
-            switch (GameObject.FindGameObjectWithTag("Background").name)
-            {
-                case "Factory":
-                    break;
-                case "Desert":
-                    break;
-                case "Forest":
-                    break;
-                case "Submarine":
-                    break;
-                default:
-                    break;
-            }
+            case "Factory":
+                Instantiate(factoryWarning);
+                break;
+            case "Desert":
+                Instantiate(desertWarning);
+                break;
+            case "Forest":
+                Instantiate(forestWarning);
+                break;
+            case "Submarine":
+                Instantiate(submarineWarning);
+                break;
+            default:
+                break;
         }
+        //Play sound warning
     }
 }
