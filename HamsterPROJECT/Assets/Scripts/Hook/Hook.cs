@@ -89,6 +89,7 @@ public class Hook : MonoBehaviour {
     float knockBackBlade1;
     float knockBackBlade2;
     float knockBackBlade3;
+    float freezeFrameDuration;
     bool doubleFXprotection;
 
     //PARTICLE
@@ -142,6 +143,7 @@ public class Hook : MonoBehaviour {
         criticalSpeed = balanceData.criticalSpeed;
         timeBeforeDestroy = balanceData.timeRopeCut;
         attackTime = balanceData.attackTime;
+        freezeFrameDuration = balanceData.freezeFrameDuration;
 
         timeRemaining = timeHooked;
 
@@ -567,8 +569,25 @@ public class Hook : MonoBehaviour {
             //Si c'est une fleche qui est touché on applique un knockback
             if (collision.gameObject.CompareTag("Arrow"))
             {
-                GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                ArrowHit(collision);
+                //GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                switch (collision.gameObject.GetComponent<Hook>().currentBlade)
+                {
+                    case CurrentBlade.none:
+                        print("Nikoumouk le code, t'es trop lent");
+                        break;
+                    case CurrentBlade.blade1:
+                        StartCoroutine(ArrowHit(collision, 1));
+                        break;
+                    case CurrentBlade.blade2:
+                        StartCoroutine(ArrowHit(collision, 2));
+                        break;
+                    case CurrentBlade.blade3:
+                        StartCoroutine(ArrowHit(collision, 3));
+                        break;
+                    default:
+                        print("Impossible. IM-PO-SSI-BLE !");
+                        break;
+                }
                 HitFX(collision.GetContact(0).point, collision.gameObject);
             }
             //Si le joueur est touché des dégâts lui sont appliqués
@@ -580,8 +599,25 @@ public class Hook : MonoBehaviour {
                 {
                     if (collisionFail.collider.gameObject.CompareTag("Arrow"))
                     {
-                        GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                        ArrowHit(collisionFail.collider);
+                        //GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                        switch (collisionFail.collider.gameObject.GetComponent<Hook>().currentBlade)
+                        {
+                            case CurrentBlade.none:
+                                print("Nikoumouk le code, t'es trop lent");
+                                break;
+                            case CurrentBlade.blade1:
+                                StartCoroutine(ArrowHit(collisionFail.collider, 1));
+                                break;
+                            case CurrentBlade.blade2:
+                                StartCoroutine(ArrowHit(collisionFail.collider, 2));
+                                break;
+                            case CurrentBlade.blade3:
+                                StartCoroutine(ArrowHit(collisionFail.collider, 3));
+                                break;
+                            default:
+                                print("Impossible. IM-PO-SSI-BLE !");
+                                break;
+                        }
                         HitFX(collisionFail.point, collisionFail.collider.gameObject);
                     }
                 }
@@ -589,7 +625,8 @@ public class Hook : MonoBehaviour {
                 {
                     foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
-                    GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                    //GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
+                    StartCoroutine(FreezeAttacker());
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     switch (currentBlade)
                     {
@@ -597,16 +634,13 @@ public class Hook : MonoBehaviour {
                             print("Nikoumouk le code, t'es trop lent");
                             break;
                         case CurrentBlade.blade1:
-                            foeScript.TakeDamage(blade1damage, gameObject, true);
-                            print("blade1damage");
+                            foeScript.TakeDamage(blade1damage, gameObject, true, Vector3.zero, 1);
                             break;
                         case CurrentBlade.blade2:
-                            foeScript.TakeDamage(blade2damage, gameObject, true);
-                            print("blade2damage");
+                            foeScript.TakeDamage(blade2damage, gameObject, true, Vector3.zero, 2);
                             break;
                         case CurrentBlade.blade3:
-                            foeScript.TakeDamage(blade3damage, gameObject, true);
-                            print("blade3damage");
+                            foeScript.TakeDamage(blade3damage, gameObject, true, Vector3.zero, 3);
                             break;
                         default:
                             print("Impossible. IM-PO-SSI-BLE !");
@@ -648,25 +682,44 @@ public class Hook : MonoBehaviour {
         doubleFXprotection = false;
     }
 
+    IEnumerator FreezeAttacker()
+    {
+        playerMovement.lockMovement = true;
+        float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
+        Vector2 tmpVelocity = playerMovement.rigid.velocity;
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.lockMovement = false;
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        playerMovement.rigid.velocity = tmpVelocity;
+        playerMovement.rigid.angularVelocity = tmpAngularVelocity;
+    }
+
     //Deux flèches se touche, on applique un knockback en fonction de la flèche de l'autre joueur
-    void ArrowHit(Collision2D collision)
+    IEnumerator ArrowHit(Collision2D collision, int bladeLevel)
     {
         playerMovement.lockMovement = true;
         Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
-        playerMovement.rigid.velocity = Vector3.zero;
         AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-        switch (collision.gameObject.GetComponent<Hook>().currentBlade)
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        switch (bladeLevel)
         {
-            case CurrentBlade.none:
+            case 0:
                 print("You are not suppossed to be there ! How do you came ?!");
                 break;
-            case CurrentBlade.blade1:
+            case 1:
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                 break;
-            case CurrentBlade.blade2:
+            case 2:
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
                 break;
-            case CurrentBlade.blade3:
+            case 3:
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                 break;
             default:
@@ -677,25 +730,30 @@ public class Hook : MonoBehaviour {
         AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
         Invoke("UnlockMovement", knockBackTime);
     }
-    void ArrowHit(Collider2D collision)
+    IEnumerator ArrowHit(Collider2D collision, int bladeLevel)
     {
         playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = (collision.gameObject.transform.position - transform.position).normalized;
+        Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
         playerMovement.rigid.velocity = Vector3.zero;
         AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-        switch (collision.gameObject.GetComponent<Hook>().currentBlade)
+        playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.gravityScale = 0;
+        playerMovement.rigid.angularVelocity = 0;
+        yield return new WaitForSeconds(freezeFrameDuration);
+        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        switch (bladeLevel)
         {
-            case CurrentBlade.none:
+            case 0:
                 print("You are not suppossed to be there ! How do you came ?!");
                 break;
-            case CurrentBlade.blade1:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+            case 1:
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                 break;
-            case CurrentBlade.blade2:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+            case 2:
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
                 break;
-            case CurrentBlade.blade3:
-                playerMovement.rigid.AddForce(-directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+            case 3:
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
                 break;
             default:
                 print("Impossible, you just CAN'T be there !");
