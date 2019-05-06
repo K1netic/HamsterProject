@@ -97,6 +97,7 @@ public class SuddenDeathMovement : MonoBehaviour {
                 Instantiate(submarineWarning);
                 break;
             default:
+                print("Mets un fond si tu veux un warning");
                 break;
         }
         //Play sound warning

@@ -30,6 +30,7 @@ public class Balancing : MonoBehaviour {
     public float hookRecuperationSpeed = 20;
     public float criticalSpeed = 40;
     public float lastAttackerDuration = 3f;
+    public float freezeFrameDuration = .1f;
 
     [Header("KNOCKBACK")]
     public float knockBackTime = 0.5f;
