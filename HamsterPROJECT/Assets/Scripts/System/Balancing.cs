@@ -38,6 +38,7 @@ public class Balancing : MonoBehaviour {
     public float knockBackBlade3 = 20;
     public float knockBackLaser = 20;
     public float knockBackMeteor = 20;
+    public float knockBackTrampoline = 30;
 
     [Header("ATTACK")]
     public float attackTime;
