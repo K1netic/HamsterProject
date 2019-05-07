@@ -409,7 +409,7 @@ public class PlayerLifeManager : MonoBehaviour {
                     {
                         hookScript.DisableRope(false);
                     }
-                    StartCoroutine(DoKnockBack(col.gameObject,false));
+                    StartCoroutine(DoKnockBack(col.gameObject, false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
@@ -426,7 +426,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         hookScript.DisableRope(false);
                     }
                     directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
-                    StartCoroutine(DoKnockBack(col.gameObject,false));
+                    StartCoroutine(DoKnockBack(col.gameObject, false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
