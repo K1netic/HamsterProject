@@ -206,8 +206,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598289e4e9cac6649a3d3a11a19eed4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  clockwise: 0
+  speed: 20
+  clockwise: 1
+--- !u!50 &371056081
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 371056078}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &379563586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4425315645506096, guid: be484e472d477cd41a5cb43abce9d2a0,
