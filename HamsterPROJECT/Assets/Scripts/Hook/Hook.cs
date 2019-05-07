@@ -90,6 +90,7 @@ public class Hook : MonoBehaviour {
     float knockBackBlade2;
     float knockBackBlade3;
     float freezeFrameDuration;
+    float knockBackAttacker;
     bool doubleFXprotection;
 
     //PARTICLE
@@ -144,6 +145,7 @@ public class Hook : MonoBehaviour {
         timeBeforeDestroy = balanceData.timeRopeCut;
         attackTime = balanceData.attackTime;
         freezeFrameDuration = balanceData.freezeFrameDuration;
+        knockBackAttacker = balanceData.knockBackAttacker;
 
         timeRemaining = timeHooked;
 
@@ -626,7 +628,7 @@ public class Hook : MonoBehaviour {
                     foeScript = collision.gameObject.GetComponent<PlayerLifeManager>();
                     //Appelle la méthode du fx avant celle des dégâts pour qu'elle ne soit pas bloqué par le recovery
                     //GameObject.Find("SlowMo").GetComponent<SlowMotion>().DoSlowmotion();
-                    StartCoroutine(FreezeAttacker());
+                    StartCoroutine(FreezeAttacker(collision.gameObject.transform.position));
                     foeScript.HitFX(collision.GetContact(0).point, playerMovement.speed);
                     switch (currentBlade)
                     {
@@ -682,86 +684,99 @@ public class Hook : MonoBehaviour {
         doubleFXprotection = false;
     }
 
-    IEnumerator FreezeAttacker()
+    IEnumerator FreezeAttacker(Vector3 playerHitPos)
     {
-        playerMovement.lockMovement = true;
-        float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
-        Vector2 tmpVelocity = playerMovement.rigid.velocity;
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.lockMovement = false;
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        playerMovement.rigid.velocity = tmpVelocity;
-        playerMovement.rigid.angularVelocity = tmpAngularVelocity;
+        if (!playerMovement.lockMovement)
+        {
+            print("FreezeDone");
+            playerMovement.lockMovement = true;
+            float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
+            Vector2 tmpVelocity = playerMovement.rigid.velocity;
+            playerMovement.rigid.velocity = Vector3.zero;
+            playerMovement.rigid.gravityScale = 0;
+            playerMovement.rigid.angularVelocity = 0;
+            Vector2 directionKnockBack = -(playerHitPos - transform.position).normalized;
+            yield return new WaitForSeconds(freezeFrameDuration);
+            playerMovement.rigid.gravityScale = playerMovement.gravity;
+            playerMovement.rigid.AddForce(directionKnockBack * knockBackAttacker, ForceMode2D.Impulse);
+            Debug.DrawRay(player.transform.position, directionKnockBack, Color.red, 1);
+            playerMovement.lockMovement = false;
+        }
     }
 
     //Deux flèches se touche, on applique un knockback en fonction de la flèche de l'autre joueur
     IEnumerator ArrowHit(Collision2D collision, int bladeLevel)
     {
-        playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
-        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        switch (bladeLevel)
+        if (!playerMovement.lockMovement)
         {
-            case 0:
-                print("You are not suppossed to be there ! How do you came ?!");
-                break;
-            case 1:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
-                break;
-            case 2:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
-                break;
-            case 3:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
-                break;
-            default:
-                print("Impossible, you just CAN'T be there !");
-                break;
+            print("ArrowHitDone1");
+            playerMovement.lockMovement = true;
+            Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
+            AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+            playerMovement.rigid.velocity = Vector3.zero;
+            playerMovement.rigid.gravityScale = 0;
+            playerMovement.rigid.angularVelocity = 0;
+            yield return new WaitForSeconds(freezeFrameDuration);
+            playerMovement.rigid.gravityScale = playerMovement.gravity;
+            switch (bladeLevel)
+            {
+                case 0:
+                    print("You are not suppossed to be there ! How do you came ?!");
+                    break;
+                case 1:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                    break;
+                case 2:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                    break;
+                case 3:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+                    break;
+                default:
+                    print("Impossible, you just CAN'T be there !");
+                    break;
+            }
+            StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+            AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
+            Invoke("UnlockMovement", knockBackTime);
         }
-        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-        AudioManager.instance.PlaySound("arrowHitArrow", playerNumber+"Arrow");
-        Invoke("UnlockMovement", knockBackTime);
     }
     IEnumerator ArrowHit(Collider2D collision, int bladeLevel)
     {
-        playerMovement.lockMovement = true;
-        Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
-        playerMovement.rigid.velocity = Vector3.zero;
-        AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
-        playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
-        switch (bladeLevel)
+        if (!playerMovement.lockMovement)
         {
-            case 0:
-                print("You are not suppossed to be there ! How do you came ?!");
-                break;
-            case 1:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
-                break;
-            case 2:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
-                break;
-            case 3:
-                playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
-                break;
-            default:
-                print("Impossible, you just CAN'T be there !");
-                break;
+            print("ArrowHitDone2");
+            playerMovement.lockMovement = true;
+            Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
+            playerMovement.rigid.velocity = Vector3.zero;
+            AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
+            playerMovement.rigid.velocity = Vector3.zero;
+            playerMovement.rigid.gravityScale = 0;
+            playerMovement.rigid.angularVelocity = 0;
+            yield return new WaitForSeconds(freezeFrameDuration);
+            playerMovement.rigid.gravityScale = playerMovement.gravity;
+            switch (bladeLevel)
+            {
+                case 0:
+                    print("You are not suppossed to be there ! How do you came ?!");
+                    break;
+                case 1:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
+                    break;
+                case 2:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade2, ForceMode2D.Impulse);
+                    break;
+                case 3:
+                    playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade3, ForceMode2D.Impulse);
+                    break;
+                default:
+                    print("Impossible, you just CAN'T be there !");
+                    break;
+            }
+            StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
+            AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
+            Invoke("UnlockMovement", knockBackTime);
         }
-        StartCoroutine(CancelVibration(Vibrations.PlayVibration("CollisionArrowArrow", playerMovement.playerInputDevice)));
-        AudioManager.instance.PlaySound("arrowHitArrow", playerNumber + "Arrow");
-        Invoke("UnlockMovement", knockBackTime);
     }
 
     void AddLastAttacker(string attacker)
