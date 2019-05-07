@@ -179,7 +179,7 @@ public class PlayerLifeManager : MonoBehaviour {
     //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
     //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
     //4 et 5 servent pour le knockback avec les lasers
-    public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3) , int bladeLevel = 0)
+    public void TakeDamage(float damage, GameObject attacker, bool freezeFrame, Vector3 contactPoint = default(Vector3) , int bladeLevel = 0)
     {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
@@ -189,19 +189,16 @@ public class PlayerLifeManager : MonoBehaviour {
                 hookScript.DisableRope(false);
             }
             inRecovery = true;
-            if (knockBack)
+            //Calcule la direction du knockback
+            if (attacker.CompareTag("Laser"))
             {
-                //Calcule la direction du knockback
-                if (attacker.CompareTag("Laser"))
-                {
-                    directionKnockBack = -(contactPoint - transform.position).normalized;
-                }
-                else
-                {
-                    directionKnockBack = -(attacker.transform.position - transform.position).normalized;
-                }
-                StartCoroutine(DoKnockBack(attacker, bladeLevel));
+                directionKnockBack = -(contactPoint - transform.position).normalized;
             }
+            else
+            {
+                directionKnockBack = -(attacker.transform.position - transform.position).normalized;
+            }
+            StartCoroutine(DoKnockBack(attacker, freezeFrame, bladeLevel));
 
             //Attribution des dégâts
             CancelCleanLastAttacker();
@@ -291,17 +288,21 @@ public class PlayerLifeManager : MonoBehaviour {
         }
     }
 
-    IEnumerator DoKnockBack(GameObject attacker, int bladeLevel = 0)
+    IEnumerator DoKnockBack(GameObject attacker, bool freezeFrame, int bladeLevel = 0)
     {
         //Bloque le mouvement du joueur pour ne pas override le knockback
         playerMovement.lockMovement = true;
         //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
         playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
-        playerMovement.rigid.angularVelocity = 0;
-        Invoke("UnlockMovement", knockBackTime);
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        if (freezeFrame)
+        {
+            playerMovement.rigid.gravityScale = 0;
+            playerMovement.rigid.angularVelocity = 0;
+            Invoke("UnlockMovement", knockBackTime);
+            yield return new WaitForSeconds(freezeFrameDuration);
+            playerMovement.rigid.gravityScale = playerMovement.gravity;
+        }
+        
         //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
         //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
         switch (attacker.tag)
