@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class RotativePlatform : MonoBehaviour {
 
     [SerializeField]
-    float speed;
+    float speed = 20;
     [SerializeField]
     bool clockwise = true;
 
+    Rigidbody2D rigid;
+    float t;
+
     private void Start()
     {
+        rigid = GetComponent<Rigidbody2D>();
+        if (rigid.bodyType != RigidbodyType2D.Kinematic)
+            rigid.bodyType = RigidbodyType2D.Kinematic;
         if (clockwise)
             speed = -speed;
     }
@@ -19,7 +26,8 @@ public class RotativePlatform : MonoBehaviour {
     {
         if (MatchStart.gameHasStarted)
         {
-            transform.Rotate(new Vector3(0, 0, speed));
+            t += Time.deltaTime;
+            rigid.MoveRotation(speed*t);
         }
     }
 }
