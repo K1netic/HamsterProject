@@ -292,17 +292,16 @@ public class PlayerLifeManager : MonoBehaviour {
     {
         //Bloque le mouvement du joueur pour ne pas override le knockback
         playerMovement.lockMovement = true;
+        Invoke("UnlockMovement", knockBackTime);
         //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
         playerMovement.rigid.velocity = Vector3.zero;
+        playerMovement.rigid.angularVelocity = 0;
         if (freezeFrame)
         {
             playerMovement.rigid.gravityScale = 0;
-            playerMovement.rigid.angularVelocity = 0;
-            Invoke("UnlockMovement", knockBackTime);
             yield return new WaitForSeconds(freezeFrameDuration);
             playerMovement.rigid.gravityScale = playerMovement.gravity;
         }
-        
         //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
         //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
         switch (attacker.tag)
@@ -403,14 +402,14 @@ public class PlayerLifeManager : MonoBehaviour {
             case "LaserEdge":
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
-                    TakeDamage(laserDamage, col.gameObject, true);
+                    TakeDamage(laserDamage, col.gameObject, false);
                 else
                 {//Le joueur retouche le LaserEdge alors qu'il est encore en recovery
                     if (hookScript.hooked)
                     {
                         hookScript.DisableRope(false);
                     }
-                    StartCoroutine(DoKnockBack(col.gameObject));
+                    StartCoroutine(DoKnockBack(col.gameObject,false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
@@ -418,7 +417,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
                 {
-                    TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
+                    TakeDamage(laserDamage, col.gameObject, false, col.GetContact(0).point);
                 }
                 else
                 {//Le joueur retouche le Laser alors qu'il est encore en recovery
@@ -427,7 +426,7 @@ public class PlayerLifeManager : MonoBehaviour {
                         hookScript.DisableRope(false);
                     }
                     directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
-                    StartCoroutine(DoKnockBack(col.gameObject));
+                    StartCoroutine(DoKnockBack(col.gameObject,false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
