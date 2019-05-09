@@ -177,7 +177,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			notAvailable.gameObject.SetActive (false);
 		}
 			
-		if (device.LeftStickX.Value >= 0.8f && !blockStickMovement)
+		if ((device.LeftStickX.Value >= 0.8f || device.DPadRight.WasPressed) && !blockStickMovement)
 		{
 			if (characterSelected < GameManager.nbOfCharacters - 1)
 			{
@@ -192,7 +192,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		else if (device.LeftStickX.Value <= -0.8f && !blockStickMovement)
+		else if ((device.LeftStickX.Value <= -0.8f || device.DPadLeft.WasPressed) && !blockStickMovement)
 		{
 			if (characterSelected > 0)
 			{
@@ -207,7 +207,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		else if (Mathf.Abs(device.LeftStickX.Value) < 0.2f)
+		else if (Mathf.Abs(device.LeftStickX.Value) < 0.2f )
 			blockStickMovement = false;
 
 	}

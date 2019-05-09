@@ -29,10 +29,6 @@ public class MapSelector : MonoBehaviour {
 		MusicManager.instance.PlayMusic("menu");
 	}
 
-	// void OnDisable()
-	// {
-	// }
-
 	void Start()
 	{
 		mapTitle = GameObject.Find("MapName").GetComponent<Text>();

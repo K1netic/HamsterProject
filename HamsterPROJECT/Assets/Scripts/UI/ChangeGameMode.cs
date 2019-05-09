@@ -8,13 +8,12 @@ using UnityEngine.EventSystems;
 public class ChangeGameMode : Selectable {
 
 	bool blockStickMovement = false;
-	BaseEventData baseEvent;
 
 	void Update()
 	{
 		if (EventSystem.current.currentSelectedGameObject == this.gameObject)
 		{
-			if (Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) >= 0.8f && !blockStickMovement)
+			if ((Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) >= 0.8f || InputManager.ActiveDevice.DPadX.WasPressed ) && !blockStickMovement)
 			{
 				if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 				{

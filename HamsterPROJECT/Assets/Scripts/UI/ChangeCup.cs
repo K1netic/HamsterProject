@@ -24,7 +24,7 @@ public class ChangeCup : Selectable {
 		if (EventSystem.current.currentSelectedGameObject == this.gameObject)
 		{
 			// Augment value of rounds
-			if (InputManager.ActiveDevice.LeftStickX.Value >= 0.8f && !blockStickMovement)
+			if ((InputManager.ActiveDevice.LeftStickX.Value >= 0.8f || InputManager.ActiveDevice.DPadRight.WasPressed ) && !blockStickMovement)
 			{
 				IncreaseValue();
 				AudioManager.instance.PlaySound ("UI_pick", "UI");
@@ -33,7 +33,7 @@ public class ChangeCup : Selectable {
 				UpdateCupText();
 			}
 
-			else if (InputManager.ActiveDevice.LeftStickX.Value <= -0.8f && !blockStickMovement)
+			else if ((InputManager.ActiveDevice.LeftStickX.Value <= -0.8f || InputManager.ActiveDevice.DPadLeft.WasPressed) && !blockStickMovement)
 			{
 				DecreaseValue();
 				AudioManager.instance.PlaySound ("UI_pick", "UI");
