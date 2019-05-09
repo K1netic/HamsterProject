@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour {
 
 	public static string lastLevelPlayed;
 
+	public static bool inMenu;
+
 	void Awake()
 	{
 		// Don't destroy the game manager when reloading/changing scene

@@ -688,7 +688,6 @@ public class Hook : MonoBehaviour {
     {
         if (!playerMovement.lockMovement)
         {
-            print("FreezeDone");
             playerMovement.lockMovement = true;
             float tmpAngularVelocity = playerMovement.rigid.angularVelocity;
             Vector2 tmpVelocity = playerMovement.rigid.velocity;
