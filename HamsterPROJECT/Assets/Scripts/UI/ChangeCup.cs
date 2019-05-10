@@ -28,30 +28,28 @@ public class ChangeCup : Selectable {
 			{
 				IncreaseValue();
 				AudioManager.instance.PlaySound ("UI_pick", "UI");
-				textToChange.text = "FIGHT TO " + GameManager.rounds.ToString () + " WINS/KILLS";
-				blockStickMovement = true;
+				UpdateDescriptionText();
 				UpdateCupText();
+				blockStickMovement = true;
 			}
 
 			else if ((InputManager.ActiveDevice.LeftStickX.Value <= -0.8f || InputManager.ActiveDevice.DPadLeft.WasPressed) && !blockStickMovement)
 			{
 				DecreaseValue();
-				AudioManager.instance.PlaySound ("UI_pick", "UI");
-				textToChange.text = "FIGHT TO " + GameManager.rounds.ToString () + " WINS/KILLS";
-				blockStickMovement = true;
+				AudioManager.instance.PlaySound ("UI_pick", "UI");				
+				UpdateDescriptionText();
 				UpdateCupText();
+				blockStickMovement = true;
 			} 
 
 			else if (Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) < 0.2f)
 				blockStickMovement = false;
 		}
 		
-		// Update text to match GameManager value
 	}
 
 	public void IncreaseValue()
 	{
-		//mngr.PlaySound ("UI_pick", //mngr.UIsource);
 		switch (GameManager.rounds)
 		{
 		case 3:
@@ -70,7 +68,6 @@ public class ChangeCup : Selectable {
 
 	public void DecreaseValue()
 	{
-		//mngr.PlaySound ("UI_pick", //mngr.UIsource);
 		switch (GameManager.rounds)
 		{
 		case 3:
@@ -87,7 +84,13 @@ public class ChangeCup : Selectable {
 		}
 	}
 
-	void UpdateCupText()
+	// Update text to match GameManager value
+	public void UpdateDescriptionText()
+	{
+		textToChange.text = "FIGHT TO " + GameManager.rounds.ToString () + " WINS/KILLS";
+	}
+
+	public void UpdateCupText()
 	{
 		switch(GameManager.rounds)
 		{
