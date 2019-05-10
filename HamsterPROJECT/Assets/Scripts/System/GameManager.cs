@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour {
 
 	public static bool inMenu;
 
+	public static float delayMenu = 0.15f;
+
 	void Awake()
 	{
 		// Don't destroy the game manager when reloading/changing scene
