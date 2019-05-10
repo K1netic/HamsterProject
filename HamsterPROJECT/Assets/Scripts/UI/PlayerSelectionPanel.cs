@@ -77,7 +77,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			{
 				state = SelectionPanelState.Activated;
 				AudioManager.instance.PlaySound ("UI_panelActivation", "UI");
-
 			}
 
 			// Validation (Activated -> Validated)
@@ -180,13 +179,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		if ((device.LeftStickX.Value >= 0.8f || device.DPadRight.WasPressed) && !blockStickMovement)
 		{
 			if (characterSelected < GameManager.nbOfCharacters - 1)
-			{
-				characterSelected += 1;
-			}
-			else
-			{
-				characterSelected = 0;
-			}
+				FindNextSelectableCharacter(characterSelected + 1);
+			else 
+				FindNextSelectableCharacter(0);
 			characterSprite.sprite = characterSprites[characterSelected];
 			AudioManager.instance.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
@@ -195,13 +190,11 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		else if ((device.LeftStickX.Value <= -0.8f || device.DPadLeft.WasPressed) && !blockStickMovement)
 		{
 			if (characterSelected > 0)
-			{
-				characterSelected -= 1;
-			}
-			else
-			{
-				characterSelected = GameManager.nbOfCharacters - 1;
-			}
+				FindPreviousSelectableCharacter(characterSelected - 1);
+
+			else 
+				FindPreviousSelectableCharacter(GameManager.nbOfCharacters - 1);
+
 			characterSprite.sprite = characterSprites[characterSelected];
 			AudioManager.instance.PlaySound ("UI_pick", "UI");
 			blockStickMovement = true;
@@ -237,6 +230,48 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		newPlayer = Instantiate(inst);
 		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelId];
 		GameManager.playersSprites[panelId] = newPlayer.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+	}
+
+	void FindNextSelectableCharacter(int index)
+	{
+		for (int i = index; i < GameManager.nbOfCharacters; i++)
+		{
+			if (CharacterSelectionScreen.selectableCharacters [i])
+			{
+				characterSelected = i;
+				return;
+			}
+		}
+
+		for (int i = 0; i < index - 1; i ++)
+		{
+			if (CharacterSelectionScreen.selectableCharacters [i])
+			{
+				characterSelected = i;
+				return;
+			}
+		}
+	}
+
+	void FindPreviousSelectableCharacter(int index)
+	{
+		for (int i = index; i >= 0; i--)
+		{
+			if (CharacterSelectionScreen.selectableCharacters [i])
+			{
+				characterSelected = i;
+				return;
+			}
+		}
+
+		for (int i = GameManager.nbOfCharacters - 1; i > index + 1; i--)
+		{
+			if (CharacterSelectionScreen.selectableCharacters [i])
+			{
+				characterSelected = i;
+				return;
+			}
+		}
 	}
 
 }
