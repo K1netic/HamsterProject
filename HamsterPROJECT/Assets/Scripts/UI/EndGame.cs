@@ -17,7 +17,7 @@ public class EndGame : MonoBehaviour {
 
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (0.25f);
+		yield return new WaitForSeconds (GameManager.delayMenu);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 	}

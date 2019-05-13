@@ -177,7 +177,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 26198325}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -748,7 +748,7 @@ SpriteShapeRenderer:
   - {fileID: 0}
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 2.8031676, y: 2.8031676, z: 0}
+    m_Extent: {x: 2.3026676, y: 2.3026676, z: 0}
 --- !u!1001 &773376229
 Prefab:
   m_ObjectHideFlags: 0
@@ -2966,7 +2966,7 @@ Prefab:
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
@@ -3006,12 +3006,12 @@ Prefab:
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
@@ -3036,18 +3036,33 @@ Prefab:
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 223993461815228742, guid: 222b32e809c5eba49ae297ec517e33d5,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1468036936}
+    - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224276901935856448, guid: 222b32e809c5eba49ae297ec517e33d5,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 222b32e809c5eba49ae297ec517e33d5, type: 2}
   m_IsPrefabAsset: 0

@@ -40,6 +40,7 @@ public class Balancing : MonoBehaviour {
     public float knockBackLaser = 20;
     public float knockBackMeteor = 20;
     public float knockBackTrampoline = 30;
+    public float knockBackAttacker = 5;
 
     [Header("ATTACK")]
     public float attackTime;
@@ -73,5 +74,6 @@ public class Balancing : MonoBehaviour {
     [Header("SUDDEN DEATH")]
     public float suddenDeathSpeed = .02f;
     public float suddenDeathTime = 90;
+    public float timeRemainingWhenTwoPlayersLeft = 15;
 
 }

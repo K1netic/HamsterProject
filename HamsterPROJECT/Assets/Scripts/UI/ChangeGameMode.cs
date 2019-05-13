@@ -8,23 +8,22 @@ using UnityEngine.EventSystems;
 public class ChangeGameMode : Selectable {
 
 	bool blockStickMovement = false;
-	BaseEventData baseEvent;
 
 	void Update()
 	{
 		if (EventSystem.current.currentSelectedGameObject == this.gameObject)
 		{
-			if (Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) >= 0.8f && !blockStickMovement)
+			if ((Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) >= 0.8f || InputManager.ActiveDevice.DPadX.WasPressed ) && !blockStickMovement)
 			{
 				if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 				{
 					GameManager.gameModeType = GameManager.gameModes.Deathmatch;
-					this.GetComponent<Text> ().text = "Deathmatch";
+					UpdateText();
 				}
 				else
 				{
 					GameManager.gameModeType = GameManager.gameModes.LastManStanding;
-					this.GetComponent<Text> ().text = "Last Man Standing";
+					UpdateText();
 				}
 				AudioManager.instance.PlaySound ("UI_pick", "UI");
 
@@ -33,6 +32,19 @@ public class ChangeGameMode : Selectable {
 
 			else if (Mathf.Abs(InputManager.ActiveDevice.LeftStickX.Value) < 0.2f)
 				blockStickMovement = false;
+		}
+	}
+
+	public void UpdateText()
+	{
+		switch(GameManager.gameModeType)
+		{
+			case GameManager.gameModes.LastManStanding:
+				this.GetComponent<Text>().text = "Last Man Standing";
+			break;
+			case GameManager.gameModes.Deathmatch:
+				this.GetComponent<Text>().text = "Deathmatch";
+			break;
 		}
 	}
 }

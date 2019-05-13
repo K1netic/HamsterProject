@@ -27,12 +27,6 @@ public class MapSelector : MonoBehaviour {
 			itemSelected = GameObject.Find ("Maps").transform.GetChild(0).gameObject;
 		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
 		MusicManager.instance.PlayMusic("menu");
-
-	}
-
-	void OnDisable()
-	{
-		lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 	}
 
 	void Start()
@@ -63,6 +57,7 @@ public class MapSelector : MonoBehaviour {
 				if (dev.Action1.WasPressed)
 				{
 					allowInteraction = false;
+					lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 				}
 			}
 		}
@@ -70,7 +65,7 @@ public class MapSelector : MonoBehaviour {
 	
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (0.5f);
+		yield return new WaitForSeconds (GameManager.delayMenu);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 		currentSelectedObject = EventSystem.current.currentSelectedGameObject;

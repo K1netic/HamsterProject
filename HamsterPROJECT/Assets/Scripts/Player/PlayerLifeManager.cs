@@ -179,7 +179,7 @@ public class PlayerLifeManager : MonoBehaviour {
     //2eme arg : le game object qui est à l'origine des dégâts, utilisé pour trouver la direction du knockback
     //3eme arg : bool qui sert à savoir s'il on doit appliquer un knockback
     //4 et 5 servent pour le knockback avec les lasers
-    public void TakeDamage(float damage, GameObject attacker, bool knockBack, Vector3 contactPoint = default(Vector3) , int bladeLevel = 0)
+    public void TakeDamage(float damage, GameObject attacker, bool freezeFrame, Vector3 contactPoint = default(Vector3) , int bladeLevel = 0)
     {
         //Vérifie si le joueur n'est pas en recovery
         if (!inRecovery)
@@ -189,38 +189,57 @@ public class PlayerLifeManager : MonoBehaviour {
                 hookScript.DisableRope(false);
             }
             inRecovery = true;
-            if (knockBack)
+            //Calcule la direction du knockback
+            if (attacker.CompareTag("Laser"))
             {
-                //Calcule la direction du knockback
-                if (attacker.CompareTag("Laser"))
-                {
-                    directionKnockBack = -(contactPoint - transform.position).normalized;
-                }
-                else
-                {
-                    directionKnockBack = -(attacker.transform.position - transform.position).normalized;
-                }
-                StartCoroutine(DoKnockBack(attacker, bladeLevel));
-            }
-
-            //Attribution des dégâts
-            CancelCleanLastAttacker();
-            if (attacker.CompareTag("Arrow"))
-            {
-                lastAttacker = attacker.GetComponent<Hook>().playerMovement.playerNumber;
-                playerHP -= damage;
-                woundedMaterial.color = Color.Lerp(Color.red, Color.white , playerHP / 100);
-                if(attacker.GetComponent<Hook>().currentBlade == Hook.CurrentBlade.blade3)
-                    AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
-                else
-                    AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                directionKnockBack = -(contactPoint - transform.position).normalized;
             }
             else
             {
-                playerHP -= damage;
-                woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
-                AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
+                directionKnockBack = -(attacker.transform.position - transform.position).normalized;
             }
+            StartCoroutine(DoKnockBack(attacker, freezeFrame, bladeLevel));
+
+            //Attribution des dégâts
+            CancelCleanLastAttacker();
+            switch (attacker.tag)
+            {
+                case "Arrow":
+                    lastAttacker = attacker.GetComponent<Hook>().playerMovement.playerNumber;
+                    playerHP -= damage;
+                    switch (bladeLevel)
+                    {
+                        case 0:
+                            print("You are not suppossed to be there ! How did you came ?!");
+                            break;
+                        case 1:
+                            AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                            break;
+                        case 2:
+                            AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                            break;
+                        case 3:
+                            AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
+                            break;
+                        default:
+                            print("Impossible. IM-PO-SSI-BLE !");
+                            break;
+                    }
+                    break;
+                case "Laser":
+                    playerHP -= damage;
+                    AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
+                    break;
+                case "LaserEdge":
+                    playerHP -= damage;
+                    AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
+                    break;
+                default:
+                    playerHP -= damage;
+                    print(attacker.tag + "please insert a case in this switch for this attacker");
+                    break;
+            }
+            woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
             CleanLastAttacker();
 
             //Rend le player invulnérable pendant recoveryTime secondes
@@ -269,17 +288,20 @@ public class PlayerLifeManager : MonoBehaviour {
         }
     }
 
-    IEnumerator DoKnockBack(GameObject attacker, int bladeLevel)
+    IEnumerator DoKnockBack(GameObject attacker, bool freezeFrame, int bladeLevel = 0)
     {
         //Bloque le mouvement du joueur pour ne pas override le knockback
         playerMovement.lockMovement = true;
+        Invoke("UnlockMovement", knockBackTime);
         //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
         playerMovement.rigid.velocity = Vector3.zero;
-        playerMovement.rigid.gravityScale = 0;
         playerMovement.rigid.angularVelocity = 0;
-        Invoke("UnlockMovement", knockBackTime);
-        yield return new WaitForSeconds(freezeFrameDuration);
-        playerMovement.rigid.gravityScale = playerMovement.gravity;
+        if (freezeFrame)
+        {
+            playerMovement.rigid.gravityScale = 0;
+            yield return new WaitForSeconds(freezeFrameDuration);
+            playerMovement.rigid.gravityScale = playerMovement.gravity;
+        }
         //Switch qui test la nature de l'attaquant pour savoir quel knockback effectué
         //ForceMode2D.Impulse est essentiel pour que le knockback soit efficace
         switch (attacker.tag)
@@ -292,7 +314,6 @@ public class PlayerLifeManager : MonoBehaviour {
                         print("You are not suppossed to be there ! How did you came ?!");
                         break;
                     case 1:
-                        print("coucou");
                         playerMovement.rigid.AddForce(directionKnockBack * knockBackBlade1, ForceMode2D.Impulse);
                         break;
                     case 2:
@@ -333,6 +354,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackLaser, ForceMode2D.Impulse);
                 break;
             default:
+                print(attacker.tag + " please insert a case for this attacker in this switch");
                 break;
         }
     }
@@ -380,36 +402,14 @@ public class PlayerLifeManager : MonoBehaviour {
             case "LaserEdge":
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
-                    TakeDamage(laserDamage, col.gameObject, true);
+                    TakeDamage(laserDamage, col.gameObject, false);
                 else
                 {//Le joueur retouche le LaserEdge alors qu'il est encore en recovery
                     if (hookScript.hooked)
                     {
                         hookScript.DisableRope(false);
                     }
-                    //Bloque le mouvement du joueur pour ne pas override le knockback
-                    playerMovement.lockMovement = true;
-                    //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-                    playerMovement.rigid.velocity = Vector3.zero;
-                    Invoke("UnlockMovement", knockBackTime);
-                    LaserColliderDetection laserScript = col.gameObject.GetComponent<LaserColliderDetection>();
-                    switch (laserScript.side)
-                    {
-                        case LaserColliderDetection.LaserSide.bot:
-                            playerMovement.rigid.AddForce(Vector3.up * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        case LaserColliderDetection.LaserSide.top:
-                            playerMovement.rigid.AddForce(Vector3.down * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        case LaserColliderDetection.LaserSide.right:
-                            playerMovement.rigid.AddForce(Vector3.left * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        case LaserColliderDetection.LaserSide.left:
-                            playerMovement.rigid.AddForce(Vector3.right * knockBackLaser, ForceMode2D.Impulse);
-                            break;
-                        default:
-                            break;
-                    }
+                    StartCoroutine(DoKnockBack(col.gameObject, false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;
@@ -417,7 +417,7 @@ public class PlayerLifeManager : MonoBehaviour {
                 LaserHitFX(col.GetContact(0).point);
                 if (!inRecovery)
                 {
-                    TakeDamage(laserDamage, col.gameObject, true, col.GetContact(0).point);
+                    TakeDamage(laserDamage, col.gameObject, false, col.GetContact(0).point);
                 }
                 else
                 {//Le joueur retouche le Laser alors qu'il est encore en recovery
@@ -425,12 +425,8 @@ public class PlayerLifeManager : MonoBehaviour {
                     {
                         hookScript.DisableRope(false);
                     }
-                    //Bloque le mouvement du joueur pour ne pas override le knockback
-                    playerMovement.lockMovement = true;
-                    //Passe la vitesse à 0 pour que le knockback soit correctement appliqué
-                    playerMovement.rigid.velocity = Vector3.zero;
-                    Invoke("UnlockMovement", knockBackTime);
-                    playerMovement.rigid.AddForce(-(col.GetContact(0).point - (Vector2)transform.position).normalized * knockBackLaser, ForceMode2D.Impulse);
+                    directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
+                    StartCoroutine(DoKnockBack(col.gameObject, false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                 }
                 break;

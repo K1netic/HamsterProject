@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +15,13 @@ public class SuddenDeathMovement : MonoBehaviour {
     [SerializeField]
     GameObject submarineWarning;
     [SerializeField]
-    [Range(24f, 34f)]
+    [Range(24f, 36f)]
     float remainingSpace;
 
     GameObject[] childs = new GameObject[4];
     float suddenDeathSpeed;
     float suddenDeathTime;
+    float timeRemainingWhenTwoPlayersLeft;
     bool launchSuddenDeath;
     bool warningDone;
     Camera cam;
@@ -31,6 +32,7 @@ public class SuddenDeathMovement : MonoBehaviour {
 
         suddenDeathSpeed = balanceData.suddenDeathSpeed;
         suddenDeathTime = balanceData.suddenDeathTime;
+        timeRemainingWhenTwoPlayersLeft = balanceData.timeRemainingWhenTwoPlayersLeft;
 
         cam = FindObjectOfType<Camera>();
 
@@ -39,11 +41,21 @@ public class SuddenDeathMovement : MonoBehaviour {
             childs[i] = gameObject.transform.GetChild(i).gameObject;
         }
         counter = 0;
+        foreach (GameObject item in childs)
+        {
+            item.SetActive(false);
+        }
     }
 	
 	void Update () {
         if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime)
         {
+            if(GameManager.playersActive.Length > 2 && GameManager.playersAlive.Length == 2)
+            {
+                if (suddenDeathTime - counter > timeRemainingWhenTwoPlayersLeft)
+                    counter = suddenDeathTime - timeRemainingWhenTwoPlayersLeft;
+            }
+
             counter += Time.deltaTime;
             if (counter > suddenDeathTime)
             {
@@ -55,7 +67,6 @@ public class SuddenDeathMovement : MonoBehaviour {
                     LaunchWarning();
                 }
             }
-                
         }
         if (launchSuddenDeath)
         {
@@ -81,6 +92,10 @@ public class SuddenDeathMovement : MonoBehaviour {
 
     void LaunchWarning()
     {
+        foreach (GameObject item in childs)
+        {
+            item.SetActive(true);
+        }
         warningDone = true;
         switch (GameObject.FindGameObjectWithTag("Background").name)
         {

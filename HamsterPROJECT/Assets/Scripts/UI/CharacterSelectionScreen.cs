@@ -28,10 +28,10 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	[SerializeField] Animator gamesModesScreenAnimator;
 	Animator characterScreenAnimator;
 
+	[SerializeField] public GameObject system;
 
 	void Awake()
 	{
-
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
         if (PlayerPrefs.GetInt("NotFirstTime") == 0)
@@ -72,7 +72,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		MusicManager.instance.PlayMusic("menu");
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
 		if (checkPanels)
 		{
@@ -97,6 +97,20 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				ready = false;
 			
 			checkPanels = true;
+		}
+
+		if (readyCount >= 1)
+		{
+			system.GetComponentInChildren<MatchStart>().enabled = true;
+			system.GetComponentInChildren<MatchEnd>().enabled = false;
+			system.GetComponentInChildren<PauseMenu>().enabled = false;
+			system.GetComponentInChildren<FeedbacksOnDeath>().enabled = false;
+			system.SetActive(true);
+		}
+
+		else if (readyCount == 0)
+		{
+			system.SetActive(false);
 		}
 
 		if (ready)
@@ -134,10 +148,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				screenManager.OpenPanel (gamesModesScreenAnimator);
 			}
 		}
-	}
 
-	void Update()
-	{
 		// InputDevice inputDevice = InputManager.ActiveDevice;
 		foreach(InputDevice inputDevice in InputManager.ActiveDevices)
 		{
@@ -207,6 +218,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
 				GameManager.playersNumbers[i] = "_P" + (i + 1).ToString();
+				GameManager.playersTractConfig[i] = panels[i].tract;
 			}
 		}
 		DeleteClones ();

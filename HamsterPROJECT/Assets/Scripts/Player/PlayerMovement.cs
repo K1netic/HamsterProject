@@ -67,13 +67,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
 	{
-        /*
-        lockMovement = false;
-        speed = 0;
-        lockMovementDash = false;
-        dashReadyEffect.SetActive(true);
-        dashInCD = false;*/
-
         Application.targetFrameRate = 60;
         //S'il y a une erreur ici s'assurer que le prefab "Balancing" est bien dans la scène
         balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();

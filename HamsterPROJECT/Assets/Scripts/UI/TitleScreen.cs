@@ -41,7 +41,7 @@ public class TitleScreen : MonoBehaviour {
 
 	IEnumerator OpenNextScreen()
 	{
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(GameManager.delayMenu);
 		screenManager.OpenPanel (nextScreenAnimator);
 		// if(PlayerPrefs.GetInt("NotFirstTime") == 1)
 		// 	screenManager.OpenPanel (nextScreenAnimator);
