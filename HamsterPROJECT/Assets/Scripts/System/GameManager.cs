@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour {
 	public static GameObject[] playersCharacters = new GameObject[nbOfPlayers];
 	public static Sprite[] playersSprites = new Sprite[nbOfPlayers];
 	public static string[] playersNumbers = new string[nbOfPlayers];
+	public static bool[] playersTractConfig = new bool[nbOfPlayers];
 
 	//Players metrics
 	public static int[] playersScores = new int[nbOfPlayers];

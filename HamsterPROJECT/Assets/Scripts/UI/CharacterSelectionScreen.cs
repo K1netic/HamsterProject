@@ -218,6 +218,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				//Set selected characters
 				GameManager.playersInputDevices [i] = panels [i].device;
 				GameManager.playersNumbers[i] = "_P" + (i + 1).ToString();
+				GameManager.playersTractConfig[i] = panels[i].tract;
 			}
 		}
 		DeleteClones ();

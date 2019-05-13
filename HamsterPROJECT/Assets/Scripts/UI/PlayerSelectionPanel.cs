@@ -43,6 +43,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	// Input device
 	public InputDevice device;
 
+	// Control options
+	public bool tract = false;
+
 	void Awake()
 	{
 		characterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/ValidatedCharacters");
@@ -157,6 +160,15 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			RoomElements.SetActive(true);
 			if (!MatchStart.gameHasStarted) 
 				MatchStart.gameHasStarted = true;
+			if (device.CommandWasPressed)
+			{
+				if (tract)
+					tract = false;
+				else if (!tract)
+					tract = true;
+
+				newPlayer.GetComponentInChildren<Hook>().inverseRetractation = tract;
+			}
 			break;
 		}
 		#endregion
@@ -229,6 +241,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		}
 		newPlayer = Instantiate(inst);
 		newPlayer.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[panelId];
+		newPlayer.GetComponentInChildren<Hook>().inverseRetractation = tract;
 		GameManager.playersSprites[panelId] = newPlayer.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
 	}
 

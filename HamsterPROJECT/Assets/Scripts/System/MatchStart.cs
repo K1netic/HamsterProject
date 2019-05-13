@@ -206,6 +206,7 @@ public class MatchStart : MonoBehaviour {
         inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
         inst.name = GameManager.playersSprites[playerIndex].name;
         inst.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersNumbers[playerIndex];
+        inst.transform.GetChild(1).GetComponent<Hook>().inverseRetractation = GameManager.playersTractConfig[playerIndex];
         inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
     
         inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
@@ -220,6 +221,7 @@ public class MatchStart : MonoBehaviour {
         inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
         inst.name = GameManager.playersSprites[playerIndex].name;
         inst.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersNumbers[playerIndex];
+        inst.transform.GetChild(1).GetComponent<Hook>().inverseRetractation = GameManager.playersTractConfig[playerIndex];
         int j = Random.Range(0, spawnPoints.Count);
         inst.transform.position = spawnPoints[j].transform.position;
         spawnPoints.Remove(spawnPoints[j]);
