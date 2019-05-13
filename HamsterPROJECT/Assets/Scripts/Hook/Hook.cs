@@ -315,7 +315,7 @@ public class Hook : MonoBehaviour {
                 }
 
                 RaycastingDistanceJoint();
-                if (!inverseRetrataction)
+                if (!inverseRetractation)
                 {
                     //Permet de s'approcher du joint uniquement s'il n'y a pas de plateforme directement devant le joueur
                     if (playerMovement.playerInputDevice.RightTrigger.Value > 0 && checkToJoint.collider == null)
