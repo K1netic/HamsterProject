@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
 
 	public static bool inMenu;
 
-	public static float delayMenu = 0.15f;
+	public static float delayMenu = 0.25f;
 
 	void Awake()
 	{
