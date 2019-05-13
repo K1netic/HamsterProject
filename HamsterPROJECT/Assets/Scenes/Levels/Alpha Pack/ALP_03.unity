@@ -591,11 +591,6 @@ Prefab:
         type: 3}
     - target: {fileID: 60285991777140976, guid: 156e187d202db2340a0cb2c3229c3c8c,
         type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 60285991777140976, guid: 156e187d202db2340a0cb2c3229c3c8c,
-        type: 2}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
       value: 0.5534
       objectReference: {fileID: 0}
@@ -1598,6 +1593,11 @@ Prefab:
       propertyPath: m_LocalAABB.m_Center.x
       value: -0.00959003
       objectReference: {fileID: 0}
+    - target: {fileID: 60285991777140976, guid: 156e187d202db2340a0cb2c3229c3c8c,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 372bcd4bbadc18b4f9786c5cc881bd35, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 156e187d202db2340a0cb2c3229c3c8c, type: 2}
   m_IsPrefabAsset: 0
