@@ -15,7 +15,7 @@ public class SuddenDeathMovement : MonoBehaviour {
     [SerializeField]
     GameObject submarineWarning;
     [SerializeField]
-    [Range(24f, 34f)]
+    [Range(24f, 36f)]
     float remainingSpace;
 
     GameObject[] childs = new GameObject[4];
