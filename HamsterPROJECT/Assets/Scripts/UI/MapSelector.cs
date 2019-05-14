@@ -65,7 +65,7 @@ public class MapSelector : MonoBehaviour {
 	
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (GameManager.delayMenu);
+		yield return new WaitForSeconds (0.4f);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 		currentSelectedObject = EventSystem.current.currentSelectedGameObject;
