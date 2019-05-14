@@ -116,7 +116,7 @@ public class MatchEnd : MonoBehaviour {
 			// Keep playing if nobody reached the game goal
 			foreach (InputDevice dev in InputManager.ActiveDevices)
 			{
-				if (dev.Action1.WasPressed && GameManager.playersScores[winner] < GameManager.rounds )
+				if ((dev.Action1.WasPressed && GameManager.playersScores[winner] < GameManager.rounds) || winner == 42)
 				{
 					GameManager.lastLevelPlayed = "";
 					lvlSelect.LoadNextLevel(SceneManager.GetActiveScene ().name);
