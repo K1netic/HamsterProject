@@ -135,6 +135,11 @@ public class CharacterSelectionScreen : MonoBehaviour {
 				&& readyCount == 0)
 			{
 				AudioManager.instance.PlaySound ("UI_cancel", "UI");
+				foreach(PlayerSelectionPanel pan in panels)
+				{
+					pan.doorUpAnimator.SetBool("open", false);
+					pan.doorDownAnimator.SetBool("open", false);
+				}
 				screenManager.OpenPanel (previousScreenAnimator);
 				DeleteClones ();
 			}

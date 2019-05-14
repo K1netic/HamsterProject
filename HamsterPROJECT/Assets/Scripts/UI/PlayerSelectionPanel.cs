@@ -20,7 +20,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 	// Images to activate/deactive which receive the collections of images
 	[SerializeField] Image notAvailable;
-	[SerializeField] Image border;
+	[SerializeField] public Animator doorDownAnimator;
+	[SerializeField] public Animator doorUpAnimator;
+
 	public Image characterSprite;
 	[SerializeField] GameObject guid;
 	GameObject leftArrow;
@@ -134,7 +136,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			guid.SetActive(true);
 			leftArrow.SetActive(false);
 			rightArrow.SetActive(false);
-			border.sprite = deactivatedBorder;
+			doorDownAnimator.SetBool("open", false);
+			doorUpAnimator.SetBool("open", false);
 			notAvailable.gameObject.SetActive (false);
 			break;
 
@@ -145,7 +148,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			guid.SetActive(true);
 			leftArrow.SetActive(true);
 			rightArrow.SetActive(true);
-			border.sprite = activatedBorder;
+			doorDownAnimator.SetBool("open", true);
+			doorUpAnimator.SetBool("open", true);
 			characterSprite.sprite = characterSprites[characterSelected];
 			//Activate character selection
 			CharacterSelection();
@@ -153,7 +157,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 
 		case SelectionPanelState.Validated:
 			guid.SetActive(false);
-			border.sprite = validatedBorders[characterSelected];
 			CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
 			blockCharacterSelection = true;
 			UIElements.SetActive(false);
