@@ -10,6 +10,8 @@ public class Trampoline : MonoBehaviour {
 	float knockBackTrampoline;
 	PlayerMovement playerMovement;
 
+	[SerializeField] bool isFlat = false;
+
 	void Start()
 	{
 		balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
@@ -24,14 +26,18 @@ public class Trampoline : MonoBehaviour {
 			playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
 			//Point de contact entre le joueur et le trampoline
 			Vector3 contact = collision.GetContact(0).point;
+			Vector3 center = Vector3.zero;
 			//Centre du trampoline
-			Vector3 center = this.transform.position;
+			if (!isFlat)
+				center = this.transform.position;
+			else if (isFlat)
+				center = new Vector3(contact.x, transform.position.y, 0);
 			//Rayon incident
 			Vector3 incident = collision.transform.position - contact;
 			//Normale
 			Vector3 normale = contact - center;
 			//Rayon réfléchi
-			Vector3 reflected = Vector3.Reflect(incident, normale);
+			Vector3 reflected = - Vector3.Reflect(incident, normale).normalized;
 			Knockback(collision.gameObject, reflected);
 		}
 	}
