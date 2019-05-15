@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212243663179160484}
   - component: {fileID: 50352325265301940}
   - component: {fileID: 114206165885559166}
-  - component: {fileID: 60292194505593186}
+  - component: {fileID: 61401003629322322}
   m_Layer: 16
   m_Name: DP_4_Full
   m_TagString: Hookable
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1277804319869416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -6.56, z: 0}
+  m_LocalPosition: {x: -2.54, y: -12.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60292194505593186
-PolygonCollider2D:
+--- !u!61 &61401003629322322
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -85,37 +85,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.96400005, y: 0.92800003}
-      - {x: 0.88000005, y: 0.98}
-      - {x: 0.81600004, y: 0.94400007}
-      - {x: 0.72800004, y: 0.96800005}
-      - {x: 0.63600004, y: 0.96000004}
-      - {x: 0.544, y: 0.984}
-      - {x: 0.41200003, y: 0.94400007}
-      - {x: 0.34, y: 0.94400007}
-      - {x: 0.26000002, y: 0.984}
-      - {x: 0.252, y: 0.984}
-      - {x: 0.26000002, y: 0.984}
-      - {x: 0.284, y: 0.98}
-      - {x: 0.28800002, y: 0.9760001}
-      - {x: 0.312, y: 0.96800005}
-      - {x: 0.328, y: 0.96400005}
-      - {x: 0.36800003, y: 0.95600003}
-      - {x: 0.44000003, y: 0.96400005}
-      - {x: 0.532, y: 1.0320001}
-      - {x: 0.568, y: 1.0680001}
-      - {x: 0.712, y: 1.304}
-      - {x: 0.768, y: 1.3280001}
-      - {x: 0.836, y: 1.3800001}
-      - {x: 1.008, y: 1.524}
-      - {x: 1.024, y: 1.544}
-      - {x: 1.024, y: 4.096}
-      - {x: -1.024, y: 4.096}
-      - {x: -1.024, y: -4.096}
-      - {x: 1.024, y: -4.096}
-      - {x: 1.024, y: 0.90400004}
+  serializedVersion: 2
+  m_Size: {x: 2.048, y: 8.192}
+  m_EdgeRadius: 0
 --- !u!114 &114206165885559166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,9 +141,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1888461155
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 73dd6317a0af137479e20d05c6e06fe0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 398f52e547d5fe543b41a3297d6aa9fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

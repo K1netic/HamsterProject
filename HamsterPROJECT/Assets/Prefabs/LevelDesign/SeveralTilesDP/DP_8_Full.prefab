@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212992340215877928}
   - component: {fileID: 50449043093558296}
   - component: {fileID: 114480884506874410}
-  - component: {fileID: 60090653893908852}
+  - component: {fileID: 61939691698243132}
   m_Layer: 16
   m_Name: DP_8_Full
   m_TagString: Hookable
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1731387487303332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.18, y: -0, z: 0}
+  m_LocalPosition: {x: -1.6936414, y: -9.171894, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60090653893908852
-PolygonCollider2D:
+--- !u!61 &61939691698243132
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -85,34 +85,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.87200004, y: 5.0800004}
-      - {x: 0.768, y: 5.064}
-      - {x: 0.56, y: 5.0880003}
-      - {x: 0.52000004, y: 5.0800004}
-      - {x: 0.432, y: 5.0480003}
-      - {x: 0.504, y: 5.096}
-      - {x: 0.57600003, y: 5.1600003}
-      - {x: 0.656, y: 5.28}
-      - {x: 0.72, y: 5.4}
-      - {x: 0.81600004, y: 5.4480004}
-      - {x: 0.9760001, y: 5.584}
-      - {x: 1.024, y: 5.6320004}
-      - {x: 1.024, y: 8.192}
-      - {x: -1.024, y: 8.192}
-      - {x: -1.024, y: -4.6480002}
-      - {x: -1.016, y: -4.6720004}
-      - {x: -0.96800005, y: -4.8320003}
-      - {x: -0.84000003, y: -5.2320004}
-      - {x: -0.8880001, y: -5.3120003}
-      - {x: -0.94400007, y: -5.32}
-      - {x: -1.016, y: -5.36}
-      - {x: -1.024, y: -5.4160004}
-      - {x: -1.024, y: -8.192}
-      - {x: 1.024, y: -8.192}
-      - {x: 1.024, y: 5.0080004}
-      - {x: 1.016, y: 5.0160003}
+  serializedVersion: 2
+  m_Size: {x: 2.048, y: 16.384}
+  m_EdgeRadius: 0
 --- !u!114 &114480884506874410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,9 +141,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1888461155
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0262d86762f0a6b4ea77fa7485c1e1a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f5d612ffb224bfa4f867f02d89db9f5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
