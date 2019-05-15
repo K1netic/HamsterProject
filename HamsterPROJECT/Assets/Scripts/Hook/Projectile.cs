@@ -223,7 +223,7 @@ public class Projectile : MonoBehaviour {
             switch (collision.gameObject.tag)
             {
                 case "Hook":
-                    Instantiate(hitHook, transform.position, transform.rotation);
+                    Instantiate(hitHook, collision.GetContact(0).point, transform.rotation);
                     hook.VibrationOnProjectileDestroyed();
                     // AudioManager.instance.PlaySound("doubleHookContact", hook.playerMovement.playerNumber + "Hook");
                     Destruction();
@@ -235,13 +235,13 @@ public class Projectile : MonoBehaviour {
                 default:
                     if(collision.gameObject.layer != 25)//scraps
                     {
-                        Instantiate(hitHook, transform.position, transform.rotation);
+                        Instantiate(hitHook, collision.GetContact(0).point, transform.rotation);
                         hook.VibrationOnProjectileDestroyed();
                         Destruction();
                     }
                     else
                     {
-                        Instantiate(hitHook, transform.position, transform.rotation);
+                        Instantiate(hitHook, collision.GetContact(0).point, transform.rotation);
                         hook.VibrationOnProjectileDestroyed();
                         Destruction();
                     }
