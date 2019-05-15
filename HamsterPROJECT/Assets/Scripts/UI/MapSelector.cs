@@ -13,11 +13,16 @@ public class MapSelector : MonoBehaviour {
 	GameObject currentSelectedObject;
 	GameObject previousSelectedObject;
 	public string selectedObjectName;
-
-	GameObject lastSelectedOject;
-	Text mapTitle;
-
 	GameObject itemSelected;
+	GameObject lastSelectedOject;
+
+	// Éléments à modifier en fonction de la sélection
+	Text mapTitle;
+	[SerializeField] Image mapMiniature;
+	[SerializeField] Text mapDescription;
+
+	[SerializeField] Sprite[] miniatures;
+	[SerializeField] string[] descriptions;
 
 	void OnEnable()
 	{
@@ -32,6 +37,7 @@ public class MapSelector : MonoBehaviour {
 	void Start()
 	{
 		mapTitle = GameObject.Find("MapName").GetComponent<Text>();
+		UpdateInfos(GameObject.Find ("Maps").transform.GetChild(0).gameObject.name);
 	}
 
 	// Update is called once per frame
@@ -44,12 +50,13 @@ public class MapSelector : MonoBehaviour {
 			// Move selector to the newly selected element when a player changes the selection
 			if (currentSelectedObject != previousSelectedObject && currentSelectedObject != null)
 			{
-				AudioManager.instance.PlaySound("UI_pick", "UI");
 				selectedObjectPosition = new Vector2(currentSelectedObject.transform.position.x, currentSelectedObject.transform.position.y);
 				selectedObjectName = currentSelectedObject.name;
 				// Updating the title of the screen with the selected pack's name
 				mapTitle.text = selectedObjectName;
 				this.transform.position = new Vector2(selectedObjectPosition.x, selectedObjectPosition.y);
+				UpdateInfos(selectedObjectName);
+				lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 			}
 
 			foreach (InputDevice dev in InputManager.ActiveDevices)
@@ -57,7 +64,6 @@ public class MapSelector : MonoBehaviour {
 				if (dev.Action1.WasPressed)
 				{
 					allowInteraction = false;
-					lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 				}
 			}
 		}
@@ -65,10 +71,41 @@ public class MapSelector : MonoBehaviour {
 	
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (0.4f);
+		yield return new WaitForSeconds (0.3f);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 		currentSelectedObject = EventSystem.current.currentSelectedGameObject;
 		allowInteraction = true;
+	}
+
+	void UpdateInfos(string mapName)
+	{
+		switch(mapName)
+		{
+			case "Alpha":
+				mapMiniature.sprite = miniatures[Random.Range(0,3)];
+				mapDescription.text = descriptions[0];
+				break;
+			case "Proto":
+				mapMiniature.sprite = miniatures[Random.Range(0,3)];
+				mapDescription.text = descriptions[1];
+				break;
+			case "Factory":
+				mapMiniature.sprite = miniatures[0];
+				mapDescription.text = descriptions[2];
+				break;
+			case "Submarine":
+				mapMiniature.sprite = miniatures[1];
+				mapDescription.text = descriptions[3];
+				break;
+			case "Mars":
+				mapMiniature.sprite = miniatures[2];
+				mapDescription.text = descriptions[4];
+				break;
+			case "Forest":
+				mapMiniature.sprite = miniatures[3];
+				mapDescription.text = descriptions[5];
+				break;
+		}
 	}
 }
