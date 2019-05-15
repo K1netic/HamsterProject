@@ -29,6 +29,24 @@ public class Explodable : MonoBehaviour
     private List<List<Vector2>> polygons = new List<List<Vector2>>();
    
 	void Start() {
+        switch (GameObject.FindGameObjectWithTag("Background").name)
+        {
+            case "Factory":
+                GetComponent<SpriteRenderer>().color = new Color(.65f, .39f, .61f);
+                break;
+            case "Desert":
+                GetComponent<SpriteRenderer>().color = new Color(.69f, .56f, .40f);
+                break;
+            case "Forest":
+                GetComponent<SpriteRenderer>().color = new Color(.37f, .48f, .39f);
+                break;
+            case "Submarine":
+                GetComponent<SpriteRenderer>().color = new Color(.35f, .35f, .55f);
+                break;
+            default:
+                print("Mets un background si tu veux pas des plateformes grises.");
+                break;
+        }
         deleteFragments();
         explode ();
 	}

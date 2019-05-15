@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212227440414453196}
   - component: {fileID: 50540812257432196}
   - component: {fileID: 114335480369755274}
-  - component: {fileID: 60091634435665652}
+  - component: {fileID: 61154462704122818}
   m_Layer: 16
   m_Name: DP_23_Full
   m_TagString: Hookable
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1345211148410964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.7017813}
+  m_LocalPosition: {x: -6.75489, y: 0.038993835, z: -3.7017813}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,8 +63,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60091634435665652
-PolygonCollider2D:
+--- !u!61 &61154462704122818
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -85,32 +85,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.0239999, y: -16.349483}
-      - {x: 1.0239999, y: -2.1285393}
-      - {x: 0.90894383, y: -2.0595055}
-      - {x: 0.86292136, y: -2.0595055}
-      - {x: 1.0009887, y: -1.6222922}
-      - {x: 1.0239999, y: -1.5762696}
-      - {x: 1.0239999, y: 18.213392}
-      - {x: 0.95496625, y: 18.282427}
-      - {x: 1.0239999, y: 18.742651}
-      - {x: 1.0239999, y: 23.552}
-      - {x: -1.0239999, y: 23.552}
-      - {x: -1.0239999, y: 14.80773}
-      - {x: -0.632809, y: 14.416539}
-      - {x: -1.0239999, y: 14.301483}
-      - {x: -1.0239999, y: 6.5006742}
-      - {x: -0.9779775, y: 6.3626065}
-      - {x: -1.0239999, y: 6.0634604}
-      - {x: -1.0239999, y: -11.793259}
-      - {x: -0.8168989, y: -12.00036}
-      - {x: -1.0239999, y: -12.345528}
-      - {x: -1.0239999, y: -23.552}
-      - {x: 1.0239999, y: -23.552}
-      - {x: 1.0239999, y: -16.602606}
-      - {x: 1.0009887, y: -16.579596}
+  serializedVersion: 2
+  m_Size: {x: 2.048, y: 47.104}
+  m_EdgeRadius: 0
 --- !u!114 &114335480369755274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,9 +141,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1888461155
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a2f22e71f3a9cc94787de5c32595f562, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce5229e63d6328741ab6f744d275830b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
