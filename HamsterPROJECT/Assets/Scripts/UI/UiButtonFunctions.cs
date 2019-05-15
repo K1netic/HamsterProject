@@ -73,7 +73,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		this.GetComponent<Text> ().color = new Color (255, 255, 255);
 		this.transform.GetChild (0).gameObject.SetActive (false);
-		AudioManager.instance.PlaySound ("UI_highlight", "UI");
+		// AudioManager.instance.PlaySound ("UI_highlight", "UI");
 	}
 
 	// Utilisé pour les éléments qui ont deux flèches de sélection
