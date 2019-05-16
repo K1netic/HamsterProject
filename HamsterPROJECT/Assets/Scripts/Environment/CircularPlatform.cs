@@ -7,6 +7,8 @@ public class CircularPlatform : MonoBehaviour {
 
 	[SerializeField]
 	float moveSpeed;
+    [SerializeField]
+    bool clockWise = true;
 
     Rigidbody2D rigid;
     Vector3 pivotPos;
@@ -24,6 +26,9 @@ public class CircularPlatform : MonoBehaviour {
         pivotPos = transform.parent.transform.position;
         rigid = GetComponent<Rigidbody2D>();
         radius = Vector2.Distance(pivotPos, transform.position);
+
+        if (!clockWise)
+            moveSpeed = -moveSpeed;
 
         transform.position = pivotPos + new Vector3(Mathf.Sin(t * moveSpeed) * radius, Mathf.Cos(t * moveSpeed) * radius, 0);
         vectorToTarget = transform.position - pivotPos;
