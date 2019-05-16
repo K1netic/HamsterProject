@@ -28,8 +28,8 @@ public class MapButton : MonoBehaviour {
 	public void Select()
 	{
 		this.transform.GetChild (0).gameObject.SetActive (true);
-		AudioManager.instance.PlaySound ("UI_Pick", "UI");
 		anim.SetBool("highlighted", true);
+		AudioManager.instance.PlaySound ("UI_pick", "UI");
 	}
 
 	public void Deselect()

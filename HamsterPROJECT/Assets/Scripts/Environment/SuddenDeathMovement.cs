@@ -115,6 +115,6 @@ public class SuddenDeathMovement : MonoBehaviour {
                 print("Mets un fond si tu veux un warning");
                 break;
         }
-        //Play sound warning
+        AudioManager.instance.PlaySound("alarmSuddenDeath", "UI");
     }
 }

@@ -213,13 +213,13 @@ public class PlayerLifeManager : MonoBehaviour {
                             print("You are not suppossed to be there ! How did you came ?!");
                             break;
                         case 1:
-                            AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                            AudioManager.instance.PlaySound("damageLV1", playerMovement.playerNumber);
                             break;
                         case 2:
-                            AudioManager.instance.PlaySound("damage", playerMovement.playerNumber);
+                            AudioManager.instance.PlaySound("damageLV2", playerMovement.playerNumber);
                             break;
                         case 3:
-                            AudioManager.instance.PlaySound("criticalDamage", playerMovement.playerNumber);
+                            AudioManager.instance.PlaySound("damageLV3", playerMovement.playerNumber);
                             break;
                         default:
                             print("Impossible. IM-PO-SSI-BLE !");

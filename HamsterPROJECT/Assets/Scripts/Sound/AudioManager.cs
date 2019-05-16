@@ -9,40 +9,26 @@ public class AudioManager : MonoBehaviour {
 
     [Header("In game sounds")]
     #region IG
-    [SerializeField] AudioClip criticalDamage;
-	[Range(0f,1f)] [SerializeField] float criticalDamageVolume;
-	[SerializeField] AudioClip damage;
-	[Range(0f,1f)] [SerializeField] float damageVolume;
+    [SerializeField] AudioClip damageLV3;
+	[Range(0f,1f)] [SerializeField] float damageLV3Volume;
+	[SerializeField] AudioClip damageLV2;
+	[Range(0f,1f)] [SerializeField] float damageLV2Volume;
+	[SerializeField] AudioClip damageLV1;
+	[Range(0f,1f)] [SerializeField] float damageLV1Volume;
 	[SerializeField] AudioClip dash;
 	[Range(0f,1f)] [SerializeField] float dashVolume;
 	[SerializeField] AudioClip destructionHook;
 	[Range(0f,1f)] [SerializeField] float destructionHookVolume;
-	// [SerializeField] AudioClip doubleHookContact;
-	// [Range(0f,1f)] [SerializeField] float doubleHookContactVolume;
-	// [SerializeField] AudioClip hookContactScraps;
-	// [Range(0f,1f)] [SerializeField] float hookContactScrapsVolume;
 	[SerializeField] AudioClip playerHitLaser;
 	[Range(0f,1f)] [SerializeField] float playerHitLaserVolume;
 	[SerializeField] AudioClip playerHitPlayer;
 	[Range(0f,1f)] [SerializeField] float playerHitPlayerVolume;
-	// [SerializeField] AudioClip throwHook;
-	// [Range(0f,1f)] [SerializeField] float throwHookVolume;
-	// [SerializeField] AudioClip arrowHitShield;
-	// [Range(0f,1f)] [SerializeField] float arrowHitShieldVolume;
 	[SerializeField] AudioClip arrowHitArrow;
 	[Range(0f,1f)] [SerializeField] float arrowHitArrowVolume;
-	// [SerializeField] AudioClip switchWeapon;
-	// [Range(0f,1f)] [SerializeField] float switchWeaponVolume;
-	// [SerializeField] AudioClip towing;
-	// [Range(0f,1f)] [SerializeField] float towingVolume;
-	// [SerializeField] AudioClip untowing;
-	// [Range(0f,1f)] [SerializeField] float untowingVolume;
     [SerializeField] AudioClip death;
     [Range(0f, 1f)] [SerializeField] float deathVolume;
     [SerializeField] AudioClip dashRecovery;
     [Range(0f, 1f)] [SerializeField] float dashRecoveryVolume;
-    // [SerializeField] AudioClip doubleShieldContact;
-    // [Range(0f, 1f)] [SerializeField] float doubleShieldContactVolume;
 	[SerializeField] AudioClip destructingPlatform;
 	[Range(0f, 1f)] [SerializeField] float destructingPlatformVolume;
 	[SerializeField] AudioClip ropeCut;
@@ -77,6 +63,8 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float UI_titleJingleVolume;
 	[SerializeField] AudioClip UI_readyFight;
 	[Range(0f,1f)] [SerializeField] float UI_readyFightVolume;
+	[SerializeField] AudioClip UI_alarmSuddenDeath;
+	[Range(0f,1f)] [SerializeField] float UI_alarmSuddenDeathVolume;
 	#endregion
 
 	public static AudioManager instance = null;
@@ -163,51 +151,31 @@ public class AudioManager : MonoBehaviour {
 			
         switch(audioName)
 		{
-        // case "doubleShieldContact":
-        //     source.pitch = .75f;
-        //     source.volume = doubleShieldContactVolume;
-        //         source.PlayOneShot(doubleShieldContact);
-        //     break;
-		// case "towing":
-		// 	source.pitch = 1.0f;
-		// 	source.volume = towingVolume;
-		// 	source.PlayOneShot (towing);
-		// 	break;
-		// case "untowing":
-		// 	source.pitch = 1.0f;
-		// 	source.volume = untowingVolume;
-		// 	source.PlayOneShot (untowing);
-		// 	break;
-		case "damage":
+		case "damageLV1":
 			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = damageVolume;
-			source.PlayOneShot (damage);
+			source.volume = damageLV1Volume;
+			source.PlayOneShot (damageLV1);
 			break;
-		case "criticalDamage":
+		case "damageLV2":
 			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = criticalDamageVolume;
-			source.PlayOneShot (criticalDamage);
+			source.volume = damageLV2Volume;
+			source.PlayOneShot (damageLV2);
+			break;
+		case "damageLV3":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = damageLV3Volume;
+			source.PlayOneShot (damageLV3);
 			break;
 		case "dash":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = dashVolume;
 			source.PlayOneShot (dash);
 			break;
-		// case "doubleHookContact":
-		// 	source.pitch = Random.Range (pitchMin, pitchMax);
-		// 	source.volume = doubleHookContactVolume;
-		// 	source.PlayOneShot (doubleHookContact);
-		// 	break;
 		case "destructionHook":
 			source.pitch = 1.0f;
 			source.volume = destructionHookVolume;
 			source.PlayOneShot (destructionHook);
 			break;
-		// case "hookContactScraps":
-		// 	source.pitch = Random.Range (pitchMin, pitchMax);
-		// 	source.volume = hookContactScrapsVolume;
-		// 	source.PlayOneShot (hookContactScraps);
-		// 	break;
 		case "playerHitLaser":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = playerHitLaserVolume;
@@ -218,26 +186,11 @@ public class AudioManager : MonoBehaviour {
 			source.volume = playerHitPlayerVolume;
 			source.PlayOneShot (playerHitPlayer);
 			break;
-		// case "throwHook":
-		// 	source.pitch = Random.Range (pitchMin, pitchMax);
-		// 	source.volume = throwHookVolume;
-		// 	source.PlayOneShot (throwHook);
-		// 	break;
-		// case "arrowHitShield":
-		// 	source.pitch = 0.5f;
-		// 	source.volume = arrowHitShieldVolume;
-		// 	source.PlayOneShot (arrowHitShield);
-		// 	break;
 		case "arrowHitArrow":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = arrowHitArrowVolume;
 			source.PlayOneShot (arrowHitArrow);
 			break;
-		// case "switchWeapon":
-		// 	source.pitch = Random.Range (pitchMin, pitchMax);
-		// 	source.volume = switchWeaponVolume;
-		// 	source.PlayOneShot (switchWeapon);
-		// 	break;
 		case "death":
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = deathVolume;
@@ -309,6 +262,10 @@ public class AudioManager : MonoBehaviour {
 		case "UI_readyFight":
 			source.volume = UI_readyFightVolume;
 			source.PlayOneShot (UI_readyFight);
+			break;
+		case "UI_alarmSuddenDeath":
+			source.volume = UI_alarmSuddenDeathVolume;
+			source.PlayOneShot(UI_alarmSuddenDeath);
 			break;
 		default:
 			break;
