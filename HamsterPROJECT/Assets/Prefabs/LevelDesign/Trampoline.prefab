@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 8633865682405946448}
   - component: {fileID: 114974810392519710}
   - component: {fileID: 114694647853278062}
+  - component: {fileID: 95030535822160020}
   m_Layer: 16
   m_Name: Trampoline
   m_TagString: Hookable
@@ -171,6 +172,24 @@ PolygonCollider2D:
       - {x: -0.9774, y: -2.55876}
       - {x: -0.07741, y: -2.64626}
       - {x: -0.02096, y: -2.64974}
+--- !u!95 &95030535822160020
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554615733148102}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5fbb9868bfc6864b86e2079e5df91e0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114694647853278062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4551a19ce81ef994782be8d408dd9439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFlat: 0
 --- !u!114 &114974810392519710
 MonoBehaviour:
   m_ObjectHideFlags: 1

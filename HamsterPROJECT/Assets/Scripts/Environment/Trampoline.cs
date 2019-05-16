@@ -9,6 +9,7 @@ public class Trampoline : MonoBehaviour {
 	float knockBackTime;
 	float knockBackTrampoline;
 	PlayerMovement playerMovement;
+    Animator anim;
 
 	[SerializeField] bool isFlat = false;
 
@@ -17,6 +18,7 @@ public class Trampoline : MonoBehaviour {
 		balanceData = GameObject.Find("Balancing").GetComponent<Balancing>();
 		knockBackTime = balanceData.knockBackTime;
 		knockBackTrampoline = balanceData.knockBackTrampoline;
+        anim = GetComponent<Animator>();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
@@ -39,6 +41,7 @@ public class Trampoline : MonoBehaviour {
 			//Rayon réfléchi
 			Vector3 reflected = - Vector3.Reflect(incident, normale).normalized;
 			Knockback(collision.gameObject, reflected);
+            anim.SetTrigger("Touched");
 		}
 	}
 
