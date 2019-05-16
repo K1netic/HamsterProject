@@ -1832,10 +1832,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pitchMin: 0.9
   pitchMax: 1.1
-  criticalDamage: {fileID: 8300000, guid: 0357fc5e0059e374dac118fe29870433, type: 3}
-  criticalDamageVolume: 0.6
-  damage: {fileID: 8300000, guid: 5e4a004ff5f5f3847b903a496809df55, type: 3}
-  damageVolume: 1
+  damageLV3: {fileID: 8300000, guid: 5d7c9924a81359448bb89afaec79b6c2, type: 3}
+  damageLV3Volume: 1
+  damageLV2: {fileID: 8300000, guid: 6dfbfae779d67364c8be949c7ca6ec07, type: 3}
+  damageLV2Volume: 1
+  damageLV1: {fileID: 8300000, guid: 5e4a004ff5f5f3847b903a496809df55, type: 3}
+  damageLV1Volume: 1
   dash: {fileID: 8300000, guid: 9d00df5237ca5ee4b8e8cf039b67431f, type: 3}
   dashVolume: 0.8
   destructionHook: {fileID: 8300000, guid: 45d497646ef415943a52c761e9e58735, type: 3}
@@ -1850,7 +1852,7 @@ MonoBehaviour:
   deathVolume: 1
   dashRecovery: {fileID: 8300000, guid: b1351912c0526c642abd2a42eeba1e2a, type: 3}
   dashRecoveryVolume: 0.3
-  destructingPlatform: {fileID: 8300000, guid: 9c17df86e92682841950635c638f11b2, type: 3}
+  destructingPlatform: {fileID: 8300000, guid: a8420675d8631ba4f989b5a6c038d241, type: 3}
   destructingPlatformVolume: 0.3
   ropeCut: {fileID: 8300000, guid: 1169b109d6055ff40b0c764dec7f9697, type: 3}
   ropeCutVolume: 0.5
@@ -1883,6 +1885,8 @@ MonoBehaviour:
   UI_titleJingleVolume: 0.5
   UI_readyFight: {fileID: 8300000, guid: b0ac5e9a8b2263c498aa0fdf6db38a80, type: 3}
   UI_readyFightVolume: 0.35
+  UI_alarmSuddenDeath: {fileID: 8300000, guid: 51b4b31f80f64ad4587b5175e3dd4eaa, type: 3}
+  UI_alarmSuddenDeathVolume: 0.3
   _P1Source: {fileID: 82239681915808194}
   _P2Source: {fileID: 82732385018354254}
   _P3Source: {fileID: 82030563775631576}
