@@ -41,7 +41,7 @@ public class Explodable : MonoBehaviour
                 GetComponent<SpriteRenderer>().color = new Color(.37f, .48f, .39f);
                 break;
             case "Submarine":
-                GetComponent<SpriteRenderer>().color = new Color(.35f, .35f, .55f);
+                GetComponent<SpriteRenderer>().color = new Color(.1f, .1f, .35f);
                 break;
             default:
                 print("Mets un background si tu veux pas des plateformes grises.");
