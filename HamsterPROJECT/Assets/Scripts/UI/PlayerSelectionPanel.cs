@@ -92,7 +92,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
 				InstantiatePlayer();
 				validatedCharacter = newPlayer;
-				border.sprite = validatedBorders[characterSelected];
 			}
 
 			// Deactivation (Activated -> Deactivated)
@@ -115,7 +114,6 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 				Destroy (newPlayer.gameObject);
 				blockCharacterSelection = false;
-				border.sprite = basicBorder;
 				device.StopVibration ();
 			}
 
@@ -141,6 +139,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			doorDownAnimator.SetBool("open", false);
 			doorUpAnimator.SetBool("open", false);
 			notAvailable.gameObject.SetActive (false);
+			border.sprite = basicBorder;
 			break;
 
 		case SelectionPanelState.Activated:
@@ -155,9 +154,11 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			characterSprite.sprite = characterSprites[characterSelected];
 			//Activate character selection
 			CharacterSelection();
+			border.sprite = basicBorder;
 			break;
 
 		case SelectionPanelState.Validated:
+			border.sprite = validatedBorders[characterSelected];
 			guid.SetActive(false);
 			CharacterSelectionScreen.selectableCharacters [characterSelected] = false;
 			blockCharacterSelection = true;
@@ -171,7 +172,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 					tract = false;
 				else if (!tract)
 					tract = true;
-
+				AudioManager.instance.PlaySound("UI_pick", "UI");
 				newPlayer.GetComponentInChildren<Hook>().inverseRetractation = tract;
 			}
 			break;

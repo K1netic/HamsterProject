@@ -32,12 +32,12 @@ public class MapSelector : MonoBehaviour {
 			itemSelected = GameObject.Find ("Maps").transform.GetChild(0).gameObject;
 		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
 		MusicManager.instance.PlayMusic("menu");
+		UpdateInfos(GameObject.Find ("Maps").transform.GetChild(0).gameObject.name);
 	}
 
 	void Start()
 	{
 		mapTitle = GameObject.Find("MapName").GetComponent<Text>();
-		UpdateInfos(GameObject.Find ("Maps").transform.GetChild(0).gameObject.name);
 	}
 
 	// Update is called once per frame
