@@ -20,13 +20,13 @@ public class TractInversionGuid : MonoBehaviour {
 	void Update () {
 		if (panel.tract)
 		{
-			txt.color = new Color (216, 191, 0);
-			point.color = new Color (216, 191, 0);
+			txt.color = new Color (0, 0, 255);
+			point.color = new Color (0, 0, 255);
 		}
 		else
 		{
-			txt.color = new Color (255,255,255);
-			point.color = new Color(255,255,255);
+			txt.color = new Color (0,0,0);
+			point.color = new Color(0,0,0);
 		}
 	}
 }

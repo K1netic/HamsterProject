@@ -14,9 +14,9 @@ public class PlayerSelectionPanel : MonoBehaviour {
 	// Collections of images to load and apply on various changes
 	[HideInInspector] public Sprite[] characterSprites = new Sprite[GameManager.nbOfCharacters];
 	[HideInInspector] public Sprite[] unavailableCharacterSprites = new Sprite[GameManager.nbOfCharacters];
+	[SerializeField] Image border;
+	Sprite basicBorder;
 	Sprite[] validatedBorders = new Sprite[GameManager.nbOfCharacters];
-	Sprite deactivatedBorder;
-	Sprite activatedBorder;
 
 	// Images to activate/deactive which receive the collections of images
 	[SerializeField] Image notAvailable;
@@ -64,8 +64,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 		unavailableCharacterSprites = Resources.LoadAll<Sprite> ("CharacterSelection/UnavailableCharacters");
 		validatedBorders = Resources.LoadAll<Sprite> ("CharacterSelection/Borders");
-		deactivatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordgray");
-		activatedBorder = Resources.Load<Sprite> ("CharacterSelection/Bordwhite");
+		basicBorder = Resources.Load<Sprite> ("CharacterSelection/PlayerBord");
 		leftArrow = guid.transform.GetChild (0).gameObject;
 		rightArrow = guid.transform.GetChild (1).gameObject;
 	}
@@ -93,6 +92,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
 				InstantiatePlayer();
 				validatedCharacter = newPlayer;
+				border.sprite = validatedBorders[characterSelected];
 			}
 
 			// Deactivation (Activated -> Deactivated)
@@ -115,6 +115,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 				CharacterSelectionScreen.selectableCharacters [characterSelected] = true;
 				Destroy (newPlayer.gameObject);
 				blockCharacterSelection = false;
+				border.sprite = basicBorder;
+				device.StopVibration ();
 			}
 
 			// Trying to validate on a character not avalaible
