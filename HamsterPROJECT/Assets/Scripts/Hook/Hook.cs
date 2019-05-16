@@ -734,7 +734,6 @@ public class Hook : MonoBehaviour {
     {
         if (!playerMovement.lockMovement)
         {
-            print("ArrowHitDone1");
             playerMovement.lockMovement = true;
             Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
             AddLastAttacker(collision.gameObject.GetComponent<Hook>().playerNumber);
@@ -770,7 +769,6 @@ public class Hook : MonoBehaviour {
     {
         if (!playerMovement.lockMovement)
         {
-            print("ArrowHitDone2");
             playerMovement.lockMovement = true;
             Vector2 directionKnockBack = -(collision.gameObject.transform.position - transform.position).normalized;
             playerMovement.rigid.velocity = Vector3.zero;
