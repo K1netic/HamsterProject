@@ -50,7 +50,7 @@ public class SuddenDeathMovement : MonoBehaviour {
 	void Update () {
         if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime)
         {
-            if(GameManager.playersActive.Length > 2 && GameManager.playersAlive.Length == 2)
+            if (GameManager.HowManyPlayersPlaying() > 2 && GameManager.HowManyPlayersAlive() == 2)
             {
                 if (suddenDeathTime - counter > timeRemainingWhenTwoPlayersLeft)
                     counter = suddenDeathTime - timeRemainingWhenTwoPlayersLeft;

@@ -79,4 +79,30 @@ public class GameManager : MonoBehaviour {
 			playersSelfDestructs [i] = 0;
 		}
 	}
+
+    public static int HowManyPlayersPlaying()
+    {
+        int res = 0;
+        for (int i = 0; i < GameManager.playersActive.Length; i++)
+        {
+            if (GameManager.playersActive[i] == true)
+            {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public static int HowManyPlayersAlive()
+    {
+        int res = 0;
+        for (int i = 0; i < GameManager.playersAlive.Length; i++)
+        {
+            if (GameManager.playersAlive[i] == true)
+            {
+                res++;
+            }
+        }
+        return res;
+    }
 }
