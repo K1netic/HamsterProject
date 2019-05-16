@@ -37,7 +37,7 @@ public class MeteorBehavior : MonoBehaviour {
         transform.position = Vector3.MoveTowards(transform.position, target, speed);
         if (transform.position.y < 23)
             Destroy(warningInst);
-        if (transform.position.y < targetY)
+        if (transform.position.y <= targetY)
             Destroy(gameObject);
 	}
 
