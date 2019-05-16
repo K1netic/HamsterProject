@@ -7427,12 +7427,12 @@ Prefab:
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: damageLV3Volume
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
       propertyPath: damageLV2Volume
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
         type: 2}
@@ -7648,7 +7648,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchoredPosition: {x: 75, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &634872205
@@ -7786,12 +7786,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4692e2b18efc1334787eb3c0c3a3acd0, type: 3}
   - {fileID: 21300000, guid: a505e929cb62d4a4fb70513d1d365e06, type: 3}
   descriptions:
-  - Alpha pack description
-  - Prototype pack description
-  - Factory pack description
-  - Submarine pack description
-  - Mars pack description
-  - Forest pack description
+  - Levels that have survived through the updates and remain (almost) unchanged. Old
+    but gold !
+  - Where the newest ideas are found. Experimental, avant-garde and hipster stuff  that
+    will make you go "I loooooove the concept !".
+  - '[Factory pack description]'
+  - '[Submarine pack description]'
+  - '[Mars pack description]'
+  - '[Forest pack description]'
 --- !u!1 &652927844
 GameObject:
   m_ObjectHideFlags: 0
@@ -17652,7 +17654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchoredPosition: {x: 75, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1448707149
@@ -23598,10 +23600,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: bf78a0628a3f5b246807a32beceb3507, type: 3}
-    m_FontSize: 42
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 4
+    m_MinSize: 0
     m_MaxSize: 42
     m_Alignment: 4
     m_AlignByGeometry: 0
