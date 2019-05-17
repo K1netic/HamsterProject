@@ -28,6 +28,8 @@ public class MatchStart : MonoBehaviour {
 
     GameObject PlayerPrefab;
 
+    int secondPlayerSpawn;
+
 	void Awake ()
 	{
         if (SceneManager.GetActiveScene().name == "Menu")
@@ -85,14 +87,7 @@ public class MatchStart : MonoBehaviour {
             {
                 if(howManyPlayers == 2)
                 {
-                    // Instantiate Players depending on which were validated in the character selection screen
-                    for (int i = 0; i < GameManager.playersActive.Length; i++)
-                    {
-                        if (GameManager.playersActive[i] == true)
-                        {
-                            InstantiateTwoPlayers(i);
-                        }
-                    }
+                    InstantiateTwoPlayers();
                 }
                 else
                 {
@@ -137,79 +132,127 @@ public class MatchStart : MonoBehaviour {
             gameHasStarted = true;
 	}
 
-    void InstantiateTwoPlayers(int playerIndex)
+    void InstantiateTwoPlayers()
     {
-		// GameObject inst = GameManager.playersCharacters[playerIndex];
-        GameObject inst = Instantiate(PlayerPrefab);
-
-		// Spawn points management
-        int j = Random.Range(0, spawnPoints.Count);
-        inst.transform.position = spawnPoints[j].transform.position;
-        if(playerIndex == 0)
+        for (int playerIndex = 0; playerIndex < 2; playerIndex++)
         {
-            Transform currentSpawn = spawnPoints[j];
-            switch (currentSpawn.name)
+            // GameObject inst = GameManager.playersCharacters[playerIndex];
+            GameObject inst = Instantiate(PlayerPrefab);
+            // Spawn points management
+            if (playerIndex == 0)
             {
-                case "SpawnPoint1":
-                    for (int i = 0; i < spawnPoints.Count; i++)
-                    {
-                        if (spawnPoints[i].name == "SpawnPoint2")
-                            spawnPoints.Remove(spawnPoints[i]);
-                    }
-                    break;
-                case "SpawnPoint2":
-                    for (int i = 0; i < spawnPoints.Count; i++)
-                    {
-                        switch (spawnPoints[i].name)
+                int j = Random.Range(0, spawnPoints.Count);
+                inst.transform.position = spawnPoints[j].transform.position;
+                switch (j)
+                {
+                    case 0:
+                        float distZeroOne = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[1].transform.position);
+                        float distZeroTwo = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[2].transform.position);
+                        float distZeroThree = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[3].transform.position);
+                        print("1 " + distZeroOne);
+                        print("2 " + distZeroTwo);
+                        print("3 " + distZeroThree);
+                        if (distZeroOne > distZeroTwo)
                         {
-                            case "SpawnPoint1":
-                                spawnPoints.Remove(spawnPoints[i]);
-                                break;
-                            case "SpawnPoint3":
-                                spawnPoints.Remove(spawnPoints[i]);
-                                break;
-                            default:
-                                break;
+                            if (distZeroOne > distZeroThree)
+                                secondPlayerSpawn = 1;
+                            else
+                                secondPlayerSpawn = 3;
                         }
-                    }
-                    break;
-                case "SpawnPoint3":
-                    for (int i = 0; i < spawnPoints.Count; i++)
-                    {
-                        switch (spawnPoints[i].name)
+                        else
                         {
-                            case "SpawnPoint2":
-                                spawnPoints.Remove(spawnPoints[i]);
-                                break;
-                            case "SpawnPoint4":
-                                spawnPoints.Remove(spawnPoints[i]);
-                                break;
-                            default:
-                                break;
+                            if (distZeroTwo > distZeroThree)
+                                secondPlayerSpawn = 2;
+                            else
+                                secondPlayerSpawn = 3;
                         }
-                    }
-                    break;
-                case "SpawnPoint4":
-                    for(int i = 0; i< spawnPoints.Count; i++)
-                    {
-                        if (spawnPoints[i].name == "SpawnPoint3")
-                            spawnPoints.Remove(spawnPoints[i]);
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case 1:
+                        float distOneZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[1].transform.position);
+                        float distOneTwo = Vector3.Distance(spawnPoints[1].transform.position, spawnPoints[2].transform.position);
+                        float distOneThree = Vector3.Distance(spawnPoints[1].transform.position, spawnPoints[3].transform.position);
+                        print("0 " + distOneZero);
+                        print("2 " + distOneTwo);
+                        print("3 " + distOneThree);
+                        if (distOneZero > distOneTwo)
+                        {
+                            if (distOneZero > distOneThree)
+                                secondPlayerSpawn = 0;
+                            else
+                                secondPlayerSpawn = 3;
+                        }
+                        else
+                        {
+                            if (distOneTwo > distOneThree)
+                                secondPlayerSpawn = 2;
+                            else
+                                secondPlayerSpawn = 3;
+                        }
+                        break;
+                    case 2:
+                        float distTwoZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[2].transform.position);
+                        float distTwoOne = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[1].transform.position);
+                        float distTwoThree = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[3].transform.position);
+                        print("0 " + distTwoZero);
+                        print("1 " + distTwoOne);
+                        print("3 " + distTwoThree);
+                        if (distTwoZero > distTwoOne)
+                        {
+                            if (distTwoZero > distTwoThree)
+                                secondPlayerSpawn = 0;
+                            else
+                                secondPlayerSpawn = 3;
+                        }
+                        else
+                        {
+                            if (distTwoOne > distTwoThree)
+                                secondPlayerSpawn = 1;
+                            else
+                                secondPlayerSpawn = 3;
+                        }
+                        break;
+                    case 3:
+                        float distThreeZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[3].transform.position);
+                        float distThreeOne = Vector3.Distance(spawnPoints[3].transform.position, spawnPoints[1].transform.position);
+                        float distThreeTwo = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[3].transform.position);
+                        print("0 "+distThreeZero);
+                        print("1 " + distThreeOne);
+                        print("2 " + distThreeTwo);
+                        if (distThreeZero > distThreeOne)
+                        {
+                            if (distThreeZero > distThreeTwo)
+                                secondPlayerSpawn = 0;
+                            else
+                                secondPlayerSpawn = 2;
+                        }
+                        else
+                        {
+                            if (distThreeOne > distThreeTwo)
+                                secondPlayerSpawn = 1;
+                            else
+                                secondPlayerSpawn = 2;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                print("coucou" + secondPlayerSpawn);
             }
-            spawnPoints.Remove(currentSpawn);
-        }
+            else
+            {
+                print("bye" + secondPlayerSpawn);
+                inst.transform.position = spawnPoints[secondPlayerSpawn].transform.position;
+            }
 
-        //Set sprite, name and player number
-        inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
-        inst.name = GameManager.playersSprites[playerIndex].name;
-        inst.transform.GetChild(0).GetComponent<PlayerMovement> ().playerNumber = GameManager.playersNumbers[playerIndex];
-        inst.transform.GetChild(1).GetComponent<Hook>().inverseRetractation = GameManager.playersTractConfig[playerIndex];
-        inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
-    
-        inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+            //Set sprite, name and player number
+            inst.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = GameManager.playersSprites[playerIndex];
+            inst.name = GameManager.playersSprites[playerIndex].name;
+            inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerNumber = GameManager.playersNumbers[playerIndex];
+            inst.transform.GetChild(1).GetComponent<Hook>().inverseRetractation = GameManager.playersTractConfig[playerIndex];
+            inst.transform.GetChild(0).GetComponent<Rigidbody2D>().isKinematic = true;
+
+            inst.transform.GetChild(0).GetComponent<PlayerMovement>().playerInputDevice = GameManager.playersInputDevices[playerIndex];
+        }
     }
 
     void InstantiatePlayer(int playerIndex)
