@@ -143,6 +143,13 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			break;
 
 		case SelectionPanelState.Activated:
+			if (CharacterSelectionScreen.selectableCharacters[characterSelected] == false)
+			{
+				if (characterSelected < GameManager.nbOfCharacters - 1)
+					FindNextSelectableCharacter(characterSelected + 1);
+				else 
+					FindNextSelectableCharacter(0);
+			}
 			UIElements.SetActive(true);
 			RoomElements.SetActive(false);
 			characterSprite.gameObject.SetActive(true);
