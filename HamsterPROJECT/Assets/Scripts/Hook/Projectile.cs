@@ -111,7 +111,7 @@ public class Projectile : MonoBehaviour {
         switch (hooked)
         {
             case true:
-                if (hookedObject.CompareTag("Untagged"))
+                if (hookedObject.CompareTag("Untagged") || hookedObject.CompareTag("Thorns"))
                 {
                     hook.DisableRope(false);
                 }
@@ -138,20 +138,30 @@ public class Projectile : MonoBehaviour {
             raycast = Physics2D.Raycast(transform.position, direction, raycastRange, hook.layerMaskRaycast);
             raycastLeft = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[13]), direction, raycastRange, hook.layerMaskRaycast);
             raycastRight = Physics2D.Raycast((Vector2)coll.transform.TransformPoint(coll.points[37]), direction, raycastRange, hook.layerMaskRaycast);
+
+            //S'accroche si jamais le gameObject à le bon tag
             if (raycast.collider != null)
             {
-                //S'accroche si jamais le gameObject à le bon tag
                 if (raycast.collider.gameObject.CompareTag("Hookable"))
                 {
                     GetHooked(raycast.point, raycast.collider.gameObject);
-                }
-                else if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
+                    return;
+                }   
+            }
+            if (raycastLeft.collider != null)
+            {
+                if (raycastLeft.collider.gameObject.CompareTag("Hookable"))
                 {
                     GetHooked(raycastLeft.point, raycastLeft.collider.gameObject);
+                    return;
                 }
-                else if (raycastRight.collider.gameObject.CompareTag("Hookable"))
+            }
+            if (raycastRight.collider != null)
+            {
+                if (raycastRight.collider.gameObject.CompareTag("Hookable"))
                 {
-                    GetHooked(raycastRight.point, raycastRight.collider.gameObject);
+                GetHooked(raycastRight.point, raycastRight.collider.gameObject);
+                return;
                 }
             }
         }

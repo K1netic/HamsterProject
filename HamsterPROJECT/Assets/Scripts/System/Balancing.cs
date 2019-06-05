@@ -76,4 +76,9 @@ public class Balancing : MonoBehaviour {
     public float suddenDeathTime = 90;
     public float timeRemainingWhenTwoPlayersLeft = 15;
 
+    [Header("THORNS")]
+    public float thornsDamage = 10;
+    public float knockBackThorns = 15;
+    public float thornsBallSpeed = .25f;
+
 }

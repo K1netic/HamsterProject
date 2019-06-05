@@ -32,6 +32,8 @@ public class PlayerLifeManager : MonoBehaviour {
     float laserDamage;
     float criticalSpeed;
     float freezeFrameDuration;
+    float thornsDamage;
+    float knockBackThorns;
 
     //Last attacker
     public string lastAttacker = null;
@@ -87,6 +89,8 @@ public class PlayerLifeManager : MonoBehaviour {
         criticalSpeed = balanceData.criticalSpeed;
         lastAttackerDuration = balanceData.lastAttackerDuration;
         freezeFrameDuration = balanceData.freezeFrameDuration;
+        thornsDamage = balanceData.thornsDamage;
+        knockBackThorns = balanceData.knockBackThorns;
 
         playerMovement = GetComponent<PlayerMovement>();
         trail = GetComponent<TrailRenderer>();
@@ -190,7 +194,7 @@ public class PlayerLifeManager : MonoBehaviour {
             }
             inRecovery = true;
             //Calcule la direction du knockback
-            if (attacker.CompareTag("Laser"))
+            if (attacker.CompareTag("Laser") || attacker.CompareTag("Thorns"))
             {
                 directionKnockBack = -(contactPoint - transform.position).normalized;
             }
@@ -234,6 +238,10 @@ public class PlayerLifeManager : MonoBehaviour {
                     playerHP -= damage;
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
                     break;
+                case "Thorns":
+                    playerHP -= damage;
+                    //Audio
+                    break;
                 default:
                     playerHP -= damage;
                     print(attacker.tag + "please insert a case in this switch for this attacker");
@@ -261,7 +269,7 @@ public class PlayerLifeManager : MonoBehaviour {
 					}
 				}
 
-				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser" || attacker.tag == "Bombe" ||attacker.tag == "Meteor")
+				else if (attacker.tag == "LaserEdge" || attacker.tag == "Laser" || attacker.tag == "Bombe" ||attacker.tag == "Meteor" || attacker.tag == "Thorns")
 				{
                     if (lastAttacker == null)
                     {
@@ -353,8 +361,11 @@ public class PlayerLifeManager : MonoBehaviour {
             case "Laser":
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackLaser, ForceMode2D.Impulse);
                 break;
+            case "Thorns":
+                playerMovement.rigid.AddForce(directionKnockBack * knockBackThorns, ForceMode2D.Impulse);
+                break;
             default:
-                print(attacker.tag + " please insert a case for this attacker in this switch");
+                print(attacker.tag + " ; please insert a case for this attacker in this switch");
                 break;
         }
     }
@@ -428,6 +439,20 @@ public class PlayerLifeManager : MonoBehaviour {
                     directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
                     StartCoroutine(DoKnockBack(col.gameObject, false));
                     AudioManager.instance.PlaySound("playerHitLaser", playerMovement.playerNumber);
+                }
+                break;
+            case "Thorns":
+                if (!inRecovery)
+                    TakeDamage(thornsDamage, col.gameObject, false, col.GetContact(0).point);
+                else
+                {//Le joueur retouche les épines alors qu'il est encore en recovery
+                    if (hookScript.hooked)
+                    {
+                        hookScript.DisableRope(false);
+                    }
+                    directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
+                    StartCoroutine(DoKnockBack(col.gameObject, false));
+                    //Audio
                 }
                 break;
             default:
