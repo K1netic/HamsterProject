@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour {
 	public static bool[] playersActive = new bool[nbOfPlayers];
 	public static bool[] playersAlive = new bool[nbOfPlayers];
 
-	//Characters selected by players -> technically not used anymore
-	public static GameObject[] playersCharacters = new GameObject[nbOfPlayers];
 	public static Sprite[] playersSprites = new Sprite[nbOfPlayers];
 	public static string[] playersNumbers = new string[nbOfPlayers];
 	public static bool[] playersTractConfig = new bool[nbOfPlayers];
