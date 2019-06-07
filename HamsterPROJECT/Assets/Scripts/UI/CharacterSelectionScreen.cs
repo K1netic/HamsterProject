@@ -34,8 +34,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	{
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
-        if (PlayerPrefs.GetInt("NotFirstTime") == 0)
-            GameObject.Find("TutorialHint").SetActive(false);
+        // if (PlayerPrefs.GetInt("NotFirstTime") == 0)
+        //     GameObject.Find("TutorialHint").SetActive(false);
     }
 
 	void Start()

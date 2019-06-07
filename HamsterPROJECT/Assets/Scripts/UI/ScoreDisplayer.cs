@@ -19,13 +19,16 @@ public class ScoreDisplayer : MonoBehaviour {
     bool firstActivation = false;
 
 	// Use this for initialization
-	void Start () {
-        Debug.Log("verif");
+    void OnEnable()
+    {
         if (!firstActivation)
         {
             baseScore = GameManager.playersScores[ScoreDisplayerID];
             firstActivation = true;
         }
+    }
+
+	void Start () {
 
 		// Don't display score if the corresponding player is not in the game
 		for(int i = 0; i < GameManager.playersActive.Length; i++)

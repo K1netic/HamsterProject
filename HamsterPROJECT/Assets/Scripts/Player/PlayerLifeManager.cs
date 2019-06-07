@@ -214,7 +214,7 @@ public class PlayerLifeManager : MonoBehaviour {
                     switch (bladeLevel)
                     {
                         case 0:
-                            print("You are not suppossed to be there ! How did you came ?!");
+                            print("You are not suppossed to be there ! How did you come ?!");
                             break;
                         case 1:
                             AudioManager.instance.PlaySound("damageLV1", playerMovement.playerNumber);
