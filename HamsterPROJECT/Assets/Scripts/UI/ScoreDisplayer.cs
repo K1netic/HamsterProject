@@ -15,8 +15,17 @@ public class ScoreDisplayer : MonoBehaviour {
 
     public Color iconColor;
 
+    public int baseScore;
+    bool firstActivation = false;
+
 	// Use this for initialization
 	void Start () {
+        Debug.Log("verif");
+        if (!firstActivation)
+        {
+            baseScore = GameManager.playersScores[ScoreDisplayerID];
+            firstActivation = true;
+        }
 
 		// Don't display score if the corresponding player is not in the game
 		for(int i = 0; i < GameManager.playersActive.Length; i++)
@@ -27,10 +36,7 @@ public class ScoreDisplayer : MonoBehaviour {
 
         rect = this.GetComponent<RectTransform>();
 
-		// Update score text
-		// transform.GetChild(1).GetComponent<Text>().text = " : " + GameManager.playersScores [ScoreDisplayerID].ToString ();
-        // if(GameManager.playersActive[ScoreDisplayerID])
-        transform.GetChild(0).GetComponent<Image>().sprite = GameManager.playersSprites[ScoreDisplayerID];
+		transform.GetChild(0).GetComponent<Image>().sprite = GameManager.playersSprites[ScoreDisplayerID];
         
         // Définie la couleur des icônes à afficher en fonction du personnage choisi par le joueur
         if (this.gameObject.activeSelf)

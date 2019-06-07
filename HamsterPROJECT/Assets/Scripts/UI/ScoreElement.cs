@@ -41,6 +41,14 @@ public class ScoreElement : MonoBehaviour {
 		else 
 			iconToActivate.SetActive(true);
 
+		// Ne lancer l'animation de l'icône de score que pour les nouveaux points acquis
+		Debug.Log("before : " + disp.baseScore);
+		Debug.Log("after : " + GameManager.playersScores[disp.ScoreDisplayerID]);
+		if (id <= disp.baseScore)
+			iconToActivate.GetComponent<Animator>().SetBool("newScore", false);
+		else
+			iconToActivate.GetComponent<Animator>().SetBool("newScore", true);
+
 		iconRect = iconToActivate.GetComponent<RectTransform>();
 		iconRect.offsetMin = new Vector2(0,0);
 		iconRect.offsetMax = new Vector2(0,0);

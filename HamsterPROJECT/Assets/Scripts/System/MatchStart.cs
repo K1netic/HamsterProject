@@ -149,9 +149,6 @@ public class MatchStart : MonoBehaviour {
                         float distZeroOne = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[1].transform.position);
                         float distZeroTwo = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[2].transform.position);
                         float distZeroThree = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[3].transform.position);
-                        print("1 " + distZeroOne);
-                        print("2 " + distZeroTwo);
-                        print("3 " + distZeroThree);
                         if (distZeroOne > distZeroTwo)
                         {
                             if (distZeroOne > distZeroThree)
@@ -171,9 +168,6 @@ public class MatchStart : MonoBehaviour {
                         float distOneZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[1].transform.position);
                         float distOneTwo = Vector3.Distance(spawnPoints[1].transform.position, spawnPoints[2].transform.position);
                         float distOneThree = Vector3.Distance(spawnPoints[1].transform.position, spawnPoints[3].transform.position);
-                        print("0 " + distOneZero);
-                        print("2 " + distOneTwo);
-                        print("3 " + distOneThree);
                         if (distOneZero > distOneTwo)
                         {
                             if (distOneZero > distOneThree)
@@ -193,9 +187,6 @@ public class MatchStart : MonoBehaviour {
                         float distTwoZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[2].transform.position);
                         float distTwoOne = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[1].transform.position);
                         float distTwoThree = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[3].transform.position);
-                        print("0 " + distTwoZero);
-                        print("1 " + distTwoOne);
-                        print("3 " + distTwoThree);
                         if (distTwoZero > distTwoOne)
                         {
                             if (distTwoZero > distTwoThree)
@@ -215,9 +206,6 @@ public class MatchStart : MonoBehaviour {
                         float distThreeZero = Vector3.Distance(spawnPoints[0].transform.position, spawnPoints[3].transform.position);
                         float distThreeOne = Vector3.Distance(spawnPoints[3].transform.position, spawnPoints[1].transform.position);
                         float distThreeTwo = Vector3.Distance(spawnPoints[2].transform.position, spawnPoints[3].transform.position);
-                        print("0 "+distThreeZero);
-                        print("1 " + distThreeOne);
-                        print("2 " + distThreeTwo);
                         if (distThreeZero > distThreeOne)
                         {
                             if (distThreeZero > distThreeTwo)
@@ -236,11 +224,9 @@ public class MatchStart : MonoBehaviour {
                     default:
                         break;
                 }
-                print("coucou" + secondPlayerSpawn);
             }
             else
             {
-                print("bye" + secondPlayerSpawn);
                 inst.transform.position = spawnPoints[secondPlayerSpawn].transform.position;
             }
 
