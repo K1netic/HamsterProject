@@ -30,6 +30,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	[SerializeField] public GameObject system;
 
+	ActivateInput inputActivationScript;
+
 	void Awake()
 	{
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
@@ -44,6 +46,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		// MusicManager.instance.PlayMusic ("menu");
 		screenManager = FindObjectOfType<ScreenManager> ();
 		characterScreenAnimator = GameObject.Find ("CharacterSelectionPanel").gameObject.GetComponent<Animator> ();
+		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 	}
 
 	void OnEnable()
@@ -154,17 +157,20 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 
-		// InputDevice inputDevice = InputManager.ActiveDevice;
-		foreach(InputDevice inputDevice in InputManager.ActiveDevices)
+		if (inputActivationScript.inputOK)
 		{
-			if (inputDevice.Action1.WasPressed)
+			foreach(InputDevice inputDevice in InputManager.ActiveDevices)
 			{
-				if (ThereIsNoPanelUsingDevice(inputDevice))
+				if (inputDevice.Action1.WasPressed)
 				{
-					ActivatePlayerSelectionPanel(inputDevice);
+					if (ThereIsNoPanelUsingDevice(inputDevice))
+					{
+						ActivatePlayerSelectionPanel(inputDevice);
+					}
 				}
 			}
 		}
+		
 	}
 
 	bool ThereIsNoPanelUsingDevice( InputDevice inputDevice )

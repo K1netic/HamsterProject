@@ -4454,6 +4454,7 @@ GameObject:
   - component: {fileID: 454394384}
   - component: {fileID: 454394383}
   - component: {fileID: 454394385}
+  - component: {fileID: 454394386}
   m_Layer: 5
   m_Name: TitlePanel
   m_TagString: Untagged
@@ -4536,6 +4537,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &454394386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 454394381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &485284506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6792,6 +6805,7 @@ GameObject:
   - component: {fileID: 554971554}
   - component: {fileID: 554971553}
   - component: {fileID: 554971556}
+  - component: {fileID: 554971557}
   m_Layer: 5
   m_Name: GameModesPanel
   m_TagString: Untagged
@@ -6876,6 +6890,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &554971557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 554971552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &562708882
 GameObject:
   m_ObjectHideFlags: 0
@@ -11882,6 +11908,7 @@ GameObject:
   - component: {fileID: 909942881}
   - component: {fileID: 909942884}
   - component: {fileID: 909942882}
+  - component: {fileID: 909942883}
   m_Layer: 5
   m_Name: MapSelectionPanel
   m_TagString: Untagged
@@ -11938,6 +11965,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &909942883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 909942880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!222 &909942884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11956,6 +11995,7 @@ GameObject:
   - component: {fileID: 910788386}
   - component: {fileID: 910788385}
   - component: {fileID: 910788387}
+  - component: {fileID: 910788388}
   m_Layer: 5
   m_Name: EndGamePanel
   m_TagString: Untagged
@@ -12041,6 +12081,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &910788388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 910788383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &930069178
 GameObject:
   m_ObjectHideFlags: 0
@@ -13723,6 +13775,7 @@ GameObject:
   - component: {fileID: 1086149895}
   - component: {fileID: 1086149894}
   - component: {fileID: 1086149896}
+  - component: {fileID: 1086149897}
   m_Layer: 5
   m_Name: CharacterSelectionPanel
   m_TagString: Untagged
@@ -13812,6 +13865,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1086149897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1086149892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &1086971166
 GameObject:
   m_ObjectHideFlags: 0
@@ -17749,6 +17814,7 @@ GameObject:
   - component: {fileID: 1457018780}
   - component: {fileID: 1457018779}
   - component: {fileID: 1457018778}
+  - component: {fileID: 1457018781}
   m_Layer: 5
   m_Name: CreditsPanel
   m_TagString: Untagged
@@ -17835,6 +17901,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1457018776}
   m_CullTransparentMesh: 0
+--- !u!114 &1457018781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1457018776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!20 &1470264664 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 20258103320589278, guid: cff12470b32d2d4419646b6fa640451e,
@@ -22819,6 +22897,7 @@ GameObject:
   - component: {fileID: 1777326052}
   - component: {fileID: 1777326051}
   - component: {fileID: 1777326050}
+  - component: {fileID: 1777326053}
   m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -22903,6 +22982,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1777326048}
   m_CullTransparentMesh: 0
+--- !u!114 &1777326053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1777326048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &1779483433
 GameObject:
   m_ObjectHideFlags: 0
@@ -23835,6 +23926,7 @@ GameObject:
   - component: {fileID: 1909374749}
   - component: {fileID: 1909374748}
   - component: {fileID: 1909374747}
+  - component: {fileID: 1909374750}
   m_Layer: 5
   m_Name: OptionsPanel
   m_TagString: Untagged
@@ -23917,6 +24009,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1909374745}
   m_CullTransparentMesh: 0
+--- !u!114 &1909374750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909374745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &1914173491
 GameObject:
   m_ObjectHideFlags: 0
@@ -24148,6 +24252,7 @@ GameObject:
   - component: {fileID: 1924717957}
   - component: {fileID: 1924717956}
   - component: {fileID: 1924717958}
+  - component: {fileID: 1924717959}
   m_Layer: 5
   m_Name: ResultsPanel
   m_TagString: Untagged
@@ -24231,6 +24336,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1924717959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1924717954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1db69bde44ae0b41967ec0cb8868343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputOK: 0
 --- !u!1 &1927856009
 GameObject:
   m_ObjectHideFlags: 0

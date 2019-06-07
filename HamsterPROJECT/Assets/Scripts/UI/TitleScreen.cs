@@ -10,8 +10,11 @@ public class TitleScreen : MonoBehaviour {
 	ScreenManager screenManager;
 	[SerializeField] Animator nextScreenAnimator;
 
+	ActivateInput inputActivationScript;
+
     void Start()
 	{
+		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		//PlayerPrefs.DeleteAll ();
 		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
         Cursor.visible = false;
@@ -19,17 +22,19 @@ public class TitleScreen : MonoBehaviour {
 	}
 
 	void Update () {
-		foreach (InputDevice dev in InputManager.ActiveDevices)
+		if (inputActivationScript.inputOK)
 		{
-			if (dev.Action1.WasPressed)
+			foreach (InputDevice dev in InputManager.ActiveDevices)
 			{
-				AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
-				StartCoroutine(OpenNextScreen ());
-			}
-
-			else if (InputManager.ActiveDevice.Action2.WasPressed)
-			{
-				Application.Quit ();
+				if (dev.Action1.WasPressed)
+				{
+					AudioManager.instance.PlaySound ("UI_titleScreenValidation", "UI");
+					StartCoroutine(OpenNextScreen ());
+				}
+				else if (InputManager.ActiveDevice.Action2.WasPressed)
+				{
+					Application.Quit ();
+				}
 			}
 		}
 	}

@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class EndGame : MonoBehaviour {
 
 	GameObject itemSelected;
+	ActivateInput inputActivationScript;
 
 	void OnEnable()
 	{
+		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		MusicManager.instance.PlayMusic("menu");
 		itemSelected = GameObject.Find ("RematchButton");
 		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
@@ -17,7 +19,7 @@ public class EndGame : MonoBehaviour {
 
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (GameManager.delayMenu);
+		yield return new WaitUntil(() => inputActivationScript.inputOK);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 	}

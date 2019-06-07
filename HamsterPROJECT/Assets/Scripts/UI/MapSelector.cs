@@ -23,9 +23,11 @@ public class MapSelector : MonoBehaviour {
 
 	[SerializeField] Sprite[] miniatures;
 	[SerializeField] string[] descriptions;
+	ActivateInput inputActivationScript;
 
 	void OnEnable()
 	{
+		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		if (lastSelectedOject != null)
 			itemSelected = lastSelectedOject;
 		else 
@@ -71,7 +73,7 @@ public class MapSelector : MonoBehaviour {
 	
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitUntil(() => inputActivationScript.inputOK);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 		currentSelectedObject = EventSystem.current.currentSelectedGameObject;

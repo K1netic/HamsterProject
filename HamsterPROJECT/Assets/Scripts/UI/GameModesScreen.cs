@@ -16,9 +16,11 @@ public class GameModesScreen : MonoBehaviour {
 	int storedRounds;
 	GameManager.gameModes defaultGameMode = GameManager.gameModes.LastManStanding;
 	int defaultRounds = 5;
+	ActivateInput inputActivationScript;
 
 	void OnEnable()
 	{
+		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		itemSelected = GameObject.Find ("GameModeSelection");
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		storedRounds = GameManager.rounds;
@@ -66,7 +68,7 @@ public class GameModesScreen : MonoBehaviour {
 
 	IEnumerator WaitBeforeAllowingActivationOfButton()
 	{
-		yield return new WaitForSeconds (GameManager.delayMenu);
+		yield return new WaitUntil(() => inputActivationScript.inputOK);
 		EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<ChangeGameMode> ().Select ();
 	}
