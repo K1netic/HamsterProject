@@ -47,6 +47,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		screenManager = FindObjectOfType<ScreenManager> ();
 		characterScreenAnimator = GameObject.Find ("CharacterSelectionPanel").gameObject.GetComponent<Animator> ();
 		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
+		MusicManager.instance.PlayMusic("menu");
 	}
 
 	void OnEnable()
@@ -71,8 +72,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		}
 		#endregion
 
-		EventSystem.current.SetSelectedGameObject(null);
-		MusicManager.instance.PlayMusic("menu");
+		// EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	void Update()

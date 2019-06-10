@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 	public static Sprite[] playersSprites = new Sprite[nbOfPlayers];
 	public static string[] playersNumbers = new string[nbOfPlayers];
 	public static bool[] playersTractConfig = new bool[nbOfPlayers];
+	public static InputDevice[] playersInputDevices = new InputDevice[nbOfPlayers];
 
 	//Players metrics
 	public static int[] playersScores = new int[nbOfPlayers];
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour {
 	public static int[] playersDeaths = new int[nbOfPlayers];
 	public static int[] playersSelfDestructs = new int[nbOfPlayers];
 
-	public static InputDevice[] playersInputDevices = new InputDevice[nbOfPlayers];
 
 	public static string lastLevelPlayed;
 
@@ -75,6 +75,19 @@ public class GameManager : MonoBehaviour {
 			playersScores [i] = 0;
 			playersDeaths [i] = 0;
 			playersSelfDestructs [i] = 0;
+		}
+	}
+
+	public static void ClearData()
+	{
+		for (int i = 0; i < nbOfPlayers; i ++)
+		{
+			playersActive[i] = false;
+			playersAlive[i] = false;
+			playersSprites[i] = null;
+			playersNumbers[i] = null;
+			playersTractConfig[i] = false;
+			playersInputDevices[i] = null;
 		}
 	}
 

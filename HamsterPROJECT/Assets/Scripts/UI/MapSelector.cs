@@ -33,13 +33,13 @@ public class MapSelector : MonoBehaviour {
 		else 
 			itemSelected = GameObject.Find ("Maps").transform.GetChild(0).gameObject;
 		StartCoroutine (WaitBeforeAllowingActivationOfButton ());
-		MusicManager.instance.PlayMusic("menu");
 		UpdateInfos(GameObject.Find ("Maps").transform.GetChild(0).gameObject.name);
 	}
 
 	void Start()
 	{
 		mapTitle = GameObject.Find("MapName").GetComponent<Text>();
+		MusicManager.instance.PlayMusic("menu");
 	}
 
 	// Update is called once per frame

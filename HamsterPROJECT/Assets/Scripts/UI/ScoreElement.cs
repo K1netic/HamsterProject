@@ -17,7 +17,7 @@ public class ScoreElement : MonoBehaviour {
 	[SerializeField] int id;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		disp = transform.parent.parent.GetComponent<ScoreDisplayer>();
 		iconColor = disp.iconColor;
 		skull = transform.GetChild(0).gameObject;
@@ -40,7 +40,9 @@ public class ScoreElement : MonoBehaviour {
 			iconToActivate.SetActive(false);
 		else 
 			iconToActivate.SetActive(true);
+	}
 
+	void Start(){
 		// Ne lancer l'animation de l'icône de score que pour les nouveaux points acquis
 		if (id <= disp.baseScore)
 			iconToActivate.GetComponent<Animator>().SetBool("newScore", false);
