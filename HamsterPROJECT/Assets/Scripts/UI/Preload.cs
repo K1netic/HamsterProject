@@ -8,12 +8,15 @@ public class Preload : MonoBehaviour {
 
 	void Awake()
 	{
-		foreach(GameObject screen in screensToPreload)
+		if (GameManager.firstLaunch)
 		{
-			screen.SetActive(true);
-			if(screen.name == "CharacterSelectionPanel")
-				PreloadCharacterInstantiations(screen);
-			screen.SetActive(false);
+			foreach(GameObject screen in screensToPreload)
+			{
+				screen.SetActive(true);
+				if(screen.name == "CharacterSelectionPanel")
+					PreloadCharacterInstantiations(screen);
+				screen.SetActive(false);
+			}
 		}
 	}
 
@@ -28,6 +31,7 @@ public class Preload : MonoBehaviour {
 		}
 
 		GameManager.ClearData();
+		GameManager.firstLaunch = false;
 	}
 
 }

@@ -32,6 +32,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	ActivateInput inputActivationScript;
 
+	[SerializeField] GameObject LoadingScreen;
+
 	void Awake()
 	{
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
@@ -71,8 +73,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 		#endregion
+		EventSystem.current.SetSelectedGameObject(null);
 
-		// EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	void Update()
@@ -143,8 +145,8 @@ public class CharacterSelectionScreen : MonoBehaviour {
 					pan.doorUpAnimator.SetBool("open", false);
 					pan.doorDownAnimator.SetBool("open", false);
 				}
-				screenManager.OpenPanel (previousScreenAnimator);
-				DeleteClones ();
+				StartCoroutine("CloseWait");
+
 			}
 
 			// Equivalent of Y Button 
@@ -252,6 +254,17 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		{
 			device.StopVibration ();
 		}
+	}
+
+	IEnumerator CloseWait()
+	{
+		// LoadingScreen.SetActive(true);
+		// LoadingScreen.transform.SetAsLastSibling();
+		yield return new WaitForSeconds(0.2f);
+		// LoadingScreen.SetActive(false);
+		screenManager.OpenPanel (previousScreenAnimator);
+		DeleteClones ();
+		EventSystem.current.SetSelectedGameObject(null);
 	}
 
 }
