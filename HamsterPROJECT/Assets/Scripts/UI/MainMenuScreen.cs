@@ -10,8 +10,6 @@ public class MainMenuScreen : MonoBehaviour {
 	ScreenManager manager;
 	ActivateInput inputActivationScript;
 
-	bool dontLoop = false;
-
 	void OnEnable()
 	{
 		MusicManager.instance.PlayMusic("menu");
