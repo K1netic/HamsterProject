@@ -28,13 +28,19 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	[SerializeField] Animator gamesModesScreenAnimator;
 	Animator characterScreenAnimator;
 
+	// Map Selection
+	[SerializeField] GameObject mapSelection;
+	Animator rightBackgroundAnim;
+	Animator leftBackgroundAnim;
+	[SerializeField] ActivateInput mapInputActivationScript;
+	GameObject hints;
 	[SerializeField] public GameObject system;
+	public ActivateInput inputActivationScript;
+	public BackgroundDoor rightBackgroundDoorScript;
+	public BackgroundDoor leftBackgroundDoorScript;
+	bool blockInputs = false;
 
-	ActivateInput inputActivationScript;
-
-	[SerializeField] GameObject LoadingScreen;
-
-	void Awake()
+    void Awake()
 	{
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
 
@@ -47,13 +53,19 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		// GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
 		// MusicManager.instance.PlayMusic ("menu");
 		screenManager = FindObjectOfType<ScreenManager> ();
-		characterScreenAnimator = GameObject.Find ("CharacterSelectionPanel").gameObject.GetComponent<Animator> ();
 		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
+		rightBackgroundAnim = GameObject.Find("BackgroundRight").GetComponent<Animator>();
+		leftBackgroundAnim = GameObject.Find("BackgroundLeft").GetComponent<Animator>();
+		hints = GameObject.Find("Hints");
 		MusicManager.instance.PlayMusic("menu");
+		rightBackgroundDoorScript = GameObject.Find("BackgroundRight").GetComponent<BackgroundDoor>();
+		leftBackgroundDoorScript = GameObject.Find("BackgroundLeft").GetComponent<BackgroundDoor>();
 	}
 
 	void OnEnable()
 	{
+		characterScreenAnimator = GameObject.Find ("CharacterSelectionPanel").gameObject.GetComponent<Animator> ();
+
 		selectableCharacters = new bool[GameManager.nbOfCharacters];
 		selectableCharacters.SetValue (true, 0);
 		selectableCharacters.SetValue (true, 1);
@@ -74,7 +86,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		}
 		#endregion
 		EventSystem.current.SetSelectedGameObject(null);
-
+		characterScreenAnimator.SetBool("slideTransition", true);
 	}
 
 	void Update()
@@ -118,49 +130,9 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			system.SetActive(false);
 		}
 
-		if (ready)
+		if (!blockInputs && inputActivationScript.inputOK)
 		{
-			readyText.SetActive (true);
-			foreach (InputDevice dev in InputManager.ActiveDevices)
-			{
-				//Open Next Screen when LB and RB are pressed simulatenously
-				if (dev.LeftBumper.IsPressed && dev.RightBumper.IsPressed && ready)
-				{
-					PlayerInfos ();
-					AudioManager.instance.PlaySound ("UI_validate", "UI");
-					screenManager.OpenPanel (nextScreenAnimator);
-				}
-			}
-		}
-
-		foreach (InputDevice dev in InputManager.ActiveDevices)
-		{
-			if (dev.Action2.WasPressed
-				&& activatedPlayers == 0 
-				&& readyCount == 0)
-			{
-				AudioManager.instance.PlaySound ("UI_cancel", "UI");
-				foreach(PlayerSelectionPanel pan in panels)
-				{
-					pan.doorUpAnimator.SetBool("open", false);
-					pan.doorDownAnimator.SetBool("open", false);
-				}
-				StartCoroutine("CloseWait");
-
-			}
-
-			// Equivalent of Y Button 
-			if (dev.Action4.WasPressed)
-			{
-				PlayerInfos();
-				AudioManager.instance.PlaySound ("UI_validate", "UI");
-				CancelAllVibrations();
-				screenManager.OpenPanel (gamesModesScreenAnimator);
-			}
-		}
-
-		if (inputActivationScript.inputOK)
-		{
+			// Attribuer les controllers aux panneaux de personnages
 			foreach(InputDevice inputDevice in InputManager.ActiveDevices)
 			{
 				if (inputDevice.Action1.WasPressed)
@@ -171,8 +143,48 @@ public class CharacterSelectionScreen : MonoBehaviour {
 					}
 				}
 			}
+
+			// Si deux joueurs au moins ont validés leurs personnages...
+			if (ready)
+			{
+				readyText.SetActive (true);
+				foreach (InputDevice dev in InputManager.ActiveDevices)
+				{
+					//Open Map Selection Screen when LB and RB are pressed simulatenously
+					if (dev.LeftBumper.IsPressed && dev.RightBumper.IsPressed && ready)
+					{
+						AudioManager.instance.PlaySound ("UI_validate", "UI");
+						StartCoroutine(OpenMapSelection());
+					}
+				}
+			}
+
+			foreach (InputDevice dev in InputManager.ActiveDevices)
+			{
+				// Retour en arrière
+				if (dev.Action2.WasPressed
+					&& activatedPlayers == 0 
+					&& readyCount == 0)
+				{
+					AudioManager.instance.PlaySound ("UI_cancel", "UI");
+					foreach(PlayerSelectionPanel pan in panels)
+					{
+						pan.doorUpAnimator.SetBool("open", false);
+						pan.doorDownAnimator.SetBool("open", false);
+					}
+					StartCoroutine("CloseWait");
+				}
+
+				// Activation de l'écran de configuration des modes de jeux
+				if (dev.Action4.WasPressed)
+				{
+					PlayerInfos();
+					AudioManager.instance.PlaySound ("UI_validate", "UI");
+					CancelAllVibrations();
+					screenManager.OpenPanel (gamesModesScreenAnimator);
+				}
+			}
 		}
-		
 	}
 
 	bool ThereIsNoPanelUsingDevice( InputDevice inputDevice )
@@ -262,9 +274,31 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		// LoadingScreen.transform.SetAsLastSibling();
 		yield return new WaitForSeconds(0.2f);
 		// LoadingScreen.SetActive(false);
+		characterScreenAnimator.SetBool("slideTransition", true);
 		screenManager.OpenPanel (previousScreenAnimator);
 		DeleteClones ();
 		EventSystem.current.SetSelectedGameObject(null);
 	}
-
+	
+	IEnumerator OpenMapSelection()
+	{
+		blockInputs = true;
+		inputActivationScript.inputDeactivation();
+		PlayerInfos ();
+		// Désactiver hints
+		hints.SetActive (false);
+		// Activer écran Map Selection
+		mapSelection.SetActive(true);
+		// Lancer anim ouverture portes
+		rightBackgroundAnim.SetBool("openDoor", true);
+		leftBackgroundAnim.SetBool("openDoor", true);
+		yield return new WaitUntil(() => rightBackgroundDoorScript.openOver && leftBackgroundDoorScript.openOver);
+		rightBackgroundAnim.SetBool("openDoor", false);
+		leftBackgroundAnim.SetBool("openDoor", false);
+		blockInputs = false;
+		// récupérer activationScript du map sélection + set inputOK une fois l'anim terminée
+		mapInputActivationScript.inputOK = true;
+		// Désactiver écran sélection perso
+		transform.parent.gameObject.SetActive(false);
+	}
 }

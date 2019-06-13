@@ -11,7 +11,7 @@ public class ScreenManager : MonoBehaviour {
 	[SerializeField] Animator titleScreen;
 	[SerializeField] Animator resultsScreen;
 	[SerializeField] Animator characterSelectionScreen;
-	[SerializeField] Animator mapSelectionScreen;
+	[SerializeField] GameObject mapSelectionScreen;
 
 	//string to determine whether or not the menu is opened after a series of match or when the game is launched
 	public static string screenToInitiallyOpen;
@@ -50,7 +50,9 @@ public class ScreenManager : MonoBehaviour {
 			initiallyOpen = characterSelectionScreen;
 			break;
 			case "MapSelectionPanel":
-			initiallyOpen = mapSelectionScreen;
+			mapSelectionScreen.SetActive(true);
+			mapSelectionScreen.gameObject.GetComponent<ActivateInput>().inputOK = true;
+			initiallyOpen = null;
 			break;
 			default:
 			initiallyOpen = titleScreen;
@@ -60,7 +62,6 @@ public class ScreenManager : MonoBehaviour {
 		//If set, opens the initial Screen
 		if (initiallyOpen == null)
 			return;
-		
 		OpenPanel (initiallyOpen);
 	}
 

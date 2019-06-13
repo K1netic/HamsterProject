@@ -20,12 +20,20 @@ public class MapSelector : MonoBehaviour {
 	Text mapTitle;
 	[SerializeField] Image mapMiniature;
 	[SerializeField] Text mapDescription;
-
 	[SerializeField] Sprite[] miniatures;
 	[SerializeField] string[] descriptions;
-	ActivateInput inputActivationScript;
 
-	void OnEnable()
+	ActivateInput inputActivationScript;
+	[SerializeField] GameObject characterSelection;
+	Animator rightBackgroundAnim;
+	Animator leftBackgroundAnim;
+	[SerializeField] ActivateInput characterInputActivationScript;
+	[SerializeField] GameObject hints;
+    BackgroundDoor rightBackgroundDoorScript;
+    BackgroundDoor leftBackgroundDoorScript;
+	bool blockInputs = false;
+
+    void OnEnable()
 	{
 		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		if (lastSelectedOject != null)
@@ -45,7 +53,7 @@ public class MapSelector : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (allowInteraction)
+		if (allowInteraction && !blockInputs)
 		{
 			previousSelectedObject = currentSelectedObject;
 			currentSelectedObject = EventSystem.current.currentSelectedGameObject;
@@ -63,12 +71,46 @@ public class MapSelector : MonoBehaviour {
 
 			foreach (InputDevice dev in InputManager.ActiveDevices)
 			{
+				// Avoid spam
 				if (dev.Action1.WasPressed)
 				{
 					allowInteraction = false;
 				}
+
+				if (dev.Action2.WasPressed)
+				{
+					AudioManager.instance.PlaySound ("UI_cancel", "UI");
+					EventSystem.current.SetSelectedGameObject(null);
+					StartCoroutine(OpenCharacterSelection());
+				}
 			}
 		}
+	}
+
+	IEnumerator OpenCharacterSelection()
+	{
+		// Activer écran Character Selection
+		blockInputs = true;
+		inputActivationScript.inputDeactivation();
+		characterSelection.SetActive(true);
+		characterSelection.GetComponent<Animator>().SetBool("slideTransition", false);
+		// Lancer anim ouverture portes
+		rightBackgroundDoorScript = GameObject.Find("BackgroundRight").GetComponent<BackgroundDoor>();
+		leftBackgroundDoorScript = GameObject.Find("BackgroundLeft").GetComponent<BackgroundDoor>();
+		rightBackgroundAnim = GameObject.Find("BackgroundRight").GetComponent<Animator>();
+		leftBackgroundAnim = GameObject.Find("BackgroundLeft").GetComponent<Animator>();
+		rightBackgroundAnim.SetBool("closeDoor", true);
+		leftBackgroundAnim.SetBool("closeDoor", true);
+		yield return new WaitUntil(() => rightBackgroundDoorScript.closeOver && leftBackgroundDoorScript.closeOver);
+		rightBackgroundAnim.SetBool("closeDoor", false);
+		leftBackgroundAnim.SetBool("closeDoor", false);
+		// set inputOK une fois l'anim terminée
+		characterInputActivationScript.inputOK = true;
+		// Activer hints
+		hints.SetActive (true);
+		// Désactiver écran sélection map
+		blockInputs = false;
+		transform.transform.parent.gameObject.SetActive(false);
 	}
 	
 	IEnumerator WaitBeforeAllowingActivationOfButton()

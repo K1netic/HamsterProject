@@ -11,4 +11,9 @@ public class ActivateInput : MonoBehaviour {
 	{
 		inputOK = true;
 	}
+
+	public void inputDeactivation()
+	{
+		inputOK = false;
+	}
 }

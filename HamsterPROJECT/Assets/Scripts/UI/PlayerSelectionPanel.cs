@@ -86,7 +86,8 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			// Validation (Activated -> Validated)
 			else if (device.Action1.WasPressed
 				&& state == SelectionPanelState.Activated 
-				&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true)
+				&& CharacterSelectionScreen.selectableCharacters[characterSelected] == true
+				&& select.inputActivationScript.inputOK)
 			{
 				state = SelectionPanelState.Validated;
 				AudioManager.instance.PlaySound ("UI_validate", "UI");
@@ -201,7 +202,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			notAvailable.gameObject.SetActive (false);
 		}
 			
-		if ((device.LeftStickX.Value >= 0.8f || device.DPadRight.WasPressed) && !blockStickMovement)
+		if ((device.LeftStickX.Value >= 0.8f || device.DPadRight.WasPressed) && !blockStickMovement && select.inputActivationScript.inputOK)
 		{
 			if (characterSelected < GameManager.nbOfCharacters - 1)
 				FindNextSelectableCharacter(characterSelected + 1);
@@ -212,7 +213,7 @@ public class PlayerSelectionPanel : MonoBehaviour {
 			blockStickMovement = true;
 		} 
 
-		else if ((device.LeftStickX.Value <= -0.8f || device.DPadLeft.WasPressed) && !blockStickMovement)
+		else if ((device.LeftStickX.Value <= -0.8f || device.DPadLeft.WasPressed) && !blockStickMovement && select.inputActivationScript.inputOK)
 		{
 			if (characterSelected > 0)
 				FindPreviousSelectableCharacter(characterSelected - 1);
