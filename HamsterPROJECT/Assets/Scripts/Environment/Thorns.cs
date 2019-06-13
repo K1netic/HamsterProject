@@ -64,8 +64,8 @@ public class Thorns : MonoBehaviour {
             Invoke("Infest", timeBeforeSpawn);
             infestCall = true;
         }
-            if (Input.GetKeyDown(KeyCode.L))
-            Infest();
+        if (MatchEnd.matchEnded)
+            CancelInvoke();
 	}
 
     void Infest()

@@ -48,7 +48,7 @@ public class SuddenDeathMovement : MonoBehaviour {
     }
 	
 	void Update () {
-        if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime)
+        if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime && !MatchEnd.matchEnded)
         {
             if (GameManager.HowManyPlayersPlaying() > 2 && GameManager.HowManyPlayersAlive() == 2)
             {
