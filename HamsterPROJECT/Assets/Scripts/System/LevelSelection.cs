@@ -25,6 +25,7 @@ public class LevelSelection : MonoBehaviour {
 	[SerializeField] List<string> pack3 = new List<string>();
 	[SerializeField] List<string> pack4 = new List<string>();
 	[SerializeField] List<string> pack5 = new List<string>();
+    [SerializeField] List<string> pack6 = new List<string>();
 
     List<string> currentPack = new List<string>();
 	public List<string> levels = new List<string>();
@@ -50,7 +51,10 @@ public class LevelSelection : MonoBehaviour {
 			case 5:
 			currentPack = pack5;
 			break;
-			default:
+            case 6:
+            currentPack = pack6;
+            break;
+            default:
 			currentPack = pack1;
 			break;
 		}

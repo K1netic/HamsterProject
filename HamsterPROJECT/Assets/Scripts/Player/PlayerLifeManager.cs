@@ -248,7 +248,7 @@ public class PlayerLifeManager : MonoBehaviour {
                     break;
                 default:
                     playerHP -= damage;
-                    print(attacker.tag + "please insert a case in this switch for this attacker");
+                    print(attacker.tag + " ; please insert a case in this switch for this attacker");
                     break;
             }
             woundedMaterial.color = Color.Lerp(Color.red, Color.white, playerHP / 100);
