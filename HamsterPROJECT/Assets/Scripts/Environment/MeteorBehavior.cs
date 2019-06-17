@@ -60,6 +60,14 @@ public class MeteorBehavior : MonoBehaviour {
                 collider.gameObject.GetComponent<Projectile>().hook.DisableRope(false);
             }
         }
+        StartCoroutine(DestroyMeteor());
+    }
+
+    IEnumerator DestroyMeteor()
+    {
+        GetComponent<CircleCollider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+        yield return new WaitForSeconds(3);
         Destroy(gameObject);
     }
 
