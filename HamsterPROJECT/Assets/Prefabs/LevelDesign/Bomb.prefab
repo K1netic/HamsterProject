@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 58317314570526142}
   - component: {fileID: 114790095161755338}
   - component: {fileID: 95850879211051680}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Bomb
   m_TagString: Bombe
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253978269752170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4384894492120038}
@@ -84,8 +84,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 5
+  m_LinearDrag: 0.05
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: ae8163dd558df3e488a70c4cacdf618d, type: 2}
@@ -184,7 +184,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -274237361
-  m_SortingLayer: 9
+  m_SortingLayer: 15
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 59dfc23e69f4e9c4f9395dab8eeb38e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
