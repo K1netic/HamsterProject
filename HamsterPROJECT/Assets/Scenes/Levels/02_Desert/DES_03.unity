@@ -310,6 +310,11 @@ Prefab:
       propertyPath: TestWithoutUI
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114409854355809182, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
+        type: 2}
+      propertyPath: radius
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
   m_IsPrefabAsset: 0
@@ -2857,6 +2862,72 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!1001 &732078369
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
+        type: 2}
+      propertyPath: timeBeforeFirstSpawn
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
+        type: 2}
+      propertyPath: howManySpawn
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
+        type: 2}
+      propertyPath: leftBound
+      value: -35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1577834683046406, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
+      propertyPath: m_Name
+      value: MeteorSpawn (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
+        type: 2}
+      propertyPath: rightBound
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &758887270
 GameObject:
@@ -7526,7 +7597,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4382148144957336, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7559,12 +7630,17 @@ Prefab:
     - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
         type: 2}
       propertyPath: timeBeforeFirstSpawn
-      value: 7.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
         type: 2}
       propertyPath: howManySpawn
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114021407912228374, guid: 6a121603eb207ab42a534b5ee488b658,
+        type: 2}
+      propertyPath: leftBound
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a121603eb207ab42a534b5ee488b658, type: 2}
