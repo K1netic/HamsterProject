@@ -35,23 +35,18 @@ public class CharacterSelectionScreen : MonoBehaviour {
 	[SerializeField] ActivateInput mapInputActivationScript;
 	GameObject hints;
 	[SerializeField] public GameObject system;
-	public ActivateInput inputActivationScript;
-	public BackgroundDoor rightBackgroundDoorScript;
-	public BackgroundDoor leftBackgroundDoorScript;
+	[HideInInspector] public ActivateInput inputActivationScript;
+	[HideInInspector] public BackgroundDoor rightBackgroundDoorScript;
+	[HideInInspector] public BackgroundDoor leftBackgroundDoorScript;
 	bool blockInputs = false;
 
     void Awake()
 	{
 		characterPrefab = Resources.Load<GameObject> ("Prefabs/PlayerPrefab");
-
-        // if (PlayerPrefs.GetInt("NotFirstTime") == 0)
-        //     GameObject.Find("TutorialHint").SetActive(false);
     }
 
 	void Start()
 	{
-		// GameObject.Find ("UISource").GetComponent<AudioSource>().Stop ();
-		// MusicManager.instance.PlayMusic ("menu");
 		screenManager = FindObjectOfType<ScreenManager> ();
 		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		rightBackgroundAnim = GameObject.Find("BackgroundRight").GetComponent<Animator>();
@@ -270,10 +265,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	IEnumerator CloseWait()
 	{
-		// LoadingScreen.SetActive(true);
-		// LoadingScreen.transform.SetAsLastSibling();
 		yield return new WaitForSeconds(0.2f);
-		// LoadingScreen.SetActive(false);
 		characterScreenAnimator.SetBool("slideTransition", true);
 		screenManager.OpenPanel (previousScreenAnimator);
 		DeleteClones ();
@@ -286,7 +278,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 		inputActivationScript.inputDeactivation();
 		PlayerInfos ();
 		// Désactiver hints
-		hints.SetActive (false);
+		readyText.SetActive (false);
 		// Activer écran Map Selection
 		mapSelection.SetActive(true);
 		// Lancer anim ouverture portes

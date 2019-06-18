@@ -8,20 +8,25 @@ using UnityEngine.SceneManagement;
 public class Tutorial : MonoBehaviour {
 
 	[SerializeField] Sprite[] tutorialPages;
-	[SerializeField] Animator characterSelectionScreenAnimator;
-	[SerializeField] Animator titleScreenAnimator;
+	[SerializeField] Animator mainMenuAnimator;
+	[SerializeField] Animator characterSelectionAnimator;
 	[SerializeField] GameObject nextHint;
-	[SerializeField] GameObject playHint;
+	[SerializeField] GameObject backToMenuHint;
 	[SerializeField] GameObject previousHint;
 	[SerializeField] Image img;
 	ScreenManager screenManager;
 
-	float delay = 0.1f;
 	int pageIndex = 0;
+
+	void OnEnable()
+	{
+		pageIndex = 0;
+		img.sprite = tutorialPages [pageIndex];
+	}
 
 	void Start()
 	{
-		playHint.SetActive (false);
+		backToMenuHint.SetActive (false);
 		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 
@@ -41,30 +46,31 @@ public class Tutorial : MonoBehaviour {
 		}
 		else if (InputManager.ActiveDevice.Action1.WasPressed && pageIndex == 2)
 		{
-			AudioManager.instance.PlaySound ("UI_gameLaunch", "UI");
-			screenManager.OpenPanel (characterSelectionScreenAnimator);
+			AudioManager.instance.PlaySound ("UI_validate", "UI");
+			StartCoroutine(CloseWait());
 		}
 		else if (InputManager.ActiveDevice.Action2.WasPressed && pageIndex == 0)
 		{
 			AudioManager.instance.PlaySound ("UI_cancel", "UI");
-			screenManager.CloseCurrent ();
-			if(PlayerPrefs.GetInt("NotFirstTime") == 1)
-				screenManager.OpenPanel (characterSelectionScreenAnimator);
-			else 
-				screenManager.OpenPanel (titleScreenAnimator);
+			StartCoroutine(CloseWait());
 		}
 			
 		if (pageIndex == 2)
 		{
 			nextHint.SetActive (false);
-			playHint.SetActive (true);
+			backToMenuHint.SetActive (true);
 		}
 		else
 		{
 			nextHint.SetActive (true);
-			playHint.SetActive (false);
+			backToMenuHint.SetActive (false);
 		}
-			
+	}
 
+	IEnumerator CloseWait()
+	{
+		yield return new WaitForSeconds(0.2f);
+		screenManager.CloseCurrent ();
+		screenManager.OpenPanel (mainMenuAnimator);
 	}
 }
