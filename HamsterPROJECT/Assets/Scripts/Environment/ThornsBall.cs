@@ -6,7 +6,6 @@ public class ThornsBall : MonoBehaviour {
 
     public GameObject target;
     public float speed;
-    public Thorns thornsSystem;
 
     Vector3 dir;
 
@@ -18,9 +17,15 @@ public class ThornsBall : MonoBehaviour {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
             if (Vector3.Distance(target.transform.position, transform.position) < .1f)
             {
-                thornsSystem.SwitchSpriteShape();
-                Destroy(gameObject);
+                target.GetComponent<Animator>().SetBool("Transition", true);
+                Invoke("Destruction", .1f);
             }
         }
 	}
+
+    void Destruction()
+    {
+        target.GetComponent<Animator>().SetTrigger("TransitionIn");
+        Destroy(gameObject);
+    }
 }

@@ -49,6 +49,7 @@ public class Thorns : MonoBehaviour {
         controllers = GameObject.FindObjectsOfType<SpriteShapeController>();
         if (!manualPlatformSelection)
         {
+            allPlatforms.Clear();
             foreach (SpriteShapeController item in controllers)
             {
                 if (item.gameObject.layer == 16 && !item.gameObject.GetComponent<Trampoline>())
@@ -73,21 +74,30 @@ public class Thorns : MonoBehaviour {
     {
         if (currentPlatform)
         {
-            currentPlatform.GetComponent<SpriteShapeController>().spriteShape = stockedShape;
-            currentPlatform.tag = "Hookable";
-            ball = Instantiate(thornsBall, currentPlatform.transform.position, currentPlatform.transform.rotation);
+            currentPlatform.GetComponent<Animator>().SetTrigger("TransitionOut");
         }
         else
         {
             ball = Instantiate(thornsBall, new Vector3(0,30,0), Quaternion.identity);
+            InitBall();
         }
+    }
+
+    void InitBall()
+    {
         ballScript = ball.GetComponent<ThornsBall>();
         currentPlatform = targetPlatforms[Random.Range(0, targetPlatforms.Count)];
         ballScript.target = currentPlatform;
         ballScript.speed = thornsBallSpeed;
-        ballScript.thornsSystem = this;
         FillTargetsPlatforms();
         targetPlatforms.Remove(currentPlatform);
+        if (!currentPlatform.GetComponent<ThornsEvent>())
+            currentPlatform.AddComponent<ThornsEvent>();
+        if (!currentPlatform.GetComponent<Animator>())
+        {
+            currentPlatform.AddComponent<Animator>();
+            currentPlatform.GetComponent<Animator>().runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("Anim/ForestPlatform");
+        }
     }
 
     public void SwitchSpriteShape()
@@ -105,6 +115,14 @@ public class Thorns : MonoBehaviour {
             currentPlatform.GetComponent<SpriteShapeController>().spriteShape = thornsShape;
         currentPlatform.tag = "Thorns";
         Invoke("Infest", timeBetweenEachInfest);
+    }
+
+    public void LaunchThornsBall()
+    {
+        currentPlatform.GetComponent<SpriteShapeController>().spriteShape = stockedShape;
+        currentPlatform.tag = "Hookable";
+        ball = Instantiate(thornsBall, currentPlatform.transform.position, currentPlatform.transform.rotation);
+        InitBall();
     }
 
     void FillTargetsPlatforms()
