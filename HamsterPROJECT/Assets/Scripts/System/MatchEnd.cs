@@ -36,12 +36,7 @@ public class MatchEnd : MonoBehaviour {
     // Use this for initialization
     void OnEnable ()
 		{
-			if (!mtchstrt.TestWithoutUI && !GameManager.inMenu)
-			{
-				scoreDisplay = GameObject.Find("ScoreDisplayer");
-				scoreDisplay.SetActive (false);
-			}
-			//mngr = FindObjectOfType<AudioManager> ();
+            //mngr = FindObjectOfType<AudioManager> ();
 			matchEnded = false;
 			// default value, stays at 42 if nobody won
 			// 0, 1, 2 and 3 are reserved to players
@@ -49,8 +44,19 @@ public class MatchEnd : MonoBehaviour {
 			lvlSelect = FindObjectOfType<LevelSelection> ();
 		}
 
-	// Update is called once per frame
-	void Update ()
+    private void Start()
+    {
+        print(GameManager.inMenu + "UI" + mtchstrt.TestWithoutUI);
+
+        if (!mtchstrt.TestWithoutUI && !GameManager.inMenu)
+        {
+            scoreDisplay = GameObject.Find("ScoreDisplayer");
+            scoreDisplay.SetActive(false);
+        }
+    }
+
+    // Update is called once per frame
+    void Update ()
 	{
 		// Count number of players in game
 		nbPlayersAlive = 0;
