@@ -17,7 +17,7 @@ public class ScoreElement : MonoBehaviour {
 	[SerializeField] int id;
 
 	// Use this for initialization
-	void Awake () {
+	void OnEnable () {
 		disp = transform.parent.parent.GetComponent<ScoreDisplayer>();
 		iconColor = disp.iconColor;
 		skull = transform.GetChild(0).gameObject;
@@ -36,7 +36,7 @@ public class ScoreElement : MonoBehaviour {
 		}
 
 		// Affiche l'icône courante si son index est inférieur ou égal au score du joueur
-		if (id > GameManager.playersScores [disp.ScoreDisplayerID]) 
+		if (id > GameManager.playersScores [disp.ScoreDisplayerID])
 			iconToActivate.SetActive(false);
 		else 
 			iconToActivate.SetActive(true);
@@ -45,9 +45,13 @@ public class ScoreElement : MonoBehaviour {
 	void Start(){
 		// Ne lancer l'animation de l'icône de score que pour les nouveaux points acquis
 		if (id <= disp.baseScore)
+		{
 			iconToActivate.GetComponent<Animator>().SetBool("newScore", false);
+		}
 		else
+		{
 			iconToActivate.GetComponent<Animator>().SetBool("newScore", true);
+		}
 
 		iconRect = iconToActivate.GetComponent<RectTransform>();
 		iconRect.offsetMin = new Vector2(0,0);

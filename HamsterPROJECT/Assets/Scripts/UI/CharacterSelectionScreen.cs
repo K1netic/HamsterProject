@@ -24,7 +24,6 @@ public class CharacterSelectionScreen : MonoBehaviour {
 
 	ScreenManager screenManager;
 	[SerializeField] Animator previousScreenAnimator;
-	[SerializeField] Animator nextScreenAnimator;
 	[SerializeField] Animator gamesModesScreenAnimator;
 	Animator characterScreenAnimator;
 
@@ -80,7 +79,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 			}
 		}
 		#endregion
-		EventSystem.current.SetSelectedGameObject(null);
+		// EventSystem.current.SetSelectedGameObject(null);
 		characterScreenAnimator.SetBool("slideTransition", true);
 	}
 
