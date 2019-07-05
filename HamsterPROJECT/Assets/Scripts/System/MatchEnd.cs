@@ -46,8 +46,6 @@ public class MatchEnd : MonoBehaviour {
 
     private void Start()
     {
-        print(GameManager.inMenu + "UI" + mtchstrt.TestWithoutUI);
-
         if (!mtchstrt.TestWithoutUI && !GameManager.inMenu)
         {
             scoreDisplay = GameObject.Find("ScoreDisplayer");
