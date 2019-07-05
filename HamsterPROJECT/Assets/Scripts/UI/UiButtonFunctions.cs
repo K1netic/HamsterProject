@@ -18,6 +18,8 @@ public class UiButtonFunctions : MonoBehaviour {
 	MusicManager music;
 	ScreenManager screenManager;
 
+	[SerializeField] GameObject mapSelection;
+
 	void Start()
 	{
 		lvlSelect = FindObjectOfType<LevelSelection>();
@@ -128,5 +130,12 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		MusicManager.instance.StopMusic ("menu");
 	}
+
+	public void OpenMapSelection()
+	{
+		screenManager.CloseCurrent ();
+		mapSelection.SetActive(true);
+		mapSelection.GetComponent<ActivateInput>().inputOK = true;
+	} 
 
 }

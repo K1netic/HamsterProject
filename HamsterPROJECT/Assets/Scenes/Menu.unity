@@ -1034,6 +1034,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &104924513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2806,6 +2807,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &322201381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4606,6 +4608,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &491497736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7345,6 +7348,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &591166033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8313,6 +8317,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &680107242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8839,6 +8844,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: OptionsPanel
+  mapSelection: {fileID: 0}
 --- !u!114 &722541302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11400,6 +11406,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: CharacterSelectionPanel
+  mapSelection: {fileID: 0}
 --- !u!114 &825334430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15699,6 +15706,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &1195039001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16070,6 +16078,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &1223890515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17190,6 +17199,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &1322511609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24286,6 +24296,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &1817344484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25485,6 +25496,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: 
+  mapSelection: {fileID: 0}
 --- !u!114 &1934052677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26917,6 +26929,7 @@ MonoBehaviour:
   controlsScheme: {fileID: 0}
   packID: 0
   screenNameToInitiallyOpen: MapSelectionPanel
+  mapSelection: {fileID: 909942880}
 --- !u!114 &2045642173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26951,7 +26964,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2045642172}
-          m_MethodName: OpenNextScreen
+          m_MethodName: OpenMapSelection
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
