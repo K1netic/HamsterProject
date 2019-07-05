@@ -11,7 +11,7 @@ public class PauseScreen : MonoBehaviour {
 	void OnEnable()
 	{
 		itemSelected = GameObject.Find ("ResumeButton");
-		EventSystem.current.firstSelectedGameObject = itemSelected;
+		// EventSystem.current.firstSelectedGameObject = itemSelected;
 		itemSelected.GetComponent<Button> ().Select ();
 		// StartCoroutine (WaitBeforeAllowingActivationOfButton ());
 	}

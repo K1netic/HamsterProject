@@ -41,7 +41,7 @@ public class TitleScreen : MonoBehaviour {
 
 	void OnEnable()
 	{
-		EventSystem.current.firstSelectedGameObject = null;
+		// EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	IEnumerator OpenNextScreen()

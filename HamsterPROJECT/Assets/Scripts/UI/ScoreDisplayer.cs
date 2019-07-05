@@ -97,9 +97,6 @@ public class ScoreDisplayer : MonoBehaviour {
                 default:
                     break;
             }
-
-            // rect.ForceUpdateRectTransforms();
         }
-        
     }
 }
