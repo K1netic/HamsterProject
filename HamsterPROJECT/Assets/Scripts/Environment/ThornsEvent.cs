@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ThornsEvent : MonoBehaviour {
 
+    [SerializeField]
+    string thornsName = "ThornsSystem";
+
 	void TransitionIn()
     {
-        GameObject.Find("ThornsSystem").GetComponent<Thorns>().SwitchSpriteShape();
+        GameObject.Find(thornsName).GetComponent<Thorns>().SwitchSpriteShape();
     }
 
     void TransitionOut()
     {
-        GameObject.Find("ThornsSystem").GetComponent<Thorns>().LaunchThornsBall();
+        GameObject.Find(thornsName).GetComponent<Thorns>().LaunchThornsBall();
     }
 }

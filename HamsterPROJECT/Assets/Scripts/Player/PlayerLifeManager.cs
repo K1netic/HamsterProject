@@ -368,6 +368,9 @@ public class PlayerLifeManager : MonoBehaviour {
             case "Thorns":
                 playerMovement.rigid.AddForce(directionKnockBack * knockBackThorns, ForceMode2D.Impulse);
                 break;
+            case "Bombe":
+                //t mor lol
+                break;
             default:
                 print(attacker.tag + " ; please insert a case for this attacker in this switch");
                 break;
