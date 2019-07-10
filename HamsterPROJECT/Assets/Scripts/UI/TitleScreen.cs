@@ -17,7 +17,6 @@ public class TitleScreen : MonoBehaviour {
 		inputActivationScript = transform.parent.GetComponent<ActivateInput>();
 		//PlayerPrefs.DeleteAll ();
 		AudioManager.instance.PlaySound("UI_titleJingle", "UI");
-        Cursor.visible = false;
 		screenManager = FindObjectOfType<ScreenManager> ();
 	}
 
