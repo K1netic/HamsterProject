@@ -8073,10 +8073,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4692e2b18efc1334787eb3c0c3a3acd0, type: 3}
   - {fileID: 21300000, guid: a505e929cb62d4a4fb70513d1d365e06, type: 3}
   descriptions:
-  - FACTORY
-  - SUBMARINE
-  - DESRT
-  - FOREST
+  - Where combat robots are manufactured and trained. Ideal to get a grip on space
+    hook battles !
+  - Beware of the explosive mines that may remain in these submarine, claustrophobic
+    arenas...
+  - Fight on the surface of a desertic planet where meteor storms may fall on you
+    !
+  - Dangerous mutant thorns invade the arena as you fight in this tropical forest.
+    Careful where you land !
   characterSelection: {fileID: 1086149892}
   characterInputActivationScript: {fileID: 1086149897}
   hints: {fileID: 652927844}
@@ -8483,26 +8487,6 @@ Prefab:
     - target: {fileID: 1222806858455820, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114464750304548780, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834280797739368, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114785833461155082, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114973293187150428, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd,
-        type: 2}
-      propertyPath: knockBackTrampoline
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a1c0d3ab82536a46a3b51e2042aa8bd, type: 2}
@@ -16533,7 +16517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Alpha Pack
+  m_Text: FACTORY
 --- !u!222 &1258840679
 CanvasRenderer:
   m_ObjectHideFlags: 0
