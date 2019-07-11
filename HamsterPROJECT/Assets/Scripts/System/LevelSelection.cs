@@ -26,7 +26,7 @@ public class LevelSelection : MonoBehaviour {
 	[SerializeField] List<string> pack4 = new List<string>();
 
     List<string> currentPack = new List<string>();
-	public List<string> levels = new List<string>();
+	[HideInInspector] public List<string> levels = new List<string>();
 	string lastLevelPlayed;
 	string levelToLoad;
 

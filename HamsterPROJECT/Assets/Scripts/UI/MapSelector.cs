@@ -126,29 +126,21 @@ public class MapSelector : MonoBehaviour {
 	{
 		switch(mapName)
 		{
-			case "Alpha":
-				mapMiniature.sprite = miniatures[Random.Range(0,3)];
-				mapDescription.text = descriptions[0];
-				break;
-			case "Proto":
-				mapMiniature.sprite = miniatures[Random.Range(0,3)];
-				mapDescription.text = descriptions[1];
-				break;
 			case "Factory":
 				mapMiniature.sprite = miniatures[0];
-				mapDescription.text = descriptions[2];
+				mapDescription.text = descriptions[0];
 				break;
 			case "Submarine":
 				mapMiniature.sprite = miniatures[1];
-				mapDescription.text = descriptions[3];
+				mapDescription.text = descriptions[1];
 				break;
 			case "Mars":
 				mapMiniature.sprite = miniatures[2];
-				mapDescription.text = descriptions[4];
+				mapDescription.text = descriptions[2];
 				break;
 			case "Forest":
 				mapMiniature.sprite = miniatures[3];
-				mapDescription.text = descriptions[5];
+				mapDescription.text = descriptions[3];
 				break;
 		}
 	}
