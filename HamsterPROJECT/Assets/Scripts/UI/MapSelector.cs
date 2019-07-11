@@ -134,7 +134,7 @@ public class MapSelector : MonoBehaviour {
 				mapMiniature.sprite = miniatures[1];
 				mapDescription.text = descriptions[1];
 				break;
-			case "Mars":
+			case "Desert":
 				mapMiniature.sprite = miniatures[2];
 				mapDescription.text = descriptions[2];
 				break;
