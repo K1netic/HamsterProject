@@ -12,6 +12,7 @@ public class Trampoline : MonoBehaviour {
     Animator anim;
 
 	[SerializeField] bool isFlat = false;
+	[SerializeField] bool vertical = false;
 
 	void Start()
 	{
@@ -34,6 +35,8 @@ public class Trampoline : MonoBehaviour {
 				center = this.transform.position;
 			else if (isFlat)
 				center = new Vector3(contact.x, transform.position.y, 0);
+			if (vertical)
+				center = new Vector3(transform.position.x, contact.y, 0);
 			//Rayon incident
 			Vector3 incident = collision.transform.position - contact;
 			//Normale
