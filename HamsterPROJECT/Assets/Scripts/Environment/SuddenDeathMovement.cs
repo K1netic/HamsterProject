@@ -46,8 +46,14 @@ public class SuddenDeathMovement : MonoBehaviour {
             item.SetActive(false);
         }
     }
-	
-	void Update () {
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(remainingSpace*2,remainingSpace*1.06f,0));
+    }
+
+    void Update () {
         if (MatchStart.gameHasStarted && !launchSuddenDeath && counter < suddenDeathTime && !MatchEnd.matchEnded)
         {
             if (GameManager.HowManyPlayersPlaying() > 2 && GameManager.HowManyPlayersAlive() == 2)

@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thornsName: ThornsSystemLeft
+  thornsName: ThornsSystemRight
 --- !u!1001 &197535170
 Prefab:
   m_ObjectHideFlags: 0
@@ -8142,7 +8142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thornsName: ThornsSystemRight
+  thornsName: ThornsSystemLeft
 --- !u!1 &614840843 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1093216867631822, guid: 222b32e809c5eba49ae297ec517e33d5,
@@ -8211,7 +8211,7 @@ Prefab:
         type: 2}
       propertyPath: allPlatforms.Array.data[0]
       value: 
-      objectReference: {fileID: 359792060}
+      objectReference: {fileID: 136465709}
     - target: {fileID: 1878554167646860, guid: d0f73829835b583429773e65656fa2c4, type: 2}
       propertyPath: m_Name
       value: ThornsSystemRight
@@ -8220,17 +8220,17 @@ Prefab:
         type: 2}
       propertyPath: allPlatforms.Array.data[1]
       value: 
-      objectReference: {fileID: 2132786546}
+      objectReference: {fileID: 2040209223}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[2]
       value: 
-      objectReference: {fileID: 1378252189}
+      objectReference: {fileID: 359792060}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[3]
       value: 
-      objectReference: {fileID: 602014618}
+      objectReference: {fileID: 1378252189}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[4]
@@ -8253,7 +8253,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 29
+      value: 25.51
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.y
@@ -15078,22 +15078,22 @@ Prefab:
         type: 2}
       propertyPath: allPlatforms.Array.data[1]
       value: 
-      objectReference: {fileID: 136465709}
+      objectReference: {fileID: 1255550269}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[2]
       value: 
-      objectReference: {fileID: 1255550269}
+      objectReference: {fileID: 1210121528}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[3]
       value: 
-      objectReference: {fileID: 2040209223}
+      objectReference: {fileID: 2132786546}
     - target: {fileID: 114442046446139136, guid: d0f73829835b583429773e65656fa2c4,
         type: 2}
       propertyPath: allPlatforms.Array.data[4]
       value: 
-      objectReference: {fileID: 1210121528}
+      objectReference: {fileID: 602014618}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f73829835b583429773e65656fa2c4, type: 2}
   m_IsPrefabAsset: 0
@@ -22532,7 +22532,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9
+      value: 5.42
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.y
@@ -24717,7 +24717,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -10.59
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalPosition.y
@@ -31685,7 +31685,7 @@ Prefab:
     - target: {fileID: 114032993780135204, guid: 162e037f0a0c2474b88b854f2ef94b41,
         type: 2}
       propertyPath: remainingSpace
-      value: 32
+      value: 36
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 162e037f0a0c2474b88b854f2ef94b41, type: 2}
@@ -34046,7 +34046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thornsName: ThornsSystemLeft
+  thornsName: ThornsSystemRight
 --- !u!1 &2046717171
 GameObject:
   m_ObjectHideFlags: 0
@@ -40850,7 +40850,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_SelectedEditorRenderState
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
@@ -43117,7 +43117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thornsName: ThornsSystemRight
+  thornsName: ThornsSystemLeft
 --- !u!4 &2135449458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
