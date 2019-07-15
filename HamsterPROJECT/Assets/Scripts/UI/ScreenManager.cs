@@ -65,6 +65,11 @@ public class ScreenManager : MonoBehaviour {
 		OpenPanel (initiallyOpen);
 	}
 
+	void Start()
+	{
+		MusicManager.instance.StopMusic("battle");
+	}
+
 	//Closes the currently open panel and opens the provided one
 	public void OpenPanel(Animator anim)
 	{
