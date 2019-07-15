@@ -9,6 +9,8 @@ public class RotativePlatform : MonoBehaviour {
     float speed = 20;
     [SerializeField]
     bool clockwise = true;
+    [SerializeField]
+    bool randomDirection;
 
     Rigidbody2D rigid;
     float t;
@@ -20,6 +22,11 @@ public class RotativePlatform : MonoBehaviour {
             rigid.bodyType = RigidbodyType2D.Kinematic;
         if (clockwise)
             speed = -speed;
+        if (randomDirection)
+        {
+            if (Random.Range(0, 2) == 1)
+                speed = -speed;      
+        }
     }
 
     private void Update()
