@@ -3475,6 +3475,16 @@ Prefab:
       propertyPath: m_SelectedEditorRenderState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114974170295215178, guid: ec621e6647f6b0d468bf7a0f1f27719f,
+        type: 2}
+      propertyPath: randomDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114974170295215178, guid: ec621e6647f6b0d468bf7a0f1f27719f,
+        type: 2}
+      propertyPath: clockWise
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 60863613413654862, guid: ec621e6647f6b0d468bf7a0f1f27719f, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: ec621e6647f6b0d468bf7a0f1f27719f, type: 2}
@@ -3626,7 +3636,7 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1266519283
-  m_SortingLayer: 11
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
