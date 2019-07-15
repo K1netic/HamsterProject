@@ -113,12 +113,12 @@ public class MatchEnd : MonoBehaviour {
 		scoreDisplay.SetActive (true);
 		//mngr.PlaySound ("UI_matchEnd", //mngr.UIsource);
 
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (0.5f);
 
 		if (GameManager.gameModeType == GameManager.gameModes.LastManStanding)
 		{
 			// Keep playing if nobody reached the game goal
-			foreach (InputDevice dev in InputManager.ActiveDevices)
+			foreach (InputDevice dev in InputManager.Devices)
 			{
 				if ((dev.Action1.WasPressed && GameManager.playersScores[winner] < GameManager.rounds) || winner == 42)
 				{

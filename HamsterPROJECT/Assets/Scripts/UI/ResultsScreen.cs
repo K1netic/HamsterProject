@@ -44,7 +44,7 @@ public class ResultsScreen : MonoBehaviour {
 		
 	void Update()
 	{
-		foreach (InputDevice dev in InputManager.ActiveDevices)
+		foreach (InputDevice dev in InputManager.Devices)
 		{
 			if (activateInput && (dev.AnyButtonWasPressed || dev.CommandWasPressed))
 			{

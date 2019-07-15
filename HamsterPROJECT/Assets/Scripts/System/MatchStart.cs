@@ -110,7 +110,7 @@ public class MatchStart : MonoBehaviour {
 	{
         if (!TestWithoutUI && !GameManager.inMenu)
         {
-            foreach (InputDevice dev in InputManager.ActiveDevices)
+            foreach (InputDevice dev in InputManager.Devices)
             {
                 if ((dev.AnyButtonWasPressed || dev.CommandWasPressed || dev.LeftTrigger.WasPressed || dev.RightTrigger.WasPressed) && !activateBegin)
                 {
