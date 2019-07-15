@@ -69,7 +69,7 @@ public class MapSelector : MonoBehaviour {
 				lastSelectedOject = EventSystem.current.currentSelectedGameObject;
 			}
 
-			foreach (InputDevice dev in InputManager.ActiveDevices)
+			foreach (InputDevice dev in InputManager.Devices)
 			{
 				// Avoid spam
 				if (dev.Action1.WasPressed)

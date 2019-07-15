@@ -39,7 +39,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void Update()
 	{
-		foreach (InputDevice dev in InputManager.ActiveDevices)
+		foreach (InputDevice dev in InputManager.Devices)
 		{
 			if (dev.CommandWasPressed && !pauseMenu.activeSelf && MatchStart.gameHasStarted && !MatchEnd.matchEnded)
 			{

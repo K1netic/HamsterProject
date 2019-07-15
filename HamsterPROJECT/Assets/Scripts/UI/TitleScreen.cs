@@ -23,7 +23,7 @@ public class TitleScreen : MonoBehaviour {
 	void Update () {
 		if (inputActivationScript.inputOK)
 		{
-			foreach (InputDevice dev in InputManager.ActiveDevices)
+			foreach (InputDevice dev in InputManager.Devices)
 			{
 				if (dev.Action1.WasPressed)
 				{
