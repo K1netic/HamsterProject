@@ -240,11 +240,11 @@ public class PlayerLifeManager : MonoBehaviour {
                     break;
                 case "Thorns":
                     playerHP -= damage;
-                    //Audio
+                    AudioManager.instance.PlaySound("playerHitThorns", playerMovement.playerNumber);
                     break;
                 case "Meteor":
                     playerHP -= damage;
-                    //Audio
+                    //Audio = son de la météorité qui explose donc pas besoin de son supplémentaire
                     break;
                 default:
                     playerHP -= damage;
@@ -459,7 +459,7 @@ public class PlayerLifeManager : MonoBehaviour {
                     }
                     directionKnockBack = -(col.GetContact(0).point - (Vector2)transform.position).normalized;
                     StartCoroutine(DoKnockBack(col.gameObject, false));
-                    //Audio
+                    AudioManager.instance.PlaySound("playerHitThorns", playerMovement.playerNumber);
                 }
                 break;
             default:
