@@ -3139,7 +3139,7 @@ Prefab:
     - target: {fileID: 82303809821247032, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8,
         type: 2}
       propertyPath: m_Volume
-      value: 0.3
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1168764707586068, guid: c7e4d21ff738dbf4ca4ea49b0a3772e8, type: 2}
       propertyPath: m_IsActive
@@ -7734,6 +7734,16 @@ Prefab:
     - target: {fileID: 4749309683437356, guid: e99cc891a0742e445a1edc9b96fd90b2, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: playerHitThorns
+      value: 
+      objectReference: {fileID: 8300000, guid: f36661d85426496428b328b73ddfe26f, type: 3}
+    - target: {fileID: 114325004583357376, guid: e99cc891a0742e445a1edc9b96fd90b2,
+        type: 2}
+      propertyPath: playerHitThornsVolume
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e99cc891a0742e445a1edc9b96fd90b2, type: 2}

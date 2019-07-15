@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f,1f)] [SerializeField] float playerHitLaserVolume;
 	[SerializeField] AudioClip playerHitPlayer;
 	[Range(0f,1f)] [SerializeField] float playerHitPlayerVolume;
+	[SerializeField] AudioClip playerHitThorns;
+	[Range(0f,1f)] [SerializeField] float playerHitThornsVolume;
 	[SerializeField] AudioClip arrowHitArrow;
 	[Range(0f,1f)] [SerializeField] float arrowHitArrowVolume;
     [SerializeField] AudioClip death;
@@ -185,6 +187,11 @@ public class AudioManager : MonoBehaviour {
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = playerHitPlayerVolume;
 			source.PlayOneShot (playerHitPlayer);
+			break;
+		case "playerHitThorns":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = playerHitThornsVolume;
+			source.PlayOneShot (playerHitThorns);
 			break;
 		case "arrowHitArrow":
 			source.pitch = Random.Range (pitchMin, pitchMax);
