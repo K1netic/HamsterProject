@@ -12,6 +12,8 @@ public class ThornsBall : MonoBehaviour {
     void Update () {
         if (target)
         {
+            //TEST-SON
+            AudioManager.instance.PlaySound("movingThornBall", "enviro");
             if(dir == Vector3.zero)
                 dir = (target.transform.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
@@ -26,6 +28,8 @@ public class ThornsBall : MonoBehaviour {
     void Destruction()
     {
         target.GetComponent<Animator>().SetTrigger("TransitionIn");
+        AudioManager.instance.enviroSource.Stop();
+        AudioManager.instance.PlaySound("transformation", "enviro");
         Destroy(gameObject);
     }
 }

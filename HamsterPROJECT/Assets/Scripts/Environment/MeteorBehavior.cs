@@ -47,6 +47,7 @@ public class MeteorBehavior : MonoBehaviour {
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
         foreach (Collider2D collider in deathOverlap)
         {
+            AudioManager.instance.PlaySound("meteorExplosion","enviro");
             if (collider.gameObject.CompareTag("Player"))
             {
                 collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(50, gameObject, true);

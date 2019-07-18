@@ -35,6 +35,14 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f, 1f)] [SerializeField] float destructingPlatformVolume;
 	[SerializeField] AudioClip ropeCut;
 	[Range(0f, 1f)] [SerializeField] float ropeCutVolume;
+	[SerializeField] AudioClip movingItem;
+	[Range(0f, 1f)] [SerializeField] float movingItemVolume;
+	[SerializeField] AudioClip movingBomb;
+	[Range(0f, 1f)] [SerializeField] float movingBombVolume;
+	[SerializeField] AudioClip trampoline;
+	[Range(0f, 1f)] [SerializeField] float trampolineVolume;
+	[SerializeField] AudioClip transformation;
+	[Range(0f, 1f)] [SerializeField] float transformationVolume;
     #endregion
 
     [Header("UI sounds")]
@@ -217,6 +225,31 @@ public class AudioManager : MonoBehaviour {
 			source.pitch = Random.Range (pitchMin, pitchMax);
 			source.volume = ropeCutVolume;
 			source.PlayOneShot (ropeCut);
+			break;
+		case "movingBomb":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = movingBombVolume;
+			source.PlayOneShot (movingBomb);
+			break;
+		case "movingThornBall":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = movingItemVolume / 4.0f;
+			source.PlayOneShot (movingItem);
+			break;
+		case "trampoline":
+			source.pitch = Random.Range (pitchMin-0.1f, pitchMax+0.1f);
+			source.volume = trampolineVolume;
+			source.PlayOneShot (trampoline);
+			break;
+		case "transformation":
+			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.volume = transformationVolume;
+			source.PlayOneShot (transformation);
+			break;
+		case "meteorExplosion":
+			source.pitch = Random.Range (pitchMin -0.4f, pitchMax +0.4f);
+			source.volume = 0.3f;
+			source.PlayOneShot (death);
 			break;
         case "UI_highlight":
 			source.volume = UI_highlightVolume;

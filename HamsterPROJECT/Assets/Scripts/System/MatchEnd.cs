@@ -160,6 +160,7 @@ public class MatchEnd : MonoBehaviour {
 
 	void FreezeGame()
 	{
+		AudioManager.instance.enviroSource.Stop();
 		if (!arrowSet)
 		{
 			arrowSet = true;
