@@ -8,12 +8,17 @@ public class ThornsBall : MonoBehaviour {
     public float speed;
 
     Vector3 dir;
+    bool soundPlayed = false;
 
     void Update () {
         if (target)
         {
             //TEST-SON
-            AudioManager.instance.PlaySound("movingThornBall", "enviro");
+            if (!soundPlayed)
+            {
+                AudioManager.instance.PlaySound("movingThornBall", "enviro");
+                soundPlayed = true;
+            }
             if(dir == Vector3.zero)
                 dir = (target.transform.position - transform.position).normalized;
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
