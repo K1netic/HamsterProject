@@ -92,8 +92,6 @@ public class SuddenDeathMovement : MonoBehaviour {
             if(childs[0].transform.position.x <= 38.5)
                 cam.orthographicSize -= suddenDeathSpeed/2;
         }
-        if (Input.GetKeyDown(KeyCode.I))
-            launchSuddenDeath = true;
     }
 
     void LaunchWarning()
