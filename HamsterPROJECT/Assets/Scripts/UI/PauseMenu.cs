@@ -55,6 +55,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
+		AudioManager.instance.enviroSource.Stop();
 		AudioManager.instance.PlaySound ("UI_pauseMenuEnabled", "UI");
 		source.volume *= 0.25f;
 		filter.enabled = true;
@@ -73,7 +74,6 @@ public class PauseMenu : MonoBehaviour {
 		filter.enabled = false;
 		UnfreezePlayers ();
 		arrowSet = false;
-		// EventSystem.current.SetSelectedGameObject(null);
 	}
 
 	void FreezePlayers()
