@@ -34,11 +34,14 @@ public class MeteorBehavior : MonoBehaviour {
     }
 
 	void Update () {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed);
-        if (transform.position.y < 23)
-            Destroy(warningInst);
-        if (transform.position.y <= targetY)
-            Destroy(gameObject);
+        if (Time.timeScale != 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, speed);
+            if (transform.position.y < 23)
+                Destroy(warningInst);
+            if (transform.position.y <= targetY)
+                Destroy(gameObject);
+        }
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -11,21 +11,32 @@ public class ThornsBall : MonoBehaviour {
     bool soundPlayed = false;
 
     void Update () {
-        if (target)
-        {
-            //TEST-SON
-            if (!soundPlayed)
+        if(Time.timeScale != 0)
+        { 
+            if (target)
             {
-                AudioManager.instance.PlaySound("movingThornBall", "enviro");
-                soundPlayed = true;
-            }
-            if(dir == Vector3.zero)
-                dir = (target.transform.position - transform.position).normalized;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
-            if (Vector3.Distance(target.transform.position, transform.position) < .1f)
-            {
-                target.GetComponent<Animator>().SetBool("Transition", true);
-                Invoke("Destruction", .1f);
+                //TEST-SON
+                if (!soundPlayed)
+                {
+                    AudioManager.instance.PlaySound("movingThornBall", "enviro");
+                    soundPlayed = true;
+                }
+                if(dir == Vector3.zero)
+                    dir = (target.transform.position - transform.position).normalized;
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
+                if (Vector3.Distance(target.transform.position, transform.position) < .1f)
+                {
+                    //TEST-SON
+                    AudioManager.instance.PlaySound("movingThornBall", "enviro");
+                    if (dir == Vector3.zero)
+                        dir = (target.transform.position - transform.position).normalized;
+                    transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
+                    if (Vector3.Distance(target.transform.position, transform.position) < .1f)
+                    {
+                        target.GetComponent<Animator>().SetBool("Transition", true);
+                        Invoke("Destruction", .1f);
+                    }
+                }
             }
         }
 	}
