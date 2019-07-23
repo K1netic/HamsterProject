@@ -72,6 +72,7 @@ public class Hook : MonoBehaviour {
     public LayerMask layerMaskLineCast;//Layer qui gère la détection des autres flèches
     [HideInInspector]
     public CurrentBlade currentBlade;
+    LayerMask layerMaskOthersArrow;
     Sprite blade1Sprite;
     Sprite blade2Sprite;
     Sprite blade3Sprite;
@@ -247,22 +248,26 @@ public class Hook : MonoBehaviour {
             case "_P1":
                 line.gameObject.layer = 17;
                 gameObject.layer = 17;
-                layerMaskLineCast = (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24);
+                layerMaskLineCast = (1 << 18) | (1 << 19) | (1 << 20) | (1 << 22) | (1 << 23) | (1 << 24) | (1 << 26);
+                layerMaskOthersArrow = (1 << 18) | (1 << 19) | (1 << 20);
                 break;
             case "_P2":
                 line.gameObject.layer = 18;
                 gameObject.layer = 18;
-                layerMaskLineCast = (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24);
+                layerMaskLineCast = (1 << 17) | (1 << 19) | (1 << 20) | (1 << 21) | (1 << 23) | (1 << 24) | (1 << 26);
+                layerMaskOthersArrow = (1 << 17) | (1 << 19) | (1 << 20);
                 break;
             case "_P3":
                 line.gameObject.layer = 19;
                 gameObject.layer = 19;
-                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24);
+                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 20) | (1 << 21) | (1 << 22) | (1 << 24) | (1 << 26);
+                layerMaskOthersArrow = (1 << 17) | (1 << 18) | (1 << 20);
                 break;
             case "_P4":
                 line.gameObject.layer = 20;
                 gameObject.layer = 20;
-                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23);
+                layerMaskLineCast = (1 << 17) | (1 << 18) | (1 << 19) | (1 << 21) | (1 << 22) | (1 << 23) | (1 << 26);
+                layerMaskOthersArrow = (1 << 17) | (1 << 18) | (1 << 19);
                 break;
             default:
                 print("Default case switch start Hook.cs");
@@ -622,7 +627,7 @@ public class Hook : MonoBehaviour {
             //Mais avant on vérifie si la collision n'a pas eu de problème en envoyant un raycast entre les deux joueurs pour voir s'il n'y a pas la flèche du défenseur qui était censé bloquer
             else if (collision.gameObject.CompareTag("Player"))
             {
-                RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskLineCast);
+                RaycastHit2D collisionFail = Physics2D.Linecast(transform.position, collision.gameObject.transform.position, layerMaskOthersArrow);
                 if (collisionFail.collider != null)
                 {
                     if (collisionFail.collider.gameObject.CompareTag("Arrow"))
