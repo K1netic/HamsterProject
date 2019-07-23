@@ -10,17 +10,20 @@ public class ThornsBall : MonoBehaviour {
     Vector3 dir;
 
     void Update () {
-        if (target)
+        if(Time.timeScale != 0)
         {
-            //TEST-SON
-            AudioManager.instance.PlaySound("movingThornBall", "enviro");
-            if(dir == Vector3.zero)
-                dir = (target.transform.position - transform.position).normalized;
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
-            if (Vector3.Distance(target.transform.position, transform.position) < .1f)
+            if (target)
             {
-                target.GetComponent<Animator>().SetBool("Transition", true);
-                Invoke("Destruction", .1f);
+                //TEST-SON
+                AudioManager.instance.PlaySound("movingThornBall", "enviro");
+                if (dir == Vector3.zero)
+                    dir = (target.transform.position - transform.position).normalized;
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed);
+                if (Vector3.Distance(target.transform.position, transform.position) < .1f)
+                {
+                    target.GetComponent<Animator>().SetBool("Transition", true);
+                    Invoke("Destruction", .1f);
+                }
             }
         }
 	}
