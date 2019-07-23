@@ -176,6 +176,7 @@ public class CharacterSelectionScreen : MonoBehaviour {
 					AudioManager.instance.PlaySound ("UI_validate", "UI");
 					CancelAllVibrations();
 					screenManager.OpenPanel (gamesModesScreenAnimator);
+					// screenManager.CloseCurrent();
 				}
 			}
 		}
