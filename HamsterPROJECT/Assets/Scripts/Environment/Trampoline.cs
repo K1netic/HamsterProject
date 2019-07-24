@@ -27,7 +27,7 @@ public class Trampoline : MonoBehaviour {
 		if (collision.gameObject.tag == "Player")
 		{
 			//TEST-SON
-			AudioManager.instance.PlaySound("trampoline", "enviro");
+			AudioManager.instance.PlaySound("trampoline", "trampoline");
 			playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
 			//Point de contact entre le joueur et le trampoline
 			Vector3 contact = collision.GetContact(0).point;

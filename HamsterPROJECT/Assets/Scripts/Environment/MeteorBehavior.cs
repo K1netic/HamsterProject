@@ -27,6 +27,8 @@ public class MeteorBehavior : MonoBehaviour {
 
     GameObject warningInst;
 
+    bool playSoundOnlyOnce = false;
+
 	void Start () {
         target = new Vector3(Random.Range(leftBound, rightBound),targetY, 0);
         transform.rotation = Quaternion.FromToRotation(Vector3.right, -(target - transform.position).normalized);
@@ -50,7 +52,12 @@ public class MeteorBehavior : MonoBehaviour {
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
         foreach (Collider2D collider in deathOverlap)
         {
-            AudioManager.instance.PlaySound("meteorExplosion","enviro");
+            //TEST-SON
+            if (!playSoundOnlyOnce)
+            {
+                AudioManager.instance.PlaySound("meteorExplosion","meteor");
+                playSoundOnlyOnce = true;
+            }
             if (collider.gameObject.CompareTag("Player"))
             {
                 collider.gameObject.GetComponent<PlayerLifeManager>().TakeDamage(50, gameObject, true);

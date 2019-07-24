@@ -93,6 +93,13 @@ public class AudioManager : MonoBehaviour {
     public AudioSource _P4ArrowSource;
     public AudioSource UIsource;
 	public AudioSource enviroSource;
+	public AudioSource meteorSource;
+	public AudioSource bombSource;
+	//used for thorn movements
+	public AudioSource thornsSource;
+	//used for thorn transformations
+	public AudioSource thornsSource2;
+	public AudioSource trampolineSource;
 
     AudioSource source;
 
@@ -154,6 +161,21 @@ public class AudioManager : MonoBehaviour {
 				break;
 			case "enviro":
 				source = enviroSource;
+				break;
+			case "meteor":
+				source = meteorSource;
+				break;
+			case "bomb":
+				source = bombSource;
+				break;
+			case "thorns":
+				source = thornsSource;
+				break;
+			case "thorns2":
+				source = thornsSource;
+				break;
+			case "trampoline":
+				source = trampolineSource;
 				break;
             default:
                 break;
@@ -251,6 +273,7 @@ public class AudioManager : MonoBehaviour {
 			source.volume = 0.3f;
 			source.PlayOneShot (death);
 			break;
+		// UI SOUNDS
         case "UI_highlight":
 			source.volume = UI_highlightVolume;
 			source.PlayOneShot (UI_highlight);

@@ -47,7 +47,7 @@ public class BombScript : MonoBehaviour {
 		if (oneAnim == true) {
 			animatorBomb.SetBool ("StartAnim", true);
 			//TEST-SON
-			// AudioManager.instance.PlaySound("movingBomb", "enviro");
+			// AudioManager.instance.PlaySound("movingBomb", "bomb");
 			oneAnim = false;
 		}
 
@@ -67,8 +67,7 @@ public class BombScript : MonoBehaviour {
                 }
 			}
 			//TEST-SON
-			AudioManager.instance.enviroSource.Stop();
-			AudioManager.instance.PlaySound("death", "enviro");
+			AudioManager.instance.PlaySound("death", "bomb");
 			Destroy (bomb);
 		}
 		size.transform.localScale =new Vector3 (speedAnim,speedAnim,1);

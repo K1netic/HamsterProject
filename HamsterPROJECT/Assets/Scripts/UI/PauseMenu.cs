@@ -55,7 +55,9 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
-		AudioManager.instance.enviroSource.Stop();
+		AudioManager.instance.thornsSource.Stop();
+		AudioManager.instance.bombSource.Pause();
+		AudioManager.instance.meteorSource.Pause();
 		AudioManager.instance.PlaySound ("UI_pauseMenuEnabled", "UI");
 		source.volume *= 0.25f;
 		filter.enabled = true;
@@ -70,6 +72,8 @@ public class PauseMenu : MonoBehaviour {
 		Time.timeScale = 1;
 		pauseMenu.SetActive (false);
 		AudioManager.instance.PlaySound ("UI_pauseMenuDisabled", "UI");
+		AudioManager.instance.bombSource.UnPause();
+		AudioManager.instance.meteorSource.UnPause();
 		source.volume *= 4.0f;
 		filter.enabled = false;
 		UnfreezePlayers ();
