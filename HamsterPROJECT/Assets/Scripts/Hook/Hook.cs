@@ -417,6 +417,7 @@ public class Hook : MonoBehaviour {
     //Déploie la lame qui correspond à la vitesse au début de l'attaque
     public void BladeChoice(float speed)
     {
+        CancelInvoke("Sheate");
         if(speed <= hookRecuperationSpeed)
         {
             bladeRenderer.sprite = blade1Sprite;
