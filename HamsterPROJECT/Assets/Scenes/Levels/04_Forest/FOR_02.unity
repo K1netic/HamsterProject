@@ -242,7 +242,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Extent.y
-      value: 1.9050002
+      value: 1.905
       objectReference: {fileID: 0}
     - target: {fileID: 1072883386913422, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_Name
@@ -285,6 +285,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
     type: 2}
   m_PrefabInternal: {fileID: 31358892}
+--- !u!114 &31358896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 31358893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornsName: ThornsSystem
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!4 &77528378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4365700036317740, guid: d8e336b3748a75b41a35a402bcd00679,
@@ -2655,7 +2668,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Extent.y
-      value: 1.9050002
+      value: 1.905
       objectReference: {fileID: 0}
     - target: {fileID: 1072883386913422, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_Name
@@ -2698,6 +2711,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
     type: 2}
   m_PrefabInternal: {fileID: 490329290}
+--- !u!114 &490329294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 490329291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornsName: ThornsSystem
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!1001 &535665303
 Prefab:
   m_ObjectHideFlags: 0
@@ -3074,7 +3100,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Extent.y
-      value: 1.9050002
+      value: 1.905
       objectReference: {fileID: 0}
     - target: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -3108,6 +3134,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1049744608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1049744606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornsName: ThornsSystem
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!4 &1049744611 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
@@ -3512,7 +3551,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Center.x
-      value: -0.000061035156
+      value: -0.000060081482
       objectReference: {fileID: 0}
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
@@ -6875,6 +6914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thornsName: ThornsSystemLeft
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!1001 &1407693275
 Prefab:
   m_ObjectHideFlags: 0
@@ -7492,7 +7532,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Center.x
-      value: -0.000061035156
+      value: -0.000060081482
       objectReference: {fileID: 0}
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
@@ -10855,6 +10895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thornsName: ThornsSystemLeft
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!1001 &1903330533
 Prefab:
   m_ObjectHideFlags: 0
@@ -11107,7 +11148,7 @@ Prefab:
     - target: {fileID: 8633865680831419178, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
         type: 2}
       propertyPath: m_LocalAABB.m_Extent.y
-      value: 1.9050002
+      value: 1.905
       objectReference: {fileID: 0}
     - target: {fileID: 1072883386913422, guid: 7f8e79eee0a5ae74b8ec6203273409aa, type: 2}
       propertyPath: m_Name
@@ -11150,6 +11191,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4227625605734790, guid: 7f8e79eee0a5ae74b8ec6203273409aa,
     type: 2}
   m_PrefabInternal: {fileID: 2026124890}
+--- !u!114 &2026124894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2026124891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee87a287d6214b4ca0411ebf452853f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornsName: ThornsSystem
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!1001 &2052870995
 Prefab:
   m_ObjectHideFlags: 0

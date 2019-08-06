@@ -55,7 +55,8 @@ public class PauseMenu : MonoBehaviour {
 
 	void OpenPauseMenu()
 	{
-		AudioManager.instance.thornsSource.Stop();
+		PauseAllMeteorSources();
+		PauseAllThornSources();
 		AudioManager.instance.bombSource.Pause();
 		AudioManager.instance.meteorSource.Pause();
 		AudioManager.instance.PlaySound ("UI_pauseMenuEnabled", "UI");
@@ -74,6 +75,8 @@ public class PauseMenu : MonoBehaviour {
 		AudioManager.instance.PlaySound ("UI_pauseMenuDisabled", "UI");
 		AudioManager.instance.bombSource.UnPause();
 		AudioManager.instance.meteorSource.UnPause();
+		UnPauseAllMeteorSources();
+		UnPauseAllThornSources();
 		source.volume *= 4.0f;
 		filter.enabled = false;
 		UnfreezePlayers ();
@@ -91,6 +94,42 @@ public class PauseMenu : MonoBehaviour {
 		foreach (GameObject arrow in arrows)
 		{
 			if (arrow != null) arrow.GetComponent<Hook> ().isFrozen = true;
+		}
+	}
+
+	void PauseAllMeteorSources()
+	{
+		GameObject[] meteors = GameObject.FindGameObjectsWithTag("Meteor");
+		foreach(GameObject meteor in meteors)
+		{
+			meteor.GetComponent<AudioSource>().Pause();
+		}
+	}
+
+	void UnPauseAllMeteorSources()
+	{
+		GameObject[] meteors = GameObject.FindGameObjectsWithTag("Meteor");
+		foreach(GameObject meteor in meteors)
+		{
+			meteor.GetComponent<AudioSource>().UnPause();
+		}
+	}
+
+		void PauseAllThornSources()
+	{
+		GameObject[] thorns = GameObject.FindGameObjectsWithTag("ThornBall");
+		foreach(GameObject thorn in thorns)
+		{
+			thorn.GetComponent<AudioSource>().Pause();
+		}
+	}
+
+	void UnPauseAllThornSources()
+	{
+		GameObject[] thorns = GameObject.FindGameObjectsWithTag("ThornBall");
+		foreach(GameObject thorn in thorns)
+		{
+			thorn.GetComponent<AudioSource>().UnPause();
 		}
 	}
 

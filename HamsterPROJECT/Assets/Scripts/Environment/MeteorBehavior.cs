@@ -27,7 +27,11 @@ public class MeteorBehavior : MonoBehaviour {
 
     GameObject warningInst;
 
-    bool playSoundOnlyOnce = false;
+    bool playExplosionSoundOnlyOnce = false;
+    bool playFallSoundOnlyOnce = false;
+
+    [SerializeField] AudioClip fallingMeteorSound;
+    AudioSource newSource;
 
 	void Start () {
         target = new Vector3(Random.Range(leftBound, rightBound),targetY, 0);
@@ -43,6 +47,14 @@ public class MeteorBehavior : MonoBehaviour {
                 Destroy(warningInst);
             if (transform.position.y <= targetY)
                 Destroy(gameObject);
+            if (!playFallSoundOnlyOnce)
+            {
+                newSource = gameObject.AddComponent<AudioSource>();
+                newSource.pitch = Random.Range (0.8f, 1.0f);
+			    newSource.volume = 0.4f;
+                newSource.PlayOneShot(fallingMeteorSound);
+                playFallSoundOnlyOnce = true;
+            }
         }
 	}
 
@@ -52,11 +64,11 @@ public class MeteorBehavior : MonoBehaviour {
         deathOverlap = Physics2D.OverlapCircleAll(transform.position, deathRadius, layerMaskDeath);
         foreach (Collider2D collider in deathOverlap)
         {
-            //TEST-SON
-            if (!playSoundOnlyOnce)
+            if (!playExplosionSoundOnlyOnce)
             {
+                newSource.Stop();
                 AudioManager.instance.PlaySound("meteorExplosion","meteor");
-                playSoundOnlyOnce = true;
+                playExplosionSoundOnlyOnce = true;
             }
             if (collider.gameObject.CompareTag("Player"))
             {

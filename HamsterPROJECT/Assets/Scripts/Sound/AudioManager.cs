@@ -35,14 +35,16 @@ public class AudioManager : MonoBehaviour {
 	[Range(0f, 1f)] [SerializeField] float destructingPlatformVolume;
 	[SerializeField] AudioClip ropeCut;
 	[Range(0f, 1f)] [SerializeField] float ropeCutVolume;
-	[SerializeField] AudioClip movingItem;
-	[Range(0f, 1f)] [SerializeField] float movingItemVolume;
+	[SerializeField] AudioClip movingThorns;
+	[Range(0f, 1f)] [SerializeField] float movingThornsVolume;
 	[SerializeField] AudioClip movingBomb;
 	[Range(0f, 1f)] [SerializeField] float movingBombVolume;
 	[SerializeField] AudioClip trampoline;
 	[Range(0f, 1f)] [SerializeField] float trampolineVolume;
 	[SerializeField] AudioClip transformation;
 	[Range(0f, 1f)] [SerializeField] float transformationVolume;
+	[SerializeField] AudioClip fallingMeteor;
+	[Range(0f, 1f)] [SerializeField] float fallingMeteorVolume;
     #endregion
 
     [Header("UI sounds")]
@@ -93,12 +95,9 @@ public class AudioManager : MonoBehaviour {
     public AudioSource _P4ArrowSource;
     public AudioSource UIsource;
 	public AudioSource enviroSource;
+	//used for meteor explosions
 	public AudioSource meteorSource;
 	public AudioSource bombSource;
-	//used for thorn movements
-	public AudioSource thornsSource;
-	//used for thorn transformations
-	public AudioSource thornsSource2;
 	public AudioSource trampolineSource;
 
     AudioSource source;
@@ -167,12 +166,6 @@ public class AudioManager : MonoBehaviour {
 				break;
 			case "bomb":
 				source = bombSource;
-				break;
-			case "thorns":
-				source = thornsSource;
-				break;
-			case "thorns2":
-				source = thornsSource;
 				break;
 			case "trampoline":
 				source = trampolineSource;
@@ -249,24 +242,14 @@ public class AudioManager : MonoBehaviour {
 			source.PlayOneShot (ropeCut);
 			break;
 		case "movingBomb":
-			source.pitch = Random.Range (pitchMin, pitchMax);
+			source.pitch = 1.0f;
 			source.volume = movingBombVolume;
 			source.PlayOneShot (movingBomb);
-			break;
-		case "movingThornBall":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = movingItemVolume / 4.0f;
-			source.PlayOneShot (movingItem);
 			break;
 		case "trampoline":
 			source.pitch = Random.Range (pitchMin-0.1f, pitchMax+0.1f);
 			source.volume = trampolineVolume;
 			source.PlayOneShot (trampoline);
-			break;
-		case "transformation":
-			source.pitch = Random.Range (pitchMin, pitchMax);
-			source.volume = transformationVolume;
-			source.PlayOneShot (transformation);
 			break;
 		case "meteorExplosion":
 			source.pitch = Random.Range (pitchMin -0.4f, pitchMax +0.4f);

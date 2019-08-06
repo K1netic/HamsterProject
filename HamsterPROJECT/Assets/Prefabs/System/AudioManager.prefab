@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 4766267421510052}
   - component: {fileID: 82799538080188806}
   m_Layer: 0
-  m_Name: MeteorSource
+  m_Name: MeteorSource2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,6 +282,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1852727598404196
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4992190626545918}
+  - component: {fileID: 82411391042881630}
+  m_Layer: 0
+  m_Name: MeteorSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1855229295148646
 GameObject:
   m_ObjectHideFlags: 1
@@ -384,7 +400,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4749309683437356}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4288153819613544
 Transform:
@@ -410,7 +426,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4749309683437356}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4354443708388822
 Transform:
@@ -488,7 +504,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4749309683437356}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4503420465681848
 Transform:
@@ -566,6 +582,7 @@ Transform:
   - {fileID: 4354443708388822}
   - {fileID: 4474973607265952}
   - {fileID: 4815695034116510}
+  - {fileID: 4992190626545918}
   - {fileID: 4766267421510052}
   - {fileID: 4245996674102776}
   - {fileID: 4316271322542566}
@@ -585,7 +602,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4749309683437356}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4815695034116510
 Transform:
@@ -624,7 +641,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4749309683437356}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4949561392436472
 Transform:
@@ -638,6 +655,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4749309683437356}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4992190626545918
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852727598404196}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4749309683437356}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &82024838718141704
 AudioSource:
@@ -1405,6 +1435,101 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1792674351768428}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &82411391042881630
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852727598404196}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -2483,14 +2608,16 @@ MonoBehaviour:
   destructingPlatformVolume: 0.3
   ropeCut: {fileID: 8300000, guid: 1169b109d6055ff40b0c764dec7f9697, type: 3}
   ropeCutVolume: 0.5
-  movingItem: {fileID: 8300000, guid: c5d19d3a73a1d31488a26f27256f45ac, type: 3}
-  movingItemVolume: 0.1
-  movingBomb: {fileID: 0}
-  movingBombVolume: 0
+  movingThorns: {fileID: 8300000, guid: fd9bd285157645e438b1993291546026, type: 3}
+  movingThornsVolume: 0.3
+  movingBomb: {fileID: 8300000, guid: 0d09a8ddbc8333e4f945ff93d08f3b11, type: 3}
+  movingBombVolume: 0.18
   trampoline: {fileID: 8300000, guid: 11c9bcf399728cf41b90ce3d90e9bd73, type: 3}
   trampolineVolume: 0.04
-  transformation: {fileID: 8300000, guid: d761b11213210c346a9fed5e17898129, type: 3}
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
   transformationVolume: 0.25
+  fallingMeteor: {fileID: 8300000, guid: 85a81b590f7f5b144a936202603c2a17, type: 3}
+  fallingMeteorVolume: 0.5
   UI_highlight: {fileID: 8300000, guid: fd20db669597bc8499a48c74993ddcbc, type: 3}
   UI_highlightVolume: 0.125
   UI_validate: {fileID: 8300000, guid: b009cbe041104a0428ffd71c5b1a34e3, type: 3}
@@ -2536,7 +2663,8 @@ MonoBehaviour:
   _P4ArrowSource: {fileID: 82753720295751918}
   UIsource: {fileID: 82037198523475254}
   enviroSource: {fileID: 82790845188105004}
-  meteorSource: {fileID: 82799538080188806}
+  meteorSource: {fileID: 82411391042881630}
+  meteorSource2: {fileID: 82799538080188806}
   bombSource: {fileID: 82613397266502256}
   thornsSource: {fileID: 82868089468641636}
   thornsSource2: {fileID: 82525997501912240}

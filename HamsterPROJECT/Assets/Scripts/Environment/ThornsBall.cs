@@ -10,6 +10,10 @@ public class ThornsBall : MonoBehaviour {
     Vector3 dir;
     bool soundPlayed = false;
 
+    AudioSource newSource;
+
+    [SerializeField] AudioClip movingThornBall;
+
     void Update () {
         if(Time.timeScale != 0)
         { 
@@ -17,8 +21,10 @@ public class ThornsBall : MonoBehaviour {
             {
                 if (!soundPlayed)
                 {
-                    //TEST-SON
-                    AudioManager.instance.PlaySound("movingThornBall", "thorns");
+                    newSource = gameObject.AddComponent<AudioSource>();
+                    newSource.pitch = Random.Range (0.8f, 1.0f);
+			        newSource.volume = 0.15f;
+                    newSource.PlayOneShot(movingThornBall);
                     soundPlayed = true;
                 }
                 if(dir == Vector3.zero)
@@ -42,7 +48,6 @@ public class ThornsBall : MonoBehaviour {
     void Destruction()
     {
         target.GetComponent<Animator>().SetTrigger("TransitionIn");
-        AudioManager.instance.PlaySound("transformation", "thorns2");
         Destroy(gameObject);
     }
 }

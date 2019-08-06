@@ -47,7 +47,7 @@ public class BombScript : MonoBehaviour {
 		if (oneAnim == true) {
 			animatorBomb.SetBool ("StartAnim", true);
 			//TEST-SON
-			// AudioManager.instance.PlaySound("movingBomb", "bomb");
+			AudioManager.instance.PlaySound("movingBomb", "bomb");
 			oneAnim = false;
 		}
 
@@ -66,7 +66,6 @@ public class BombScript : MonoBehaviour {
                     collider.gameObject.GetComponent<ExplodeOnClick>().Explosion(collider.gameObject.transform.position, speed);
                 }
 			}
-			//TEST-SON
 			AudioManager.instance.PlaySound("death", "bomb");
 			Destroy (bomb);
 		}

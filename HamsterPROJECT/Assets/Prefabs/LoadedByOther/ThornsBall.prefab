@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 95310879412948430}
   m_Layer: 21
   m_Name: ThornsBall
-  m_TagString: Untagged
+  m_TagString: ThornBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,6 +73,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 0
+  movingThornBall: {fileID: 8300000, guid: fd9bd285157645e438b1993291546026, type: 3}
+  transformation: {fileID: 8300000, guid: 416050f983aa06746822316d3e2e1282, type: 3}
 --- !u!212 &212975740116725172
 SpriteRenderer:
   m_ObjectHideFlags: 1
