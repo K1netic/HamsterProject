@@ -35,6 +35,6 @@ public class PlayerResultPanel : MonoBehaviour {
 		scoreText.text = "Score : " + GameManager.playersScores [playerResultPanelID].ToString ();
 		killsText.text = "Kills : " + GameManager.playersKills [playerResultPanelID].ToString ();
 		deathsText.text = "Deaths : " + GameManager.playersDeaths [playerResultPanelID ].ToString ();
-		selfDestructsText.text = "Laser : " + GameManager.playersSelfDestructs [playerResultPanelID].ToString ();
+		selfDestructsText.text = "Self : " + GameManager.playersSelfDestructs [playerResultPanelID].ToString ();
 	}
 }

@@ -175,6 +175,13 @@ public class MatchEnd : MonoBehaviour {
 				}
 			}
 		}
+
+		AudioSource[] sources = GameObject.FindObjectsOfType<AudioSource>();
+		foreach(AudioSource source in sources)
+		{
+			if (source.gameObject.name != "MusicManager")
+				source.Stop();
+		}
 	}
 
 	// Instruction for when the match is over

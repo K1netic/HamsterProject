@@ -61,6 +61,7 @@ public class UiButtonFunctions : MonoBehaviour {
 	{
 		//reset timeScale in case a scene is loaded from the pause menu
 		if (Time.timeScale != 1) Time.timeScale = 1;
+		MusicManager.instance.StopMusic ("menu");
 		SceneManager.LoadScene (GameManager.lastLevelPlayed);
 	}
 

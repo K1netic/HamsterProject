@@ -34,6 +34,11 @@ public class ResultsScreen : MonoBehaviour {
 	void Start()
 	{
 		music.StopMusic ("battle");
+		AudioSource[] sources = GameObject.FindObjectsOfType<AudioSource>();
+		foreach(AudioSource source in sources)
+		{
+			source.Stop();
+		}
 		AudioManager.instance.PlaySound ("UI_resultsScreen", "UI");
 		panels [winnerIndex].borders.sprite = sprt; 
 		rect = panels [winnerIndex].GetComponent<RectTransform> ();
